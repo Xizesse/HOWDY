@@ -51,7 +51,7 @@ public class UI {
         int scale = 3;
         x = gp.screenWidth/2 - (gp.tileSize * scale)/2;
         y += gp.tileSize;
-        g2d.drawImage(gp.player.down1, x, y, gp.tileSize*scale, gp.tileSize*scale, null);
+        g2d.drawImage(gp.player.titleArt, x, y, gp.tileSize*scale, gp.tileSize*scale, null);
 
         //MENU
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 48f));
