@@ -21,14 +21,18 @@ public class GamePanel extends JPanel implements Runnable{
 
     //FPS
     final int FPS = 60;
-    KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyH);
+    // ENTITY AND OBJECTS
 
-    // Set players default position
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
+    // GAME STATE
+    public int gameState;
+    public final int titleState = 0;
+    public final int playState = 1;
+    public final int pauseState = 2;
+
+    public UI ui = new UI(this);
+    KeyHandler keyH = new KeyHandler(ui.gp);
+    Player player = new Player(this, keyH);
 
     public GamePanel() {
 
@@ -73,7 +77,16 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        player.draw(g2d);
+
+
+        if (gameState == titleState) {
+            ui.draw(g2d);
+        } else if (gameState == playState) {
+            player.draw(g2d);
+        } else if (gameState == pauseState) {
+
+        }
+
         g2d.dispose();
     }
 }
