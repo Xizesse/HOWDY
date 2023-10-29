@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Player extends Entity{
+public class Player extends Entity {
 
     GamePanel gp;
     KeyHandler keyH;
@@ -22,7 +22,7 @@ public class Player extends Entity{
         getPlayerImage();
     }
 
-    public void setDefaultValue(){
+    public void setDefaultValue() {
         x = 100;
         y = 100;
         speed = 4;
@@ -31,76 +31,88 @@ public class Player extends Entity{
 
     public void getPlayerImage() {
 
-        try{
+        try {
             up1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_1.png"));
             up2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_2.png"));
-            down1   = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_1.png"));
-            down2   = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_2.png"));
-            left1   = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_1.png"));
-            left2   = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_2.png"));
-            right1  = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_1.png"));
-            right2  = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_2.png"));
+            down1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_1.png"));
+            down2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_2.png"));
+            left1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_1.png"));
+            left2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_2.png"));
+            right1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_1.png"));
+            right2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_2.png"));
 
-        }catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void update(){
-        if(keyH.upPressed) {
+    public void update() {
+
+        if (keyH.upPressed) {
             direction = "up";
             y -= speed;
         }
-        if(keyH.downPressed) {
+        if (keyH.downPressed) {
             direction = "down";
             y += speed;
         }
-        if(keyH.leftPressed) {
+        if (keyH.leftPressed) {
             direction = "left";
             x -= speed;
         }
-        if(keyH.rightPressed) {
+        if (keyH.rightPressed) {
             direction = "right";
             x += speed;
         }
 
+        spriteCounter++;
+
+        if (spriteCounter > 10) {
+            if (spriteNum == 1 &&( keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed)) {
+                spriteNum = 2;
+            } else if (spriteNum == 2) {
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
+
     }
-    public void draw(Graphics2D g2d){
+
+    public void draw(Graphics2D g2d) {
 //        g2d.setColor(Color.WHITE);
 //        g2d.fillRect(x, y, gp.tileSize, gp.tileSize);
 
 
         BufferedImage image = null;
 
-        switch (direction){
+        switch (direction) {
             case "up":
-                if (gp.gameTime % 20 < 10) {
+                if (spriteNum == 1) {
                     image = up1;
-                } else {
+                } else if (spriteNum == 2) {
                     image = up2;
                 }
                 break;
             case "down":
-                if (gp.gameTime % 20 < 10) {
+                if (spriteNum == 1) {
                     image = down1;
-                } else {
+                } else if (spriteNum == 2) {
                     image = down2;
                 }
                 break;
             case "left":
-                if (gp.gameTime % 20 < 10) {
+                if (spriteNum == 1) {
                     image = left1;
-                } else {
+                } else if (spriteNum == 2) {
                     image = left2;
                 }
                 break;
             case "right":
-                if (gp.gameTime % 20 < 10) {
+                if (spriteNum == 1) {
                     image = right1;
-                } else {
+                } else if (spriteNum == 2)
                     image = right2;
-                }
                 break;
         }
 
