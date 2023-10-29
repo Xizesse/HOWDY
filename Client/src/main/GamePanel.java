@@ -47,7 +47,7 @@ public class GamePanel extends JPanel implements Runnable{
     @Override
     public void run() {
 
-        double deltaInterval = 1000000000 / FPS;
+        double deltaInterval = (double)1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
