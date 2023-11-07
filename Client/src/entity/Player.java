@@ -34,14 +34,14 @@ public class Player extends Entity {
     public void getPlayerImage() {
 
         try {
-//            up1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_1.png"));
-//            up2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_2.png"));
+           up1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_1.png"));
+            up2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_2.png"));
             down1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_1.png"));
             down2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_2.png"));
-//            left1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_1.png"));
-//            left2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_2.png"));
-//            right1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_1.png"));
-//            right2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_2.png"));
+            left1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_1.png"));
+            left2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_2.png"));
+            right1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_1.png"));
+            right2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_2.png"));
             titleArt = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_title_art.png"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -91,9 +91,9 @@ public class Player extends Entity {
         switch (direction) {
             case "up":
                 if (spriteNum == 1) {
-                    image = down1;
+                    image = up1;
                 } else if (spriteNum == 2) {
-                    image = down2;
+                    image = up2;
                 }
                 break;
             case "down":                   //need to change to the correct sprites later on
@@ -105,16 +105,16 @@ public class Player extends Entity {
                 break;
             case "left":
                 if (spriteNum == 1) {
-                    image = down1;
+                    image = left1;
                 } else if (spriteNum == 2) {
-                    image = down2;
+                    image = left2;
                 }
                 break;
             case "right":
                 if (spriteNum == 1) {
-                    image = down1;
+                    image = right1;
                 } else if (spriteNum == 2)
-                    image = down2;
+                    image = right2;
                 break;
         }
 
