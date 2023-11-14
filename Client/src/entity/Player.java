@@ -7,13 +7,14 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Objects;
 
 
 public class Player extends Entity {
 
     GamePanel gp;
     KeyHandler keyH;
+
+    public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -34,15 +35,21 @@ public class Player extends Entity {
     public void getPlayerImage() {
 
         try {
-           up1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_1.png"));
-            up2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_2.png"));
-            down1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_1.png"));
-            down2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_2.png"));
-            left1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_1.png"));
-            left2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_2.png"));
-            right1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_1.png"));
-            right2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_2.png"));
+           bodyUp1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_1.png"));
+            bodyUp2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_2.png"));
+            bodyDown1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_1.png"));
+            bodyDown2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_2.png"));
+            BodyLeft1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_1.png"));
+            BodyLeft2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_2.png"));
+            BodyRight1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_1.png"));
+            BodyRight2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_2.png"));
             titleArt = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_title_art.png"));
+
+            HelmetUp = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_up.png"));
+            HelmetDown = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_down.png"));
+            HelmetLeft = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_left.png"));
+            HelmetRight = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_right.png"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -86,38 +93,46 @@ public class Player extends Entity {
 //        g2d.fillRect(x, y, gp.tileSize, gp.tileSize);
 
 
-        BufferedImage image = null;
+        BufferedImage body = null;
+        BufferedImage helmet = null;
+
 
         switch (direction) {
             case "up":
                 if (spriteNum == 1) {
-                    image = up1;
+                    body = bodyUp1;
                 } else if (spriteNum == 2) {
-                    image = up2;
+                    body = bodyUp2;
                 }
+                helmet = HelmetUp;
                 break;
             case "down":                   //need to change to the correct sprites later on
                 if (spriteNum == 1) {
-                    image = down1;
+                    body = bodyDown1;
                 } else if (spriteNum == 2) {
-                    image = down2;
+                    body = bodyDown2;
                 }
+                helmet = HelmetDown;
                 break;
             case "left":
                 if (spriteNum == 1) {
-                    image = left1;
+                    body = BodyLeft1;
                 } else if (spriteNum == 2) {
-                    image = left2;
+                    body = BodyLeft2;
                 }
+                helmet = HelmetLeft;
                 break;
             case "right":
                 if (spriteNum == 1) {
-                    image = right1;
+                    body = BodyRight1;
                 } else if (spriteNum == 2)
-                    image = right2;
+                    body = BodyRight2;
+                helmet = HelmetRight;
                 break;
         }
 
-        g2d.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2d.drawImage(body, x, y, gp.tileSize, gp.tileSize, null);
+        g2d.drawImage(helmet, x, y, gp.tileSize, gp.tileSize, null);
+
     }
 }
