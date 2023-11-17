@@ -1,6 +1,7 @@
 package main;
 
 import entity.Player;
+import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -17,16 +18,20 @@ public class GamePanel extends JPanel implements Runnable{
     final int originalTileSize = 16; // 16x16 pixels
     final int scale = 3; // 3x scale
     public final int tileSize = originalTileSize * scale; // 48x48 pixels
-    final int maxScreenCol = 16; // 16 tiles wide
-    final int maxScreenRow = 12; // 12 tiles tall
-    final int screenWidth = tileSize * maxScreenCol; // 768 pixels wide
-    final int screenHeight = tileSize * maxScreenRow; // 576 pixels tall
-
-    public int gameTime = 10;
+    public final int maxScreenCol = 16; // 16 tiles wide
+    public final int maxScreenRow = 16; // 12 tiles tall
+    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels wide
+    public final int screenHeight = tileSize * maxScreenRow; // 576 pixels tal
 
     //FPS
     final int FPS = 60;
+
+    TileManager tileM = new TileManager(this);
     Thread gameThread;
+    public UI ui = new UI(this);
+    KeyHandler keyH = new KeyHandler(ui.gp);
+    Player player = new Player(this, keyH);
+
     // ENTITY AND OBJECTS
 
     // GAME STATE
@@ -35,9 +40,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int playState = 1;
     public final int pauseState = 2;
 
-    public UI ui = new UI(this);
-    KeyHandler keyH = new KeyHandler(ui.gp);
-    Player player = new Player(this, keyH);
+
 
     public GamePanel() {
 
@@ -87,6 +90,7 @@ public class GamePanel extends JPanel implements Runnable{
         if (gameState == titleState) {
             ui.draw(g2d);
         } else if (gameState == playState) {
+            tileM.draw(g2d);
             player.draw(g2d);
         } else if (gameState == pauseState) {
 
