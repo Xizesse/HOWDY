@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 public class TileManager {
     GamePanel gp;
     Tile[] tile;
-    int mapTileNum[][];
+    int[][] mapTileNum;
 
     public TileManager(GamePanel gp){
 
@@ -52,7 +52,7 @@ public class TileManager {
                 String line = br.readLine();
 
                 while (col < gp.maxWorldCol){
-                    String numbers[] = line.split(" ");
+                    String[] numbers = line.split(" ");
                      int num = Integer.parseInt(numbers[col]);
 
                     mapTileNum[col][row] = num;
