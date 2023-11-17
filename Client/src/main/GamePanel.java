@@ -4,8 +4,13 @@ import entity.Player;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import net.GameClient;
+import net.GameServer;
 
 public class GamePanel extends JPanel implements Runnable{
+
+    private GameClient socketClient;
+    private GameServer socketServer;
 
     // Screen settings
 

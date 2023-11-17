@@ -1,5 +1,7 @@
 package net;
 
+import main.GamePanel;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -7,21 +9,15 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-import main.GamePanel;
-
-public class GameClient extends Thread{
-    private InetAddress ipAddress;
+public class GameServer {
     private DatagramSocket socket;
     private GamePanel game;
 
-    public GameClient(GamePanel game, String ipAddress){
+    public GameServer(GamePanel game){
         this.game = game;
         try {
-            this.socket = new DatagramSocket();
-            this.ipAddress = InetAddress.getByName(ipAddress);
+            this.socket = new DatagramSocket(1331);
         } catch(SocketException e){
-            e.printStackTrace();
-        } catch(UnknownHostException e){
             e.printStackTrace();
         }
     }
@@ -35,16 +31,19 @@ public class GameClient extends Thread{
             } catch(IOException e){
                 e.printStackTrace();
             }
-            System.out.println("SERVER > " + new String(packet.getData()));
+            String message = new String(packet.getData());
+            System.out.println("CLIENT > " + message);
+            if(message.equalsIgnoreCase("ping")){
+                sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
+            }
         }
     }
 
-    public void sendData(byte[] data){
-        DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);
-        try{
+    public void sendData(byte[] data, InetAddress ipAddress, int port) {
+        DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, port);
+        try {
             socket.send(packet);
-
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
