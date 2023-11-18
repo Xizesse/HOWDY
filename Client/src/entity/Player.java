@@ -20,7 +20,7 @@ public class Player extends Entity {
     public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
 
-    public Player(GamePanel gp, KeyHandler keyH) {
+    public Player(GamePanel gp, KeyHandler keyH, int x, int y) {
         this.gp = gp;
         this.keyH = keyH;
 
@@ -29,8 +29,12 @@ public class Player extends Entity {
 
         solidArea = new Rectangle(8,16, 32, 32);
 
-        setDefaultValue();
+        speed = 4;
+        direction = "down";
+        this.worldX = gp.tileSize* x;
+        this.worldY = gp.tileSize* y;
         getPlayerImage();
+        System.out.println("Player created on (" + x + "," + y + ")");
     }
 
     public void setDefaultValue() {

@@ -4,9 +4,7 @@ import net.GameServer;
 
 public class MainServer {
     public static void main(String[] args) {
-        GamePanel gamePanel = new GamePanel();
-
-        GameServer socketServer = new GameServer(gamePanel);
+        GameServer socketServer = new GameServer();
         socketServer.start();
     }
 }

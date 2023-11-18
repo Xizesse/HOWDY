@@ -1,17 +1,24 @@
 package main;
 
 import entity.Player;
+import entity.PlayerMP;
+import net.Packet00Login;
 import object.SuperObject;
 import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.GameClient;
 import net.GameServer;
 
 public class GamePanel extends JPanel implements Runnable{
 
     private GameClient socketClient;
+
+
 
     // Screen settings
 
@@ -37,8 +44,10 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     public CollisionChecker cCheck = new CollisionChecker(this);
     public UI ui = new UI(this);
-    KeyHandler keyH = new KeyHandler(ui.gp);
-    public Player player = new Player(this, keyH);
+    public KeyHandler keyH = new KeyHandler(ui.gp);
+    public Player player = new Player(this, keyH, 1,1);
+    public PlayerMP player2 = null;
+
     public SuperObject[] obj = new SuperObject[10];
     // ENTITY AND OBJECTS
 
@@ -57,6 +66,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+
     }
 
     public void startGameThread() {
@@ -65,6 +76,11 @@ public class GamePanel extends JPanel implements Runnable{
 
         socketClient = new GameClient(this, "localhost");
         socketClient.start();
+        Packet00Login loginPacket = new Packet00Login();
+        loginPacket.writeData(socketClient);
+        System.out.println("Client Socket started");
+        //socketClient.sendData("ping".getBytes());
+
     }
 
     @Override
@@ -89,9 +105,16 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() {
-
         player.update();
+
     }
+
+    public synchronized void addRemotePlayer(PlayerMP newPlayer) {
+
+        this.player2 = newPlayer;
+        repaint();
+    }
+
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -102,7 +125,11 @@ public class GamePanel extends JPanel implements Runnable{
             ui.draw(g2d);
         } else if (gameState == playState) {
             tileM.draw(g2d);
+
             player.draw(g2d);
+            if (player2 != null) {
+                player2.draw(g2d);
+            }
         } else if (gameState == pauseState) {
 
         }

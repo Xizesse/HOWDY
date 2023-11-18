@@ -7,6 +7,8 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import entity.Player;
+import entity.PlayerMP;
 import main.GamePanel;
 
 public class GameClient extends Thread{ // extends Thread so we can run it in the background
@@ -32,12 +34,37 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
             DatagramPacket packet = new DatagramPacket(data, data.length);//putting data into the packets
             try {
                 socket.receive(packet); // receive the data
+                this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort()); // parse the packet
             } catch(IOException e){
                 e.printStackTrace(); // print the error
             }
-            System.out.println("SERVER > " + new String(packet.getData())); // print the data we received
+
         }
     }
+
+    private void parsePacket(byte[] data, InetAddress address, int port)
+    {
+        String message = new String(data,0,data.length).trim();
+        Packet.PacketTypes type = Packet.lookupPacket(message.substring(0,2));
+        Packet packet = null;
+        switch (type)
+        {
+            default:
+            case INVALID:
+                break;
+            case LOGIN:
+                packet = new Packet00Login();
+                PlayerMP player = new PlayerMP(game, address, port, 2, 1);
+                game.addRemotePlayer(player);
+                System.out.println("["+address.getHostAddress()+"][port: "+port+"] has joined the game...");
+                break;
+            case DISCONNECT:
+
+                break;
+        }
+
+    }
+
 
     public void sendData(byte[] data){
         DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
