@@ -27,6 +27,8 @@ public class Player extends Entity {
         screenX = gp.screenWidth / 2 - gp.tileSize / 2;
         screenY = gp.screenHeight / 2 - gp.tileSize / 2;
 
+        solidArea = new Rectangle(8,16, 32, 32);
+
         setDefaultValue();
         getPlayerImage();
     }
@@ -64,34 +66,56 @@ public class Player extends Entity {
 
     public void update() {
 
-        if (keyH.upPressed) {
-            direction = "up";
-            worldY -= speed;
-        }
-        if (keyH.downPressed) {
-            direction = "down";
-            worldY += speed;
-        }
-        if (keyH.leftPressed) {
-            direction = "left";
-            worldX -= speed;
-        }
-        if (keyH.rightPressed) {
-            direction = "right";
-            worldX += speed;
-        }
-
-        spriteCounter++;
-
-        if (spriteCounter > 10) {
-            if (spriteNum == 1 &&( keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed)) {
-                spriteNum = 2;
-            } else if (spriteNum == 2) {
-                spriteNum = 1;
+        //MOVEMENT AND COLLISION CHECKING
+        if (keyH.downPressed|| keyH.upPressed|| keyH.leftPressed|| keyH.rightPressed) {
+            if (keyH.upPressed) {
+                colisionOn = false;
+                direction = "up";
+                gp.cCheck.checkTile(this);
+                if (!colisionOn) {
+                    worldY -= speed;
+                }
             }
-            spriteCounter = 0;
-        }
+            if (keyH.downPressed) {
+                colisionOn = false;
+                direction = "down";
+                gp.cCheck.checkTile(this);
+                if (!colisionOn) {
+                    worldY += speed;
+                }
+            }
+            if (keyH.leftPressed) {
+                colisionOn = false;
+                direction = "left";
+                gp.cCheck.checkTile(this);
+                if (!colisionOn) {
+                    worldX -= speed;
+                }
+            }
+            if (keyH.rightPressed) {
+                colisionOn = false;
+                direction = "right";
+                gp.cCheck.checkTile(this);
+                if (!colisionOn) {
+                    worldX += speed;
+                }
 
+            }
+
+
+
+
+            spriteCounter++;
+
+            if (spriteCounter > 10) {
+                if (spriteNum == 1 &&( keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed)) {
+                    spriteNum = 2;
+                } else if (spriteNum == 2) {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
+            }
+        }
     }
 
     public void draw(Graphics2D g2d) {
