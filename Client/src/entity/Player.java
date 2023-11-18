@@ -159,8 +159,31 @@ public class Player extends Entity {
                 break;
         }
 
-        g2d.drawImage(body, screenX, screenY, gp.tileSize, gp.tileSize, null);
-        g2d.drawImage(helmet, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+
+        int x = screenX;
+        int y = screenY;
+
+        //Stop camera movement at the edge of the map
+        //left
+        if(screenX > worldX){
+            x = worldX;
+        }
+        //top
+        if(screenY > worldY){
+            y = worldY;
+        }
+        //right
+        if(screenX < worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth){
+            x = worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth;
+        }
+        //bottom
+        if(screenY < worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight){
+            y = worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight;
+        }
+
+        g2d.drawImage(body, x, y, gp.tileSize, gp.tileSize, null);
+        g2d.drawImage(helmet, x, y, gp.tileSize, gp.tileSize, null);
 
     }
 }

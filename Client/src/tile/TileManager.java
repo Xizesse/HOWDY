@@ -52,7 +52,7 @@ public class TileManager {
                 String line = br.readLine();
 
                 while (col < gp.maxWorldCol){
-                    String numbers[] = line.split(" ");
+                    String[] numbers = line.split(" ");
                      int num = Integer.parseInt(numbers[col]);
 
                     mapTileNum[col][row] = num;
@@ -89,9 +89,32 @@ public class TileManager {
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
+            //Stop camera movement at the edge of the map
+            //left
+            if(gp.player.screenX > gp.player.worldX){
+                screenX = worldX;
+            }
+            //top
+            if(gp.player.screenY > gp.player.worldY){
+                screenY = worldY;
+            }
+            //right
+            if(gp.player.screenX < gp.player.worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth){
+                screenX = worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth;
+            }
+            //bottom
+            if(gp.player.screenY < gp.player.worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight){
+                screenY = worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight;
+            }
+
+
+
+
+
+
             // only draw tiles that are on the screen
-            if(worldX > gp.player.worldX - gp.screenWidth / 2 - gp.tileSize && worldX < gp.player.worldX + gp.screenWidth / 2 + gp.tileSize
-                    && worldY > gp.player.worldY - gp.screenHeight / 2 - gp.tileSize && worldY < gp.player.worldY + gp.screenHeight / 2 + gp.tileSize){
+            if(worldX > gp.player.worldX - gp.screenWidth && worldX < gp.player.worldX + gp.screenWidth
+                    && worldY > gp.player.worldY - gp.screenHeight && worldY < gp.player.worldY + gp.screenHeight){
 
                 g2d.drawImage(tile[tileType].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
