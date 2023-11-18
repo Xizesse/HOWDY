@@ -56,7 +56,7 @@ public class UI {
         //MENU
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 48f));
 
-        text = "NEW GAME";
+        text = "HOST GAME";
         x = getXforCenteredText(text);
         y += gp.tileSize * 5;
         g2d.drawString(text, x, y);
@@ -64,7 +64,7 @@ public class UI {
             g2d.drawString(">", x-gp.tileSize, y);
         }
 
-        text = "LOAD GAME";
+        text = "JOIN GAME";
         x = getXforCenteredText(text);
         y += gp.tileSize;
         g2d.drawString(text, x, y);

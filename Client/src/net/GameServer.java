@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-public class GameServer {
+public class GameServer extends Thread{
     private DatagramSocket socket;
     private GamePanel game;
 
@@ -23,6 +23,17 @@ public class GameServer {
     }
 
     public void run(){
+        Thread heartbeatThread = new Thread(() -> {
+            while (true) {
+                System.out.println("Server running");
+                try {
+                    Thread.sleep(2000); // Sleep for 10 seconds
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        heartbeatThread.start();
         while(true){
             byte[] data = new byte[1024];
             DatagramPacket packet = new DatagramPacket(data, data.length);

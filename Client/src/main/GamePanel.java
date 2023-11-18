@@ -12,7 +12,6 @@ import net.GameServer;
 public class GamePanel extends JPanel implements Runnable{
 
     private GameClient socketClient;
-    private GameServer socketServer;
 
     // Screen settings
 
@@ -63,6 +62,9 @@ public class GamePanel extends JPanel implements Runnable{
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
+
+        socketClient = new GameClient(this, "localhost");
+        socketClient.start();
     }
 
     @Override
