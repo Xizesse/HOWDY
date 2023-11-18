@@ -32,7 +32,7 @@ public class TileManager {
 
             tile[1] = new Tile();
             tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
-
+            tile[1].Collision = true;
 
         }catch (IOException e){
             e.printStackTrace();
