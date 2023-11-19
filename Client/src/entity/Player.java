@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 import net.Packet02Move;
 
 import javax.imageio.ImageIO;
@@ -47,26 +48,33 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
+        bodyUp1 = setup("player/boy_up_1");
+        bodyUp2 = setup("player/boy_up_2");
+        bodyDown1 = setup("player/boy_down_1");
+        bodyDown2 = setup("player/boy_down_2");
+        BodyLeft1 = setup("player/boy_left_1");
+        BodyLeft2 = setup("player/boy_left_2");
+        BodyRight1 = setup("player/boy_right_1");
+        BodyRight2 = setup("player/boy_right_2");
+        titleArt = setup("player/boy_title_art");
+
+        HelmetUp = setup("player/ironHelmet_up");
+        HelmetDown = setup("player/ironHelmet_down");
+        HelmetLeft = setup("player/ironHelmet_left");
+        HelmetRight = setup("player/ironHelmet_right");
+
+    }
+
+    public BufferedImage setup(String imagePath) {
+        UtilityTool uT = new UtilityTool();
+        BufferedImage scaledImage = null;
         try {
-           bodyUp1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_1.png"));
-            bodyUp2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_2.png"));
-            bodyDown1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_1.png"));
-            bodyDown2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_2.png"));
-            BodyLeft1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_1.png"));
-            BodyLeft2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_2.png"));
-            BodyRight1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_1.png"));
-            BodyRight2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_2.png"));
-            titleArt = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_title_art.png"));
-
-            HelmetUp = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_up.png"));
-            HelmetDown = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_down.png"));
-            HelmetLeft = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_left.png"));
-            HelmetRight = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_right.png"));
-
+            scaledImage = ImageIO.read(ClassLoader.getSystemResourceAsStream(imagePath + ".png"));
+            scaledImage = uT.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        return scaledImage;
     }
 
     public void update() {
@@ -189,8 +197,8 @@ public class Player extends Entity {
             y = worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight;
         }
 
-        g2d.drawImage(body, x, y, gp.tileSize, gp.tileSize, null);
-        g2d.drawImage(helmet, x, y, gp.tileSize, gp.tileSize, null);
+        g2d.drawImage(body, x, y, null);
+        g2d.drawImage(helmet, x, y, null);
 
     }
 }

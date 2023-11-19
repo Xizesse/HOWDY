@@ -1,6 +1,7 @@
 package tile;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -26,18 +27,25 @@ public class TileManager {
     }
 
     public void getTileImage(){
+
+        setup(0, "/tiles/floor", false);
+        setup(1, "/tiles/wall", true);
+
+    }
+
+    public void setup(int index, String imagePath, boolean collision){
+
+        UtilityTool uT = new UtilityTool();
+
+
         try{
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/floor.png"));
-
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
-            tile[1].Collision = true;
-
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream(imagePath + ".png"));
+            tile[index].image = uT.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].Collision = collision;
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
 
     public void loadMap(String mapFilePath){
@@ -108,15 +116,13 @@ public class TileManager {
             }
 
 
-
-
-
-
             // only draw tiles that are on the screen
-            if(worldX > gp.player.worldX - gp.screenWidth && worldX < gp.player.worldX + gp.screenWidth
-                    && worldY > gp.player.worldY - gp.screenHeight && worldY < gp.player.worldY + gp.screenHeight){
+            if(worldX > gp.player.worldX - gp.screenWidth &&
+                    worldX < gp.player.worldX + gp.screenWidth &&
+                    worldY > gp.player.worldY - gp.screenHeight &&
+                    worldY < gp.player.worldY + gp.screenHeight){
 
-                g2d.drawImage(tile[tileType].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2d.drawImage(tile[tileType].image, screenX, screenY, null);
             }
             worldCol++;
 

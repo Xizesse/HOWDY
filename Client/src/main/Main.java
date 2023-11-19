@@ -1,10 +1,11 @@
 package main;
 
-import main.GamePanel;
 
 import javax.swing.JFrame;
 
 public class Main {
+
+    public static boolean DEV_MODE = false;
     public static void main(String[] args) {
 
         JFrame window = new JFrame();
@@ -19,6 +20,8 @@ public class Main {
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
+        gamePanel.setupGame();
 
         gamePanel.startGameThread();
 

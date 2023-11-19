@@ -14,6 +14,8 @@ import java.util.List;
 
 import net.GameClient;
 import net.GameServer;
+import static main.Main.DEV_MODE;
+
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -46,11 +48,12 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionChecker cCheck = new CollisionChecker(this);
     public UI ui = new UI(this);
     public KeyHandler keyH = new KeyHandler(ui.gp);
+    public AssetSetter aS = new AssetSetter(this);
     public Player player = new Player(this, keyH, 1,1);
     public PlayerMP player2 = null;
 
-    public SuperObject[] obj = new SuperObject[10];
     // ENTITY AND OBJECTS
+    public SuperObject[] obj = new SuperObject[10];
 
     // GAME STATE
     public int gameState;
@@ -69,6 +72,10 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
 
 
+    }
+
+    public void setupGame() {
+        aS.setObject();
     }
 
     public void startGameThread() {
@@ -108,7 +115,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         Packet02Move packet = new Packet02Move(player.worldX, player.worldY);
         packet.writeData(socketClient);
-        System.out.println("Sending data to server: "+player.worldX+","+player.worldY);
+//        System.out.println("Sending data to server: "+player.worldX+","+player.worldY);
 
     }
 
@@ -129,18 +136,41 @@ public class GamePanel extends JPanel implements Runnable{
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
+        // DEBUG
+        long drawStartTime = 0;
+        if(DEV_MODE) {
+            drawStartTime = System.nanoTime();
+        }
+
+
 
         if (gameState == titleState) {
             ui.draw(g2d);
         } else if (gameState == playState) {
+            // TILE
             tileM.draw(g2d);
+            // OBJECT
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    obj[i].draw(g2d, this);
+                }
+            }
 
+            // PLAYER
             player.draw(g2d);
             if (player2 != null) {
                 player2.draw(g2d);
             }
         } else if (gameState == pauseState) {
 
+        }
+
+        // DEBUG
+        if(DEV_MODE) {
+            long drawEndTime = System.nanoTime();
+            long drawTime = drawEndTime - drawStartTime;
+            g2d.setColor(Color.WHITE);
+            System.out.println("Draw Time: " + (float) drawTime / 1000000 + "ms");
         }
 
         g2d.dispose();

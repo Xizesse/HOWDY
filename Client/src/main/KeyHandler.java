@@ -3,6 +3,8 @@ package main;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
+import static main.Main.DEV_MODE;
+
 public class KeyHandler implements KeyListener {
 
     GamePanel gp;
@@ -61,6 +63,8 @@ public class KeyHandler implements KeyListener {
             }
             else if(code == KeyEvent.VK_RIGHT) {
                 rightPressed = true;
+            } else if (code == KeyEvent.VK_T) {
+                DEV_MODE = !DEV_MODE;
             }
         }
 
