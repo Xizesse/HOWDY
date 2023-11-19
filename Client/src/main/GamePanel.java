@@ -113,7 +113,6 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public synchronized void addRemotePlayer(PlayerMP newPlayer) {
-
         this.player2 = newPlayer;
         repaint();
     }

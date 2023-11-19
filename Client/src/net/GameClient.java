@@ -54,8 +54,6 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 break;
             case LOGIN:
                 packet = new Packet00Login();
-                PlayerMP player = new PlayerMP(game, address, port, 2, 1);
-                game.addRemotePlayer(player);
                 System.out.println("["+address.getHostAddress()+"][port: "+port+"] has joined the game...");
                 break;
             case DISCONNECT:

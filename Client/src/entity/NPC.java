@@ -85,6 +85,7 @@ public class NPC extends Entity
             BufferedImage helmet = null;
 
 
+
             switch (direction) {
                 case "up":
                     if (spriteNum == 1) {
