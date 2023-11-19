@@ -1,5 +1,6 @@
 package main;
 
+import entity.NPC_Player2;
 import object.OBJ_Helmet;
 
 public class AssetSetter {
@@ -19,6 +20,12 @@ public class AssetSetter {
         gp.obj[1].worldX = 3 * gp.tileSize;
         gp.obj[1].worldY = 5 * gp.tileSize;
 
+    }
 
+    public void setNPC(){
+
+        gp.player2 = new NPC_Player2(gp);
+        gp.player2.worldX = gp.tileSize * 2;
+        gp.player2.worldY = gp.tileSize * 2;
     }
 }
