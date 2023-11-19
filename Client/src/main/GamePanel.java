@@ -29,9 +29,9 @@ public class GamePanel extends JPanel implements Runnable{
     final int scale = 3; // 3x scale
     public final int tileSize = originalTileSize * scale; // 48x48 pixels
     public final int maxScreenCol = 16; // 16 tiles wide
-    public final int maxScreenRow = 16; // 12 tiles tall
+    public final int maxScreenRow = 16; // 16 tiles tall
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels wide
-    public final int screenHeight = tileSize * maxScreenRow; // 576 pixels tal
+    public final int screenHeight = tileSize * maxScreenRow; // 768 pixels tal
 
     // WORLD SETTINGS
     public final int maxWorldCol = 32;
@@ -101,7 +101,6 @@ public class GamePanel extends JPanel implements Runnable{
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / deltaInterval;
             lastTime = currentTime;
-
             if(delta >= 1) {
                 update();
                 repaint();
