@@ -20,7 +20,7 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
-    public boolean colisionOn = false;
+    public boolean collisionOn = false;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
