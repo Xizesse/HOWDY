@@ -120,9 +120,6 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(gameState == playState){
             player.update();
-            if(player2 != null) {
-                player2.update();
-            }
 
         }
         if(gameState == pauseState){
@@ -140,12 +137,15 @@ public class GamePanel extends JPanel implements Runnable{
 //        repaint();
 //    }
 
-//    public synchronized void updatePlayer2(int x, int y) {
-//        if(player2 != null) {
-//            player2.update(x, y);
-//        }
-//
-//    }
+    public synchronized void updatePlayer2(String direction, int worldX, int worldY) {
+        if(gameState == playState){
+            if(player2 != null) {
+                player2.update(direction, worldX, worldY);
+            }
+        }
+        if(gameState == pauseState){
+        }
+    }
 
 
     public void paintComponent(Graphics g) {

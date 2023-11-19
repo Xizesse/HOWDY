@@ -28,10 +28,10 @@ public class Entity {
         this.gp = gp;
     }
 
-    public void setAction(){}
+    public void setAction(String direction, int WordX, int WordY){}
 
-    public void update(){
-        setAction();
+    public void update(String direction, int WordX, int WordY){
+        setAction(direction, WordX, WordY);
 
     }
     public void setDefaultValue(){}
