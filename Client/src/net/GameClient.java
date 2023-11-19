@@ -62,29 +62,30 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
             case MOVE:
                 packet = new Packet02Move(data);
-//                handleMove((Packet02Move)packet);
+                handleMove((Packet02Move)packet);
                 break;
         }
 
     }
 
-//    private void handleMove(Packet02Move packet) {
-//        if(game.player2 != null){
-////            game.updatePlayer2(packet.getX(), packet.getY());
-//        }
-//        else{
-//            game.player2 = new PlayerMP(game, null, -1, packet.getX(), packet.getY());
-//        }
-//    }
+            private void handleMove(Packet02Move packet) {
+                if(this.game != null){
+                    this.game.player2.setAction(packet.getDirection(), packet.getX(), packet.getY());
+                }
+            }
 
 
-    public void sendData(byte[] data){
-        DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
-        try{
-            socket.send(packet);
 
-        } catch(IOException e){
-            e.printStackTrace();
-        }
+
+            public void sendData(byte[] data)
+            {
+                DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
+                try{
+                    socket.send(packet);
+
+                    } catch(IOException e){
+                        e.printStackTrace();
+                }
+            }
+
     }
-}

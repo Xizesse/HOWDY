@@ -121,14 +121,16 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameState == playState){
             player.update();
 
+            Packet02Move packet = new Packet02Move((char) 0, player.worldX, player.worldY, player.direction);
+            packet.writeData(socketClient);
+            // System.out.println("Sending data to server: "+player.worldX+","+player.worldY);
         }
         if(gameState == pauseState){
         }
 
 
-        Packet02Move packet = new Packet02Move(player.worldX, player.worldY);
-        packet.writeData(socketClient);
-//        System.out.println("Sending data to server: "+player.worldX+","+player.worldY);
+
+
 
     }
 

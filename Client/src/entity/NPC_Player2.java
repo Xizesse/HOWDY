@@ -35,6 +35,7 @@ public class NPC_Player2 extends Entity
 
     }
 
+
     public void setAction(String direction, int worldX, int worldY) {
 
         this.direction = direction;

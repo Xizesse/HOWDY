@@ -1,7 +1,10 @@
 package net;
 
+import entity.NPC_Player2;
 import entity.Player;
 import entity.PlayerMP;
+import main.GamePanel;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
@@ -19,8 +22,10 @@ import java.net.UnknownHostException;
 public class GameServer extends Thread{
     private DatagramSocket socket;
 
-
-    private List<ClientInfo> connectedPlayers = new ArrayList<ClientInfo>();
+    private GamePanel game;
+    private PlayerMP player1 = null;
+    private PlayerMP player2 = null;
+    private List<PlayerMP> connectedPlayers = new ArrayList<PlayerMP>();
 
     public GameServer(){
 
@@ -36,8 +41,8 @@ public class GameServer extends Thread{
             while (true) {
                 System.out.println("Server running");
                 //print ips from players connected
-                for (  ClientInfo clientInfo : connectedPlayers) {
-                    System.out.println("["+clientInfo.ipAddress.getHostAddress()+"] port: "+clientInfo.port);
+                for (  PlayerMP player : connectedPlayers) {
+                    System.out.println("["+player.ipAddress.getHostAddress()+"] port: "+player.port);
                 }
                 try {
                     Thread.sleep(5000); // Sleep for 5 seconds
@@ -77,13 +82,20 @@ public class GameServer extends Thread{
                 break;
             case LOGIN:
 
-                ClientInfo clientInfo = new ClientInfo(address, port);
-                System.out.println( "LOGIN from ["+clientInfo.ipAddress.getHostAddress()+"] port: "+clientInfo.port);
-                connectedPlayers.add(clientInfo);
-                if(/*connectedPlayers.size() ==1*/ true){
-                    Packet00Login p = new Packet00Login();
-                    p.writeData(this);
+                if(connectedPlayers.size() == 0){
+                    player1 = new PlayerMP(address, port, '0',0,0,"down");
+                    connectedPlayers.add(player1);
+                    System.out.println( "LOGIN player 1 from ["+player1.ipAddress.getHostAddress()+"] port: "+player1.port);
+                    break;
                 }
+                if(connectedPlayers.size() == 1){
+                    player2 = new PlayerMP(address, port, '0',0,0,"down");
+                    connectedPlayers.add(player2);
+                    System.out.println( "LOGIN player 2 from ["+player2.ipAddress.getHostAddress()+"] port: "+player2.port);
+                    break;
+                }
+                System.out.println("Server full");
+
 
 
                 break;
@@ -91,7 +103,8 @@ public class GameServer extends Thread{
                 break;
             case MOVE:
                 Packet02Move p = new Packet02Move(data);
-                System.out.println("["+address.getHostAddress()+"] port: "+port+" > MOVE: "+p.getX()+","+p.getY());
+                System.out.println("["+address.getHostName()+"] port: "+port+", entity" + p.getEntityID() + " moved to " + p.getX() + "," + p.getY() + " direction: " + p.getDirection());
+
                 sendDataToAllClientsExceptOne(p.getData(), address, port);
 
                 break;
@@ -109,18 +122,18 @@ public class GameServer extends Thread{
 
     public void sendDataToAllClients(byte[] data) {
         System.out.println("Sending to all clients");
-        for(ClientInfo clientInfo : connectedPlayers){
-            sendData(data, clientInfo.ipAddress, clientInfo.port);
+        for(PlayerMP player : connectedPlayers){
+            sendData(data, player.ipAddress, player.port);
         }
     }
 
     public void sendDataToAllClientsExceptOne(byte[] data, InetAddress ipAddress, int port) {
         System.out.println("Sending to all clients except one");
 
-        for(ClientInfo clientInfo : connectedPlayers){
-            if((clientInfo.port != port) || (clientInfo.ipAddress != ipAddress)){
-                sendData(data, clientInfo.ipAddress, clientInfo.port);
-                System.out.println("Sending to: "+clientInfo.ipAddress.getHostAddress()+" port: "+clientInfo.port);
+        for(PlayerMP player : connectedPlayers){
+            if((player.port != port) || (player.ipAddress != ipAddress)){
+                sendData(data, player.ipAddress, player.port);
+                System.out.println("Sending to: "+player.ipAddress.getHostAddress()+" port: "+player.port);
             }
         }
     }
