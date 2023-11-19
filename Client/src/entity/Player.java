@@ -81,34 +81,34 @@ public class Player extends Entity {
         //MOVEMENT AND COLLISION CHECKING
         if (keyH.downPressed|| keyH.upPressed|| keyH.leftPressed|| keyH.rightPressed) {
             if (keyH.upPressed) {
-                colisionOn = false;
+                collisionOn = false;
                 direction = "up";
                 gp.cCheck.checkTile(this);
-                if (!colisionOn) {
+                if (!collisionOn) {
                     worldY -= speed;
                 }
             }
             if (keyH.downPressed) {
-                colisionOn = false;
+                collisionOn = false;
                 direction = "down";
                 gp.cCheck.checkTile(this);
-                if (!colisionOn) {
+                if (!collisionOn) {
                     worldY += speed;
                 }
             }
             if (keyH.leftPressed) {
-                colisionOn = false;
+                collisionOn = false;
                 direction = "left";
                 gp.cCheck.checkTile(this);
-                if (!colisionOn) {
+                if (!collisionOn) {
                     worldX -= speed;
                 }
             }
             if (keyH.rightPressed) {
-                colisionOn = false;
+                collisionOn = false;
                 direction = "right";
                 gp.cCheck.checkTile(this);
-                if (!colisionOn) {
+                if (!collisionOn) {
                     worldX += speed;
                 }
 
