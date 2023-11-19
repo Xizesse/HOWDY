@@ -11,7 +11,7 @@ public class OBJ_Helmet extends SuperObject{
         name = "Helmet";
 
         try{
-            image = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_down.png"));
+            image = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/ironHelmet_down.png"));
             uT.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch (IOException e){
             e.printStackTrace();

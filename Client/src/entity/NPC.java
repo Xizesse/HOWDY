@@ -1,7 +1,6 @@
 package entity;
 
 import main.GamePanel;
-import main.KeyHandler;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -37,20 +36,20 @@ public class NPC extends Entity
         public void getPlayerImage() {
 
             try {
-                bodyUp1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_1.png"));
-                bodyUp2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_up_2.png"));
-                bodyDown1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_1.png"));
-                bodyDown2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_down_2.png"));
-                BodyLeft1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_1.png"));
-                BodyLeft2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_left_2.png"));
-                BodyRight1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_1.png"));
-                BodyRight2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_right_2.png"));
-                titleArt = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/boy_title_art.png"));
+                bodyUp1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/boy_up_1.png"));
+                bodyUp2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/boy_up_2.png"));
+                bodyDown1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/boy_down_1.png"));
+                bodyDown2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/boy_down_2.png"));
+                BodyLeft1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/boy_left_1.png"));
+                BodyLeft2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/boy_left_2.png"));
+                BodyRight1 = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/boy_right_1.png"));
+                BodyRight2 = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/boy_right_2.png"));
+                titleArt = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/boy_title_art.png"));
 
-                HelmetUp = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_up.png"));
-                HelmetDown = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_down.png"));
-                HelmetLeft = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_left.png"));
-                HelmetRight = ImageIO.read(ClassLoader.getSystemResourceAsStream("player/ironHelmet_right.png"));
+                HelmetUp = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/ironHelmet_up.png"));
+                HelmetDown = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/ironHelmet_down.png"));
+                HelmetLeft = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/ironHelmet_left.png"));
+                HelmetRight = ImageIO.read(ClassLoader.getSystemResourceAsStream("boy/ironHelmet_right.png"));
 
             } catch (IOException e) {
                 e.printStackTrace();

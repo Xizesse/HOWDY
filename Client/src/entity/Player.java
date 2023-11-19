@@ -3,7 +3,6 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
-import net.Packet02Move;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -48,20 +47,20 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
-        bodyUp1 = setup("player/boy_up_1");
-        bodyUp2 = setup("player/boy_up_2");
-        bodyDown1 = setup("player/boy_down_1");
-        bodyDown2 = setup("player/boy_down_2");
-        BodyLeft1 = setup("player/boy_left_1");
-        BodyLeft2 = setup("player/boy_left_2");
-        BodyRight1 = setup("player/boy_right_1");
-        BodyRight2 = setup("player/boy_right_2");
-        titleArt = setup("player/boy_title_art");
+        bodyUp1 = setup("boy/boy_up_1");
+        bodyUp2 = setup("boy/boy_up_2");
+        bodyDown1 = setup("boy/boy_down_1");
+        bodyDown2 = setup("boy/boy_down_2");
+        BodyLeft1 = setup("boy/boy_left_1");
+        BodyLeft2 = setup("boy/boy_left_2");
+        BodyRight1 = setup("boy/boy_right_1");
+        BodyRight2 = setup("boy/boy_right_2");
+        titleArt = setup("boy/boy_title_art");
 
-        HelmetUp = setup("player/ironHelmet_up");
-        HelmetDown = setup("player/ironHelmet_down");
-        HelmetLeft = setup("player/ironHelmet_left");
-        HelmetRight = setup("player/ironHelmet_right");
+        HelmetUp = setup("boy/ironHelmet_up");
+        HelmetDown = setup("boy/ironHelmet_down");
+        HelmetLeft = setup("boy/ironHelmet_left");
+        HelmetRight = setup("boy/ironHelmet_right");
 
     }
 
