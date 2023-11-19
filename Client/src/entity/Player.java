@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import net.Packet02Move;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -120,6 +121,8 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         }
+
+
     }
 
     public void draw(Graphics2D g2d) {

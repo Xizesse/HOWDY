@@ -3,6 +3,7 @@ package main;
 import entity.Player;
 import entity.PlayerMP;
 import net.Packet00Login;
+import net.Packet02Move;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -16,7 +17,7 @@ import net.GameServer;
 
 public class GamePanel extends JPanel implements Runnable{
 
-    private GameClient socketClient;
+    public GameClient socketClient = new GameClient(this, "localhost");
 
 
 
@@ -73,8 +74,6 @@ public class GamePanel extends JPanel implements Runnable{
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
-
-        socketClient = new GameClient(this, "localhost");
         socketClient.start();
         Packet00Login loginPacket = new Packet00Login();
         loginPacket.writeData(socketClient);
@@ -107,12 +106,23 @@ public class GamePanel extends JPanel implements Runnable{
     public void update() {
         player.update();
 
+        Packet02Move packet = new Packet02Move(player.worldX, player.worldY);
+        packet.writeData(socketClient);
+        System.out.println("Sending data to server: "+player.worldX+","+player.worldY);
+
     }
 
     public synchronized void addRemotePlayer(PlayerMP newPlayer) {
 
         this.player2 = newPlayer;
         repaint();
+    }
+
+    public synchronized void updatePlayer2(int x, int y) {
+        if(player2 != null) {
+            player2.update(x, y);
+        }
+
     }
 
 

@@ -61,8 +61,22 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
             case DISCONNECT:
 
                 break;
+
+            case MOVE:
+                packet = new Packet02Move(data);
+                handleMove((Packet02Move)packet);
+                break;
         }
 
+    }
+
+    private void handleMove(Packet02Move packet) {
+        if(game.player2 != null){
+            game.updatePlayer2(packet.getX(), packet.getY());
+        }
+        else{
+            game.player2 = new PlayerMP(game, null, -1, packet.getX(), packet.getY());
+        }
     }
 
 

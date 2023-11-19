@@ -1,7 +1,6 @@
 package net;
 
 import entity.Player;
-import main.GamePanel;
 import entity.PlayerMP;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +68,7 @@ public class GameServer extends Thread{
     }
 
     private void parsePacket(byte[] data, InetAddress address, int port) {
+        System.out.println("Parsing packet");
         String message = new String(data).trim();
         Packet.PacketTypes type = Packet.lookupPacket(message.substring(0,2));
         switch (type){
@@ -76,18 +76,24 @@ public class GameServer extends Thread{
             case INVALID:
                 break;
             case LOGIN:
-                Packet00Login p = new Packet00Login();
-                ClientInfo clientInfo = new ClientInfo(address, port);
-                System.out.println( "LOGIN["+clientInfo.ipAddress.getHostAddress()+"] port: "+clientInfo.port);
-                connectedPlayers.add(clientInfo);
 
-                sendDataToAllClientsExceptOne(p.getData(), address, port);
+                ClientInfo clientInfo = new ClientInfo(address, port);
+                System.out.println( "LOGIN from ["+clientInfo.ipAddress.getHostAddress()+"] port: "+clientInfo.port);
+                connectedPlayers.add(clientInfo);
+                if(/*connectedPlayers.size() ==1*/ true){
+                    Packet00Login p = new Packet00Login();
+                    p.writeData(this);
+                }
 
 
                 break;
             case DISCONNECT:
                 break;
             case MOVE:
+                Packet02Move p = new Packet02Move(data);
+                System.out.println("["+address.getHostAddress()+"] port: "+port+" > MOVE: "+p.getX()+","+p.getY());
+                sendDataToAllClientsExceptOne(p.getData(), address, port);
+
                 break;
         }
     }

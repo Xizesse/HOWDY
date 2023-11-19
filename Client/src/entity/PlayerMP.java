@@ -10,24 +10,16 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 
-public class PlayerMP extends Player {
+public class PlayerMP extends NPC {
     public InetAddress ipAddress;
     public int port;
-    public PlayerMP (GamePanel gp, KeyHandler keyH, InetAddress ipAddress, int port,  int x, int y) {
-        super(gp, keyH, x, y);
+
+
+    public PlayerMP(GamePanel gp, InetAddress ipAddress, int port, int x, int y) {
+        super(gp, x, y);
+        direction = "down";
         this.ipAddress = ipAddress;
         this.port = port;
-    }
 
-    public PlayerMP (GamePanel gp, InetAddress ipAddress, int port, int x, int y) {
-        super(gp, null, x, y);
-        this.ipAddress = ipAddress;
-        this.port = port;
     }
-
-    @Override
-    public void update(){
-        super.update();
-    }
-
 }
