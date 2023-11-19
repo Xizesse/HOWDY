@@ -12,7 +12,6 @@ import java.io.IOException;
 
 public class Player extends Entity {
 
-    GamePanel gp;
     KeyHandler keyH;
 
     public final int screenX;
@@ -22,7 +21,7 @@ public class Player extends Entity {
 
 
     public Player(GamePanel gp, KeyHandler keyH, int x, int y) {
-        this.gp = gp;
+        super(gp);
         this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - gp.tileSize / 2;
@@ -47,34 +46,24 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
-        bodyUp1 = setup("boy/boy_up_1");
-        bodyUp2 = setup("boy/boy_up_2");
-        bodyDown1 = setup("boy/boy_down_1");
-        bodyDown2 = setup("boy/boy_down_2");
-        BodyLeft1 = setup("boy/boy_left_1");
-        BodyLeft2 = setup("boy/boy_left_2");
-        BodyRight1 = setup("boy/boy_right_1");
-        BodyRight2 = setup("boy/boy_right_2");
-        titleArt = setup("boy/boy_title_art");
+        bodyUp1 = setup("player1/boy_up_1");
+        bodyUp2 = setup("player1/boy_up_2");
+        bodyDown1 = setup("player1/boy_down_1");
+        bodyDown2 = setup("player1/boy_down_2");
+        BodyLeft1 = setup("player1/boy_left_1");
+        BodyLeft2 = setup("player1/boy_left_2");
+        BodyRight1 = setup("player1/boy_right_1");
+        BodyRight2 = setup("player1/boy_right_2");
+        titleArt = setup("player1/boy_title_art");
 
-        HelmetUp = setup("boy/ironHelmet_up");
-        HelmetDown = setup("boy/ironHelmet_down");
-        HelmetLeft = setup("boy/ironHelmet_left");
-        HelmetRight = setup("boy/ironHelmet_right");
+        HelmetUp = setup("player1/ironHelmet_up");
+        HelmetDown = setup("player1/ironHelmet_down");
+        HelmetLeft = setup("player1/ironHelmet_left");
+        HelmetRight = setup("player1/ironHelmet_right");
 
     }
 
-    public BufferedImage setup(String imagePath) {
-        UtilityTool uT = new UtilityTool();
-        BufferedImage scaledImage = null;
-        try {
-            scaledImage = ImageIO.read(ClassLoader.getSystemResourceAsStream(imagePath + ".png"));
-            scaledImage = uT.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return scaledImage;
-    }
+
 
     public void update() {
 
@@ -148,7 +137,7 @@ public class Player extends Entity {
                 }
                 helmet = HelmetUp;
                 break;
-            case "down":                   //need to change to the correct sprites later on
+            case "down":
                 if (spriteNum == 1) {
                     body = bodyDown1;
                 } else if (spriteNum == 2) {

@@ -1,5 +1,6 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
 import entity.PlayerMP;
 import net.Packet00Login;
@@ -43,16 +44,19 @@ public class GamePanel extends JPanel implements Runnable{
     //FPS
     final int FPS = 60;
 
-    TileManager tileM = new TileManager(this);
-    Thread gameThread;
-    public CollisionChecker cCheck = new CollisionChecker(this);
+    // SYSTEM
     public UI ui = new UI(this);
+    TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(ui.gp);
+    public CollisionChecker cCheck = new CollisionChecker(this);
     public AssetSetter aS = new AssetSetter(this);
-    public Player player = new Player(this, keyH, 1,1);
-    public PlayerMP player2 = null;
+    Thread gameThread;
 
     // ENTITY AND OBJECTS
+    public Player player = new Player(this, keyH, 1,1);
+
+    public Entity player2 = new Entity(this);
+    public Entity[] npc = new Entity[10];
     public SuperObject[] obj = new SuperObject[10];
 
     // GAME STATE
@@ -76,6 +80,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setupGame() {
         aS.setObject();
+        aS.setNPC();
+        gameState = titleState;
     }
 
     public void startGameThread() {
@@ -111,7 +117,13 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() {
-        player.update();
+
+        if(gameState == playState){
+            player.update();
+        }
+        if(gameState == pauseState){
+        }
+
 
         Packet02Move packet = new Packet02Move(player.worldX, player.worldY);
         packet.writeData(socketClient);
@@ -119,17 +131,17 @@ public class GamePanel extends JPanel implements Runnable{
 
     }
 
-    public synchronized void addRemotePlayer(PlayerMP newPlayer) {
-        this.player2 = newPlayer;
-        repaint();
-    }
+//    public synchronized void addRemotePlayer(PlayerMP newPlayer) {
+//        this.player2 = newPlayer;
+//        repaint();
+//    }
 
-    public synchronized void updatePlayer2(int x, int y) {
-        if(player2 != null) {
-            player2.update(x, y);
-        }
-
-    }
+//    public synchronized void updatePlayer2(int x, int y) {
+//        if(player2 != null) {
+//            player2.update(x, y);
+//        }
+//
+//    }
 
 
     public void paintComponent(Graphics g) {
@@ -155,14 +167,21 @@ public class GamePanel extends JPanel implements Runnable{
                     obj[i].draw(g2d, this);
                 }
             }
+            // NPC
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    npc[i].draw(g2d);
+                }
+            }
 
-            // PLAYER
+            // PLAYER1
             player.draw(g2d);
+            // PLAYER2
             if (player2 != null) {
                 player2.draw(g2d);
             }
         } else if (gameState == pauseState) {
-
+            ui.draw(g2d);
         }
 
         // DEBUG

@@ -24,11 +24,19 @@ public class UI {
         
         if(gp.gameState == gp.titleState) {
             drawTitleScreen(g2d);
+        } else if (gp.gameState == gp.pauseState) {
+            drawPauseScreen(g2d);
         }
-        
-        
 
 
+    }
+
+    public void drawPauseScreen(Graphics2D g2d){
+        String text = "PAUSED";
+        int x = getXforCenteredText(text);
+        int y = gp.screenHeight/2;
+
+        g2d.drawString(text, x, y);
     }
 
     private void drawTitleScreen(Graphics2D g2d) {

@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 public class SuperObject {
     public BufferedImage image;
     public String name;
+    public byte id;
     public boolean collision = false;
     public int worldX, worldY;
     UtilityTool uT = new UtilityTool();
