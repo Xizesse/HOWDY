@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
     //FPS
-    final int FPS = 60;
+    final int FPS = 30;
 
     // SYSTEM
     public UI ui = new UI(this);
@@ -56,9 +56,16 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITY AND OBJECTS
     public Player player = new Player(this, keyH, 1,1);
 
-    public Entity player2 = new NPC_Player2(this);
     public Entity[] npc = new Entity[10];
     public SuperObject[] obj = new SuperObject[10];
+
+    // Player 2
+    public Entity player2 = new NPC_Player2(this);
+    private String player2Direction = "down";
+    private int player2WorldX = 0;
+    private int player2WorldY = 0;
+
+
 
     // GAME STATE
     public int gameState;
@@ -120,6 +127,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(gameState == playState){
             player.update();
+            player2.update(player2Direction, player2WorldX, player2WorldY);
 
             Packet02Move packet = new Packet02Move((char) 0, player.worldX, player.worldY, player.direction);
             packet.writeData(socketClient);
@@ -142,12 +150,18 @@ public class GamePanel extends JPanel implements Runnable{
     public synchronized void updatePlayer2(String direction, int worldX, int worldY) {
         if(gameState == playState){
             if(player2 != null) {
-                player2.update(direction, worldX, worldY);
+                player2Direction = direction;
+                player2WorldX = worldX;
+                player2WorldY = worldY;
             }
         }
         if(gameState == pauseState){
         }
     }
+
+
+
+
 
 
     public void paintComponent(Graphics g) {
