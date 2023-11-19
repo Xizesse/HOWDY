@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import entity.NPC_Player2;
 import entity.Player;
 import entity.PlayerMP;
 import net.Packet00Login;
@@ -55,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
     // ENTITY AND OBJECTS
     public Player player = new Player(this, keyH, 1,1);
 
-    public Entity player2 = new Entity(this);
+    public Entity player2 = new NPC_Player2(this);
     public Entity[] npc = new Entity[10];
     public SuperObject[] obj = new SuperObject[10];
 
