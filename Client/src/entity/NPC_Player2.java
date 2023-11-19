@@ -37,6 +37,27 @@ public class NPC_Player2 extends Entity
 
     public void setAction(){
 
+        direction = "down";
+//        worldY = worldY + speed/3;
+//        worldX = worldX + speed/3;
+
+        if(previousWorldX != worldX || previousWorldY != worldY){   //if player moved update the sprite
+            spriteCounter++;
+
+            if (spriteCounter > 10) {
+                if (spriteNum == 1 ) {
+                    spriteNum = 2;
+                } else if (spriteNum == 2) {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
+            }
+
+        }
+
+        previousWorldX = worldX;
+        previousWorldY = worldY;
+
     }
 
 

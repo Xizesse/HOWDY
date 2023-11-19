@@ -12,6 +12,8 @@ public class Entity {
 
     GamePanel gp;
     public int worldX, worldY;
+
+    public int previousWorldX, previousWorldY;
     public int speed;
 
     public BufferedImage titleArt, bodyUp1, bodyUp2, bodyDown1, bodyDown2, BodyLeft1, BodyLeft2, BodyRight1, BodyRight2;
@@ -26,7 +28,12 @@ public class Entity {
         this.gp = gp;
     }
 
-    public void serAction(){}
+    public void setAction(){}
+
+    public void update(){
+        setAction();
+
+    }
     public void setDefaultValue(){}
 
     public void draw(Graphics2D g2d) {

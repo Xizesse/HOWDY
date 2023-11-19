@@ -119,6 +119,10 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(gameState == playState){
             player.update();
+            if(player2 != null) {
+                player2.update();
+            }
+
         }
         if(gameState == pauseState){
         }
@@ -161,9 +165,9 @@ public class GamePanel extends JPanel implements Runnable{
             // TILE
             tileM.draw(g2d);
             // OBJECT
-            for (SuperObject superObject : obj) {
-                if (superObject != null) {
-                    superObject.draw(g2d, this);
+            for(int i = 0; i < obj.length; i++) {
+                if(obj[i] != null) {
+                    obj[i].draw(g2d, this);
                 }
             }
             // NPC
