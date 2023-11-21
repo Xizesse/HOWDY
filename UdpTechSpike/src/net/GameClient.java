@@ -42,7 +42,7 @@ public class GameClient extends Thread {
 
     public static void main(String[] args) {
         try {
-            GameClient client = new GameClient("localhost"); // Use the server's IP if not running on localhost
+            GameClient client = new GameClient(""); // Use the server's IP if not running on localhost
             client.start();
             client.sendData("ping");
 

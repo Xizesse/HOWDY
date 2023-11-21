@@ -27,9 +27,17 @@ public class TileManager {
     }
 
     public void getTileImage(){
-
+        //floor
         setup(0, "/tiles/floor", false);
+        setup(2, "/tiles/floor_moss", false);
+        //wall
         setup(1, "/tiles/wall", true);
+        setup(3, "/tiles/wall_moss", true);
+        //pp
+        setup(4, "/tiles/pp_clover", false);
+        //door
+        setup(5, "/tiles/door_clover", true);
+
 
     }
 
