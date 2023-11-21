@@ -62,9 +62,8 @@ public class GamePanel extends JPanel implements Runnable{
     // Player 2
     public NPC_Player2 player2 = new NPC_Player2(this);
     public String player2Direction = "down";
-    public int player2WorldX = 0;
-    public int player2WorldY = 0;
-
+    public int player2WorldX = 2;
+    public int player2WorldY = 2;
 
 
 
@@ -101,6 +100,7 @@ public class GamePanel extends JPanel implements Runnable{
         loginPacket.writeData(socketClient);
         System.out.println("Client Socket started");
         //socketClient.sendData("ping".getBytes());
+
     }
 
     @Override
