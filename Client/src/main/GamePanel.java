@@ -61,9 +61,10 @@ public class GamePanel extends JPanel implements Runnable{
 
     // Player 2
     public NPC_Player2 player2 = new NPC_Player2(this);
-    private String player2Direction = "down";
-    private int player2WorldX = 0;
-    private int player2WorldY = 0;
+    public String player2Direction = "down";
+    public int player2WorldX = 0;
+    public int player2WorldY = 0;
+
 
 
 
@@ -126,7 +127,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(gameState == playState){
             player.update();
-            player2.update(player2Direction, player2WorldX, player2WorldY);
+
 
 
         }

@@ -34,6 +34,7 @@ public class NPC_Player2 extends Entity
         titleArt = setup("girl/girl_title_art");
 
     }
+    //set default value method
 
 
     public void setAction(String direction, int worldX, int worldY) {

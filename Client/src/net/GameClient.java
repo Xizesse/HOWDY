@@ -81,6 +81,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
             {
                 DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
                 try{
+                    System.out.println("Sending data to server: "+data);
                     socket.send(packet);
                     } catch(IOException e){
                         e.printStackTrace();
