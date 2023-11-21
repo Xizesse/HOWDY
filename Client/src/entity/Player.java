@@ -3,6 +3,7 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
+import net.Packet02Move;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -107,6 +108,10 @@ public class Player extends Entity {
 
 
             spriteCounter++;
+
+            Packet02Move packet = new Packet02Move((char) 0, this.worldX, this.worldY, this.direction);
+            packet.writeData(gp.socketClient);
+            System.out.println("Sending data to server: "+this.worldX+","+this.worldY);
 
             if (spriteCounter > 10) {
                 if (spriteNum == 1 &&( keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed)) {

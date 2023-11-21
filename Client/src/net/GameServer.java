@@ -58,7 +58,7 @@ public class GameServer extends Thread{
             DatagramPacket packet = new DatagramPacket(data, data.length);
             try {
                 socket.receive(packet);
-            } catch(IOException e){
+            } catch(IOException e) {
                 e.printStackTrace();
             }
             parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
@@ -131,7 +131,7 @@ public class GameServer extends Thread{
         System.out.println("Sending to all clients except one");
 
         for(PlayerMP player : connectedPlayers){
-            if((player.port != port) || (player.ipAddress != ipAddress)){
+            if((player.port != port) && (player.ipAddress != ipAddress)){
                 sendData(data, player.ipAddress, player.port);
                 System.out.println("Sending to: "+player.ipAddress.getHostAddress()+" port: "+player.port);
             }
