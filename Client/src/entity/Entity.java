@@ -30,10 +30,6 @@ public class Entity {
 
     public void setAction(String direction, int WordX, int WordY){}
 
-    public void update(String direction, int WordX, int WordY){
-        setAction(direction, WordX, WordY);
-
-    }
     public void setDefaultValue(){}
 
     public void draw(Graphics2D g2d) {
