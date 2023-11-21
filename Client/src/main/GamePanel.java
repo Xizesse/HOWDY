@@ -60,10 +60,10 @@ public class GamePanel extends JPanel implements Runnable{
     public SuperObject[] obj = new SuperObject[10];
 
     // Player 2
-    public Entity player2 = new NPC_Player2(this);
+    public NPC_Player2 player2 = new NPC_Player2(this);
     private String player2Direction = "down";
-    private int player2WorldX = 0;
-    private int player2WorldY = 0;
+    private int player2WorldX = 2;
+    private int player2WorldY = 2;
 
 
 
@@ -127,7 +127,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(gameState == playState){
             player.update();
-            player2.update(player2Direction, player2WorldX, player2WorldY);
+
 
             Packet02Move packet = new Packet02Move((char) 0, player.worldX, player.worldY, player.direction);
             packet.writeData(socketClient);
