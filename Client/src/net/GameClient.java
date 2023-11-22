@@ -71,6 +71,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
             private void handleMove(Packet02Move packet) {
                 if(this.game != null){
                     this.game.player2.setAction(packet.getDirection(), packet.getX(), packet.getY());
+                    //System.out.println("[ X, Y, dir]: [ "+packet.getX() + " , " + packet.getY() + " , " + packet.getDirection() + " ]");
                 }
             }
 
@@ -81,7 +82,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
             {
                 DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
                 try{
-                    System.out.println("Sending data to server: "+data);
+                    //System.out.println("Sending data to server: "+data);
                     socket.send(packet);
                     } catch(IOException e){
                         e.printStackTrace();

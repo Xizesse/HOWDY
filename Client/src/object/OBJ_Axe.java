@@ -8,8 +8,8 @@ import java.io.IOException;
 public class OBJ_Axe extends SuperObject{
 
     public OBJ_Axe(GamePanel gp){
-        name = "Helmet";
-        id = 1;
+        name = "Axe";
+        id = 2;
 
         try{
             image = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/axe.png"));

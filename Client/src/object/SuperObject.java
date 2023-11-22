@@ -3,8 +3,8 @@ package object;
 import main.GamePanel;
 import main.UtilityTool;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.Graphics2D;
 
 public class SuperObject {
     public BufferedImage image;
@@ -12,6 +12,10 @@ public class SuperObject {
     public byte id;
     public boolean collision = false;
     public int worldX, worldY;
+    public Rectangle solidArea = new Rectangle(0,0,48,48);
+    public int solidAreaDefaultX = 0;
+    public int SolidAreaDefaultY = 0;
+
     UtilityTool uT = new UtilityTool();
 
     public void draw(Graphics2D g2d, GamePanel gp){

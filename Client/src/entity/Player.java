@@ -18,6 +18,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    boolean helmetOn = false;
     public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
 
@@ -28,8 +29,9 @@ public class Player extends Entity {
         screenX = gp.screenWidth / 2 - gp.tileSize / 2;
         screenY = gp.screenHeight / 2 - gp.tileSize / 2;
 
-        solidArea = new Rectangle(8,16, 32, 32);
-
+        solidArea = new Rectangle(16,16, 16, 24);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
         speed = 4;
         direction = "down";
         this.worldX = gp.tileSize* x;
@@ -74,6 +76,8 @@ public class Player extends Entity {
                 collisionOn = false;
                 direction = "up";
                 gp.cCheck.checkTile(this);
+                int objIndex = gp.cCheck.checkObject(this, true);
+                pickUpObject(objIndex);
                 if (!collisionOn) {
                     worldY -= speed;
                 }
@@ -82,6 +86,8 @@ public class Player extends Entity {
                 collisionOn = false;
                 direction = "down";
                 gp.cCheck.checkTile(this);
+                int objIndex = gp.cCheck.checkObject(this, true);
+                pickUpObject(objIndex);
                 if (!collisionOn) {
                     worldY += speed;
                 }
@@ -90,6 +96,8 @@ public class Player extends Entity {
                 collisionOn = false;
                 direction = "left";
                 gp.cCheck.checkTile(this);
+                int objIndex = gp.cCheck.checkObject(this, true);
+                pickUpObject(objIndex);
                 if (!collisionOn) {
                     worldX -= speed;
                 }
@@ -98,6 +106,8 @@ public class Player extends Entity {
                 collisionOn = false;
                 direction = "right";
                 gp.cCheck.checkTile(this);
+                int objIndex = gp.cCheck.checkObject(this, true);
+                pickUpObject(objIndex);
                 if (!collisionOn) {
                     worldX += speed;
                 }
@@ -111,7 +121,7 @@ public class Player extends Entity {
 
             Packet02Move packet = new Packet02Move((char) 0, this.worldX, this.worldY, this.direction);
             packet.writeData(gp.socketClient);
-            System.out.println("Sending data to server: "+this.worldX+","+this.worldY);
+            //System.out.println("Sending data to server: "+this.worldX+","+this.worldY);
 
             if (spriteCounter > 10) {
                 if (spriteNum == 1 &&( keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed)) {
@@ -122,10 +132,17 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         }
-
-
     }
 
+    public void pickUpObject(int i){
+        if(i!=999){
+            if (gp.obj[i].id == 1) {
+                helmetOn = true;
+            }
+            gp.obj[i] = null;
+
+        }
+    }
     public void draw(Graphics2D g2d) {
 
 
@@ -191,7 +208,7 @@ public class Player extends Entity {
         }
 
         g2d.drawImage(body, x, y, null);
-        g2d.drawImage(helmet, x, y, null);
+        if (helmetOn) {g2d.drawImage(helmet, x, y, null);}
 
     }
 }

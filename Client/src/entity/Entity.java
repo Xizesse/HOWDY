@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Entity {
 
@@ -22,6 +23,7 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
 
     public Entity(GamePanel gp) {
@@ -101,12 +103,11 @@ public class Entity {
         UtilityTool uT = new UtilityTool();
         BufferedImage scaledImage = null;
         try {
-            scaledImage = ImageIO.read(ClassLoader.getSystemResourceAsStream(imagePath + ".png"));
+            scaledImage = ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream(imagePath + ".png")));
             scaledImage = uT.scaleImage(scaledImage, gp.tileSize, gp.tileSize);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return scaledImage;
     }
-
 }
