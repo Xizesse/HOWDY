@@ -37,7 +37,7 @@ public class Player extends Entity {
         this.worldX = gp.tileSize* x;
         this.worldY = gp.tileSize* y;
         getPlayerImage();
-        System.out.println("Player created on (" + x + "," + y + ")");
+        //System.out.println("Player created on (" + x + "," + y + ")");
     }
 
     public void setDefaultValue() {

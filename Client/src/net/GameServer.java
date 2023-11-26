@@ -23,9 +23,11 @@ public class GameServer extends Thread{
     private DatagramSocket socket;
 
     private GamePanel game;
-    private PlayerMP player1 = null;
-    private PlayerMP player2 = null;
-    private List<PlayerMP> connectedPlayers = new ArrayList<PlayerMP>();
+
+    private List<PlayerMP> connectedPlayers = new ArrayList<>();
+
+
+
 
     public GameServer(){
 
@@ -42,6 +44,9 @@ public class GameServer extends Thread{
                 System.out.println("Server running");
                 //print ips from players connected
                 for (  PlayerMP player : connectedPlayers) {
+                    if(player == null){
+                        continue;
+                    }
                     System.out.println("["+player.ipAddress.getHostAddress()+"] port: "+player.port);
                 }
                 try {
@@ -52,6 +57,10 @@ public class GameServer extends Thread{
             }
         });
         heartbeatThread.start();
+
+        //initialize 2 elements in connectedPlayers
+        connectedPlayers.add(null);
+        connectedPlayers.add(null);
 
         while(true){
             byte[] data = new byte[1024];
@@ -73,7 +82,7 @@ public class GameServer extends Thread{
     }
 
     private void parsePacket(byte[] data, InetAddress address, int port) {
-        System.out.println("Parsing packet");
+        //System.out.println("Parsing packet");
         String message = new String(data).trim();
         Packet.PacketTypes type = Packet.lookupPacket(message.substring(0,2));
         switch (type){
@@ -82,33 +91,44 @@ public class GameServer extends Thread{
                 break;
             case LOGIN:
 
-                if(connectedPlayers.size() == 0){
-                    player1 = new PlayerMP(address, port, '0',0,0,"down");
-                    connectedPlayers.add(player1);
-                    System.out.println( "LOGIN player 1 from ["+player1.ipAddress.getHostAddress()+"] port: "+player1.port);
+                if(connectedPlayers.get(0) == null){
+                    connectedPlayers.set(0, new PlayerMP(address, port, '0',0,0,"down"));
+                    System.out.println( "LOGIN player 1 from ["+connectedPlayers.get(0).ipAddress.getHostAddress()+"] port: "+connectedPlayers.get(0).port);
                     break;
                 }
-                if(connectedPlayers.size() == 1){
-                    player2 = new PlayerMP(address, port, '0',0,0,"down");
-                    connectedPlayers.add(player2);
-                    System.out.println( "LOGIN player 2 from ["+player2.ipAddress.getHostAddress()+"] port: "+player2.port);
+                if(connectedPlayers.get(1) == null){
+                    connectedPlayers.set(1, new PlayerMP(address, port, '0',0,0,"down"));
+                    System.out.println( "LOGIN player 2 from ["+connectedPlayers.get(1).ipAddress.getHostAddress()+"] port: "+connectedPlayers.get(1).port);
                     break;
+
                 }
                 System.out.println("Server full");
 
 
 
                 break;
+
+
             case DISCONNECT:
                 break;
+
             case MOVE:
                 Packet02Move p = new Packet02Move(data);
+                updatePlayer(address, port, p.getX(), p.getY(), p.getDirection());
                 System.out.println("["+address.getHostName()+"] port: "+port+", entity" + p.getEntityID() + " moved to " + p.getX() + "," + p.getY() + " direction: " + p.getDirection());
-
                 sendDataToAllClientsExceptOne(p.getData(), address, port);
-
                 break;
+
         }
+
+        //print player coordinates as player 1 and 2
+        if(connectedPlayers.get(0) != null){
+            System.out.println("Player 1: "+connectedPlayers.get(0).x+","+connectedPlayers.get(0).y);
+        }
+        if(connectedPlayers.get(1) != null){
+            System.out.println("Player 2: "+connectedPlayers.get(1).x+","+connectedPlayers.get(1).y);
+        }
+
     }
 
     public void sendData(byte[] data, InetAddress ipAddress, int port) {
@@ -123,6 +143,9 @@ public class GameServer extends Thread{
     public void sendDataToAllClients(byte[] data) {
         System.out.println("Sending to all clients");
         for(PlayerMP player : connectedPlayers){
+            if(player == null){
+                continue;
+            }
             sendData(data, player.ipAddress, player.port);
         }
     }
@@ -131,10 +154,26 @@ public class GameServer extends Thread{
         System.out.println("Sending to all clients except one");
 
         for(PlayerMP player : connectedPlayers){
+            if(player == null){
+                continue;
+            }
             if((player.port != port) && (player.ipAddress != ipAddress)){
                 sendData(data, player.ipAddress, player.port);
                 System.out.println("Sending to: "+player.ipAddress.getHostAddress()+" port: "+player.port);
             }
         }
+    }
+
+    private void updatePlayer(InetAddress address, int port, int x, int y, String direction) {
+        for (PlayerMP player : connectedPlayers) {
+            if (player != null && player.ipAddress.equals(address) && player.port == port) {
+                player.x = x;
+                player.y = y;
+                player.direction = direction;
+                System.out.println("Player updated: " + player.x + "," + player.y);
+                return;
+            }
+        }
+        System.out.println("Player not found for update.");
     }
 }
