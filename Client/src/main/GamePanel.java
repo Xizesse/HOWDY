@@ -6,6 +6,7 @@ import entity.Player;
 import entity.PlayerMP;
 import net.Packet00Login;
 import net.Packet02Move;
+import net.Packet04Object;
 import object.SuperObject;
 import tile.TileManager;
 
@@ -90,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable{
         aS.setObject();
         aS.setNPC();
         gameState = titleState;
-        playMusic(0);
+        //playMusic(0);
     }
 
 

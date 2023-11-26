@@ -64,18 +64,51 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 packet = new Packet02Move(data);
                 handleMove((Packet02Move)packet);
                 break;
+
+            case OBJECT:
+                System.out.println("Object packet received");
+                packet = new Packet04Object(data);
+                handleObject((Packet04Object)packet);
+                break;
         }
 
     }
 
-            private void handleMove(Packet02Move packet) {
+
+
+    private void handleMove(Packet02Move packet) {
                 if(this.game != null){
                     this.game.player2.setAction(packet.getDirection(), packet.getX(), packet.getY());
                     //System.out.println("[ X, Y, dir]: [ "+packet.getX() + " , " + packet.getY() + " , " + packet.getDirection() + " ]");
                 }
             }
 
+    private void handleObject(Packet04Object packet)
+    {
+        //System.out.println("Handling object");
+        //System.out.println("Item ID: "+packet.getItemID()+" Give: "+packet.getGive());
+        if(this.game != null) {
+            if (this.game.obj[packet.getItemID()] != null) {
 
+                //if give is true, give it to the player
+                if (packet.getGive()) {
+                    //System.out.println("Giving item");
+                    if (game.obj[packet.getItemID()].id == 1) {
+                        //System.out.println("Helmet");
+                        game.player.helmetOn = true;
+                        //System.out.println("Helmet on");
+
+                    }
+                }
+                //if give is false, give it to the other player
+                else {
+                }
+                //delete the object
+                this.game.obj[packet.getItemID()] = null;
+            }
+
+        }
+    }
 
 
             public void sendData(byte[] data)

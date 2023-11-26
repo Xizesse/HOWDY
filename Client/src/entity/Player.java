@@ -4,6 +4,7 @@ import main.GamePanel;
 import main.KeyHandler;
 import main.UtilityTool;
 import net.Packet02Move;
+import net.Packet04Object;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,7 +19,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    boolean helmetOn = false;
+    public boolean helmetOn = false;
     public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
 
@@ -136,10 +137,13 @@ public class Player extends Entity {
 
     public void pickUpObject(int i){
         if(i!=999){
-            if (gp.obj[i].id == 1) {
+            Packet04Object p4 = new Packet04Object((char) i, true);
+            p4.writeData(gp.socketClient);
+            System.out.println("Requesting item: "+p4.getItemID());
+            /*if (gp.obj[i].id == 1) {
                 helmetOn = true;
-            }
-            gp.obj[i] = null;
+            }*/
+            //gp.obj[i] = null;
 
         }
     }

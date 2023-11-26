@@ -22,7 +22,7 @@ import java.net.UnknownHostException;
 public class GameServer extends Thread{
     private DatagramSocket socket;
 
-    private GamePanel game;
+    private GamePanel game = new GamePanel();
 
     private List<PlayerMP> connectedPlayers = new ArrayList<>();
 
@@ -39,6 +39,7 @@ public class GameServer extends Thread{
     }
 
     public void run(){
+        game.setupGame();
         Thread heartbeatThread = new Thread(() -> {
             while (true) {
                 System.out.println("Server running");
@@ -115,10 +116,29 @@ public class GameServer extends Thread{
             case MOVE:
                 Packet02Move p = new Packet02Move(data);
                 updatePlayer(address, port, p.getX(), p.getY(), p.getDirection());
-                System.out.println("["+address.getHostName()+"] port: "+port+", entity" + p.getEntityID() + " moved to " + p.getX() + "," + p.getY() + " direction: " + p.getDirection());
+                //System.out.println("["+address.getHostName()+"] port: "+port+", entity" + p.getEntityID() + " moved to " + p.getX() + "," + p.getY() + " direction: " + p.getDirection());
                 sendDataToAllClientsExceptOne(p.getData(), address, port);
                 break;
 
+            case OBJECT:
+                Packet04Object p4 = new Packet04Object(data);
+                System.out.println("["+address.getHostName()+"] port: "+port+", object" + (char)p4.getItemID() );
+                //check if that item is available
+                if (game.obj[p4.getItemID()] != null) {
+                    //check if the item is already given
+                    //send packet back to the player -> he recieves the item
+                    System.out.println("["+address.getHostName()+"] port: "+port+", object" + (char) p4.getItemID() + " give");
+                    Packet04Object p4_2 = new Packet04Object(p4.getItemID(), true);
+                    sendData(p4_2.getData(), address, port);
+                    //send packet back to the other player -> he does not recieve the item
+                    System.out.println("["+address.getHostName()+"] port: "+port+", object" +  p4.getItemID() + " already given");
+                    Packet04Object p4_3 = new Packet04Object(p4.getItemID(), false);
+                    sendDataToAllClientsExceptOne(p4_3.getData(), address, port);
+                    break;
+
+                }
+
+                break;
         }
 
         //print player coordinates as player 1 and 2
@@ -141,7 +161,7 @@ public class GameServer extends Thread{
     }
 
     public void sendDataToAllClients(byte[] data) {
-        System.out.println("Sending to all clients");
+        //System.out.println("Sending to all clients");
         for(PlayerMP player : connectedPlayers){
             if(player == null){
                 continue;
@@ -151,7 +171,7 @@ public class GameServer extends Thread{
     }
 
     public void sendDataToAllClientsExceptOne(byte[] data, InetAddress ipAddress, int port) {
-        System.out.println("Sending to all clients except one");
+        //System.out.println("Sending to all clients except one");
 
         for(PlayerMP player : connectedPlayers){
             if(player == null){
@@ -170,10 +190,10 @@ public class GameServer extends Thread{
                 player.x = x;
                 player.y = y;
                 player.direction = direction;
-                System.out.println("Player updated: " + player.x + "," + player.y);
+                //System.out.println("Player updated: " + player.x + "," + player.y);
                 return;
             }
         }
-        System.out.println("Player not found for update.");
+        //System.out.println("Player not found for update.");
     }
 }
