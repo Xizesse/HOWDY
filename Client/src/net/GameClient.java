@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import entity.Player;
 import entity.PlayerMP;
@@ -118,6 +119,11 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
     }
     private void handleMapChange(Packet06MapChange packet)
     {
+        List<TileChange> changes = packet.getChanges();
+
+        for (TileChange change : changes) {
+            this.game.tileM.updateMap(change.getX(), change.getY(), change.getNewTile());
+        }
 
     }
 

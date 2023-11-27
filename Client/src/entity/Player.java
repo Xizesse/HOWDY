@@ -5,11 +5,14 @@ import main.KeyHandler;
 import main.UtilityTool;
 import net.Packet02Move;
 import net.Packet04Object;
+import net.Packet06MapChange;
+import net.TileChange;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Player extends Entity {
@@ -137,6 +140,17 @@ public class Player extends Entity {
 
     public void pickUpObject(int i){
         if(i!=999){
+            TileChange change = new TileChange(7, 1, 12);
+            ArrayList<TileChange> changes = new ArrayList<>();
+            changes.add(change);
+            Packet06MapChange p6 = new Packet06MapChange(0, changes);
+            System.out.println("Sending map change packet");
+            String[] dataArray = p6.readData(p6.getData()).split(",");
+            for (String s : dataArray) {
+                System.out.println(s);
+            }
+//            p6.writeData(gp.socketClient);
+
             Packet04Object p4 = new Packet04Object((char) i, true);
             p4.writeData(gp.socketClient);
             System.out.println("Requesting item: "+p4.getItemID());

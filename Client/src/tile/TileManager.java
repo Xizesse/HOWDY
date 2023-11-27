@@ -124,6 +124,11 @@ public class TileManager {
         }
     }
 
+    public void updateMap(int x, int y, int newTile){
+
+        mapTileNum[y][x] = newTile;
+    }
+
     public void draw(Graphics2D g2d){
 
         int worldCol = 0;
