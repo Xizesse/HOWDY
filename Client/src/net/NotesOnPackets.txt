@@ -1,11 +1,20 @@
 00 - Login -
+
+01 - Logout - //TODO
+
 02 - Move -
-03 - Attack -
+
+03 - Attack - //TODO
+Sends the attacked areas and the damage dealth
+
 04 - object -
-05 - take damage -
+
+05 - take damage - //TODO
 
 06 - mapChange -
 when collision to a pressure plate
 when collision to a door and I have the correct key
 -> I ask the server for the changes, and the server broadcasts the changes
 format : level, number of changes, x y newTile
+//TODO : do those changes on the client
+

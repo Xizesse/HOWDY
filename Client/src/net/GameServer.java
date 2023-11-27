@@ -137,6 +137,11 @@ public class GameServer extends Thread{
                     break;
 
                 }
+            case MAPCHANGE:
+                Packet06MapChange p6 = new Packet06MapChange(data);
+                System.out.println("["+address.getHostName()+"] port: "+port+", mapchange" + p6.getLevel() + " " + p6.getnChanges());
+                sendDataToAllClients(p6.getData());
+
 
                 break;
         }

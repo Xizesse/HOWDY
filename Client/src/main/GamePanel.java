@@ -95,7 +95,6 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
 
-
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
@@ -104,8 +103,9 @@ public class GamePanel extends JPanel implements Runnable{
         loginPacket.writeData(socketClient);
         System.out.println("Client Socket started");
         //socketClient.sendData("ping".getBytes());
-
     }
+
+
 
     @Override
     public void run() {

@@ -70,6 +70,13 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 packet = new Packet04Object(data);
                 handleObject((Packet04Object)packet);
                 break;
+
+            case MAPCHANGE:
+                packet = new Packet06MapChange(data);
+                System.out.println("Map change packet received");
+                handleMapChange((Packet06MapChange)packet);
+                break;
+
         }
 
     }
@@ -109,17 +116,20 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
         }
     }
-
-
-            public void sendData(byte[] data)
-            {
-                DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
-                try{
-                    //System.out.println("Sending data to server: "+data);
-                    socket.send(packet);
-                    } catch(IOException e){
-                        e.printStackTrace();
-                }
-            }
+    private void handleMapChange(Packet06MapChange packet)
+    {
 
     }
+
+     public void sendData(byte[] data)
+     {
+         DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
+         try{
+             //System.out.println("Sending data to server: "+data);
+             socket.send(packet);
+         } catch(IOException e){
+             e.printStackTrace();
+         }
+     }
+
+}
