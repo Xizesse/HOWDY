@@ -142,8 +142,10 @@ public class Player extends Entity {
         if(i!=999){
             System.out.println(i+" is the object index, " + gp.obj[i].id + " is the object id");
             if (gp.obj[i].id == 4) {
-                TileChange change = new TileChange(7, 1, 12);
                 ArrayList<TileChange> changes = new ArrayList<>();
+                TileChange change = new TileChange(7, 1, 12);
+                changes.add(change);
+                change = new TileChange(14, 3, 13);
                 changes.add(change);
                 Packet06MapChange p6 = new Packet06MapChange(0, changes);
                 System.out.println("Sending map change packet");
