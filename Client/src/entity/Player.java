@@ -141,7 +141,7 @@ public class Player extends Entity {
     public void pickUpObject(int i){
         if(i!=999){
             System.out.println(i+" is the object index, " + gp.obj[i].id + " is the object id");
-            if (gp.obj[i].id == 4) {
+            if (gp.obj[i].id == 4) { //pp
                 ArrayList<TileChange> changes = new ArrayList<>();
                 TileChange change = new TileChange(7, 1, 12);
                 changes.add(change);
@@ -150,18 +150,19 @@ public class Player extends Entity {
                 Packet06MapChange p6 = new Packet06MapChange(0, changes);
                 System.out.println("Sending map change packet");
                 String[] dataArray = p6.readData(p6.getData()).split(",");
-                for (String s : dataArray) {
-                    System.out.println(s);
-                }
                 p6.writeData(gp.socketClient);
-            } else if (gp.obj[i].id == 1) {
-
+            } else if (gp.obj[i].id == 1) {//helmet
                 Packet04Object p4 = new Packet04Object((char) i, true);
                 p4.writeData(gp.socketClient);
                 System.out.println("Requesting item: "+p4.getItemID());
+            }else if (gp.obj[i].id == 3) {
+                Packet04Object p4 = new Packet04Object((char) i, true);
+                p4.writeData(gp.socketClient);
+                System.out.println("Requesting item: "+p4.getItemID());
+                gp.obj[i].readChapter(gp);
+                gp.gameState = gp.readState;
+
             }
-
-
 
 
 //            p6.writeData(gp.socketClient);

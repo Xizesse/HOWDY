@@ -4,36 +4,41 @@ import java.awt.*;
 
 public class UI {
     GamePanel gp;
-    Graphics2D g2d;
+    //Graphics2D g2d;
     Font TimesRoman;
 
     public int commandNum = 0;
+    public String currentText = "";
 
     public UI(GamePanel gp) {
         this.gp = gp;
-
         TimesRoman = new Font("TimesRoman", Font.PLAIN, 40);
     }
 
     public void draw(Graphics2D g2d) {
-
-        this.g2d = g2d;
-
         g2d.setFont(TimesRoman);
         g2d.setColor(Color.WHITE);
-        
+
+        //title state
         if(gp.gameState == gp.titleState) {
             drawTitleScreen(g2d);
+            //play state
         } else if (gp.gameState == gp.pauseState) {
             drawPauseScreen(g2d);
+        }
+        //read state
+        else if (gp.gameState == gp.readState) {
+            drawReadScreen(g2d);
         }
 
 
     }
 
+
+
     public void drawPauseScreen(Graphics2D g2d){
         String text = "PAUSED";
-        int x = getXforCenteredText(text);
+        int x = getXforCenteredText(text, g2d);
         int y = gp.screenHeight/2;
 
         g2d.drawString(text, x, y);
@@ -44,7 +49,7 @@ public class UI {
         //TITLE NAME
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 100));
         String text = "HOWDY";
-        int x = getXforCenteredText(text);
+        int x = getXforCenteredText(text, g2d);
         int y = gp.tileSize * 3;
 
         //SHADOW
@@ -65,7 +70,7 @@ public class UI {
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 48f));
 
         text = "HOST GAME";
-        x = getXforCenteredText(text);
+        x = getXforCenteredText(text, g2d);
         y += gp.tileSize * 5;
         g2d.drawString(text, x, y);
         if(commandNum == 0){
@@ -73,7 +78,7 @@ public class UI {
         }
 
         text = "JOIN GAME";
-        x = getXforCenteredText(text);
+        x = getXforCenteredText(text, g2d);
         y += gp.tileSize;
         g2d.drawString(text, x, y);
         if(commandNum == 1){
@@ -81,7 +86,7 @@ public class UI {
         }
 
         text = "QUIT";
-        x = getXforCenteredText(text);
+        x = getXforCenteredText(text, g2d);
         y += gp.tileSize;
         g2d.drawString(text, x, y);
         if(commandNum == 2){
@@ -90,10 +95,43 @@ public class UI {
 
     }
 
-    public int getXforCenteredText(String text){
+    public int getXforCenteredText(String text, Graphics2D g2d){
 
         int length = (int)g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         return (gp.screenWidth - length) / 2;
+
+    }
+
+
+
+    private void drawReadScreen(Graphics2D g2d) {
+        int x = gp.tileSize*2;
+        int y = gp.tileSize/2;
+        int width = gp.screenWidth - gp.tileSize*4;
+        int height = gp.screenHeight -2*gp.tileSize;
+
+        drawSubWindow(x, y, width, height, g2d);
+        x += gp.tileSize;
+        y += gp.tileSize;
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 30f));
+        g2d.setColor(Color.black);
+        for(String line: currentText.split("\n")){
+            g2d.drawString(line, x, y);
+            y += gp.tileSize/1.5;
+        }
+
+    }
+
+    public void drawSubWindow(int x, int y , int width, int height, Graphics2D g2d)
+    {
+        Color c = new Color(200,200,200, 175);
+        g2d.setColor(c);
+        g2d.fillRoundRect(x, y, width, height, 35, 35);
+
+        c = new Color(120,50,19);
+        g2d.setColor(c);
+        g2d.setStroke(new BasicStroke(10));
+        g2d.drawRoundRect(x+5, y+5, width-10, height-10, 35, 35);
 
     }
 }

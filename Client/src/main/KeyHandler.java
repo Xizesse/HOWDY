@@ -71,9 +71,17 @@ public class KeyHandler implements KeyListener {
                 DEV_MODE = !DEV_MODE;
             }
         }
+        //PAUSE
         else if(gp.gameState == gp.pauseState) {
             if(code == KeyEvent.VK_P) {
                 gp.gameState = gp.playState;
+            }
+        }
+        //READ
+        else if(gp.gameState == gp.readState) {
+            if(code == KeyEvent.VK_SPACE) {
+                gp.gameState = gp.playState;
+
             }
         }
 

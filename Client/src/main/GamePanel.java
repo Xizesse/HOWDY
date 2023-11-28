@@ -22,12 +22,10 @@ import static main.Main.DEV_MODE;
 
 public class GamePanel extends JPanel implements Runnable{
 
+    // NETWORK
     public GameClient socketClient = new GameClient(this, "localhost");
 
-
-
     // Screen settings
-
     final int originalTileSize = 16; // 16x16 pixels
     final int scale = 3; // 3x scale
     public final int tileSize = originalTileSize * scale; // 48x48 pixels
@@ -75,13 +73,14 @@ public class GamePanel extends JPanel implements Runnable{
     public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int readState = 3;
 
 
 
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.BLACK);
+        this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
@@ -197,6 +196,54 @@ public class GamePanel extends JPanel implements Runnable{
                 player2.draw(g2d);
             }
         } else if (gameState == pauseState) {
+            // TILE
+            tileM.draw(g2d);
+            // OBJECT
+            for (SuperObject superObject : obj) {
+                if (superObject != null) {
+                    superObject.draw(g2d, this);
+                }
+            }
+            // NPC
+            for (Entity entity : npc) {
+                if (entity != null) {
+                    entity.draw(g2d);
+                }
+            }
+
+            // PLAYER1
+            player.draw(g2d);
+            // PLAYER2
+            if (player2 != null) {
+                player2.draw(g2d);
+            }
+
+            ui.draw(g2d);
+        }
+
+        else if (gameState == readState) {
+            // TILE
+            tileM.draw(g2d);
+            // OBJECT
+            for (SuperObject superObject : obj) {
+                if (superObject != null) {
+                    superObject.draw(g2d, this);
+                }
+            }
+            // NPC
+            for (Entity entity : npc) {
+                if (entity != null) {
+                    entity.draw(g2d);
+                }
+            }
+
+            // PLAYER1
+            player.draw(g2d);
+            // PLAYER2
+            if (player2 != null) {
+                player2.draw(g2d);
+            }
+
             ui.draw(g2d);
         }
 
