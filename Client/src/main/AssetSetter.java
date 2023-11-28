@@ -3,6 +3,7 @@ package main;
 import entity.NPC_Player2;
 import object.OBJ_Axe;
 import object.OBJ_Helmet;
+import object.OBJ_PP;
 
 public class AssetSetter {
 
@@ -20,6 +21,10 @@ public class AssetSetter {
         gp.obj[1] = new OBJ_Axe(gp);
         gp.obj[1].worldX = 2 * gp.tileSize;
         gp.obj[1].worldY = 0 * gp.tileSize;
+
+        gp.obj[2] = new OBJ_PP(gp);
+        gp.obj[2].worldX = 7 * gp.tileSize;
+        gp.obj[2].worldY = 1 * gp.tileSize;
 
     }
 

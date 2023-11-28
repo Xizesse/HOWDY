@@ -127,11 +127,11 @@ public class GameServer extends Thread{
                 if (game.obj[p4.getItemID()] != null) {
                     //check if the item is already given
                     //send packet back to the player -> he recieves the item
-                    System.out.println("["+address.getHostName()+"] port: "+port+", object" + (char) p4.getItemID() + " give");
+                    //System.out.println("["+address.getHostName()+"] port: "+port+", object" + (char) p4.getItemID() + " give");
                     Packet04Object p4_2 = new Packet04Object(p4.getItemID(), true);
                     sendData(p4_2.getData(), address, port);
                     //send packet back to the other player -> he does not recieve the item
-                    System.out.println("["+address.getHostName()+"] port: "+port+", object" +  p4.getItemID() + " already given");
+                    //System.out.println("["+address.getHostName()+"] port: "+port+", object" +  p4.getItemID() + " already given");
                     Packet04Object p4_3 = new Packet04Object(p4.getItemID(), false);
                     sendDataToAllClientsExceptOne(p4_3.getData(), address, port);
                     //remove the item from the game
@@ -186,7 +186,7 @@ public class GameServer extends Thread{
             }
             if((player.port != port) && (player.ipAddress != ipAddress)){
                 sendData(data, player.ipAddress, player.port);
-                System.out.println("Sending to: "+player.ipAddress.getHostAddress()+" port: "+player.port);
+                //System.out.println("Sending to: "+player.ipAddress.getHostAddress()+" port: "+player.port);
             }
         }
     }

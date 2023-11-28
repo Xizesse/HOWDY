@@ -140,25 +140,31 @@ public class Player extends Entity {
 
     public void pickUpObject(int i){
         if(i!=999){
-            TileChange change = new TileChange(7, 1, 12);
-            ArrayList<TileChange> changes = new ArrayList<>();
-            changes.add(change);
-            Packet06MapChange p6 = new Packet06MapChange(0, changes);
-            System.out.println("Sending map change packet");
-            String[] dataArray = p6.readData(p6.getData()).split(",");
-            for (String s : dataArray) {
-                //System.out.println(s);
+            System.out.println(i+" is the object index, " + gp.obj[i].id + " is the object id");
+            if (gp.obj[i].id == 4) {
+                TileChange change = new TileChange(7, 1, 12);
+                ArrayList<TileChange> changes = new ArrayList<>();
+                changes.add(change);
+                Packet06MapChange p6 = new Packet06MapChange(0, changes);
+                System.out.println("Sending map change packet");
+                String[] dataArray = p6.readData(p6.getData()).split(",");
+                for (String s : dataArray) {
+                    System.out.println(s);
+                }
+                p6.writeData(gp.socketClient);
+            } else if (gp.obj[i].id == 1) {
+
+                Packet04Object p4 = new Packet04Object((char) i, true);
+                p4.writeData(gp.socketClient);
+                System.out.println("Requesting item: "+p4.getItemID());
             }
-            p6.writeData(gp.socketClient);
 
-            Packet04Object p4 = new Packet04Object((char) i, true);
 
-            p4.writeData(gp.socketClient);
-            //System.out.println("Requesting item: "+p4.getItemID());
-            /*if (gp.obj[i].id == 1) {
-                helmetOn = true;
-            }*/
-            //gp.obj[i] = null;
+
+
+//            p6.writeData(gp.socketClient);
+
+
 
         }
     }
