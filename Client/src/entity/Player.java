@@ -148,11 +148,9 @@ public class Player extends Entity {
                 Packet06MapChange p6 = new Packet06MapChange(0, changes);
                 System.out.println("Sending map change packet");
                 String[] dataArray = p6.readData(p6.getData()).split(",");
-/*
                 for (String s : dataArray) {
                     System.out.println(s);
                 }
-*/
                 p6.writeData(gp.socketClient);
             } else if (gp.obj[i].id == 1) {
 
