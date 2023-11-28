@@ -16,20 +16,20 @@ public class AssetSetter {
 
     public void setObject(){
         gp.obj[0] = new OBJ_Helmet(gp);
-        gp.obj[0].worldX = 1 * gp.tileSize;
-        gp.obj[0].worldY = 2 * gp.tileSize;
+        gp.obj[0].worldX = 8 * gp.tileSize;
+        gp.obj[0].worldY = 15 * gp.tileSize;
 
         gp.obj[1] = new OBJ_Axe(gp);
-        gp.obj[1].worldX = 2 * gp.tileSize;
-        gp.obj[1].worldY = 0 * gp.tileSize;
+        gp.obj[1].worldX = 6 * gp.tileSize;
+        gp.obj[1].worldY = 14 * gp.tileSize;
 
         gp.obj[2] = new OBJ_Book(gp);
-        gp.obj[2].worldX = 5 * gp.tileSize;
-        gp.obj[2].worldY = 1 * gp.tileSize;
+        gp.obj[2].worldX = 6 * gp.tileSize;
+        gp.obj[2].worldY = 17 * gp.tileSize;
 
         gp.obj[3] = new OBJ_PP(gp);
-        gp.obj[3].worldX = 7 * gp.tileSize;
-        gp.obj[3].worldY = 1 * gp.tileSize;
+        gp.obj[3].worldX = 14 * gp.tileSize;
+        gp.obj[3].worldY = 17 * gp.tileSize;
 
     }
 
