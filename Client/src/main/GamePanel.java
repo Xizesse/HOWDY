@@ -139,11 +139,6 @@ public class GamePanel extends JPanel implements Runnable{
 
     }
 
-//    public synchronized void addRemotePlayer(PlayerMP newPlayer) {
-//        this.player2 = newPlayer;
-//        repaint();
-//    }
-
     public synchronized void updatePlayer2(String direction, int worldX, int worldY) {
         if(gameState == playState){
             if(player2 != null) {
@@ -174,6 +169,7 @@ public class GamePanel extends JPanel implements Runnable{
         if (gameState == titleState) {
             ui.draw(g2d);
         } else if (gameState == playState) {
+
             // TILE
             tileM.draw(g2d);
             // OBJECT
@@ -195,6 +191,7 @@ public class GamePanel extends JPanel implements Runnable{
             if (player2 != null) {
                 player2.draw(g2d);
             }
+            ui.draw(g2d);
         } else if (gameState == pauseState) {
             // TILE
             tileM.draw(g2d);

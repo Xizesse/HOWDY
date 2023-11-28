@@ -26,6 +26,10 @@ public class Entity {
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
 
+    //Character stats
+    public int maxHealth;
+    public int currentHealth;
+
     public Entity(GamePanel gp) {
         this.gp = gp;
     }

@@ -1,11 +1,16 @@
 package main;
 
+import object.OBJ_Heart;
+import object.SuperObject;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class UI {
     GamePanel gp;
     //Graphics2D g2d;
     Font TimesRoman;
+    BufferedImage heartFull, heartHalf, heartEmpty;
 
     public int commandNum = 0;
     public String currentText = "";
@@ -13,27 +18,66 @@ public class UI {
     public UI(GamePanel gp) {
         this.gp = gp;
         TimesRoman = new Font("TimesRoman", Font.PLAIN, 40);
+
+        SuperObject heart = new OBJ_Heart(gp);
+        heartFull = heart.image;
+        heartHalf = heart.image2;
+        heartEmpty = heart.image3;
     }
 
     public void draw(Graphics2D g2d) {
         g2d.setFont(TimesRoman);
         g2d.setColor(Color.WHITE);
 
+
         //title state
         if(gp.gameState == gp.titleState) {
             drawTitleScreen(g2d);
-            //play state
-        } else if (gp.gameState == gp.pauseState) {
+
+
+        }
+        if(gp.gameState == gp.playState){
+
+            drawPlayerLife(g2d);
+        }
+
+        else if (gp.gameState == gp.pauseState) {
             drawPauseScreen(g2d);
+            drawPlayerLife(g2d);
+
         }
         //read state
         else if (gp.gameState == gp.readState) {
             drawReadScreen(g2d);
+            drawPlayerLife(g2d);
         }
 
 
     }
 
+    private void drawPlayerLife(Graphics2D g2d) {
+        gp.player.currentHealth = 3;
+
+        int x =  gp.tileSize/2;
+        int y = gp.screenWidth - gp.tileSize - gp.tileSize/2 ;
+        int i=0;
+
+        while (i < (gp.player.maxHealth / 2)) {
+            if (gp.player.currentHealth >= (i + 1) * 2) {
+
+                g2d.drawImage(heartFull, x, y, null);
+            } else if (gp.player.currentHealth >= (i * 2) + 1) {
+
+                g2d.drawImage(heartHalf, x, y, null);
+            } else {
+
+                g2d.drawImage(heartEmpty, x, y, null);
+            }
+
+            i++;
+            x += gp.tileSize; // Move to the next position to draw the next heart
+        }
+    }
 
 
     public void drawPauseScreen(Graphics2D g2d){

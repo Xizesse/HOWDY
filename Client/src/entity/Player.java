@@ -41,6 +41,9 @@ public class Player extends Entity {
         this.worldX = gp.tileSize* x;
         this.worldY = gp.tileSize* y;
         getPlayerImage();
+        //PLayer stats
+        maxHealth = 6;
+        currentHealth = maxHealth;
         //System.out.println("Player created on (" + x + "," + y + ")");
     }
 
@@ -49,6 +52,7 @@ public class Player extends Entity {
         worldY = gp.tileSize * 8;
         speed = 4;
         direction = "down";
+
     }
 
     public void getPlayerImage() {
