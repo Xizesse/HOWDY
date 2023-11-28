@@ -8,9 +8,7 @@ public class Packet04Object extends Packet{
     public Packet04Object(byte[] data) {
         super(04);
         String[] dataArray = new String(data).trim().split(",");
-        for (String s : dataArray) {
-            System.out.println(s);
-        }
+
         if (dataArray.length > 1) {
             this.itemID = dataArray[0].charAt(2); // Assuming the ID is at position 2
             this.give = dataArray[1].trim().charAt(0); // Assuming the give char is the first character

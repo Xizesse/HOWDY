@@ -134,6 +134,8 @@ public class GameServer extends Thread{
                     System.out.println("["+address.getHostName()+"] port: "+port+", object" +  p4.getItemID() + " already given");
                     Packet04Object p4_3 = new Packet04Object(p4.getItemID(), false);
                     sendDataToAllClientsExceptOne(p4_3.getData(), address, port);
+                    //remove the item from the game
+                    game.obj[p4.getItemID()] = null;
                     break;
 
                 }

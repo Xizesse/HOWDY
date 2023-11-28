@@ -18,11 +18,7 @@ public class Packet06MapChange extends Packet{
 
     public Packet06MapChange(byte[] data) {
         super(06);
-        System.out.println("Packet06MapChange received");
         String[] dataArray = new String(data).trim().split(",");
-        for (String s : dataArray) {
-            System.out.println(s);
-        }
 
         try {
             this.level = Integer.parseInt(dataArray[1]); // level is after packet ID
@@ -32,7 +28,7 @@ public class Packet06MapChange extends Packet{
             for (int i = 0; i < this.nChanges; i++) {
                 // Each change consists of 3 parts: x, y, and newTile, hence the index calculation
                 int index = 3 + i * 3;
-                if ( index + 2 < dataArray.length) {
+                if (index + 2 >= dataArray.length) {
                     break;
                 }
                 int x = Integer.parseInt(dataArray[index]);
@@ -60,7 +56,7 @@ public class Packet06MapChange extends Packet{
     @Override
     public byte[] getData() {
         StringBuilder builder = new StringBuilder();
-        builder.append("06");
+        builder.append("06,");
         builder.append(this.level);
         builder.append(",");
         builder.append(this.nChanges);

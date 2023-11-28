@@ -147,13 +147,14 @@ public class Player extends Entity {
             System.out.println("Sending map change packet");
             String[] dataArray = p6.readData(p6.getData()).split(",");
             for (String s : dataArray) {
-                System.out.println(s);
+                //System.out.println(s);
             }
-//            p6.writeData(gp.socketClient);
+            p6.writeData(gp.socketClient);
 
             Packet04Object p4 = new Packet04Object((char) i, true);
+
             p4.writeData(gp.socketClient);
-            System.out.println("Requesting item: "+p4.getItemID());
+            //System.out.println("Requesting item: "+p4.getItemID());
             /*if (gp.obj[i].id == 1) {
                 helmetOn = true;
             }*/
