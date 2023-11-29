@@ -32,16 +32,18 @@ public class NPC_Player2 extends Entity
         BodyRight1 = setup("girl/girl_right_1");
         BodyRight2 = setup("girl/girl_right_2");
         titleArt = setup("girl/girl_title_art");
+        System.out.println("NPC_Player2 getImage()");
 
     }
-    //set default value method
 
 
-    public void setAction(String direction, int worldX, int worldY) {
+@Override
+    public void setAction() {
 
         this.direction = direction;
         this.worldX = worldX;
         this.worldY = worldY;
+
 
         if((previousWorldX != worldX) || (previousWorldY) != worldY){   //if player moved update the sprite
             spriteCounter++;

@@ -21,11 +21,11 @@ public class Entity {
 
     public String direction;
     public int spriteCounter = 0;
+    public int actionCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
-
     //Character stats
     public int maxHealth;
     public int currentHealth;
@@ -34,7 +34,8 @@ public class Entity {
         this.gp = gp;
     }
 
-    public void setAction(String direction, int WordX, int WordY){}
+    public void setAction(){}
+
 
     public void setDefaultValue(){}
 
@@ -113,5 +114,35 @@ public class Entity {
             e.printStackTrace();
         }
         return scaledImage;
+    }
+
+    public void update() {
+        setAction();
+        collisionOn = false;
+        gp.cCheck.checkTile(this);
+        gp.cCheck.checkObject(this, false);
+        gp.cCheck.checkPlayer(this);
+        if(!collisionOn){
+            switch (direction) {
+                case "up": worldY -= speed;
+                    break;
+                case "down": worldY += speed;
+                    break;
+                case "left": worldX -= speed;
+                    break;
+                case "right": worldX += speed;
+                    break;
+            }
+        }
+        spriteCounter ++;
+        if (spriteCounter > 12){
+            if (spriteNum == 1 ){
+                spriteNum = 2;
+            }
+            else if (spriteNum == 2){
+                spriteNum = 1;
+            }
+            spriteCounter = 0;
+        }
     }
 }

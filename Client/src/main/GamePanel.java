@@ -1,22 +1,15 @@
 package main;
 
-import entity.Entity;
-import entity.NPC_Player2;
-import entity.Player;
-import entity.PlayerMP;
+import entity.*;
 import net.Packet00Login;
-import net.Packet02Move;
-import net.Packet04Object;
 import object.SuperObject;
 import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.GameClient;
-import net.GameServer;
+
 import static main.Main.DEV_MODE;
 
 
@@ -55,16 +48,16 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
 
     // ENTITY AND OBJECTS
-    public Player player = new Player(this, keyH, 1,1);
-
+    public Player player = new Player(this, keyH, 3,15);
     public Entity[] npc = new Entity[10];
     public SuperObject[] obj = new SuperObject[10];
+    public Entity monster[] = new Entity[10];
 
     // Player 2
     public NPC_Player2 player2 = new NPC_Player2(this);
     public String player2Direction = "down";
-    public int player2WorldX = 2;
-    public int player2WorldY = 2;
+    public int player2WorldX = 3;
+    public int player2WorldY = 15;
 
 
 
@@ -89,7 +82,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setupGame() {
         aS.setObject();
+        aS.setPlayer2();
         aS.setNPC();
+        aS.setMonster();
         gameState = titleState;
         //playMusic(0);
     }
@@ -131,6 +126,12 @@ public class GamePanel extends JPanel implements Runnable{
 
         if(gameState == playState){
             player.update();
+            //player2.update(); <- This is done by the client thread
+            for (int i = 0; i < npc.length; i++) {
+                if (npc[i] != null) {
+                    npc[i].update();
+                }
+            }
 
             //  will be added upon in the future
         }
@@ -191,6 +192,13 @@ public class GamePanel extends JPanel implements Runnable{
             if (player2 != null) {
                 player2.draw(g2d);
             }
+            // MONSTER
+            for (int i = 0; i < monster.length; i++) {
+                if (monster[i] != null) {
+                    //monster[i].draw(g2d);
+                }
+            }
+
             ui.draw(g2d);
         } else if (gameState == pauseState) {
             // TILE

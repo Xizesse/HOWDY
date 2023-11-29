@@ -1,6 +1,8 @@
 package main;
 
+import entity.NPC;
 import entity.NPC_Player2;
+import monster.Monster_Spike;
 import object.OBJ_Axe;
 import object.OBJ_Helmet;
 import object.OBJ_Book;
@@ -33,10 +35,26 @@ public class AssetSetter {
 
     }
 
-    public void setNPC(){
+    public void setPlayer2(){
 
         gp.player2 = new NPC_Player2(gp);
-        gp.player2.worldX = gp.tileSize * 2;
-        gp.player2.worldY = gp.tileSize * 2;
+        gp.player2.worldX = gp.tileSize * 3;
+        gp.player2.worldY = gp.tileSize * 15;
+
+    }
+
+    public void setNPC(){
+        gp.npc[0] = new NPC(gp);
+        gp.npc[0].worldX =  gp.tileSize * 5;
+        gp.npc[0].worldY =  gp.tileSize * 15;
+    }
+    public void setMonster(){
+        gp.monster[0] = new Monster_Spike(gp);
+        gp.monster[0].worldX = 4 * gp.tileSize;
+        gp.monster[0].worldY = 16 * gp.tileSize;
+
+        gp.monster[1] = new Monster_Spike(gp);
+        gp.monster[1].worldX = 2 * gp.tileSize;
+        gp.monster[1].worldY = 16 * gp.tileSize;
     }
 }

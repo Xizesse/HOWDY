@@ -86,7 +86,10 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
     private void handleMove(Packet02Move packet) {
                 if(this.game != null){
-                    this.game.player2.setAction(packet.getDirection(), packet.getX(), packet.getY());
+                    this.game.player2.direction = packet.getDirection();
+                    this.game.player2.worldX = packet.getX();
+                    this.game.player2.worldY = packet.getY();
+                    this.game.player2.update();
                     //System.out.println("[ X, Y, dir]: [ "+packet.getX() + " , " + packet.getY() + " , " + packet.getDirection() + " ]");
                 }
             }

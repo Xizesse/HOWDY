@@ -48,8 +48,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValue() {
-        worldX = gp.tileSize * 8; //starting position = (8,8)
-        worldY = gp.tileSize * 8;
+        worldX = gp.tileSize * 3;
+        worldY = gp.tileSize * 15;
         speed = 4;
         direction = "down";
 
@@ -75,7 +75,7 @@ public class Player extends Entity {
     }
 
 
-
+@Override
     public void update() {
 
         //MOVEMENT AND COLLISION CHECKING
@@ -86,6 +86,8 @@ public class Player extends Entity {
                 gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
+                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+                interactNPC(npcIndex);
                 if (!collisionOn) {
                     worldY -= speed;
                 }
@@ -96,6 +98,8 @@ public class Player extends Entity {
                 gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
+                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+                interactNPC(npcIndex);
                 if (!collisionOn) {
                     worldY += speed;
                 }
@@ -106,6 +110,8 @@ public class Player extends Entity {
                 gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
+                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+                interactNPC(npcIndex);
                 if (!collisionOn) {
                     worldX -= speed;
                 }
@@ -116,12 +122,13 @@ public class Player extends Entity {
                 gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
+                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+                interactNPC(npcIndex);
                 if (!collisionOn) {
                     worldX += speed;
                 }
 
             }
-
 
 
 
@@ -141,6 +148,8 @@ public class Player extends Entity {
             }
         }
     }
+
+
 
     public void pickUpObject(int i){
         if(i!=999){
@@ -178,6 +187,13 @@ public class Player extends Entity {
 //            p6.writeData(gp.socketClient);
 
 
+
+        }
+    }
+
+    private void interactNPC(int npcIndex) {
+        if(npcIndex!=999){
+            System.out.println("NPC colision");
 
         }
     }
