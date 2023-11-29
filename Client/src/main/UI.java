@@ -56,7 +56,7 @@ public class UI {
     }
 
     private void drawPlayerLife(Graphics2D g2d) {
-        gp.player.currentHealth = 3;
+        //gp.player.currentHealth = 3;
 
         int x =  gp.tileSize/2;
         int y = gp.screenWidth - gp.tileSize - gp.tileSize/2 ;

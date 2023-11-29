@@ -53,6 +53,8 @@ public class Player extends Entity {
         speed = 4;
         direction = "down";
 
+
+
     }
 
     public void getPlayerImage() {
@@ -130,7 +132,8 @@ public class Player extends Entity {
 
             }
 
-
+            //CHECK EVENT
+            gp.eH.checkEvent();
 
             spriteCounter++;
 
