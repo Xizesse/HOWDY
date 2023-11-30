@@ -8,8 +8,6 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import entity.Player;
-import entity.PlayerMP;
 import main.GamePanel;
 
 public class GameClient extends Thread{ // extends Thread so we can run it in the background
@@ -62,6 +60,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 break;
 
             case MOVE:
+                System.out.println("Move packet received");
                 packet = new Packet02Move(data);
                 handleMove((Packet02Move)packet);
                 break;
@@ -86,28 +85,36 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
     private void handleMove(Packet02Move packet) {
                 if(this.game != null){
-                    this.game.player2.direction = packet.getDirection();
-                    this.game.player2.worldX = packet.getX();
-                    this.game.player2.worldY = packet.getY();
-                    this.game.player2.update();
-                    //System.out.println("[ X, Y, dir]: [ "+packet.getX() + " , " + packet.getY() + " , " + packet.getDirection() + " ]");
+                    System.out.println("ID = " + packet.getEntityID() + " X = " + packet.getX() + " Y = " + packet.getY() + " Direction = " + packet.getDirection());
+                    if(packet.getEntityID() == 0){
+                        //this.game.player2.direction = packet.getDirection();
+                        //this.game.player2.worldX = packet.getX();
+                        //this.game.player2.worldY = packet.getY();
+                        game.updatePlayer2(packet.getDirection(), packet.getX(), packet.getY());
+                        System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
+                    }
+                    else if(packet.getEntityID() == 1) {
+                        this.game.npc[0].direction = packet.getDirection();
+                        this.game.npc[0].worldX = packet.getX();
+                        this.game.npc[0].worldY = packet.getY();
+                    }
+
                 }
             }
 
     private void handleObject(Packet04Object packet)
     {
-        //System.out.println("Handling object");
-        //System.out.println("Item ID: "+packet.getItemID()+" Give: "+packet.getGive());
+
         if(this.game != null) {
-            if (this.game.obj[packet.getItemID()] != null) {
+            if (this.game.obj[packet.getitemIndex()] != null) {
 
                 //if give is true, give it to the player
                 if (packet.getGive()) {
-                    //System.out.println("Giving item");
-                    if (game.obj[packet.getItemID()].id == 1) {
-                        //System.out.println("Helmet");
+
+                    if (game.obj[packet.getitemIndex()].id == 1) {
+                        System.out.println("Helmet PickUp");
                         game.player.helmetOn = true;
-                        //System.out.println("Helmet on");
+
 
                     }
                 }
@@ -115,7 +122,9 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 else {
                 }
                 //delete the object
-                this.game.obj[packet.getItemID()] = null;
+                System.out.println("Helmet deleted");
+
+                this.game.obj[packet.getitemIndex()] = null;
             }
 
         }
@@ -134,7 +143,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
      {
          DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
          try{
-             //System.out.println("Sending data to server: "+data);
+
              socket.send(packet);
          } catch(IOException e){
              e.printStackTrace();

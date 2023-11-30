@@ -12,6 +12,8 @@ public class NPC extends Entity {
 
     public NPC(GamePanel gp) {
         super(gp);
+        //System.out.println("npc constructor created");
+
         direction = "down";
         speed = 1;
         getImage();
@@ -27,7 +29,9 @@ public class NPC extends Entity {
          BodyRight1 = setup("monster_spike/spike_right1");
          BodyRight2 = setup("monster_spike/spike_right2");
     }
+    @Override
     public void setAction() {
+        //System.out.println("npc action");
         actionCounter ++;
         if (actionCounter > 120){
             Random random = new Random();

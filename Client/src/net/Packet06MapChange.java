@@ -11,6 +11,7 @@ public class Packet06MapChange extends Packet{
     private List<TileChange> changes;
     public Packet06MapChange(int level, List<TileChange> changes) {
         super(06);
+        System.out.println("Packet06MapChange Created");
         this.level = level;
         this.nChanges = changes.size();
         this.changes = changes;
@@ -18,11 +19,12 @@ public class Packet06MapChange extends Packet{
 
     public Packet06MapChange(byte[] data) {
         super(06);
+        System.out.println("Packet06MapChange Created");
         String[] dataArray = new String(data).trim().split(",");
-
         try {
             this.level = Integer.parseInt(dataArray[1]); // level is after packet ID
             this.nChanges = Integer.parseInt(dataArray[2]); // number of changes is after level
+
 
             this.changes = new ArrayList<>();
             for (int i = 0; i < this.nChanges; i++) {

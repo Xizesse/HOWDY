@@ -7,10 +7,22 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.InetAddress;
 
 public class NPC_Player2 extends Entity
 {
+    public InetAddress ipAddress;
+    public NPC_Player2 player;
 
+    public int port;
+    public NPC_Player2(InetAddress ipAddress, int port, int x, int y, String direction, GamePanel gp) {
+        super(gp);
+        this.ipAddress = ipAddress;
+        this.port = port;
+        this.worldX = x;
+        this.worldY = y;
+        this.direction = direction;
+    }
     public NPC_Player2(GamePanel gp) {
         super(gp);
 
@@ -32,7 +44,7 @@ public class NPC_Player2 extends Entity
         BodyRight1 = setup("girl/girl_right_1");
         BodyRight2 = setup("girl/girl_right_2");
         titleArt = setup("girl/girl_title_art");
-        System.out.println("NPC_Player2 getImage()");
+
 
     }
 

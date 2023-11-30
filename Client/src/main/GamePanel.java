@@ -128,11 +128,11 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameState == playState){
             player.update();
             //player2.update(); <- This is done by the client thread
-            for (int i = 0; i < npc.length; i++) {
+            /*for (int i = 0; i < npc.length; i++) {
                 if (npc[i] != null) {
                     npc[i].update();
                 }
-            }
+            }*/
 
             //  will be added upon in the future
         }
@@ -144,9 +144,10 @@ public class GamePanel extends JPanel implements Runnable{
     public synchronized void updatePlayer2(String direction, int worldX, int worldY) {
         if(gameState == playState){
             if(player2 != null) {
-                player2Direction = direction;
-                player2WorldX = worldX;
-                player2WorldY = worldY;
+                player2.direction = direction;
+                player2.worldX = worldX;
+                player2.worldY = worldY;
+                System.out.println("Player 2 updated: " + player2.worldX + "," + player2.worldY);
             }
         }
         if(gameState == pauseState){
@@ -191,6 +192,7 @@ public class GamePanel extends JPanel implements Runnable{
             player.draw(g2d);
             // PLAYER2
             if (player2 != null) {
+                //System.out.println("Drawing Player 2 on " + player2WorldX + "," + player2WorldY + " direction: " + player2Direction);
                 player2.draw(g2d);
             }
             // MONSTER

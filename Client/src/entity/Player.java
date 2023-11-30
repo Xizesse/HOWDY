@@ -2,23 +2,19 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import main.UtilityTool;
 import net.Packet02Move;
 import net.Packet04Object;
 import net.Packet06MapChange;
 import net.TileChange;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class Player extends Entity {
 
     KeyHandler keyH;
-
     public final int screenX;
     public final int screenY;
 
@@ -136,8 +132,8 @@ public class Player extends Entity {
             gp.eH.checkEvent();
 
             spriteCounter++;
-
-            Packet02Move packet = new Packet02Move((char) 0, this.worldX, this.worldY, this.direction);
+            //System.out.println("Player position: playerID = 0, " + this.worldX + "," + this.worldY);
+            Packet02Move packet = new Packet02Move( 0, this.worldX, this.worldY, this.direction);
             packet.writeData(gp.socketClient);
             //System.out.println("Sending data to server: "+this.worldX+","+this.worldY);
 
@@ -156,11 +152,35 @@ public class Player extends Entity {
 
     public void pickUpObject(int i){
         if(i!=999){
-            System.out.println(i+" is the object index, " + gp.obj[i].id + " is the object id");
-            if (gp.obj[i].id == 4) { //pp
+            //print all objects and their iD
+            for(int j = 0; j < gp.obj.length; j++){
+                if(gp.obj[j] != null){
+                    //System.out.println("Object index: "+j+" Object ID: "+gp.obj[j].id);
+                }
+            }
+            //System.out.println(i+" is the object index, " + gp.obj[i].id + " is the object id");
+
+              if (gp.obj[i].id == 1) {//helmet
+                Packet04Object p4 = new Packet04Object((char) i, true);
+                p4.writeData(gp.socketClient);
+                //System.out.println("Helmet PickUp with id: 1");
+
+            } else if (gp.obj[i].id == 2) {//axe
+                Packet04Object p4 = new Packet04Object((char) i, true);
+                p4.writeData(gp.socketClient);
+                System.out.println("Requesting item: "+p4.getitemIndex());
+            }else if (gp.obj[i].id == 3) { //book
+                Packet04Object p4 = new Packet04Object((char) i, true);
+                p4.writeData(gp.socketClient);
+                System.out.println("Requesting item: "+p4.getitemIndex()); //Sends item INDEX
+                gp.obj[i].readChapter(gp);
+                gp.gameState = gp.readState;
+            }
+            else if (gp.obj[i].id == 4) { //pp
                 ArrayList<TileChange> changes = new ArrayList<>();
                 //TODO isto está completamente hardcoded
                 TileChange change;
+
                 change = new TileChange(14, 17, 12);
                 changes.add(change);
                 change = new TileChange(14, 16, 8);
@@ -169,25 +189,15 @@ public class Player extends Entity {
                 changes.add(change);
                 change = new TileChange(14, 14, 13);
                 changes.add(change);
+
                 Packet06MapChange p6 = new Packet06MapChange(0, changes);
                 System.out.println("Sending map change packet");
                 String[] dataArray = p6.readData(p6.getData()).split(",");
                 p6.writeData(gp.socketClient);
-            } else if (gp.obj[i].id == 1) {//helmet
-                Packet04Object p4 = new Packet04Object((char) i, true);
-                p4.writeData(gp.socketClient);
-                System.out.println("Requesting item: "+p4.getItemID());
-            }else if (gp.obj[i].id == 3) {
-                Packet04Object p4 = new Packet04Object((char) i, true);
-                p4.writeData(gp.socketClient);
-                System.out.println("Requesting item: "+p4.getItemID());
-                gp.obj[i].readChapter(gp);
-                gp.gameState = gp.readState;
-
             }
 
 
-//            p6.writeData(gp.socketClient);
+
 
 
 

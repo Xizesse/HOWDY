@@ -36,7 +36,6 @@ public class Entity {
 
     public void setAction(){}
 
-
     public void setDefaultValue(){}
 
     public void draw(Graphics2D g2d) {
