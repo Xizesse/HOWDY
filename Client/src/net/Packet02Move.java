@@ -33,6 +33,7 @@ public class Packet02Move extends Packet{
 
     @Override
     public void writeData(GameServer server) {
+
     }
 
     @Override

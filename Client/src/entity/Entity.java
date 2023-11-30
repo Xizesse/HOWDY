@@ -121,6 +121,7 @@ public class Entity {
         gp.cCheck.checkTile(this);
         gp.cCheck.checkObject(this, false);
         gp.cCheck.checkPlayer(this);
+        //gp.cCheck.checkEntity(this, gp.players);
         if(!collisionOn){
             switch (direction) {
                 case "up": worldY -= speed;

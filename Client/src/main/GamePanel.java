@@ -7,6 +7,8 @@ import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.GameClient;
 
@@ -55,6 +57,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Entity monster[] = new Entity[10];
 
     // Player 2
+    public Entity[] npc_players = new Entity[2];//<-I need this for collision checking;
     public NPC_Player2 player2 = new NPC_Player2(this);
     public String player2Direction = "down";
     public int player2WorldX = 3;

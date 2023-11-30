@@ -18,9 +18,6 @@ public class GameServer extends Thread{
     private ServerPanel game;
 
 
-
-
-
     public GameServer(ServerPanel game){
 
         try {

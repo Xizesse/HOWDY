@@ -39,20 +39,10 @@ public class ServerPanel extends GamePanel {
     //FPS
     final int FPS = 30;
 
-    // SYSTEM
-    //public UI ui = new UI(this);
-    //public TileManager tileM = new TileManager(this);
 
-    //public CollisionChecker cCheck = new CollisionChecker(this);
-    //public AssetSetter aS = new AssetSetter(this);
-    //public EventHandler eH = new EventHandler(this);
     Thread gameThread;
 
-    // ENTITY AND OBJECTS
 
-    //public Entity[] npc = new Entity[10]; //created everywhere but controlled here
-    //public SuperObject[] obj = new SuperObject[10]; //created everwhere but controlled here
-    //public Entity monster[] = new Entity[10];
 
     // Players
     //Array of NPC_Player2
@@ -69,50 +59,48 @@ public class ServerPanel extends GamePanel {
         socketServer.start();
         aS.setObject();
         System.out.println("Setting up objects from asset setter");
-        this.obj[0] = new OBJ_Helmet(this);
-        this.obj[0].worldX = 8 * this.tileSize;
-        this.obj[0].worldY = 15 * this.tileSize;
 
-        System.out.println("Object 0 is "+this.obj[0]);
-        this.obj[1] = new OBJ_Axe(this);
-        this.obj[1].worldX = 6 * this.tileSize;
-        this.obj[1].worldY = 14 * this.tileSize;
-        System.out.println("Object 1 is "+this.obj[1]);
-        this.obj[2] = new OBJ_Book(this);
-        this.obj[2].worldX = 6 * this.tileSize;
-        this.obj[2].worldY = 17 * this.tileSize;
-        System.out.println("Object 2 is "+this.obj[2]);
-        this.obj[3] = new OBJ_PP(this);
-        this.obj[3].worldX = 14 * this.tileSize;
-        this.obj[3].worldY = 17 * this.tileSize;
-        System.out.println("Object 3 is "+this.obj[3]);
-        //print all objects and their iD
-        for(int j = 0; j < this.obj.length; j++){
-            if(this.obj[j] != null){
-                System.out.println("Object index: "+j+" Object ID: "+this.obj[j].id);
-            }
-        }
         //aS.setPlayer2();
         //aS.setPlayers
         aS.setNPC();
+        for (int i = 0; i < npc.length; i++) {
+            if (npc[i] != null) {
+                System.out.println("NPC " + (i+1) + " is " + npc[i]);
+            }
+        }
+
 
 
         for (int i = 0; i < npc.length; i++) {
-            //System.out.println("Setting up NPC " + (i+1));
+
             if (npc[i] != null) {
-                //System.out.println("NPC " + (i+1) + " is " + npc[i]);
+
                 Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
-                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                //socketServer.sendDataToAllClients(packet.getData());
+                System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                for (NPC_Player2 player : players) {
+                    if (player != null) {
+                        System.out.println("Sending packet to player ");
+                        socketServer.sendData(packet.getData(), player.ipAddress, player.port);
+
+                    }
+                }
+
             }
         }
         aS.setMonster();
         for (int i = 0; i < npc.length; i++) {
-            //System.out.println("Setting up NPC " + (i+1));
+
             if (npc[i] != null) {
-              //  System.out.println("NPC " + (i+1) + " is " + npc[i]);
+
                 Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
-                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                for (NPC_Player2 player : players) {
+                    if (player != null) {
+                        System.out.println("Sending packet to player ");
+                        socketServer.sendData(packet.getData(), player.ipAddress, player.port);
+
+                    }
+                }
             }
         }
         gameState = titleState;
@@ -161,7 +149,14 @@ public class ServerPanel extends GamePanel {
                 if (npc[i] != null) {
                     npc[i].update();
                     Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
-                    //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                    System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                    for (NPC_Player2 player : players) {
+                        if (player != null) {
+                            System.out.println("Sending packet to player ");
+                            socketServer.sendData(packet.getData(), player.ipAddress, player.port);
+
+                        }
+                    }
                 }
             }
             //  will be added upon in the future
