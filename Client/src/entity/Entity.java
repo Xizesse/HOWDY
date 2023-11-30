@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import server.ServerPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -121,7 +122,11 @@ public class Entity {
         gp.cCheck.checkTile(this);
         gp.cCheck.checkObject(this, false);
         gp.cCheck.checkPlayer(this);
-        //gp.cCheck.checkEntity(this, gp.players);
+        if (gp instanceof ServerPanel) {
+            //System.out.println("Checking collision with players");
+            ServerPanel sp = (ServerPanel) gp;
+            gp.cCheck.checkNPC_players(this, sp.players);
+        }
         if(!collisionOn){
             switch (direction) {
                 case "up": worldY -= speed;

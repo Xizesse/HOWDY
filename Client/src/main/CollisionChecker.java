@@ -1,6 +1,10 @@
 package main;
 
 import entity.Entity;
+import entity.NPC_Player2;
+
+import java.lang.reflect.Array;
+import java.util.List;
 
 public class CollisionChecker {
     GamePanel gp;
@@ -150,6 +154,7 @@ public class CollisionChecker {
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(target[i].solidArea)){
                                 entity.collisionOn = true;
+                                System.out.println("Collision with entity: "+i);
                                 index = i;
                         }
                         break;
@@ -158,6 +163,8 @@ public class CollisionChecker {
                         if (entity.solidArea.intersects(target[i].solidArea)){
 
                                 entity.collisionOn = true;
+                            System.out.println("Collision with entity: "+i);
+
                                 index = i;
                         }
                         break;
@@ -166,6 +173,8 @@ public class CollisionChecker {
                         if (entity.solidArea.intersects(target[i].solidArea)){
 
                                 entity.collisionOn = true;
+                            System.out.println("Collision with entity: "+i);
+
 
 
                                 index = i;
@@ -176,6 +185,8 @@ public class CollisionChecker {
                         entity.solidArea.x += entity.speed;
                         if (entity.solidArea.intersects(target[i].solidArea)){
                                 entity.collisionOn = true;
+                            System.out.println("Collision with entity: "+i);
+
                                 index = i;
 
                         }
@@ -192,8 +203,6 @@ public class CollisionChecker {
     }
     public void checkPlayer(Entity entity)
     {
-
-
             // Entity solid area position
             entity.solidArea.x = entity.worldX + entity.solidArea.x;
             entity.solidArea.y = entity.worldY + entity.solidArea.y;
@@ -242,6 +251,59 @@ public class CollisionChecker {
             gp.player.solidArea.x = gp.player.solidAreaDefaultX;
             gp.player.solidArea.y = gp.player.solidAreaDefaultY;
 
+    }
+
+    public int checkNPC_players(Entity entity, List<NPC_Player2> target) {
+        int index = 999;
+        ;
+        for (int i = 0; i < target.size(); i++) {
+            NPC_Player2 targetEntity = target.get(i);
+
+            if (targetEntity != null) {
+                //System.out.println("Checking collision with entity: " + i);
+                // Entity solid area position
+                int entitySolidAreaX = entity.worldX + entity.solidArea.x;
+                int entitySolidAreaY = entity.worldY + entity.solidArea.y;
+
+                // Target's solid area position
+                int targetSolidAreaX = targetEntity.worldX + targetEntity.solidArea.x;
+                int targetSolidAreaY = targetEntity.worldY + targetEntity.solidArea.y;
+                //System.out.println("entitySolidAreaX: " + entitySolidAreaX);
+                //System.out.println("entitySolidAreaY: " + entitySolidAreaY);
+                //System.out.println("targetSolidAreaX: " + targetSolidAreaX);
+                //System.out.println("targetSolidAreaY: " + targetSolidAreaY);
+
+                // Temporarily move the entity's solid area for collision checking
+                switch (entity.direction) {
+
+                    case "up":
+                        if (entity.solidArea.intersects(targetEntity.worldX, targetEntity.worldY - entity.speed, targetEntity.solidArea.width, targetEntity.solidArea.height)) {
+                            entity.collisionOn = true;
+                            index = i;
+                        }
+                        break;
+                    case "down":
+                        if (entity.solidArea.intersects(targetEntity.worldX, targetEntity.worldY + entity.speed, targetEntity.solidArea.width, targetEntity.solidArea.height)) {
+                            entity.collisionOn = true;
+                            index = i;
+                        }
+                        break;
+                    case "left":
+                        if (entity.solidArea.intersects(targetEntity.worldX - entity.speed, targetEntity.worldY, targetEntity.solidArea.width, targetEntity.solidArea.height)) {
+                            entity.collisionOn = true;
+                            index = i;
+                        }
+                        break;
+                    case "right":
+                        if (entity.solidArea.intersects(targetEntity.worldX + entity.speed, targetEntity.worldY, targetEntity.solidArea.width, targetEntity.solidArea.height)) {
+                            entity.collisionOn = true;
+                            index = i;
+                        }
+                        break;
+                }
+            }
+        }
+        return index;
     }
 
 }

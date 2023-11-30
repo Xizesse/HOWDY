@@ -76,10 +76,10 @@ public class ServerPanel extends GamePanel {
             if (npc[i] != null) {
 
                 Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
-                System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
                 for (NPC_Player2 player : players) {
                     if (player != null) {
-                        System.out.println("Sending packet to player ");
+                        //System.out.println("Sending packet to player ");
                         socketServer.sendData(packet.getData(), player.ipAddress, player.port);
 
                     }
@@ -93,7 +93,7 @@ public class ServerPanel extends GamePanel {
             if (npc[i] != null) {
 
                 Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
-                System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
                 for (NPC_Player2 player : players) {
                     if (player != null) {
                         System.out.println("Sending packet to player ");
@@ -149,10 +149,10 @@ public class ServerPanel extends GamePanel {
                 if (npc[i] != null) {
                     npc[i].update();
                     Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
-                    System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                    //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
                     for (NPC_Player2 player : players) {
                         if (player != null) {
-                            System.out.println("Sending packet to player ");
+                            //System.out.println("Sending packet to player ");
                             socketServer.sendData(packet.getData(), player.ipAddress, player.port);
 
                         }

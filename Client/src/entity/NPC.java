@@ -15,25 +15,25 @@ public class NPC extends Entity {
         //System.out.println("npc constructor created");
 
         direction = "down";
-        speed = 1;
+        speed = 6;
         getImage();
     }
     public void getImage()
  {
-         bodyUp1 = setup("monster_spike/spike_right1");
-         bodyUp2 = setup("monster_spike/spike_right2");
-         bodyDown1 = setup("monster_spike/spike_left1");
-         bodyDown2 = setup("monster_spike/spike_left2");
-         BodyLeft1 = setup("monster_spike/spike_left1");
-         BodyLeft2 = setup("monster_spike/spike_left2");
-         BodyRight1 = setup("monster_spike/spike_right1");
-         BodyRight2 = setup("monster_spike/spike_right2");
+         bodyUp1 = setup("npc/mouse0");
+         bodyUp2 = setup("npc/mouse1");
+         bodyDown1 = setup("npc/mouse2");
+         bodyDown2 = setup("npc/mouse3");
+         BodyLeft1 = setup("npc/mouse0");
+         BodyLeft2 = setup("npc/mouse1");
+         BodyRight1 = setup("npc/mouse2");
+         BodyRight2 = setup("npc/mouse3");
     }
     @Override
     public void setAction() {
         //System.out.println("npc action");
         actionCounter ++;
-        if (actionCounter > 120){
+        if (actionCounter > 40){
             Random random = new Random();
             int i = random.nextInt(100)+1;
             if (i <= 25) {

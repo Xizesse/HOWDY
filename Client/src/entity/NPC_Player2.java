@@ -22,6 +22,8 @@ public class NPC_Player2 extends Entity
         this.worldX = x;
         this.worldY = y;
         this.direction = direction;
+        //solidAreaDefaultX = solidArea.x;
+        //solidAreaDefaultY = solidArea.y;
     }
     public NPC_Player2(GamePanel gp) {
         super(gp);
