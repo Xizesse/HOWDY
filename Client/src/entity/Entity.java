@@ -118,19 +118,25 @@ public class Entity {
 
     public void update() {
         //System.out.println("Entity update");
+        //print the content of gp players
+        //System.out.println("gp.players: " + gp.players);
         setAction();
         collisionOn = false;
-        gp.cCheck.checkTile(this);
-        gp.cCheck.checkObject(this, false);
-        gp.cCheck.checkPlayer(this);
+        gp.cCheck.checkTile(this);                     //check collision with tiles
+        if(collisionOn) System.out.println("Collision tile");
+
+        gp.cCheck.checkObject(this,false);      //check collision with objects
+        if(collisionOn) System.out.println("Collision object");
+
+
         if (gp instanceof ServerPanel) {
             //System.out.println("Checking collision with players");
-            ServerPanel sp = (ServerPanel) gp;
-            gp.cCheck.checkNPC_players(this, sp.players);
-            //print if collision is on
-            if (collisionOn) {
-                System.out.println("Collision on");
+            if (gp.players != null) {
+                System.out.println("Checking collision with players");
+                gp.cCheck.checkNPC_players(this, gp.players);
+                if(collisionOn) System.out.println("Collision NPC player");
             }
+            //print if collision is on
 
         }
         if(!collisionOn){

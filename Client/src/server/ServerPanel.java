@@ -31,7 +31,7 @@ public class ServerPanel extends GamePanel {
 
     // Players
     //Array of NPC_Player2
-    public List<NPC_Player> players = new ArrayList<>(); //created and controlled by the clients
+     //created and controlled by the clients
 
     // GAME STATE
 

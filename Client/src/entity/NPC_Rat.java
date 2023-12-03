@@ -1,16 +1,13 @@
 package entity;
 
-import jdk.jshell.execution.Util;
 import main.GamePanel;
-import main.UtilityTool;
 
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class NPC extends Entity {
+public class NPC_Rat extends Entity {
 
 
-    public NPC(GamePanel gp) {
+    public NPC_Rat(GamePanel gp) {
         super(gp);
         //System.out.println("npc constructor created");
 
@@ -37,13 +34,13 @@ public class NPC extends Entity {
             Random random = new Random();
             int i = random.nextInt(100)+1;
             if (i <= 25) {
-                direction = "up";
+                direction = "left";
             }
             else if (i <= 50) {
-                direction = "down";
+                direction = "left";
             }
             else if (i <= 75) {
-                direction = "left";
+                direction = "right";
             }
             else if (i <= 100) {
                 direction = "right";

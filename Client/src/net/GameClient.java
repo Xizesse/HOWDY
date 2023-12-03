@@ -86,13 +86,13 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
     private void handleMove(Packet02Move packet) {
                 if(this.game != null){
-                    System.out.println("ID = " + packet.getEntityID() + " X = " + packet.getX() + " Y = " + packet.getY() + " Direction = " + packet.getDirection());
+//                    System.out.println("ID = " + packet.getEntityID() + " X = " + packet.getX() + " Y = " + packet.getY() + " Direction = " + packet.getDirection());
                     if(packet.getEntityID() == 0){
                         //this.game.player2.direction = packet.getDirection();
                         //this.game.player2.worldX = packet.getX();
                         //this.game.player2.worldY = packet.getY();
                         game.updatePlayer2(packet.getDirection(), packet.getX(), packet.getY());
-                        System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
+//                        System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
                     }
                     else
                         for(int i = 0; i < game.npc.length; i++){

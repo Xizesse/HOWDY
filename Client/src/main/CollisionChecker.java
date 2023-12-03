@@ -78,34 +78,35 @@ public class CollisionChecker {
             }
 
             // Entity solid area position
-            entity.solidArea.x = entity.worldX + entity.solidArea.x;
-            entity.solidArea.y = entity.worldY + entity.solidArea.y;
+            entity.solidArea.x = entity.worldX + entity.solidArea.x; //get the entity worldX coordinate of the left most edge of the solid area
+            entity.solidArea.y = entity.worldY + entity.solidArea.y; //get the entity worldY coordinate of the top most edge of the solid area
 
             // Object's solid area position
-            gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;
-            gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;
+            gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x; //get the object worldX coordinate of the left most edge of the solid area
+            gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y; //get the object worldY coordinate of the top most edge of the solid area
 
             switch (entity.direction){
 
                 case "up":
-                    entity.solidArea.y -= entity.speed;
-                    if (entity.solidArea.intersects(gp.obj[i].solidArea)){
-                        if (gp.obj[i].collision){
-                            entity.collisionOn = true;
+                    entity.solidArea.y -= entity.speed;                         //get next position of the top most edge of the solid area
+                    if (entity.solidArea.intersects(gp.obj[i].solidArea)){      //check if the entity's solid area intersects with the object's solid area
+                        if (gp.obj[i].collision){                               //check if the object is solid
+                            entity.collisionOn = true;                          //if it is, set collisionOn to true
                         }
                         if(player) {
                             index = i;
                         }
                     }
                     break;
+                    //repeat for the other directions
                 case "down":
                     entity.solidArea.y += entity.speed;
                     if (entity.solidArea.intersects(gp.obj[i].solidArea)){
                         if (gp.obj[i].collision){
                             entity.collisionOn = true;
                         }
-                        if(player) {
-                            index = i;
+                        if(player) {                //if the entity is the player, set index to the object's index
+                            index = i;              //this is used to pick up the object
                         }
                     }
                     break;
@@ -133,184 +134,119 @@ public class CollisionChecker {
                     break;
 
             }
-            entity.solidArea.x = entity.solidAreaDefaultX;
-            entity.solidArea.y = entity.solidAreaDefaultY;
-            gp.obj[i].solidArea.x = gp.obj[i].solidAreaDefaultX;
-            gp.obj[i].solidArea.y = gp.obj[i].SolidAreaDefaultY;
+            entity.solidArea.x = entity.solidAreaDefaultX;          //reset the entity's solid area position
+            entity.solidArea.y = entity.solidAreaDefaultY;          //reset the entity's solid area position
+            gp.obj[i].solidArea.x = gp.obj[i].solidAreaDefaultX;    //reset the object's solid area position
+            gp.obj[i].solidArea.y = gp.obj[i].SolidAreaDefaultY;    //reset the object's solid area position
         }
-        return index;
+        return index;   //return the index of the object that the entity is colliding with
     }
-    public int checkEntity(Entity entity, Entity[] target){
+    public int checkEntity(Entity entity, Entity[] target) {
+        //check if the entity is colliding with another entity
+
         int index = 999;
+        // Entity solid area position
+        entity.solidArea.x = entity.worldX + entity.solidArea.x; //get the entity worldX coordinate of the left most edge of the solid area
+        entity.solidArea.y = entity.worldY + entity.solidArea.y; //get the entity worldY coordinate of the top most edge of the solid area
 
         for (int i = 0; i < target.length; i++) {
-
-            if (target[i] != null) {
-
-                // Entity solid area position
-                entity.solidArea.x = entity.worldX + entity.solidArea.x;
-                entity.solidArea.y = entity.worldY + entity.solidArea.y;
-
-                // Object's solid area position
-                target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
-                target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
-
-                switch (entity.direction){
-
-                    case "up":
-                        entity.solidArea.y -= entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)){
-                                entity.collisionOn = true;
-                                System.out.println("Collision with entity: "+i);
-                                index = i;
-                        }
-                        break;
-                    case "down":
-                        entity.solidArea.y += entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)){
-
-                                entity.collisionOn = true;
-                            System.out.println("Collision with entity: "+i);
-
-                                index = i;
-                        }
-                        break;
-                    case "left":
-                        entity.solidArea.x -= entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)){
-
-                                entity.collisionOn = true;
-                            System.out.println("Collision with entity: "+i);
-
-
-
-                                index = i;
-
-                        }
-                        break;
-                    case "right":
-                        entity.solidArea.x += entity.speed;
-                        if (entity.solidArea.intersects(target[i].solidArea)){
-                                entity.collisionOn = true;
-                            System.out.println("Collision with entity: "+i);
-
-                                index = i;
-
-                        }
-                        break;
-
-                }
-                entity.solidArea.x = entity.solidAreaDefaultX;
-                entity.solidArea.y = entity.solidAreaDefaultY;
-                target[i].solidArea.x = target[i].solidAreaDefaultX;
-                target[i].solidArea.y = target[i].solidAreaDefaultY;
+            if (target[i] == null) {
+                continue;
             }
+
+            // targetEntity solid area position
+            target[i].solidArea.x = target[i].worldX + target[i].solidArea.x; //get the object worldX coordinate of the left most edge of the solid area
+            target[i].solidArea.y = target[i].worldY + target[i].solidArea.y; //get the object worldY coordinate of the top most edge of the solid area
+
+            switch (entity.direction) {
+                case "up":
+                    entity.solidArea.y -= entity.speed;                         //get next position of the top most edge of the solid area
+                    if (entity.solidArea.intersects(target[i].solidArea)) {      //check if the entity's solid area intersects with the object's solid area
+                        entity.collisionOn = true;                          //if it does, set collisionOn to true
+                        index = i;
+                    }
+
+                    break;
+                //repeat for the other directions
+                case "down":
+                    entity.solidArea.y += entity.speed;
+                    if (entity.solidArea.intersects(target[i].solidArea)) {
+                        entity.collisionOn = true;
+                        index = i;
+                    }
+                    break;
+                case "left":
+                    entity.solidArea.x -= entity.speed;
+                    if (entity.solidArea.intersects(target[i].solidArea)) {
+                        entity.collisionOn = true;
+                        index = i;
+                    }
+                    break;
+                case "right":
+                    entity.solidArea.x += entity.speed;
+                    if (entity.solidArea.intersects(target[i].solidArea)) {
+                        entity.collisionOn = true;
+                        index = i;
+                    }
+                    break;
+
+            }
+            entity.solidArea.x = entity.solidAreaDefaultX;          //reset the entity's solid area position
+            entity.solidArea.y = entity.solidAreaDefaultY;          //reset the entity's solid area position
+            target[i].solidArea.x = target[i].solidAreaDefaultX;    //reset the object's solid area position
+            target[i].solidArea.y = target[i].solidAreaDefaultY;
         }
         return index;
     }
-    public void checkPlayer(Entity entity)
-    {
-            // Entity solid area position
-            entity.solidArea.x = entity.worldX + entity.solidArea.x;
-            entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-            // Object's solid area position
-            gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
-        gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
+
+    public void checkNPC_players(Entity entity, List<NPC_Player> target) {
+
+        // Entity solid area position
+        entity.solidArea.x = entity.worldX + entity.solidArea.x; //get the entity worldX coordinate of the left most edge of the solid area
+        entity.solidArea.y = entity.worldY + entity.solidArea.y; //get the entity worldY coordinate of the top most edge of the solid area
+
+        for(NPC_Player npc_player : target){
+            if(npc_player == null){
+                continue;
+            }
+            // Player's Solid Area Position
+            npc_player.solidArea.x = npc_player.worldX + npc_player.solidArea.x; //get the player worldX coordinate of the left most edge of the solid area
+            npc_player.solidArea.y = npc_player.worldY + npc_player.solidArea.y; //get the player worldY coordinate of the top most edge of the solid area
 
             switch (entity.direction){
 
                 case "up":
-                    entity.solidArea.y -= entity.speed;
-                    if (entity.solidArea.intersects(gp.player.solidArea)){
-                        entity.collisionOn = true;
-
+                    entity.solidArea.y -= entity.speed;                         //get next position of the top most edge of the solid area
+                    if (entity.solidArea.intersects(npc_player.solidArea)){      //check if the entity's solid area intersects with the object's solid area
+                            entity.collisionOn = true;                          //if it does, set collisionOn to true
                     }
                     break;
+                    //repeat for the other directions
                 case "down":
                     entity.solidArea.y += entity.speed;
-                    if (entity.solidArea.intersects(gp.player.solidArea)){
-
+                    if (entity.solidArea.intersects(npc_player.solidArea)){
                         entity.collisionOn = true;
                     }
                     break;
                 case "left":
                     entity.solidArea.x -= entity.speed;
-                    if (entity.solidArea.intersects(gp.player.solidArea)){
-
+                    if (entity.solidArea.intersects(npc_player.solidArea)){
                         entity.collisionOn = true;
-
-
                     }
                     break;
                 case "right":
                     entity.solidArea.x += entity.speed;
-                    if (entity.solidArea.intersects(gp.player.solidArea)){
+                    if (entity.solidArea.intersects(npc_player.solidArea)){
                         entity.collisionOn = true;
-
-
                     }
                     break;
 
             }
-            entity.solidArea.x = entity.solidAreaDefaultX;
-            entity.solidArea.y = entity.solidAreaDefaultY;
-            gp.player.solidArea.x = gp.player.solidAreaDefaultX;
-            gp.player.solidArea.y = gp.player.solidAreaDefaultY;
-
-    }
-
-    public int checkNPC_players(Entity entity, List<NPC_Player> target) {
-        int index = 999;
-        ;
-        for (int i = 0; i < target.size(); i++) {
-            NPC_Player targetEntity = target.get(i);
-
-            if (targetEntity != null) {
-                //System.out.println("Checking collision with entity: " + i);
-                // Entity solid area position
-                int entitySolidAreaX = entity.worldX + entity.solidArea.x;
-                int entitySolidAreaY = entity.worldY + entity.solidArea.y;
-
-                // Target's solid area position
-                int targetSolidAreaX = targetEntity.worldX + targetEntity.solidArea.x;
-                int targetSolidAreaY = targetEntity.worldY + targetEntity.solidArea.y;
-                //System.out.println("entitySolidAreaX: " + entitySolidAreaX);
-                //System.out.println("entitySolidAreaY: " + entitySolidAreaY);
-                //System.out.println("targetSolidAreaX: " + targetSolidAreaX);
-                //System.out.println("targetSolidAreaY: " + targetSolidAreaY);
-
-                // Temporarily move the entity's solid area for collision checking
-                switch (entity.direction) {
-
-                    case "up":
-                        if (entity.solidArea.intersects(targetEntity.worldX, targetEntity.worldY - entity.speed, targetEntity.solidArea.width, targetEntity.solidArea.height)) {
-                            entity.collisionOn = true;
-                            index = i;
-                        }
-                        break;
-                    case "down":
-                        if (entity.solidArea.intersects(targetEntity.worldX, targetEntity.worldY + entity.speed, targetEntity.solidArea.width, targetEntity.solidArea.height)) {
-                            entity.collisionOn = true;
-                            index = i;
-                        }
-                        break;
-                    case "left":
-                        if (entity.solidArea.intersects(targetEntity.worldX - entity.speed, targetEntity.worldY, targetEntity.solidArea.width, targetEntity.solidArea.height)) {
-                            entity.collisionOn = true;
-                            index = i;
-                        }
-                        break;
-                    case "right":
-                        if (entity.solidArea.intersects(targetEntity.worldX + entity.speed, targetEntity.worldY, targetEntity.solidArea.width, targetEntity.solidArea.height)) {
-                            entity.collisionOn = true;
-                            index = i;
-                        }
-                        break;
-                }
-            }
+            entity.solidArea.x = entity.solidAreaDefaultX;          //reset the entity's solid area position
+            entity.solidArea.y = entity.solidAreaDefaultY;          //reset the entity's solid area position
+            npc_player.solidArea.x = npc_player.solidAreaDefaultX;    //reset the object's solid area position
+            npc_player.solidArea.y = npc_player.solidAreaDefaultY;    //reset the object's solid area position
         }
-        return index;
     }
-
 }

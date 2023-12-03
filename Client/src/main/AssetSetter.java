@@ -1,6 +1,6 @@
 package main;
 
-import entity.NPC;
+import entity.NPC_Rat;
 import entity.NPC_Player;
 import monster.Monster_Spike;
 import object.OBJ_Axe;
@@ -58,21 +58,21 @@ public class AssetSetter {
     public void setNPC(){
         System.out.println("Setting up NPC");
 
-        gp.npc[0] = new NPC(gp);
+        gp.npc[0] = new NPC_Rat(gp);
         gp.npc[0].worldX =  gp.tileSize * 5;
         gp.npc[0].worldY =  gp.tileSize * 15;
 
-        gp.npc[1] = new NPC(gp);
-        gp.npc[1].worldX =  gp.tileSize * 7;
-        gp.npc[1].worldY =  gp.tileSize * 15;
-
-        gp.npc[2] = new NPC(gp);
-        gp.npc[2].worldX =  gp.tileSize * 5;
-        gp.npc[2].worldY =  gp.tileSize * 17;
-
-        gp.npc[3] = new NPC(gp);
-        gp.npc[3].worldX =  gp.tileSize * 3;
-        gp.npc[3].worldY =  gp.tileSize * 17;
+//        gp.npc[1] = new NPC_Rat(gp);
+//        gp.npc[1].worldX =  gp.tileSize * 7;
+//        gp.npc[1].worldY =  gp.tileSize * 15;
+//
+//        gp.npc[2] = new NPC_Rat(gp);
+//        gp.npc[2].worldX =  gp.tileSize * 5;
+//        gp.npc[2].worldY =  gp.tileSize * 17;
+//
+//        gp.npc[3] = new NPC_Rat(gp);
+//        gp.npc[3].worldX =  gp.tileSize * 3;
+//        gp.npc[3].worldY =  gp.tileSize * 17;
 
         System.out.println("NPC set up");
     }

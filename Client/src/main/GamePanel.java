@@ -8,6 +8,8 @@ import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.GameClient;
 
@@ -62,6 +64,8 @@ public class GamePanel extends JPanel implements Runnable{
     public String player2Direction = "down";
     public int player2WorldX = 3;
     public int player2WorldY = 15;
+
+    public List<NPC_Player> players = new ArrayList<>();
 
 
 
@@ -154,7 +158,7 @@ public class GamePanel extends JPanel implements Runnable{
                 player2.direction = direction;
                 player2.worldX = worldX;
                 player2.worldY = worldY;
-                System.out.println("Player 2 updated: " + player2.worldX + "," + player2.worldY);
+//                System.out.println("Player 2 updated: " + player2.worldX + "," + player2.worldY);
             }
         }
         if(gameState == pauseState){

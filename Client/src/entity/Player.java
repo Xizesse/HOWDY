@@ -79,17 +79,17 @@ public class Player extends Entity {
         //MOVEMENT AND COLLISION CHECKING
         if (keyH.downPressed|| keyH.upPressed|| keyH.leftPressed|| keyH.rightPressed) {
             if (keyH.upPressed) {
-                collisionOn = false;
-                direction = "up";
-                gp.cCheck.checkTile(this);
-                int objIndex = gp.cCheck.checkObject(this, true);
-                pickUpObject(objIndex);
-                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
-                interactNPC(npcIndex);
-                if (!collisionOn) {
-                    worldY -= speed;
+                collisionOn = false;                                               //reset collision
+                direction = "up";                                                  //set direction
+                gp.cCheck.checkTile(this);                                   //check collision with tile
+                int objIndex = gp.cCheck.checkObject(this, true);     //check collision with object
+                pickUpObject(objIndex);                                            //pick up object
+                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);          //check collision with npc
+                interactNPC(npcIndex);                                             //interact with npc
+                if (!collisionOn) {                                                //if no collision
+                    worldY -= speed;                                               //move
                 }
-            }
+            }   //same for all directions
             if (keyH.downPressed) {
                 collisionOn = false;
                 direction = "down";
