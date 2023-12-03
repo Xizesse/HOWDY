@@ -3,14 +3,10 @@ package server;
 import entity.*;
 import main.*;
 import net.*;
-import object.*;
-import tile.TileManager;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import static main.Main.DEV_MODE;
 
 
 //Server panel class, similar to the game panel class, but with a few differences, implementing
@@ -20,19 +16,8 @@ public class ServerPanel extends GamePanel {
     //public GameClient socketClient = new GameClient(this, "localhost");
 
     // Screen settings
-    final int originalTileSize = 16; // 16x16 pixels
-    final int scale = 3; // 3x scale
-    public final int tileSize = originalTileSize * scale; // 48x48 pixels
-    public final int maxScreenCol = 16; // 16 tiles wide
-    public final int maxScreenRow = 16; // 16 tiles tall
-    public final int screenWidth = tileSize * maxScreenCol; // 768 pixels wide
-    public final int screenHeight = tileSize * maxScreenRow; // 768 pixels tal
 
     // WORLD SETTINGS
-    public final int maxWorldCol = 32;
-    public final int maxWorldRow = 32;
-    public final int worldWidth = tileSize * maxWorldCol;
-    public final int worldHeight = tileSize * maxWorldRow;
 
     //NET
     public GameServer socketServer = new GameServer(this);
@@ -46,7 +31,7 @@ public class ServerPanel extends GamePanel {
 
     // Players
     //Array of NPC_Player2
-    public List<NPC_Player2> players = new ArrayList<>(); //created and controlled by the clients
+    public List<NPC_Player> players = new ArrayList<>(); //created and controlled by the clients
 
     // GAME STATE
 
@@ -77,7 +62,7 @@ public class ServerPanel extends GamePanel {
 
                 Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
                 //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                for (NPC_Player2 player : players) {
+                for (NPC_Player player : players) {
                     if (player != null) {
                         //System.out.println("Sending packet to player ");
                         socketServer.sendData(packet.getData(), player.ipAddress, player.port);
@@ -94,7 +79,7 @@ public class ServerPanel extends GamePanel {
 
                 Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
                 //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                for (NPC_Player2 player : players) {
+                for (NPC_Player player : players) {
                     if (player != null) {
                         System.out.println("Sending packet to player ");
                         socketServer.sendData(packet.getData(), player.ipAddress, player.port);
@@ -150,7 +135,7 @@ public class ServerPanel extends GamePanel {
                     npc[i].update();
                     Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
                     //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                    for (NPC_Player2 player : players) {
+                    for (NPC_Player player : players) {
                         if (player != null) {
                             //System.out.println("Sending packet to player ");
                             socketServer.sendData(packet.getData(), player.ipAddress, player.port);

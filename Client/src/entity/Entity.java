@@ -117,6 +117,7 @@ public class Entity {
     }
 
     public void update() {
+        //System.out.println("Entity update");
         setAction();
         collisionOn = false;
         gp.cCheck.checkTile(this);
@@ -126,10 +127,18 @@ public class Entity {
             //System.out.println("Checking collision with players");
             ServerPanel sp = (ServerPanel) gp;
             gp.cCheck.checkNPC_players(this, sp.players);
+            //print if collision is on
+            if (collisionOn) {
+                System.out.println("Collision on");
+            }
+
         }
         if(!collisionOn){
+            //System.out.println("No collision");
             switch (direction) {
                 case "up": worldY -= speed;
+                //System.out.println("up");
+                System.out.println(worldY);
                     break;
                 case "down": worldY += speed;
                     break;

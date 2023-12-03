@@ -1,21 +1,16 @@
 package entity;
 
 import main.GamePanel;
-import main.UtilityTool;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.InetAddress;
 
-public class NPC_Player2 extends Entity
+public class NPC_Player extends Entity
 {
     public InetAddress ipAddress;
-    public NPC_Player2 player;
+    public NPC_Player player;
 
     public int port;
-    public NPC_Player2(InetAddress ipAddress, int port, int x, int y, String direction, GamePanel gp) {
+    public NPC_Player(InetAddress ipAddress, int port, int x, int y, String direction, GamePanel gp) {
         super(gp);
         this.ipAddress = ipAddress;
         this.port = port;
@@ -25,7 +20,7 @@ public class NPC_Player2 extends Entity
         //solidAreaDefaultX = solidArea.x;
         //solidAreaDefaultY = solidArea.y;
     }
-    public NPC_Player2(GamePanel gp) {
+    public NPC_Player(GamePanel gp) {
         super(gp);
 
         direction = "down";

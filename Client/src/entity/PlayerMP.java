@@ -1,13 +1,11 @@
 package entity;
 
-import main.GamePanel;
-
 import java.net.InetAddress;
 
 
 public class PlayerMP  {
     public InetAddress ipAddress;
-    public NPC_Player2 player;
+    public NPC_Player player;
     public int port;
     public char entityID;
     public int x;

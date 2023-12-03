@@ -32,7 +32,7 @@ public class Player extends Entity {
         solidArea = new Rectangle(16,16, 16, 24);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
-        speed = 4;
+        speed = 8;
         direction = "down";
         this.worldX = gp.tileSize* x;
         this.worldY = gp.tileSize* y;
@@ -195,6 +195,25 @@ public class Player extends Entity {
                 String[] dataArray = p6.readData(p6.getData()).split(",");
                 p6.writeData(gp.socketClient);
             }
+              else if (gp.obj[i].id == 5) { //pp
+                  ArrayList<TileChange> changes = new ArrayList<>();
+                  //TODO isto está completamente hardcoded
+                  TileChange change;
+
+                  change = new TileChange(17, 14, 12);
+                  changes.add(change);
+                  change = new TileChange(17, 15, 8);
+                  changes.add(change);
+                  change = new TileChange(17, 16, 8);
+                  changes.add(change);
+                  change = new TileChange(17, 17, 13);
+                  changes.add(change);
+
+                  Packet06MapChange p6 = new Packet06MapChange(0, changes);
+                  System.out.println("Sending map change packet");
+                  String[] dataArray = p6.readData(p6.getData()).split(",");
+                  p6.writeData(gp.socketClient);
+              }
 
 
 

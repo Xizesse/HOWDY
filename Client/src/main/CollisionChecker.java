@@ -1,9 +1,8 @@
 package main;
 
 import entity.Entity;
-import entity.NPC_Player2;
+import entity.NPC_Player;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 public class CollisionChecker {
@@ -253,11 +252,11 @@ public class CollisionChecker {
 
     }
 
-    public int checkNPC_players(Entity entity, List<NPC_Player2> target) {
+    public int checkNPC_players(Entity entity, List<NPC_Player> target) {
         int index = 999;
         ;
         for (int i = 0; i < target.size(); i++) {
-            NPC_Player2 targetEntity = target.get(i);
+            NPC_Player targetEntity = target.get(i);
 
             if (targetEntity != null) {
                 //System.out.println("Checking collision with entity: " + i);

@@ -1,6 +1,6 @@
 package net;
 
-import entity.NPC_Player2;
+import entity.NPC_Player;
 import server.ServerPanel;
 
 import java.net.*;
@@ -39,7 +39,7 @@ public class GameServer extends Thread{
             while (true) {
                 System.out.println("Server running");
                 //print ips from players connected
-                for (  NPC_Player2 player : game.players) {
+                for (  NPC_Player player : game.players) {
                     if(player == null){
                         continue;
                     }
@@ -94,12 +94,12 @@ public class GameServer extends Thread{
                     }
                 }
                 if(game.players.get(0) == null){
-                    game.players.set(0, new NPC_Player2(address, port,0,0,"down", game));
+                    game.players.set(0, new NPC_Player(address, port,0,0,"down", game));
                     System.out.println( "LOGIN player 1 from ["+game.players.get(0).ipAddress.getHostAddress()+"] port: "+game.players.get(0).port);
                     break;
                 }
                 if(game.players.get(1) == null){
-                    game.players.set(1, new NPC_Player2(address, port,0,0,"down", game));
+                    game.players.set(1, new NPC_Player(address, port,0,0,"down", game));
                     System.out.println( "LOGIN player 2 from ["+game.players.get(1).ipAddress.getHostAddress()+"] port: "+game.players.get(1).port);
                     game.gameState = game.playState;
                     break;
@@ -182,7 +182,7 @@ public class GameServer extends Thread{
 
     public void sendDataToAllClients(byte[] data) {
         //System.out.println("Sending to all clients");
-        for(NPC_Player2 player : game.players){
+        for(NPC_Player player : game.players){
             if(player == null){
                 continue;
             }
@@ -193,7 +193,7 @@ public class GameServer extends Thread{
     public void sendDataToAllClientsExceptOne(byte[] data, InetAddress ipAddress, int port) {
         //System.out.println("Sending to all clients except one");
 
-        for(NPC_Player2 player : game.players){
+        for(NPC_Player player : game.players){
             if(player == null){
                 continue;
             }
@@ -205,7 +205,7 @@ public class GameServer extends Thread{
     }
 
     private void updatePlayer(InetAddress address, int port, int x, int y, String direction) {
-        for (NPC_Player2 player : game.players) {
+        for (NPC_Player player : game.players) {
             if (player != null && player.ipAddress.equals(address) && player.port == port) {
                 player.worldX = x;
                 player.worldY = y;

@@ -15,7 +15,7 @@ public class NPC extends Entity {
         //System.out.println("npc constructor created");
 
         direction = "down";
-        speed = 6;
+        speed = 1;
         getImage();
     }
     public void getImage()

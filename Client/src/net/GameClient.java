@@ -16,6 +16,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
     private GamePanel game; // reference to the game panel
 
     public GameClient(GamePanel game, String ipAddress){
+        //System.out.println("GameClient started");
         this.game = game; // set the reference to the game panel
         try {
             this.socket = new DatagramSocket(); // create a new socket
@@ -60,7 +61,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 break;
 
             case MOVE:
-                System.out.println("Move packet received");
+                //System.out.println("Move packet received");
                 packet = new Packet02Move(data);
                 handleMove((Packet02Move)packet);
                 break;

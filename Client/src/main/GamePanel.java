@@ -3,12 +3,11 @@ package main;
 import entity.*;
 import net.Packet00Login;
 import object.SuperObject;
+import server.ServerPanel;
 import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.GameClient;
 
@@ -18,7 +17,8 @@ import static main.Main.DEV_MODE;
 public class GamePanel extends JPanel implements Runnable{
 
     // NETWORK
-    public GameClient socketClient = new GameClient(this, "localhost");
+
+    public GameClient socketClient = null;
 
     // Screen settings
     final int originalTileSize = 16; // 16x16 pixels
@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // Player 2
     public Entity[] npc_players = new Entity[2];//<-I need this for collision checking;
-    public NPC_Player2 player2 = new NPC_Player2(this);
+    public NPC_Player player2 = new NPC_Player(this);
     public String player2Direction = "down";
     public int player2WorldX = 3;
     public int player2WorldY = 15;
@@ -75,12 +75,16 @@ public class GamePanel extends JPanel implements Runnable{
 
 
     public GamePanel() {
-
+        //new GameClient(this, "localhost"); if not an instance of game server
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+
+        if (!(this instanceof ServerPanel)) {
+            socketClient = new GameClient(this, "localhost");
+        }
 
     }
 
