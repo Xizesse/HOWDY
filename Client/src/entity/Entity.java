@@ -123,18 +123,21 @@ public class Entity {
         setAction();
         collisionOn = false;
         gp.cCheck.checkTile(this);                     //check collision with tiles
-        if(collisionOn) System.out.println("Collision tile");
+//        if(collisionOn) System.out.println("Collision tile");
 
         gp.cCheck.checkObject(this,false);      //check collision with objects
-        if(collisionOn) System.out.println("Collision object");
+//        if(collisionOn) System.out.println("Collision object");
+
+        gp.cCheck.checkEntity(this, gp.npc);                       //check collision with NPC
+        gp.cCheck.checkEntity(this, gp.monster);                    //check collision with musters
 
 
         if (gp instanceof ServerPanel) {
             //System.out.println("Checking collision with players");
             if (gp.players != null) {
-                System.out.println("Checking collision with players");
+//                System.out.println("Checking collision with players");
                 gp.cCheck.checkNPC_players(this, gp.players);
-                if(collisionOn) System.out.println("Collision NPC player");
+//                if(collisionOn) System.out.println("Collision NPC player");
             }
             //print if collision is on
 

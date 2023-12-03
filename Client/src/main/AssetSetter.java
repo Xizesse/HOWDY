@@ -61,11 +61,11 @@ public class AssetSetter {
         gp.npc[0] = new NPC_Rat(gp);
         gp.npc[0].worldX =  gp.tileSize * 5;
         gp.npc[0].worldY =  gp.tileSize * 15;
+//TODO second rat hitbox not working
+        gp.npc[1] = new NPC_Rat(gp);
+        gp.npc[1].worldX =  gp.tileSize * 7;
+        gp.npc[1].worldY =  gp.tileSize * 15;
 
-//        gp.npc[1] = new NPC_Rat(gp);
-//        gp.npc[1].worldX =  gp.tileSize * 7;
-//        gp.npc[1].worldY =  gp.tileSize * 15;
-//
 //        gp.npc[2] = new NPC_Rat(gp);
 //        gp.npc[2].worldX =  gp.tileSize * 5;
 //        gp.npc[2].worldY =  gp.tileSize * 17;
@@ -79,10 +79,10 @@ public class AssetSetter {
     public void setMonster(){
         gp.monster[0] = new Monster_Spike(gp);
         gp.monster[0].worldX = 4 * gp.tileSize;
-        gp.monster[0].worldY = 16 * gp.tileSize;
-
+        gp.monster[0].worldY = 15 * gp.tileSize;
+//TODO second monster hitbox not working
         gp.monster[1] = new Monster_Spike(gp);
-        gp.monster[1].worldX = 2 * gp.tileSize;
+        gp.monster[1].worldX = 5 * gp.tileSize;
         gp.monster[1].worldY = 16 * gp.tileSize;
 
     }

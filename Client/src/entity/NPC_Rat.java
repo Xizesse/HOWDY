@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 
+import java.awt.*;
 import java.util.Random;
 
 public class NPC_Rat extends Entity {
@@ -14,6 +15,8 @@ public class NPC_Rat extends Entity {
         direction = "down";
         speed = 1;
         getImage();
+
+        solidArea = new Rectangle(0, 4 * 3, 14*3, 7*3);
     }
     public void getImage()
  {
@@ -46,13 +49,7 @@ public class NPC_Rat extends Entity {
                 direction = "right";
             }
             actionCounter = 0;
-
         }
         actionCounter ++;
-
-
-
     }
-
-
 }

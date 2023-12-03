@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     // Screen settings
     final int originalTileSize = 16; // 16x16 pixels
-    final int scale = 3; // 3x scale
+    public final int scale = 3; // 3x scale
     public final int tileSize = originalTileSize * scale; // 48x48 pixels
     public final int maxScreenCol = 16; // 16 tiles wide
     public final int maxScreenRow = 16; // 16 tiles tall
@@ -56,10 +56,9 @@ public class GamePanel extends JPanel implements Runnable{
     public Player player = new Player(this, keyH, 3,15);
     public Entity[] npc = new Entity[10];
     public SuperObject[] obj = new SuperObject[10];
-    public Entity monster[] = new Entity[10];
+    public Entity[] monster = new Entity[10];
 
     // Player 2
-    public Entity[] npc_players = new Entity[2];//<-I need this for collision checking;
     public NPC_Player player2 = new NPC_Player(this);
     public String player2Direction = "down";
     public int player2WorldX = 3;
@@ -139,11 +138,7 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameState == playState){
             player.update();
             //player2.update(); <- This is done by the client thread
-            /*for (int i = 0; i < npc.length; i++) {
-                if (npc[i] != null) {
-                    npc[i].update();
-                }
-            }*/
+
 
             //  will be added upon in the future
         }
@@ -209,7 +204,7 @@ public class GamePanel extends JPanel implements Runnable{
             // MONSTER
             for (int i = 0; i < monster.length; i++) {
                 if (monster[i] != null) {
-                    //monster[i].draw(g2d);
+                    monster[i].draw(g2d);
                 }
             }
 
@@ -237,6 +232,12 @@ public class GamePanel extends JPanel implements Runnable{
                 player2.draw(g2d);
             }
 
+            for (int i = 0; i < monster.length; i++) {
+                if (monster[i] != null) {
+                    monster[i].draw(g2d);
+                }
+            }
+
             ui.draw(g2d);
         }
 
@@ -261,6 +262,12 @@ public class GamePanel extends JPanel implements Runnable{
             // PLAYER2
             if (player2 != null) {
                 player2.draw(g2d);
+            }
+
+            for (int i = 0; i < monster.length; i++) {
+                if (monster[i] != null) {
+                    monster[i].draw(g2d);
+                }
             }
 
             ui.draw(g2d);

@@ -3,22 +3,20 @@ package monster;
 import entity.Entity;
 import main.GamePanel;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Monster_Spike extends Entity {
 
     public Monster_Spike(GamePanel gp) {
         super(gp);
+        direction = "down";
         speed = 1;
         maxHealth = 1;
         currentHealth = maxHealth;
-        solidArea.x = 3;
-        solidArea.y = 10;
-        solidArea.width = 42;
-        solidArea.height = 38;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
+        solidArea = new Rectangle(0, 0, 48, 48);
         getImage();
+
     }
     public void getImage(){
 

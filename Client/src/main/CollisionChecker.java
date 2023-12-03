@@ -2,6 +2,7 @@ package main;
 
 import entity.Entity;
 import entity.NPC_Player;
+import monster.Monster_Spike;
 
 import java.util.List;
 
@@ -153,44 +154,34 @@ public class CollisionChecker {
             if (target[i] == null) {
                 continue;
             }
-
+            System.out.println("Checking entity "+i);
             // targetEntity solid area position
             target[i].solidArea.x = target[i].worldX + target[i].solidArea.x; //get the object worldX coordinate of the left most edge of the solid area
             target[i].solidArea.y = target[i].worldY + target[i].solidArea.y; //get the object worldY coordinate of the top most edge of the solid area
 
             switch (entity.direction) {
-                case "up":
-                    entity.solidArea.y -= entity.speed;                         //get next position of the top most edge of the solid area
-                    if (entity.solidArea.intersects(target[i].solidArea)) {      //check if the entity's solid area intersects with the object's solid area
-                        entity.collisionOn = true;                          //if it does, set collisionOn to true
-                        index = i;
-                    }
-
-                    break;
-                //repeat for the other directions
-                case "down":
-                    entity.solidArea.y += entity.speed;
-                    if (entity.solidArea.intersects(target[i].solidArea)) {
-                        entity.collisionOn = true;
-                        index = i;
-                    }
-                    break;
-                case "left":
-                    entity.solidArea.x -= entity.speed;
-                    if (entity.solidArea.intersects(target[i].solidArea)) {
-                        entity.collisionOn = true;
-                        index = i;
-                    }
-                    break;
-                case "right":
-                    entity.solidArea.x += entity.speed;
-                    if (entity.solidArea.intersects(target[i].solidArea)) {
-                        entity.collisionOn = true;
-                        index = i;
-                    }
-                    break;
-
+                case "up": entity.solidArea.y -= entity.speed; break;
+                case "down": entity.solidArea.y += entity.speed; break;
+                case "left": entity.solidArea.x -= entity.speed; break;
+                case "right": entity.solidArea.x += entity.speed; break;
             }
+
+            //print solid areas
+            System.out.println("Entity solid area: "+(entity.solidArea.x/ gp.tileSize)+","+(entity.solidArea.y/ gp.tileSize));
+            System.out.println("Target solid area: "+target[i].solidArea.x/ gp.tileSize+","+target[i].solidArea.y/ gp.tileSize);
+
+            if (entity.solidArea.intersects(target[i].solidArea)) {
+                System.out.println("Collision with entity "+i);
+            //check if the entity's solid area intersects with the object's solid area
+                if(target[i] != entity) {                               //prevents entity from colliding with itself
+                    entity.collisionOn = true;
+                    //if it does, set collisionOn to true
+                    index = i;
+                    //System.out.println("Collision with entity "+i);
+                }
+            }
+
+
             entity.solidArea.x = entity.solidAreaDefaultX;          //reset the entity's solid area position
             entity.solidArea.y = entity.solidAreaDefaultY;          //reset the entity's solid area position
             target[i].solidArea.x = target[i].solidAreaDefaultX;    //reset the object's solid area position

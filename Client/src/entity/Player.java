@@ -86,6 +86,7 @@ public class Player extends Entity {
                 pickUpObject(objIndex);                                            //pick up object
                 int npcIndex = gp.cCheck.checkEntity(this, gp.npc);          //check collision with npc
                 interactNPC(npcIndex);                                             //interact with npc
+                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
                 if (!collisionOn) {                                                //if no collision
                     worldY -= speed;                                               //move
                 }
@@ -98,6 +99,7 @@ public class Player extends Entity {
                 pickUpObject(objIndex);
                 int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
                 interactNPC(npcIndex);
+                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
                 if (!collisionOn) {
                     worldY += speed;
                 }
@@ -110,6 +112,7 @@ public class Player extends Entity {
                 pickUpObject(objIndex);
                 int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
                 interactNPC(npcIndex);
+                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
                 if (!collisionOn) {
                     worldX -= speed;
                 }
@@ -122,6 +125,12 @@ public class Player extends Entity {
                 pickUpObject(objIndex);
                 int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
                 interactNPC(npcIndex);
+                System.out.println(gp.monster[0]);
+                System.out.println(gp.monster[1]);
+                System.out.println(gp.monster[2]);
+
+
+                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
                 if (!collisionOn) {
                     worldX += speed;
                 }
