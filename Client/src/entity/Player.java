@@ -2,10 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
-import net.Packet02Move;
-import net.Packet04Object;
-import net.Packet06MapChange;
-import net.TileChange;
+import net.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,6 +16,7 @@ public class Player extends Entity {
     public final int screenY;
 
     public boolean helmetOn = false;
+
     public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
 
@@ -32,6 +30,10 @@ public class Player extends Entity {
         solidArea = new Rectangle(16,16, 16, 24);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+
+        attackArea.height = 36;
+        attackArea.width = 36;
+
         speed = 8;
         direction = "down";
         this.worldX = gp.tileSize* x;
@@ -70,14 +72,29 @@ public class Player extends Entity {
         HelmetLeft = setup("player1/ironHelmet_left");
         HelmetRight = setup("player1/ironHelmet_right");
 
+        attackUp = setup("attack/attack_up");
+        attackDown = setup("attack/attack_down");
+        attackLeft = setup("attack/attack_left");
+        attackRight = setup("attack/attack_right");
+
+
     }
 
 
 @Override
     public void update() {
-
+        if (isAttacking){
+            attack();
+        }
         //MOVEMENT AND COLLISION CHECKING
-        if (keyH.downPressed|| keyH.upPressed|| keyH.leftPressed|| keyH.rightPressed) {
+        else if (keyH.downPressed|| keyH.upPressed|| keyH.leftPressed|| keyH.rightPressed || keyH.spacePressed) {
+            if (keyH.spacePressed) {
+                isAttacking = true;
+                Packet03Attack packet = new Packet03Attack(0, 1);
+                packet.writeData(gp.socketClient);
+                attackCounter = 0;
+
+            }
             if (keyH.upPressed) {
                 collisionOn = false;                                               //reset collision
                 direction = "up";                                                  //set direction
@@ -157,6 +174,20 @@ public class Player extends Entity {
         }
     }
 
+    private void attack() {
+        attackCounter++;
+        if (attackCounter > 5){
+            isAttacking = false;
+            attackCounter = 0;
+        }
+
+        switch(direction){
+            case "up":
+                attackArea.x = worldX + gp.tileSize/2 - attackArea.width/2;
+                attackArea.y = worldY - gp.tileSize/2 - attackArea.height/2 - gp.tileSize*attackCounter/5;
+                break;
+        }
+    }
 
 
     public void pickUpObject(int i){
@@ -243,10 +274,14 @@ public class Player extends Entity {
 
         BufferedImage body = null;
         BufferedImage helmet = null;
+        BufferedImage attack = null;
 
 
         switch (direction) {
             case "up":
+                if (isAttacking) {
+                    attack = attackUp;
+                }
                 if (spriteNum == 1) {
                     body = bodyUp1;
                 } else if (spriteNum == 2) {
@@ -255,6 +290,9 @@ public class Player extends Entity {
                 helmet = HelmetUp;
                 break;
             case "down":
+                if (isAttacking) {
+                    attack = attackDown;
+                }
                 if (spriteNum == 1) {
                     body = bodyDown1;
                 } else if (spriteNum == 2) {
@@ -263,6 +301,9 @@ public class Player extends Entity {
                 helmet = HelmetDown;
                 break;
             case "left":
+                if (isAttacking) {
+                    attack = attackLeft;
+                }
                 if (spriteNum == 1) {
                     body = BodyLeft1;
                 } else if (spriteNum == 2) {
@@ -271,6 +312,9 @@ public class Player extends Entity {
                 helmet = HelmetLeft;
                 break;
             case "right":
+                if (isAttacking) {
+                    attack = attackRight;
+                }
                 if (spriteNum == 1) {
                     body = BodyRight1;
                 } else if (spriteNum == 2)
@@ -304,6 +348,23 @@ public class Player extends Entity {
 
         g2d.drawImage(body, x, y, null);
         if (helmetOn) {g2d.drawImage(helmet, x, y, null);}
+        if (isAttacking)
+        {
+            switch (direction) {
+                case "up":
+                    g2d.drawImage(attack, x, y - gp.tileSize/2 - gp.tileSize*attackCounter/5, null);
+                    break;
+                case "down":
+                    g2d.drawImage(attack, x, y + gp.tileSize/2 + gp.tileSize*attackCounter/5, null);
+                    break;
+                case "left":
+                    g2d.drawImage(attack, x - gp.tileSize/2 - gp.tileSize*attackCounter/5 , y, null);
+                    break;
+                case "right":
+                    g2d.drawImage(attack, x + + gp.tileSize/2 + gp.tileSize*attackCounter/5, y, null);
+                    break;
+            }
+        }
 
     }
 }

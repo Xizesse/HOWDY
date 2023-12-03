@@ -122,7 +122,12 @@ public class GameServer extends Thread{
                 sendDataToAllClientsExceptOne(p.getData(), address, port);
                 //System.out.println("["+address.getHostName()+"] port: "+port+", entity " + p.getEntityID() + " moved to " + p.getX() + "," + p.getY() + " direction: " + p.getDirection());
                 break;
-
+            case ATTACK:
+                Packet03Attack p3 = new Packet03Attack(data);
+                System.out.println("["+address.getHostName()+"] port: "+port+", entity" + p3.getEntityID() + " attacked " + p3.getAttacks() + " times");
+                sendDataToAllClientsExceptOne(p3.getData(), address, port);
+                //System.out.println("["+address.getHostName()+"] port: "+port+", entity " + p3.getEntityID() + " attacked " + p3.getAttacks() + " times");
+                break;
             case OBJECT:
                 Packet04Object p4 = new Packet04Object(data);
 

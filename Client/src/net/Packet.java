@@ -2,7 +2,7 @@ package net;
 
 public abstract class Packet {
     public static enum PacketTypes {
-        INVALID(-1), LOGIN(00), DISCONNECT(01), MOVE(02), OBJECT(04), MAPCHANGE(06);
+        INVALID(-1), LOGIN(00), DISCONNECT(01), MOVE(02), ATTACK(03), OBJECT(04), MAPCHANGE(06);
 
         private int packetId;
 

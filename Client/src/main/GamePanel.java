@@ -8,6 +8,7 @@ import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable{
     public GameClient socketClient = null;
 
     // Screen settings
-    final int originalTileSize = 16; // 16x16 pixels
+    public final int originalTileSize = 16; // 16x16 pixels
     public final int scale = 3; // 3x scale
     public final int tileSize = originalTileSize * scale; // 48x48 pixels
     public final int maxScreenCol = 16; // 16 tiles wide
@@ -77,7 +78,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
 
-    public GamePanel() {
+    public GamePanel() throws IOException {
         //new GameClient(this, "localhost"); if not an instance of game server
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -91,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     }
 
-    public void setupGame() {
+    public void setupGame() throws IOException {
         aS.setObject();
         aS.setPlayer2();
         aS.setNPC();

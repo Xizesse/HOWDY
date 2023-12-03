@@ -7,6 +7,8 @@ import main.KeyHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CollisionCheckerTest {
@@ -14,7 +16,7 @@ class CollisionCheckerTest {
     private CollisionChecker colCheck;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         gp = new GamePanel();
         colCheck = new CollisionChecker(gp);
     }

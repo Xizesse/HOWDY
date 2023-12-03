@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import org.w3c.dom.css.Rect;
 import server.ServerPanel;
 
 import javax.imageio.ImageIO;
@@ -19,14 +20,18 @@ public class Entity {
     public int speed;
 
     public BufferedImage titleArt, bodyUp1, bodyUp2, bodyDown1, bodyDown2, BodyLeft1, BodyLeft2, BodyRight1, BodyRight2;
+    public BufferedImage attackUp, attackLeft, attackDown, attackRight;
 
     public String direction;
     public int spriteCounter = 0;
     public int actionCounter = 0;
+    public int attackCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
+    public boolean isAttacking = false;
     //Character stats
     public int maxHealth;
     public int currentHealth;
@@ -116,6 +121,18 @@ public class Entity {
         return scaledImage;
     }
 
+    public BufferedImage setupScaled (String imagePath, int width, int height){
+        UtilityTool uT = new UtilityTool();
+        BufferedImage scaledImage = null;
+        try {
+            scaledImage = ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream(imagePath + ".png")));
+            scaledImage = uT.scaleImage(scaledImage, gp.originalTileSize * width, gp.originalTileSize * height);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return scaledImage;
+    }
+
     public void update() {
         //System.out.println("Entity update");
         //print the content of gp players
@@ -123,21 +140,17 @@ public class Entity {
         setAction();
         collisionOn = false;
         gp.cCheck.checkTile(this);                     //check collision with tiles
-//        if(collisionOn) System.out.println("Collision tile");
+
 
         gp.cCheck.checkObject(this,false);      //check collision with objects
-//        if(collisionOn) System.out.println("Collision object");
 
-        gp.cCheck.checkEntity(this, gp.npc);                       //check collision with NPC
-        gp.cCheck.checkEntity(this, gp.monster);                    //check collision with musters
 
 
         if (gp instanceof ServerPanel) {
             //System.out.println("Checking collision with players");
             if (gp.players != null) {
-//                System.out.println("Checking collision with players");
                 gp.cCheck.checkNPC_players(this, gp.players);
-//                if(collisionOn) System.out.println("Collision NPC player");
+
             }
             //print if collision is on
 
@@ -147,7 +160,7 @@ public class Entity {
             switch (direction) {
                 case "up": worldY -= speed;
                 //System.out.println("up");
-                System.out.println(worldY);
+                //System.out.println(worldY);
                     break;
                 case "down": worldY += speed;
                     break;

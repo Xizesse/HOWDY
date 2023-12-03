@@ -65,7 +65,11 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 packet = new Packet02Move(data);
                 handleMove((Packet02Move)packet);
                 break;
-
+            case ATTACK:
+                packet = new Packet03Attack(data);
+                handleAtttack((Packet03Attack)packet);
+                System.out.println("Attack packet received");
+                break;
             case OBJECT:
                 System.out.println("Object packet received");
                 packet = new Packet04Object(data);
@@ -82,17 +86,30 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
     }
 
+    private void handleAtttack(Packet03Attack packet) {
+        System.out.println("Attack packet received");
+        if (this.game != null) {
+            if (packet.getEntityID() == 0) {
+                //System.out.println("Player 1 attacked");
+                game.player2.isAttacking = true;
+            } else {
+
+
+            }
+        }
+    }
 
 
     private void handleMove(Packet02Move packet) {
                 if(this.game != null){
-//                    System.out.println("ID = " + packet.getEntityID() + " X = " + packet.getX() + " Y = " + packet.getY() + " Direction = " + packet.getDirection());
+                    //System.out.println("ID = " + packet.getEntityID() + " X = " + packet.getX() + " Y = " + packet.getY() + " Direction = " + packet.getDirection());
                     if(packet.getEntityID() == 0){
+
                         //this.game.player2.direction = packet.getDirection();
                         //this.game.player2.worldX = packet.getX();
                         //this.game.player2.worldY = packet.getY();
                         game.updatePlayer2(packet.getDirection(), packet.getX(), packet.getY());
-//                        System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
+                        System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
                     }
                     else
                         for(int i = 0; i < game.npc.length; i++){

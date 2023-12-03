@@ -5,6 +5,7 @@ import main.*;
 import net.*;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +32,14 @@ public class ServerPanel extends GamePanel {
 
     // Players
     //Array of NPC_Player2
-     //created and controlled by the clients
+    public List<NPC_Player> players = new ArrayList<>(); //created and controlled by the clients
 
     // GAME STATE
 
 
-    public ServerPanel() {
+    public ServerPanel() throws IOException {
+        super();
+
     }
 
     public void setupGame() {

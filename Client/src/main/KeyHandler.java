@@ -9,7 +9,7 @@ public class KeyHandler implements KeyListener {
 
     GamePanel gp;
 
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed;
 
     public KeyHandler(GamePanel gp) {
         this.gp = gp;
@@ -64,12 +64,16 @@ public class KeyHandler implements KeyListener {
             else if(code == KeyEvent.VK_RIGHT) {
                 rightPressed = true;
             }
+            else if (code == KeyEvent.VK_SPACE) {
+                spacePressed = true;
+            }
             else if(code == KeyEvent.VK_P) {
                 gp.gameState = gp.pauseState;
             }
             else if (code == KeyEvent.VK_T) {
                 DEV_MODE = !DEV_MODE;
             }
+
         }
         //PAUSE
         else if(gp.gameState == gp.pauseState) {
@@ -105,6 +109,9 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_RIGHT) {
             rightPressed = false;
+        }
+        if (code == KeyEvent.VK_SPACE) {
+            spacePressed = false;
         }
 
     }
