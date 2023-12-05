@@ -131,20 +131,14 @@ public class GameServer extends Thread{
             case OBJECT:
                 Packet04Object p4 = new Packet04Object(data);
 
-                System.out.println("OBJECT FROM ["+address.getHostName()+"] port: "+port+", object " + p4.getitemIndex() );
+                System.out.println("REQUEST FROM ["+address.getHostName()+"]: "+port+", object " + p4.getitemIndex() + " that is " + game.obj[p4.getitemIndex()].name);
                 //check if that item is available
                 //print all items addresses
-                System.out.println("Objects in the game: ");
-                //System.out.println("Object " + game.obj[0]  + "has ID: " + game.obj[0].id);
-                for (int i = 0; i < game.obj.length; i++) {
-                    if (game.obj[i] != null) {
-                        System.out.println("Object " + i  + "has ID: " + game.obj[i].id);
-                    }
-                }
+
                 if (game.obj[ p4.getitemIndex()] != null) {
                     //check if the item is already given
                     //send packet back to the player -> he recieves the item
-                    System.out.println("["+address.getHostName()+"] port: "+port+", object" + (char) p4.getitemIndex() + " give");
+                    System.out.println("GIVE ITEM TO ["+address.getHostName()+"] port: "+port+", object" + (char) p4.getitemIndex() + " " + game.obj[p4.getitemIndex()].name);
 
                     Packet04Object p4_2 = new Packet04Object(p4.getitemIndex(), true);
                     sendData(p4_2.getData(), address, port);
@@ -196,8 +190,7 @@ public class GameServer extends Thread{
     }
 
     public void sendDataToAllClientsExceptOne(byte[] data, InetAddress ipAddress, int port) {
-        //System.out.println("Sending to all clients except one");
-
+        System.out.println("Sending to: "+ipAddress.getHostAddress()+" port: "+port);
         for(NPC_Player player : game.players){
             if(player == null){
                 continue;

@@ -1,5 +1,7 @@
 package main;
 
+import effects.Light;
+
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
@@ -72,6 +74,9 @@ public class KeyHandler implements KeyListener {
             }
             else if (code == KeyEvent.VK_T) {
                 DEV_MODE = !DEV_MODE;
+            }
+            else if (code == KeyEvent.VK_L) {
+                gp.LIGHT = !gp.LIGHT;
             }
 
         }

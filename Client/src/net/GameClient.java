@@ -109,7 +109,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                         //this.game.player2.worldX = packet.getX();
                         //this.game.player2.worldY = packet.getY();
                         game.updatePlayer2(packet.getDirection(), packet.getX(), packet.getY());
-                        System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
+                        //System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
                     }
                     else
                         for(int i = 0; i < game.npc.length; i++){
@@ -133,13 +133,9 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
                 //if give is true, give it to the player
                 if (packet.getGive()) {
-                    System.out.println("Give is true");
+                    System.out.println("\n\nRECEIVED ITEM");
 
-                    if (game.obj[packet.getitemIndex()].id == 1) {
-                        System.out.println("Helmet PickUp");
-                        }
 
-                    }
                     game.player.inventory.add(game.obj[packet.getitemIndex()]);
                     System.out.println("Items in the inventory: ");
                     for (int i = 0; i < game.player.inventory.size(); i++) {
@@ -148,11 +144,12 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 }
                 //if give is false, give it to the other player
                 else {
+                    System.out.println("\n\nDID NOT RECEIVE ITEM");
                     game.player2.inventory.add(game.obj[packet.getitemIndex()]);
                 }
                 //delete the object
                 this.game.obj[packet.getitemIndex()] = null;
-
+            }
 
 
         }

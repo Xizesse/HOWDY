@@ -39,17 +39,24 @@ public class UI {
         if(gp.gameState == gp.playState){
 
             drawPlayerLife(g2d);
+            drawInventory(g2d);
+            drawInstructions(g2d);
+
         }
 
         else if (gp.gameState == gp.pauseState) {
             drawPauseScreen(g2d);
             drawPlayerLife(g2d);
+            drawInventory(g2d);
+
 
         }
         //read state
         else if (gp.gameState == gp.readState) {
             drawReadScreen(g2d);
             drawPlayerLife(g2d);
+            drawInventory(g2d);
+            drawInstructions(g2d);
         }
 
 
@@ -79,6 +86,37 @@ public class UI {
         }
     }
 
+    private void drawInventory(Graphics2D g2d) {
+
+        int x =  gp.screenWidth - gp.tileSize;
+        int y = gp.screenWidth - gp.tileSize - gp.tileSize/2 ;
+
+        for (int i = 0; i < gp.player.inventory.size(); i++) {
+
+            //draw a small black square
+            g2d.setColor(Color.black);
+            g2d.fillRect(x, y, gp.tileSize, gp.tileSize);
+
+            g2d.drawImage(gp.player.inventory.get(i).image, x, y, null);
+            x -= gp.tileSize;
+            }
+
+    }
+
+    private void drawInstructions(Graphics2D g2d) {
+
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 20f));
+        g2d.setColor(Color.WHITE);
+        String text = "P - Pause";
+        int x = getXforCenteredText(text, g2d);
+        int y = gp.tileSize;
+        g2d.drawString(text, x, y);
+        text = "L - Light Effects";
+        x = getXforCenteredText(text, g2d);
+        y = gp.tileSize*2;
+        g2d.drawString(text, x, y);
+
+    }
 
     public void drawPauseScreen(Graphics2D g2d){
         String text = "PAUSED";

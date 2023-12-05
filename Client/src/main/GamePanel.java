@@ -1,5 +1,6 @@
 package main;
 
+import effects.EffectManager;
 import entity.*;
 import net.Packet00Login;
 import object.SuperObject;
@@ -20,7 +21,6 @@ import static main.Main.DEV_MODE;
 public class GamePanel extends JPanel implements Runnable{
 
     // NETWORK
-
     public GameClient socketClient = null;
 
     // Screen settings
@@ -77,6 +77,9 @@ public class GamePanel extends JPanel implements Runnable{
     public final int readState = 3;
 
 
+    //Effect light
+    EffectManager effectManager = new EffectManager(this);
+    boolean LIGHT = true;
 
     public GamePanel() throws IOException {
         //new GameClient(this, "localhost"); if not an instance of game server
@@ -97,6 +100,7 @@ public class GamePanel extends JPanel implements Runnable{
         aS.setPlayer2();
         aS.setNPC();
         aS.setMonster();
+        effectManager.setup();
         gameState = titleState;
         //playMusic(0);
     }
@@ -206,6 +210,7 @@ public class GamePanel extends JPanel implements Runnable{
                     monster[i].draw(g2d);
                 }
             }
+            if (LIGHT) effectManager.draw(g2d);
 
             ui.draw(g2d);
         } else if (gameState == pauseState) {
@@ -236,7 +241,7 @@ public class GamePanel extends JPanel implements Runnable{
                     monster[i].draw(g2d);
                 }
             }
-
+            if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
         }
 
@@ -268,7 +273,7 @@ public class GamePanel extends JPanel implements Runnable{
                     monster[i].draw(g2d);
                 }
             }
-
+            if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
         }
 

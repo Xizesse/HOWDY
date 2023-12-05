@@ -196,16 +196,16 @@ public class NPC_Player extends Entity
                 if (inventory.get(i).equippable) {
                     switch (direction) {
                         case "up":
-                            g2d.drawImage(inventory.get(i).up, worldX, worldY, null);
+                            g2d.drawImage(inventory.get(i).up, screenX, screenY, null);
                             break;
                         case "down":
-                            g2d.drawImage(inventory.get(i).down, worldX, worldY, null);
+                            g2d.drawImage(inventory.get(i).down, screenX, screenY, null);
                             break;
                         case "left":
-                            g2d.drawImage(inventory.get(i).left, worldX, worldY, null);
+                            g2d.drawImage(inventory.get(i).left, screenX, screenY, null);
                             break;
                         case "right":
-                            g2d.drawImage(inventory.get(i).right, worldX, worldY, null);
+                            g2d.drawImage(inventory.get(i).right, screenX, screenY, null);
                             break;
                     }
                 }
