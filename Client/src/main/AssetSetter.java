@@ -50,6 +50,10 @@ public class AssetSetter {
         gp.obj[7] = new OBJ_Shield(gp);
         gp.obj[7].worldX = 8 * gp.tileSize;
         gp.obj[7].worldY = 17 * gp.tileSize;
+
+        gp.obj[8] = new OBJ_Firefly(gp);
+        gp.obj[8].worldX = 8 * gp.tileSize;
+        gp.obj[8].worldY = 19 * gp.tileSize;
     }
 
     public void setPlayer2(){

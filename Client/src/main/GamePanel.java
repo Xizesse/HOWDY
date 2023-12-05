@@ -80,6 +80,7 @@ public class GamePanel extends JPanel implements Runnable{
     //Effect light
     EffectManager effectManager = new EffectManager(this);
     boolean LIGHT = true;
+    public int lightsize = 200;
 
     public GamePanel() throws IOException {
         //new GameClient(this, "localhost"); if not an instance of game server

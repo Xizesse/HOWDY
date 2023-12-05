@@ -348,19 +348,24 @@ public class Player extends Entity {
         g2d.drawImage(body, x, y, null);
         for (int i = 0; i < inventory.size(); i++) {
             if (inventory.get(i).equippable) {
-                switch (direction) {
-                    case "up":
-                        g2d.drawImage(inventory.get(i).up, x, y, null);
-                        break;
-                    case "down":
-                        g2d.drawImage(inventory.get(i).down, x, y, null);
-                        break;
-                    case "left":
-                        g2d.drawImage(inventory.get(i).left, x, y, null);
-                        break;
-                    case "right":
-                        g2d.drawImage(inventory.get(i).right, x, y, null);
-                        break;
+                if(inventory.get(i).name == "firefly"){
+                    g2d.drawImage(inventory.get(i).image, x, y-gp.tileSize, null);
+                }
+                else {
+                    switch (direction) {
+                        case "up":
+                            g2d.drawImage(inventory.get(i).up, x, y, null);
+                            break;
+                        case "down":
+                            g2d.drawImage(inventory.get(i).down, x, y, null);
+                            break;
+                        case "left":
+                            g2d.drawImage(inventory.get(i).left, x, y, null);
+                            break;
+                        case "right":
+                            g2d.drawImage(inventory.get(i).right, x, y, null);
+                            break;
+                    }
                 }
             }
 

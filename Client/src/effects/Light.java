@@ -19,6 +19,7 @@ public class Light {
     }
 
     public void updateTorchEffect() {
+        size = gp.lightsize;
         torchEffect = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) torchEffect.getGraphics();
         Area screen = new Area(new Rectangle(0, 0, gp.screenWidth, gp.screenHeight));

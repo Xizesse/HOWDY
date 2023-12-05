@@ -137,6 +137,10 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
 
                     game.player.inventory.add(game.obj[packet.getitemIndex()]);
+                    if (game.obj[packet.getitemIndex()].name == "firefly") {
+                        game.lightsize += 100;
+                        System.out.println("Light size increased to " + game.lightsize);
+                    }
                     System.out.println("Items in the inventory: ");
                     for (int i = 0; i < game.player.inventory.size(); i++) {
                         System.out.println("Item " + i + " has ID: " + game.player.inventory.get(i).id + " and is a " + game.player.inventory.get(i).getClass());
