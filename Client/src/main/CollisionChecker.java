@@ -147,14 +147,16 @@ public class CollisionChecker {
 
         int index = 999;
         // Entity solid area position
-        entity.solidArea.x = entity.worldX + entity.solidArea.x; //get the entity worldX coordinate of the left most edge of the solid area
-        entity.solidArea.y = entity.worldY + entity.solidArea.y; //get the entity worldY coordinate of the top most edge of the solid area
 
         for (int i = 0; i < target.length; i++) {
             if (target[i] == null) {
                 continue;
             }
-            System.out.println("Checking entity "+i);
+            entity.solidArea.x = entity.worldX + entity.solidArea.x; //get the entity worldX coordinate of the left most edge of the solid area
+            entity.solidArea.y = entity.worldY + entity.solidArea.y; //get the entity worldY coordinate of the top most edge of the solid area
+            //System.out.println("Checking entity "+i);
+
+
             // targetEntity solid area position
             target[i].solidArea.x = target[i].worldX + target[i].solidArea.x; //get the object worldX coordinate of the left most edge of the solid area
             target[i].solidArea.y = target[i].worldY + target[i].solidArea.y; //get the object worldY coordinate of the top most edge of the solid area
@@ -167,17 +169,15 @@ public class CollisionChecker {
             }
 
             //print solid areas
-            System.out.println("Entity solid area: "+(entity.solidArea.x/ gp.tileSize)+","+(entity.solidArea.y/ gp.tileSize));
-            System.out.println("Target solid area: "+target[i].solidArea.x/ gp.tileSize+","+target[i].solidArea.y/ gp.tileSize);
+//            System.out.println("Entity solid area: "+(entity.solidArea.x/ gp.tileSize)+","+(entity.solidArea.y/ gp.tileSize));
+//            System.out.println("Target solid area: "+target[i].solidArea.x/ gp.tileSize+","+target[i].solidArea.y/ gp.tileSize);
 
             if (entity.solidArea.intersects(target[i].solidArea)) {
-                System.out.println("Collision with entity "+i);
             //check if the entity's solid area intersects with the object's solid area
                 if(target[i] != entity) {                               //prevents entity from colliding with itself
                     entity.collisionOn = true;
                     //if it does, set collisionOn to true
                     index = i;
-                    //System.out.println("Collision with entity "+i);
                 }
             }
 
@@ -185,7 +185,7 @@ public class CollisionChecker {
             entity.solidArea.x = entity.solidAreaDefaultX;          //reset the entity's solid area position
             entity.solidArea.y = entity.solidAreaDefaultY;          //reset the entity's solid area position
             target[i].solidArea.x = target[i].solidAreaDefaultX;    //reset the object's solid area position
-            target[i].solidArea.y = target[i].solidAreaDefaultY;
+            target[i].solidArea.y = target[i].solidAreaDefaultY;    //reset the object's solid area position
         }
         return index;
     }
