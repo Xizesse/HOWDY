@@ -41,7 +41,6 @@ public class Packet02Move extends Packet{
         return ("02" + this.entityID + "," + this.x + "," + this.y + "," + this.direction).getBytes();
     }
 
-
     public int getEntityID(){
         return entityID;
     }
@@ -51,7 +50,6 @@ public class Packet02Move extends Packet{
     public int getY(){
         return y;
     }
-
     public String getDirection(){
         return direction;
     }

@@ -133,22 +133,27 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
                 //if give is true, give it to the player
                 if (packet.getGive()) {
+                    System.out.println("Give is true");
 
                     if (game.obj[packet.getitemIndex()].id == 1) {
                         System.out.println("Helmet PickUp");
-                        game.player.helmetOn = true;
+                        }
 
-
+                    }
+                    game.player.inventory.add(game.obj[packet.getitemIndex()]);
+                    System.out.println("Items in the inventory: ");
+                    for (int i = 0; i < game.player.inventory.size(); i++) {
+                        System.out.println("Item " + i + " has ID: " + game.player.inventory.get(i).id + " and is a " + game.player.inventory.get(i).getClass());
                     }
                 }
                 //if give is false, give it to the other player
                 else {
+                    game.player2.inventory.add(game.obj[packet.getitemIndex()]);
                 }
                 //delete the object
-                System.out.println("Helmet deleted");
-
                 this.game.obj[packet.getitemIndex()] = null;
-            }
+
+
 
         }
     }

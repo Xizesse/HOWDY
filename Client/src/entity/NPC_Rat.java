@@ -10,7 +10,7 @@ public class NPC_Rat extends Entity {
 
     public NPC_Rat(GamePanel gp) {
         super(gp);
-        //System.out.println("npc constructor created");
+
 
         direction = "down";
         speed = 1;
@@ -31,7 +31,7 @@ public class NPC_Rat extends Entity {
     }
     @Override
     public void setAction() {
-        //System.out.println("npc action");
+
         actionCounter ++;
         if (actionCounter > 40){
             Random random = new Random();

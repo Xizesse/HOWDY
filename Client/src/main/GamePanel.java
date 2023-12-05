@@ -154,7 +154,6 @@ public class GamePanel extends JPanel implements Runnable{
                 player2.direction = direction;
                 player2.worldX = worldX;
                 player2.worldY = worldY;
-//                System.out.println("Player 2 updated: " + player2.worldX + "," + player2.worldY);
             }
         }
         if(gameState == pauseState){
@@ -199,7 +198,6 @@ public class GamePanel extends JPanel implements Runnable{
             player.draw(g2d);
             // PLAYER2
             if (player2 != null) {
-                //System.out.println("Drawing Player 2 on " + player2WorldX + "," + player2WorldY + " direction: " + player2Direction);
                 player2.draw(g2d);
             }
             // MONSTER

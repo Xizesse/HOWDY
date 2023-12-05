@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
+import object.SuperObject;
 import org.w3c.dom.css.Rect;
 import server.ServerPanel;
 
@@ -9,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.Objects;
 
 public class Entity {
@@ -35,6 +37,8 @@ public class Entity {
     //Character stats
     public int maxHealth;
     public int currentHealth;
+
+
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -134,9 +138,6 @@ public class Entity {
     }
 
     public void update() {
-        //System.out.println("Entity update");
-        //print the content of gp players
-        //System.out.println("gp.players: " + gp.players);
         setAction();
         collisionOn = false;
         gp.cCheck.checkTile(this);                     //check collision with tiles
@@ -147,7 +148,6 @@ public class Entity {
 
 
         if (gp instanceof ServerPanel) {
-            //System.out.println("Checking collision with players");
             if (gp.players != null) {
                 gp.cCheck.checkNPC_players(this, gp.players);
 
@@ -156,11 +156,8 @@ public class Entity {
 
         }
         if(!collisionOn){
-            //System.out.println("No collision");
             switch (direction) {
                 case "up": worldY -= speed;
-                //System.out.println("up");
-                //System.out.println(worldY);
                     break;
                 case "down": worldY += speed;
                     break;

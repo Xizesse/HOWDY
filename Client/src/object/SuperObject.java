@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 
 public class SuperObject {
     public BufferedImage image, image2, image3;
+    public BufferedImage up,down,left,right;
+    public boolean equippable = false;
     public String name;
     public byte id;
     public boolean collision = false;

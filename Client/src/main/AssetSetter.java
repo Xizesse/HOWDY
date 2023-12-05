@@ -3,10 +3,7 @@ package main;
 import entity.NPC_Rat;
 import entity.NPC_Player;
 import monster.Monster_Spike;
-import object.OBJ_Axe;
-import object.OBJ_Helmet;
-import object.OBJ_Book;
-import object.OBJ_PP;
+import object.*;
 
 public class AssetSetter {
 
@@ -21,11 +18,11 @@ public class AssetSetter {
         //System.out.println("Setting up objects from asset setter");
         gp.obj[0] = new OBJ_Helmet(gp);
         gp.obj[0].worldX = 8 * gp.tileSize;
-        gp.obj[0].worldY = 15 * gp.tileSize;
+        gp.obj[0].worldY = 13 * gp.tileSize;
 
         //System.out.println("Object 0 is "+gp.obj[0]);
         gp.obj[1] = new OBJ_Axe(gp);
-        gp.obj[1].worldX = 6 * gp.tileSize;
+        gp.obj[1].worldX = 8 * gp.tileSize;
         gp.obj[1].worldY = 14 * gp.tileSize;
         //System.out.println("Object 1 is "+gp.obj[1]);
         gp.obj[2] = new OBJ_Book(gp);
@@ -42,11 +39,17 @@ public class AssetSetter {
         gp.obj[4].worldY = 14 * gp.tileSize;
         //System.out.println("Object 3 is "+gp.obj[3]);
         //print all objects and their iD
-        for(int j = 0; j < gp.obj.length; j++){
-            if(gp.obj[j] != null){
-                //System.out.println("Object index: "+j+" Object ID: "+gp.obj[j].id);
-            }
-        }
+        gp.obj[5] = new OBJ_Katana(gp);
+        gp.obj[5].worldX = 8 * gp.tileSize;
+        gp.obj[5].worldY = 15 * gp.tileSize;
+
+        gp.obj[6] = new OBJ_Stick(gp);
+        gp.obj[6].worldX = 8 * gp.tileSize;
+        gp.obj[6].worldY = 16 * gp.tileSize;
+
+        gp.obj[7] = new OBJ_Shield(gp);
+        gp.obj[7].worldX = 8 * gp.tileSize;
+        gp.obj[7].worldY = 17 * gp.tileSize;
     }
 
     public void setPlayer2(){
@@ -61,7 +64,6 @@ public class AssetSetter {
         gp.npc[0] = new NPC_Rat(gp);
         gp.npc[0].worldX =  gp.tileSize * 5;
         gp.npc[0].worldY =  gp.tileSize * 15;
-//TODO second rat hitbox not working
         gp.npc[1] = new NPC_Rat(gp);
         gp.npc[1].worldX =  gp.tileSize * 7;
         gp.npc[1].worldY =  gp.tileSize * 15;
@@ -74,13 +76,12 @@ public class AssetSetter {
 //        gp.npc[3].worldX =  gp.tileSize * 3;
 //        gp.npc[3].worldY =  gp.tileSize * 17;
 
-        System.out.println("NPC set up");
     }
     public void setMonster(){
         gp.monster[0] = new Monster_Spike(gp);
         gp.monster[0].worldX = 4 * gp.tileSize;
         gp.monster[0].worldY = 15 * gp.tileSize;
-//TODO second monster hitbox not working
+
         gp.monster[1] = new Monster_Spike(gp);
         gp.monster[1].worldX = 5 * gp.tileSize;
         gp.monster[1].worldY = 16 * gp.tileSize;

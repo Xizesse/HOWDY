@@ -149,7 +149,7 @@ public class GameServer extends Thread{
                     Packet04Object p4_2 = new Packet04Object(p4.getitemIndex(), true);
                     sendData(p4_2.getData(), address, port);
                     //send packet back to the other player -> he does not recieve the item
-                    System.out.println("["+address.getHostName()+"] port: "+port+", object" +  p4.getitemIndex() + " already given");
+                    //System.out.println("["+address.getHostName()+"] port: "+port+", object" +  p4.getitemIndex() + " already given");
                     Packet04Object p4_3 = new Packet04Object(p4.getitemIndex(), false);
                     sendDataToAllClientsExceptOne(p4_3.getData(), address, port);
                     //remove the item from the game

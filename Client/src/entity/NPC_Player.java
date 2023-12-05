@@ -8,12 +8,14 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 public class NPC_Player extends Entity
 {
     public InetAddress ipAddress;
     //public NPC_Player player;
-    public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
+
+    public ArrayList<SuperObject> inventory = new ArrayList<>(10);
     BufferedImage heartFull, heartHalf, heartEmpty;
     public boolean helmetOn = false;
     public int port;
@@ -53,10 +55,6 @@ public class NPC_Player extends Entity
         BodyRight2 = setup("girl/girl_right_2");
         titleArt = setup("girl/girl_title_art");
 
-        HelmetUp = setup("player1/ironHelmet_up");
-        HelmetDown = setup("player1/ironHelmet_down");
-        HelmetLeft = setup("player1/ironHelmet_left");
-        HelmetRight = setup("player1/ironHelmet_right");
 
         attackUp = setup("attack/attack_up");
         attackDown = setup("attack/attack_down");
@@ -158,7 +156,6 @@ public class NPC_Player extends Entity
                     } else if (spriteNum == 2) {
                         body = bodyUp2;
                     }
-                    helmet = HelmetUp;
                     break;
                 case "down":
                     if (isAttacking) {
@@ -169,7 +166,6 @@ public class NPC_Player extends Entity
                     } else if (spriteNum == 2) {
                         body = bodyDown2;
                     }
-                    helmet = HelmetDown;
                     break;
                 case "left":
                     if (isAttacking) {
@@ -180,7 +176,6 @@ public class NPC_Player extends Entity
                     } else if (spriteNum == 2) {
                         body = BodyLeft2;
                     }
-                    helmet = HelmetLeft;
                     break;
                 case "right":
 
@@ -191,14 +186,30 @@ public class NPC_Player extends Entity
                         body = BodyRight1;
                     } else if (spriteNum == 2)
                         body = BodyRight2;
-                    helmet = HelmetRight;
                     break;
             }
 
             g2d.drawImage(body, screenX, screenY, null);
             drawHealthBar(g2d, screenX, screenY);
-            if (helmetOn) {
-                g2d.drawImage(helmet, screenX, screenY, null);
+
+            for (int i = 0; i < inventory.size(); i++) {
+                if (inventory.get(i).equippable) {
+                    switch (direction) {
+                        case "up":
+                            g2d.drawImage(inventory.get(i).up, worldX, worldY, null);
+                            break;
+                        case "down":
+                            g2d.drawImage(inventory.get(i).down, worldX, worldY, null);
+                            break;
+                        case "left":
+                            g2d.drawImage(inventory.get(i).left, worldX, worldY, null);
+                            break;
+                        case "right":
+                            g2d.drawImage(inventory.get(i).right, worldX, worldY, null);
+                            break;
+                    }
+                }
+
             }
             if (isAttacking)
             {

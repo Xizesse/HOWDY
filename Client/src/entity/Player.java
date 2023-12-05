@@ -3,22 +3,27 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import net.*;
+import object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
 public class Player extends Entity {
 
+
+
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
 
-    public boolean helmetOn = false;
 
     public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
+    //Inventory
+    public ArrayList <SuperObject> inventory = new ArrayList<>(10);
 
     public Player(GamePanel gp, KeyHandler keyH, int x, int y) {
         super(gp);
@@ -67,10 +72,7 @@ public class Player extends Entity {
         BodyRight2 = setup("player1/boy_right_2");
         titleArt = setup("player1/boy_title_art");
 
-        HelmetUp = setup("player1/ironHelmet_up");
-        HelmetDown = setup("player1/ironHelmet_down");
-        HelmetLeft = setup("player1/ironHelmet_left");
-        HelmetRight = setup("player1/ironHelmet_right");
+
 
         attackUp = setup("attack/attack_up");
         attackDown = setup("attack/attack_down");
@@ -142,9 +144,6 @@ public class Player extends Entity {
                 pickUpObject(objIndex);
                 int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
                 interactNPC(npcIndex);
-                System.out.println(gp.monster[0]);
-                System.out.println(gp.monster[1]);
-                System.out.println(gp.monster[2]);
 
 
                 int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
@@ -213,8 +212,10 @@ public class Player extends Entity {
                 Packet04Object p4 = new Packet04Object((char) i, true);
                 p4.writeData(gp.socketClient);
                 System.out.println("Requesting item: "+p4.getitemIndex()); //Sends item INDEX
-                gp.obj[i].readChapter(gp);
-                gp.gameState = gp.readState;
+                  if (gp.obj[i] != null){
+                    gp.obj[i].readChapter(gp);
+                    gp.gameState = gp.readState;
+                  }
             }
             else if (gp.obj[i].id == 4) { //pp
                 ArrayList<TileChange> changes = new ArrayList<>();
@@ -273,7 +274,6 @@ public class Player extends Entity {
 
 
         BufferedImage body = null;
-        BufferedImage helmet = null;
         BufferedImage attack = null;
 
 
@@ -287,7 +287,7 @@ public class Player extends Entity {
                 } else if (spriteNum == 2) {
                     body = bodyUp2;
                 }
-                helmet = HelmetUp;
+
                 break;
             case "down":
                 if (isAttacking) {
@@ -298,7 +298,7 @@ public class Player extends Entity {
                 } else if (spriteNum == 2) {
                     body = bodyDown2;
                 }
-                helmet = HelmetDown;
+
                 break;
             case "left":
                 if (isAttacking) {
@@ -309,7 +309,7 @@ public class Player extends Entity {
                 } else if (spriteNum == 2) {
                     body = BodyLeft2;
                 }
-                helmet = HelmetLeft;
+
                 break;
             case "right":
                 if (isAttacking) {
@@ -319,7 +319,6 @@ public class Player extends Entity {
                     body = BodyRight1;
                 } else if (spriteNum == 2)
                     body = BodyRight2;
-                helmet = HelmetRight;
                 break;
         }
 
@@ -347,7 +346,26 @@ public class Player extends Entity {
         }
 
         g2d.drawImage(body, x, y, null);
-        if (helmetOn) {g2d.drawImage(helmet, x, y, null);}
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).equippable) {
+                switch (direction) {
+                    case "up":
+                        g2d.drawImage(inventory.get(i).up, x, y, null);
+                        break;
+                    case "down":
+                        g2d.drawImage(inventory.get(i).down, x, y, null);
+                        break;
+                    case "left":
+                        g2d.drawImage(inventory.get(i).left, x, y, null);
+                        break;
+                    case "right":
+                        g2d.drawImage(inventory.get(i).right, x, y, null);
+                        break;
+                }
+            }
+
+        }
+        //if (helmetOn) {g2d.drawImage(helmet, x, y, null);}
         if (isAttacking)
         {
             switch (direction) {

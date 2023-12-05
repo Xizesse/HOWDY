@@ -168,9 +168,6 @@ public class CollisionChecker {
                 case "right": entity.solidArea.x += entity.speed; break;
             }
 
-            //print solid areas
-//            System.out.println("Entity solid area: "+(entity.solidArea.x/ gp.tileSize)+","+(entity.solidArea.y/ gp.tileSize));
-//            System.out.println("Target solid area: "+target[i].solidArea.x/ gp.tileSize+","+target[i].solidArea.y/ gp.tileSize);
 
             if (entity.solidArea.intersects(target[i].solidArea)) {
             //check if the entity's solid area intersects with the object's solid area
