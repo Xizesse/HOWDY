@@ -46,7 +46,24 @@ public class Light {
         Area circle = new Area(circleShape);
         screen.subtract(circle);
 
-        g2.setColor(new Color(0, 0, 0, 200));
+        Color color[] = new Color[5];
+        float fraction[] = new float[5];
+        color[0] = new Color(0, 0, 0, 0f);
+        color[1] = new Color(0, 0, 0, 0.4f);
+        color[2] = new Color(0, 0, 0, 0.6f);
+        color[3] = new Color(0, 0, 0, 0.8f);
+        color[4] = new Color(0, 0, 0, 1f);
+
+        fraction[0] = 0f;
+        fraction[1] = 0.25f;
+        fraction[2] = 0.5f;
+        fraction[3] = 0.7f;
+        fraction[4] = 1f;
+
+        RadialGradientPaint paint = new RadialGradientPaint(x + size/2, y + size/2, size/2, fraction, color);
+
+        g2.setPaint(paint);
+        g2.fill(circle);
         g2.fill(screen);
         g2.dispose();
     }

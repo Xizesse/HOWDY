@@ -131,7 +131,7 @@ public class GameServer extends Thread{
             case OBJECT:
                 Packet04Object p4 = new Packet04Object(data);
 
-                System.out.println("REQUEST FROM ["+address.getHostName()+"]: "+port+", object " + p4.getitemIndex() + " that is " + game.obj[p4.getitemIndex()].name);
+                //System.out.println("REQUEST FROM ["+address.getHostName()+"]: "+port+", object " + p4.getitemIndex() + " that is " + game.obj[p4.getitemIndex()].name);
                 //check if that item is available
                 //print all items addresses
 

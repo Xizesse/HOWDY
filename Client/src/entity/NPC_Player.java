@@ -117,7 +117,6 @@ public class NPC_Player extends Entity
     public void draw(Graphics2D g2d) {
 
         BufferedImage body = null;
-        BufferedImage helmet = null;
         BufferedImage attack = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
@@ -194,6 +193,10 @@ public class NPC_Player extends Entity
 
             for (int i = 0; i < inventory.size(); i++) {
                 if (inventory.get(i).equippable) {
+                    if(inventory.get(i).name == "firefly"){
+                        g2d.drawImage(inventory.get(i).image, screenX, screenY-gp.tileSize, null);
+                        break;
+                    }
                     switch (direction) {
                         case "up":
                             g2d.drawImage(inventory.get(i).up, screenX, screenY, null);
