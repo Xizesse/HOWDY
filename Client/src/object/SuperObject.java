@@ -53,7 +53,9 @@ public class SuperObject {
         }
 
     }
+    public void interact(){
 
+    }
     public void readChapter(GamePanel gp) {
     }
 }

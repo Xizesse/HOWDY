@@ -30,14 +30,27 @@ public class AssetSetter {
         gp.obj[2].worldX = 6 * gp.tileSize;
         gp.obj[2].worldY = 17 * gp.tileSize;
         //System.out.println("Object 2 is "+gp.obj[2]);
-        gp.obj[3] = new OBJ_PP(gp);
+
+        int[][] temp = {
+            {14, 17, 12},
+            {14, 16, 8},
+            {14, 15, 8},
+            {14, 14, 13}
+        };
+        gp.obj[3] = new OBJ_PP(gp, 4,temp);
         gp.obj[3].worldX = 14 * gp.tileSize;
         gp.obj[3].worldY = 17 * gp.tileSize;
-
-        gp.obj[4] = new OBJ_PP(gp);
+        temp = new int[][]{
+                {17, 14, 12},
+                {17, 15, 8},
+                {17, 16, 8},
+                {17, 17, 13}
+        };
+        gp.obj[4] = new OBJ_PP(gp, 5, temp);
         gp.obj[4].id = 5; //Jabardice autentica sorry
         gp.obj[4].worldX = 17 * gp.tileSize;
         gp.obj[4].worldY = 14 * gp.tileSize;
+
         //System.out.println("Object 3 is "+gp.obj[3]);
         //print all objects and their iD
         gp.obj[5] = new OBJ_Katana(gp);

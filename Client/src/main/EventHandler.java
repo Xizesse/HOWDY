@@ -15,7 +15,7 @@ public class EventHandler {
 
     public void checkEvent(){
         if(hit(30,9,"any")){
-            dmgPit(gp.titleState);
+            dmgPit(gp.readState);
         }
     }
     public boolean hit(int eventCol, int eventRow, String reqDirection){
@@ -37,7 +37,7 @@ public class EventHandler {
         return hit;
     }
     public void dmgPit(int gameState) {
-        gp.gameState = gp.readState;
+        gp.gameState = gameState;
         gp.ui.currentText = "You fell into a pit!";
         gp.player.currentHealth -= 1;
 

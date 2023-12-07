@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class Player extends Entity {
@@ -218,48 +219,10 @@ public class Player extends Entity {
                     gp.gameState = gp.readState;
                   }
             }
-            else if (gp.obj[i].id == 4) { //pp
-                ArrayList<TileChange> changes = new ArrayList<>();
-                //TODO isto está completamente hardcoded
-                TileChange change;
+            else if (Objects.equals(gp.obj[i].name, "PP")) { //pp
+                  gp.obj[i].interact();
 
-                change = new TileChange(14, 17, 12);
-                changes.add(change);
-                change = new TileChange(14, 16, 8);
-                changes.add(change);
-                change = new TileChange(14, 15, 8);
-                changes.add(change);
-                change = new TileChange(14, 14, 13);
-                changes.add(change);
-
-                Packet06MapChange p6 = new Packet06MapChange(0, changes);
-                System.out.println("Sending map change packet");
-                String[] dataArray = p6.readData(p6.getData()).split(",");
-                p6.writeData(gp.socketClient);
             }
-              else if (gp.obj[i].id == 5) { //pp
-                  ArrayList<TileChange> changes = new ArrayList<>();
-                  //TODO isto está completamente hardcoded
-                  TileChange change;
-
-                  change = new TileChange(17, 14, 12);
-                  changes.add(change);
-                  change = new TileChange(17, 15, 8);
-                  changes.add(change);
-                  change = new TileChange(17, 16, 8);
-                  changes.add(change);
-                  change = new TileChange(17, 17, 13);
-                  changes.add(change);
-
-                  Packet06MapChange p6 = new Packet06MapChange(0, changes);
-                  System.out.println("Sending map change packet");
-                  String[] dataArray = p6.readData(p6.getData()).split(",");
-                  p6.writeData(gp.socketClient);
-              }
-
-
-
-
 
 
         }

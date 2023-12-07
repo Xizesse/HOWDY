@@ -25,7 +25,7 @@ public class OBJ_Book extends SuperObject{
 
     public void setChapters() {
     	chapters[0] = "Howdy ? \nYou fell into a dungeon. \nYou are now trapped. \nYou must find a way out.";
-        chapters[1] = "YOU WILL DIE \nIF YOU DONT \nWORK TOGETHER";
+        chapters[1] = "YOU WILL DIE \nIF YOU DON'T \nWORK TOGETHER";
 
     }
 
