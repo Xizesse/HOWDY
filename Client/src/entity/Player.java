@@ -103,9 +103,9 @@ public class Player extends Entity {
                 gp.cCheck.checkTile(this);                                   //check collision with tile
                 int objIndex = gp.cCheck.checkObject(this, true);     //check collision with object
                 pickUpObject(objIndex);                                            //pick up object
-                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);          //check collision with npc
-                interactNPC(npcIndex);                                             //interact with npc
-                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
+                //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);          //check collision with npc
+                //interactNPC(npcIndex);                                             //interact with npc
+
                 if (!collisionOn) {                                                //if no collision
                     worldY -= speed;                                               //move
                 }
@@ -116,22 +116,23 @@ public class Player extends Entity {
                 gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
-                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
-                interactNPC(npcIndex);
-                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
+                //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+                //interactNPC(npcIndex);
+
                 if (!collisionOn) {
                     worldY += speed;
                 }
             }
-            if (keyH.leftPressed) {
+            if (keyH.leftPressed)
+            {
                 collisionOn = false;
                 direction = "left";
                 gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
-                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
-                interactNPC(npcIndex);
-                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
+                //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+                //interactNPC(npcIndex);
+                //int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
                 if (!collisionOn) {
                     worldX -= speed;
                 }
@@ -142,11 +143,11 @@ public class Player extends Entity {
                 gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
-                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
-                interactNPC(npcIndex);
+                //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+                //interactNPC(npcIndex);
 
 
-                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
+                //int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
                 if (!collisionOn) {
                     worldX += speed;
                 }

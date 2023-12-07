@@ -19,7 +19,6 @@ public class Monster_Spike extends Entity {
 
     }
     public void getImage(){
-
         bodyUp1 = setup("monster_spike/spike_right1");
         bodyUp2 = setup("monster_spike/spike_right2");
         bodyDown1 = setup("monster_spike/spike_left1");
@@ -28,7 +27,6 @@ public class Monster_Spike extends Entity {
         BodyLeft2 = setup("monster_spike/spike_left2");
         BodyRight1 = setup("monster_spike/spike_right1");
         BodyRight2 = setup("monster_spike/spike_right2");
-
     }
 @Override
         public void setAction() {

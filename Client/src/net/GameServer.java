@@ -160,13 +160,7 @@ public class GameServer extends Thread{
                 break;
         }
 
-        //print player coordinates as player 1 and 2
-        if(game.players.get(0) != null){
-            //System.out.println("Player 1: "+game.players.get(0).worldX+","+game.players.get(0).worldY);
-        }
-        if(game.players.get(1) != null){
-            //System.out.println("Player 2: "+game.players.get(1).worldX+","+game.players.get(1).worldY);
-        }
+
 
     }
 

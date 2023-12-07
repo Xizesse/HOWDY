@@ -57,7 +57,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Player player = new Player(this, keyH, 3,15);
     public Entity[] npc = new Entity[10];
     public SuperObject[] obj = new SuperObject[10];
-    public Entity[] monster = new Entity[10];
+
 
     // Player 2
     public NPC_Player player2 = new NPC_Player(this);
@@ -100,7 +100,6 @@ public class GamePanel extends JPanel implements Runnable{
         aS.setObject();
         aS.setPlayer2();
         aS.setNPC();
-        aS.setMonster();
         effectManager.setup();
         gameState = titleState;
         //playMusic(0);
@@ -205,12 +204,7 @@ public class GamePanel extends JPanel implements Runnable{
             if (player2 != null) {
                 player2.draw(g2d);
             }
-            // MONSTER
-            for (int i = 0; i < monster.length; i++) {
-                if (monster[i] != null) {
-                    monster[i].draw(g2d);
-                }
-            }
+
             if (LIGHT) effectManager.draw(g2d);
 
             ui.draw(g2d);
@@ -237,11 +231,7 @@ public class GamePanel extends JPanel implements Runnable{
                 player2.draw(g2d);
             }
 
-            for (int i = 0; i < monster.length; i++) {
-                if (monster[i] != null) {
-                    monster[i].draw(g2d);
-                }
-            }
+
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
         }
@@ -269,11 +259,7 @@ public class GamePanel extends JPanel implements Runnable{
                 player2.draw(g2d);
             }
 
-            for (int i = 0; i < monster.length; i++) {
-                if (monster[i] != null) {
-                    monster[i].draw(g2d);
-                }
-            }
+
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
         }

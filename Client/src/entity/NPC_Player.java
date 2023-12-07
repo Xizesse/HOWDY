@@ -18,6 +18,7 @@ public class NPC_Player extends Entity
     public ArrayList<SuperObject> inventory = new ArrayList<>(10);
     BufferedImage heartFull, heartHalf, heartEmpty;
     public boolean helmetOn = false;
+    public int screenX, screenY;
     public int port;
     public NPC_Player(InetAddress ipAddress, int port, int x, int y, String direction, GamePanel gp) {
         super(gp);
@@ -118,8 +119,8 @@ public class NPC_Player extends Entity
 
         BufferedImage body = null;
         BufferedImage attack = null;
-        int screenX = worldX - gp.player.worldX + gp.player.screenX;
-        int screenY = worldY - gp.player.worldY + gp.player.screenY;
+        screenX = worldX - gp.player.worldX + gp.player.screenX;
+        screenY = worldY - gp.player.worldY + gp.player.screenY;
 
 //        //Stop camera movement at the edge of the map
         //left

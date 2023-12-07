@@ -4,7 +4,7 @@
 
 02 - Move -
 
-03 - Attack - //TODO
+03 - Attack -
 Sends the attacked areas and the damage dealth
 
 04 - object -
@@ -16,5 +16,5 @@ when collision to a pressure plate
 when collision to a door and I have the correct key
 -> I ask the server for the changes, and the server broadcasts the changes
 format : level, number of changes, x y newTile
-//TODO : do those changes on the client
+//TODO : do these changes also on the server side
 

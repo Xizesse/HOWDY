@@ -14,13 +14,10 @@ import java.lang.reflect.Array;
 import java.util.Objects;
 
 public class Entity {
-
     GamePanel gp;
     public int worldX, worldY;
-
     public int previousWorldX, previousWorldY;
     public int speed;
-
     public BufferedImage titleArt, bodyUp1, bodyUp2, bodyDown1, bodyDown2, BodyLeft1, BodyLeft2, BodyRight1, BodyRight2;
     public BufferedImage attackUp, attackLeft, attackDown, attackRight;
 
@@ -138,15 +135,15 @@ public class Entity {
     }
 
     public void update() {
+
         setAction();
         collisionOn = false;
-        gp.cCheck.checkTile(this);                     //check collision with tiles
-
-
+        gp.cCheck.checkTile(this);
+        System.out.println("Collision with Tile: " + collisionOn);//check collision with tiles
         gp.cCheck.checkObject(this,false);      //check collision with objects
 
 
-
+        /*
         if (gp instanceof ServerPanel) {
             if (gp.players != null) {
                 gp.cCheck.checkNPC_players(this, gp.players);
@@ -154,7 +151,9 @@ public class Entity {
             }
             //print if collision is on
 
+
         }
+    */
         if(!collisionOn){
             switch (direction) {
                 case "up": worldY -= speed;

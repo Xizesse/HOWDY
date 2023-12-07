@@ -1,5 +1,4 @@
 package server;
-
 import entity.*;
 import main.*;
 import net.*;
@@ -8,46 +7,30 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-
 //Server panel class, similar to the game panel class, but with a few differences, implementing
 //just what the server needs. No graphic part
-
 public class ServerPanel extends GamePanel {
     //public GameClient socketClient = new GameClient(this, "localhost");
-
     // Screen settings
-
     // WORLD SETTINGS
-
     //NET
     public GameServer socketServer = new GameServer(this);
     //FPS
     final int FPS = 30;
-
-
     Thread gameThread;
-
-
 
     // Players
     //Array of NPC_Player2
     public List<NPC_Player> players = new ArrayList<>(); //created and controlled by the clients
-
     // GAME STATE
-
-
     public ServerPanel() throws IOException {
         super();
-
     }
-
     public void setupGame() {
         System.out.println("Setting up game");
         socketServer.start();
         aS.setObject();
         System.out.println("Setting up objects from asset setter");
-
         //aS.setPlayer2();
         //aS.setPlayers
         aS.setNPC();
@@ -75,7 +58,7 @@ public class ServerPanel extends GamePanel {
 
             }
         }
-        aS.setMonster();
+
         for (int i = 0; i < npc.length; i++) {
 
             if (npc[i] != null) {
