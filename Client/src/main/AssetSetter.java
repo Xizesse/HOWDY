@@ -3,6 +3,7 @@ package main;
 import entity.NPC_Rat;
 import entity.NPC_Player;
 import monster.Monster_Spike;
+import monster.Monster_Stalker;
 import object.*;
 
 public class AssetSetter {
@@ -77,8 +78,12 @@ public class AssetSetter {
         gp.npc[2].worldY = 15 * gp.tileSize;
 
         gp.npc[3] = new Monster_Spike(gp);
-        gp.npc[3].worldX = 5 * gp.tileSize;
+        gp.npc[3].worldX = 6 * gp.tileSize;
         gp.npc[3].worldY = 16 * gp.tileSize;
+
+        gp.npc[4] = new Monster_Stalker(gp);
+        gp.npc[4].worldX = 5 * gp.tileSize;
+        gp.npc[4].worldY = 16 * gp.tileSize;
 //        gp.npc[2] = new NPC_Rat(gp);
 //        gp.npc[2].worldX =  gp.tileSize * 5;
 //        gp.npc[2].worldY =  gp.tileSize * 17;

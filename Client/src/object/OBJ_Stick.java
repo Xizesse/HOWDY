@@ -12,7 +12,7 @@ public class OBJ_Stick extends SuperObject{
         id = 1;
 
         try{
-            image = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/stick.png"));
+            image = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/stick/stick.png"));
             image = uT.scaleImage(image, gp.tileSize, gp.tileSize);
         }catch (IOException e){
             e.printStackTrace();
