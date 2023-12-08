@@ -15,11 +15,11 @@ public class MainServer {
         sp.setupGame();
         System.out.println("objects set up");
 
-        for (int i = 0; i < sp.obj.length; i++) {
-            if (sp.obj[i] != null) {
-                System.out.println("Object index: " + i + " Object ID: " + sp.obj[i].id);
-            }
-        }
+//        for (int i = 0; i < sp.obj.length; i++) {
+//            if (sp.obj[i] != null) {
+//                System.out.println("Object index: " + i + " Object ID: " + sp.obj[i].id);
+//            }
+//        }
         sp.startGameThread();
 
     }

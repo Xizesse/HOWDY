@@ -37,7 +37,13 @@ public class AssetSetter {
             {14, 15, 8},
             {14, 14, 13}
         };
-        gp.obj[3] = new OBJ_PP(gp, 4,temp);
+        int[][] temp2 = {
+            {14, 17, 4},
+            {14, 16, 11},
+            {14, 15, 11},
+            {14, 14, 5}
+        };
+        gp.obj[3] = new OBJ_PP(gp, 4,temp, temp2);
         gp.obj[3].worldX = 14 * gp.tileSize;
         gp.obj[3].worldY = 17 * gp.tileSize;
 
@@ -47,7 +53,13 @@ public class AssetSetter {
             {17, 16, 8},
             {17, 17, 13}
         };
-        gp.obj[4] = new OBJ_PP(gp, 5, temp);
+        temp2 = new int[][]{
+                {17, 14, 4},
+                {17, 15, 11},
+                {17, 16, 11},
+                {17, 17, 5}
+        };
+        gp.obj[4] = new OBJ_PP(gp, 5, temp, temp2);
         gp.obj[4].worldX = 17 * gp.tileSize;
         gp.obj[4].worldY = 14 * gp.tileSize;
 

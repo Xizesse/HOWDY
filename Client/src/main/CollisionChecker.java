@@ -3,8 +3,10 @@ package main;
 import entity.Entity;
 import entity.NPC_Player;
 import monster.Monster_Spike;
+import object.OBJ_PP;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CollisionChecker {
     GamePanel gp;
@@ -133,6 +135,9 @@ public class CollisionChecker {
                     }
                     break;
 
+            }
+            if (gp.obj[i] instanceof OBJ_PP && index != i){
+                if (gp.obj[i].isItOn) {index = -i;}
             }
             entity.solidArea.x = entity.solidAreaDefaultX;          //reset the entity's solid area position
             entity.solidArea.y = entity.solidAreaDefaultY;          //reset the entity's solid area position

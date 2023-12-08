@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.List;
+import java.util.Objects;
 
 import main.GamePanel;
 
@@ -135,7 +136,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
 
                     game.player.inventory.add(game.obj[packet.getitemIndex()]);
-                    if (game.obj[packet.getitemIndex()].name == "firefly") {
+                    if (Objects.equals(game.obj[packet.getitemIndex()].name, "firefly")) {
                         game.lightsize += 100;
                         System.out.println("Light size increased to " + game.lightsize);
                     }

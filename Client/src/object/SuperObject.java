@@ -17,6 +17,7 @@ public class SuperObject {
     public Rectangle solidArea = new Rectangle(0,0,48,48);
     public int solidAreaDefaultX = 0;
     public int SolidAreaDefaultY = 0;
+    public boolean isItOn = false;
 
     UtilityTool uT = new UtilityTool();
 
@@ -57,5 +58,8 @@ public class SuperObject {
 
     }
     public void readChapter(GamePanel gp) {
+    }
+
+    public void turnOff() {
     }
 }

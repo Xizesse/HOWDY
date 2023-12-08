@@ -194,36 +194,40 @@ public class Player extends Entity {
     public void pickUpObject(int i){
         if(i!=999){
             //print all objects and their iD
-            for(int j = 0; j < gp.obj.length; j++){
-                if(gp.obj[j] != null){
-                    //System.out.println("Object index: "+j+" Object ID: "+gp.obj[j].id);
+//            for(int j = 0; j < gp.obj.length; j++){
+//                if(gp.obj[j] != null){
+//                        System.out.println("Object index: "+j+" Object NAME: " + gp.obj[j].name);
+//                        if (Objects.equals(gp.obj[j].name, "PP")) {
+//                            System.out.println(gp.obj[j].isItOn);
+//                        }
+//                }
+//            }
+            if (i < 0) {
+                i = - i;
+                System.out.println("To aqui porra " + gp.obj[i].isItOn);
+                gp.obj[i].turnOff();
+            } else {
+                if (gp.obj[i].id == 1) {//helmet
+                    Packet04Object p4 = new Packet04Object((char) i, true);
+                    p4.writeData(gp.socketClient);
+                    //System.out.println("Helmet PickUp with id: 1");
+
+                } else if (gp.obj[i].id == 2) {//axe
+                    Packet04Object p4 = new Packet04Object((char) i, true);
+                    p4.writeData(gp.socketClient);
+                    System.out.println("Requesting item: " + p4.getitemIndex());
+                } else if (gp.obj[i].id == 3) { //book
+                    Packet04Object p4 = new Packet04Object((char) i, true);
+                    p4.writeData(gp.socketClient);
+                    System.out.println("Requesting item: " + p4.getitemIndex()); //Sends item INDEX
+                    if (gp.obj[i] != null) {
+                        gp.obj[i].readChapter(gp);
+                        gp.gameState = gp.readState;
+                    }
+                } else if (Objects.equals(gp.obj[i].name, "PP")) { //pp
+                    gp.obj[i].interact();
                 }
             }
-            //System.out.println(i+" is the object index, " + gp.obj[i].id + " is the object id");
-
-              if (gp.obj[i].id == 1) {//helmet
-                Packet04Object p4 = new Packet04Object((char) i, true);
-                p4.writeData(gp.socketClient);
-                //System.out.println("Helmet PickUp with id: 1");
-
-            } else if (gp.obj[i].id == 2) {//axe
-                Packet04Object p4 = new Packet04Object((char) i, true);
-                p4.writeData(gp.socketClient);
-                System.out.println("Requesting item: "+p4.getitemIndex());
-            }else if (gp.obj[i].id == 3) { //book
-                Packet04Object p4 = new Packet04Object((char) i, true);
-                p4.writeData(gp.socketClient);
-                System.out.println("Requesting item: "+p4.getitemIndex()); //Sends item INDEX
-                  if (gp.obj[i] != null){
-                    gp.obj[i].readChapter(gp);
-                    gp.gameState = gp.readState;
-                  }
-            }
-            else if (Objects.equals(gp.obj[i].name, "PP")) { //pp
-                  gp.obj[i].interact();
-
-            }
-
 
         }
     }
@@ -351,6 +355,5 @@ public class Player extends Entity {
                     break;
             }
         }
-
     }
 }
