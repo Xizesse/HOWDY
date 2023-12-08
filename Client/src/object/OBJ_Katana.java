@@ -9,6 +9,7 @@ public class OBJ_Katana extends SuperObject{
 
     public OBJ_Katana(GamePanel gp){
         name = "Katana";
+        type = "weapon";
         id = 1;
 
         try{

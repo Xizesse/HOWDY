@@ -8,6 +8,7 @@ import java.io.IOException;
 public class OBJ_Firefly extends SuperObject{
     public OBJ_Firefly(GamePanel gp){
         name = "firefly";
+        type = "pet";
         id = 1;
         equippable = true;
         try{

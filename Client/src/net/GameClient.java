@@ -25,6 +25,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
         } catch(UnknownHostException e){
             e.printStackTrace();
         }
+
     }
 
     public void run(){// this method is called when we start the thread
@@ -133,7 +134,6 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 if (packet.getGive()) {
                     System.out.println("\n\nRECEIVED ITEM");
 
-
                     game.player.inventory.add(game.obj[packet.getitemIndex()]);
                     if (game.obj[packet.getitemIndex()].name == "firefly") {
                         game.lightsize += 100;
@@ -170,7 +170,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
      {
          DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
          try{
-
+             System.out.println("Sending packet to " + ipAddress + " to port:" + packet.getPort());
              socket.send(packet);
          } catch(IOException e){
              e.printStackTrace();

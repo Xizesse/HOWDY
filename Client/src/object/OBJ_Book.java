@@ -12,6 +12,7 @@ public class OBJ_Book extends SuperObject{
     int chapterIndex = 0;
     public OBJ_Book(GamePanel gp){
         name = "Book";
+        type = "book";
         id = 3;
         setChapters();
 

@@ -32,7 +32,7 @@ public class GameClient extends Thread {
 
     public void sendData(String message) {
         byte[] data = message.getBytes();
-        DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);
+        DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1332);
         try {
             socket.send(packet);
         } catch (IOException e) {
@@ -42,8 +42,9 @@ public class GameClient extends Thread {
 
     public static void main(String[] args) {
         try {
-            GameClient client = new GameClient(""); // Use the server's IP if not running on localhost
+            GameClient client = new GameClient("192.168.1.3"); // Use the server's IP if not running on localhost
             client.start();
+            System.out.println("CLIENT > Sending ping to server...");
             client.sendData("ping");
 
             // Optionally, you can sleep the main thread for a while to prevent the client from exiting immediately

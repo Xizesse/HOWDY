@@ -12,24 +12,19 @@ public class AssetSetter {
 
     public AssetSetter(GamePanel gp){
         this.gp = gp;
-        System.out.println("Asset setter created");
     }
 
     public void setObject(){
-        //System.out.println("Setting up objects from asset setter");
         gp.obj[0] = new OBJ_Helmet(gp);
         gp.obj[0].worldX = 8 * gp.tileSize;
         gp.obj[0].worldY = 13 * gp.tileSize;
 
-        //System.out.println("Object 0 is "+gp.obj[0]);
         gp.obj[1] = new OBJ_Axe(gp);
         gp.obj[1].worldX = 8 * gp.tileSize;
         gp.obj[1].worldY = 14 * gp.tileSize;
-        //System.out.println("Object 1 is "+gp.obj[1]);
         gp.obj[2] = new OBJ_Book(gp);
         gp.obj[2].worldX = 6 * gp.tileSize;
         gp.obj[2].worldY = 17 * gp.tileSize;
-        //System.out.println("Object 2 is "+gp.obj[2]);
 
         int[][] temp = {
             {14, 17, 12},
@@ -51,7 +46,6 @@ public class AssetSetter {
         gp.obj[4].worldX = 17 * gp.tileSize;
         gp.obj[4].worldY = 14 * gp.tileSize;
 
-        //System.out.println("Object 3 is "+gp.obj[3]);
         //print all objects and their iD
         gp.obj[5] = new OBJ_Katana(gp);
         gp.obj[5].worldX = 8 * gp.tileSize;
@@ -77,7 +71,6 @@ public class AssetSetter {
     }
 
     public void setNPC(){
-        System.out.println("Setting up NPC");
 
         gp.npc[0] = new NPC_Rat(gp);
         gp.npc[0].worldX =  gp.tileSize * 5;

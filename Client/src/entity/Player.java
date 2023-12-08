@@ -20,10 +20,14 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-
     public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
-    //Inventory
+    //Inventory and slots
+    public SuperObject helmet;
+    public SuperObject armour;
+    public SuperObject weapon;
+    public SuperObject shield;
+    //and then standart inventory
     public ArrayList <SuperObject> inventory = new ArrayList<>(10);
 
     public Player(GamePanel gp, KeyHandler keyH, int x, int y) {

@@ -9,6 +9,7 @@ public class OBJ_Helmet extends SuperObject{
 
     public OBJ_Helmet(GamePanel gp){
         name = "Helmet";
+        type = "helmet";
         id = 1;
         equippable = true;
 

@@ -10,6 +10,7 @@ public class OBJ_Axe extends SuperObject{
     public OBJ_Axe(GamePanel gp){
         name = "Axe";
         id = 2;
+        type = "weapon";
         equippable = true;
 
         try{

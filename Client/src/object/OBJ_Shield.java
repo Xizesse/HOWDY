@@ -11,6 +11,7 @@ public class OBJ_Shield extends SuperObject {
 
     public OBJ_Shield(GamePanel gp){
         name = "Stick";
+        type = "shield";
         id = 1;
 
         try{

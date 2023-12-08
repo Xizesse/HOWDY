@@ -92,7 +92,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
 
         if (!(this instanceof ServerPanel)) {
-            socketClient = new GameClient(this, "localhost");
+            socketClient = new GameClient(this, "192.168.1.3");
         }
 
     }
@@ -259,11 +259,11 @@ public class GamePanel extends JPanel implements Runnable{
             if (player2 != null) {
                 player2.draw(g2d);
             }
-
-
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
         }
+
+
 
         // DEBUG
         if(DEV_MODE) {

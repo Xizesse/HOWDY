@@ -63,9 +63,14 @@ public class GameServer extends Thread{
             DatagramPacket packet = new DatagramPacket(data, data.length);
             try {
                 socket.receive(packet);
+                String message = new String(packet.getData(),0, packet.getLength());
+                if("ping".equalsIgnoreCase(message.trim())){
+                    sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
+                }
             } catch(IOException e) {
                 e.printStackTrace();
             }
+
             parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
 
             //String message = new String(packet.getData(),0, packet.getLength());

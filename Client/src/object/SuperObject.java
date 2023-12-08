@@ -12,16 +12,15 @@ public class SuperObject {
     public boolean equippable = false;
     public String name;
     public byte id;
+    public String type;
     public boolean collision = false;
     public int worldX, worldY;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
     public int solidAreaDefaultX = 0;
     public int SolidAreaDefaultY = 0;
-
     UtilityTool uT = new UtilityTool();
 
     public void draw(Graphics2D g2d, GamePanel gp){
-
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
@@ -51,7 +50,6 @@ public class SuperObject {
 
             g2d.drawImage(image, screenX, screenY, null);
         }
-
     }
     public void interact(){
 

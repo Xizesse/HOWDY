@@ -10,7 +10,7 @@ import java.util.List;
 //Server panel class, similar to the game panel class, but with a few differences, implementing
 //just what the server needs. No graphic part
 public class ServerPanel extends GamePanel {
-    //public GameClient socketClient = new GameClient(this, "localhost");
+
     // Screen settings
     // WORLD SETTINGS
     //NET
@@ -34,11 +34,7 @@ public class ServerPanel extends GamePanel {
         //aS.setPlayer2();
         //aS.setPlayers
         aS.setNPC();
-        for (int i = 0; i < npc.length; i++) {
-            if (npc[i] != null) {
-                System.out.println("NPC " + (i+1) + " is " + npc[i]);
-            }
-        }
+
 
 
 
@@ -82,7 +78,7 @@ public class ServerPanel extends GamePanel {
     public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
-        System.out.println("Client Socket started");
+        //System.out.println("Client Socket started");
         //socketClient.sendData("ping".getBytes());
     }
 
@@ -111,7 +107,7 @@ public class ServerPanel extends GamePanel {
     public void update() {
 
         if(gameState == playState){
-            player.update();
+            //player.update();
             //player2.update(); <- This is done by the client thread
 
             for (int i = 0; i < npc.length; i++) {
@@ -133,6 +129,7 @@ public class ServerPanel extends GamePanel {
             //  will be added upon in the future
         }
         if(gameState == pauseState){
+
         }
 
     }
@@ -148,8 +145,6 @@ public class ServerPanel extends GamePanel {
         if(gameState == pauseState){
         }
     }
-
-
 
 
     public void paintComponent(Graphics g) {
