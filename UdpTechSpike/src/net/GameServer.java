@@ -40,7 +40,7 @@ public class GameServer extends Thread {
     }
 
     public static void main(String[] args) {
-        int port = 1331;
+        int port = 1332;
         try {
             Thread server = new GameServer(port);
             server.start();

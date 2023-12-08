@@ -19,7 +19,7 @@ import net.GameClient;
 import static main.Main.DEV_MODE;
 
 
-public class GamePanel extends JPanel implements Runnable{
+public class GamePanel extends JPanel implements Runnable {
 
     // NETWORK
     public GameClient socketClient = null;
@@ -55,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
 
     // ENTITY AND OBJECTS
-    public Player player = new Player(this, keyH, 3,15);
+    public Player player = new Player(this, keyH, 3, 15);
     public Entity[] npc = new Entity[10];
     public SuperObject[] obj = new SuperObject[10];
 
@@ -67,7 +67,6 @@ public class GamePanel extends JPanel implements Runnable{
     public int player2WorldY = 15;
 
     public List<NPC_Player> players = new ArrayList<>();
-
 
 
     // GAME STATE
@@ -118,20 +117,19 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
 
-
     @Override
     public void run() {
 
-        double deltaInterval = (double)1000000000 / FPS;
+        double deltaInterval = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
 
-        while(gameThread != null) {
+        while (gameThread != null) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / deltaInterval;
             lastTime = currentTime;
-            if(delta >= 1) {
+            if (delta >= 1) {
                 update();
                 repaint();
                 delta--;
@@ -141,31 +139,29 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void update() {
 
-        if(gameState == playState){
+        if (gameState == playState) {
             player.update();
             //player2.update(); <- This is done by the client thread
 
 
             //  will be added upon in the future
         }
-        if(gameState == pauseState){
+        if (gameState == pauseState) {
         }
 
     }
 
     public synchronized void updatePlayer2(String direction, int worldX, int worldY) {
-        if(gameState == playState){
-            if(player2 != null) {
+        if (gameState == playState) {
+            if (player2 != null) {
                 player2.direction = direction;
                 player2.worldX = worldX;
                 player2.worldY = worldY;
             }
         }
-        if(gameState == pauseState){
+        if (gameState == pauseState) {
         }
     }
-
-
 
 
     public void paintComponent(Graphics g) {
@@ -174,10 +170,9 @@ public class GamePanel extends JPanel implements Runnable{
 
         // DEBUG
         long drawStartTime = 0;
-        if(DEV_MODE) {
+        if (DEV_MODE) {
             drawStartTime = System.nanoTime();
         }
-
 
 
         if (gameState == titleState) {
@@ -235,9 +230,7 @@ public class GamePanel extends JPanel implements Runnable{
 
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
-        }
-
-        else if (gameState == readState) {
+        } else if (gameState == readState) {
             // TILE
             tileM.draw(g2d);
             // OBJECT
@@ -266,7 +259,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
         // DEBUG
-        if(DEV_MODE) {
+        if (DEV_MODE) {
             long drawEndTime = System.nanoTime();
             long drawTime = drawEndTime - drawStartTime;
             g2d.setColor(Color.WHITE);
@@ -281,6 +274,7 @@ public class GamePanel extends JPanel implements Runnable{
         music.play();
         music.loop();
     }
+
     public void stopMusic() {
         music.stop();
     }
