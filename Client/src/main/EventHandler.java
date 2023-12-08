@@ -17,6 +17,9 @@ public class EventHandler {
         if(hit(30,9,"any")){
             dmgPit(gp.readState);
         }
+        if(hit(30, 21, "any")){
+            teleport(gp.readState, 30, 7);
+        }
     }
     public boolean hit(int eventCol, int eventRow, String reqDirection){
         boolean hit = false;
@@ -41,5 +44,11 @@ public class EventHandler {
         gp.ui.currentText = "You fell into a pit!";
         gp.player.currentHealth -= 1;
 
+    }
+    public void teleport(int gameState, int newX, int newY) {
+        gp.gameState = gameState;
+        gp.ui.currentText = "Get teleported, idiot";
+        gp.player.worldX = newX * gp.tileSize;
+        gp.player.worldY = newY * gp.tileSize;
     }
 }
