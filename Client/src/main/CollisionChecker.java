@@ -65,7 +65,6 @@ public class CollisionChecker {
                 }
                 break;
         }
-
     }
 
     public int checkObject(Entity entity, boolean player) {
@@ -154,7 +153,6 @@ public class CollisionChecker {
             }
             entity.solidArea.x = entity.worldX + entity.solidArea.x; //get the entity worldX coordinate of the left most edge of the solid area
             entity.solidArea.y = entity.worldY + entity.solidArea.y; //get the entity worldY coordinate of the top most edge of the solid area
-            //System.out.println("Checking entity "+i);
 
 
             // targetEntity solid area position

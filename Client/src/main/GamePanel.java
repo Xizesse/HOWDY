@@ -3,6 +3,7 @@ package main;
 import effects.EffectManager;
 import entity.*;
 import net.Packet00Login;
+import net.Packet01Logout;
 import object.SuperObject;
 import server.ServerPanel;
 import tile.TileManager;
@@ -287,5 +288,15 @@ public class GamePanel extends JPanel implements Runnable{
     public void playSE(int i) {
         sfx.setFile(i);
         sfx.play();
+    }
+
+    public void performClosingActions() {
+        // Insert the code you want to execute before closing the window
+        // For example: saving game state, releasing resources, logging, etc.
+        Packet01Logout logoutPacket = new Packet01Logout();
+        logoutPacket.writeData(socketClient);
+        System.out.println("DISCONNECTING");
+        socketClient.close();
+
     }
 }

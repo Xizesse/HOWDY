@@ -16,7 +16,6 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
     private GamePanel game; // reference to the game panel
 
     public GameClient(GamePanel game, String ipAddress){
-        //System.out.println("GameClient started");
         this.game = game; // set the reference to the game panel
         try {
             this.socket = new DatagramSocket(); // create a new socket
@@ -56,8 +55,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 packet = new Packet00Login();
                 System.out.println("["+address.getHostAddress()+"][port: "+port+"] has joined the game...");
                 break;
-            case DISCONNECT:
-
+            case LOGOUT:
                 break;
 
             case MOVE:
@@ -114,7 +112,6 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                     else{
                         int i = packet.getEntityID() - 1;
 
-                        System.out.println("NPC index: " +i + " moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
 
                         this.game.npc[i].direction = packet.getDirection();
                         this.game.npc[i].worldX = packet.getX();
@@ -180,4 +177,11 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
          }
      }
 
+    public void close() {
+        /*
+        // Close the socket if it's open
+        if (socket != null && !socket.isClosed()) {
+            socket.close();
+        }*/
+    }
 }

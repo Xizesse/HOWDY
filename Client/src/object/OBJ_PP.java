@@ -21,6 +21,7 @@ public class OBJ_PP extends SuperObject{
 
     }
 
+
     @Override
     public void interact() {
         ArrayList<TileChange> changes = new ArrayList<>();

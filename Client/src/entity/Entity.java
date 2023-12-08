@@ -139,7 +139,7 @@ public class Entity {
         setAction();
         collisionOn = false;
         gp.cCheck.checkTile(this);
-        System.out.println("Collision with Tile: " + collisionOn);//check collision with tiles
+
         gp.cCheck.checkObject(this,false);      //check collision with objects
 
 

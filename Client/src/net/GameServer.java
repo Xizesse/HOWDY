@@ -107,12 +107,20 @@ public class GameServer extends Thread{
                 }
                 System.out.println("Server full");
 
-
-
                 break;
 
 
-            case DISCONNECT:
+            case LOGOUT:
+                //take the player out of the game
+                //System.out.println("["+address.getHostName()+"] port: "+port+", has left the game...");
+                for (int i = 0; i < game.players.size(); i++) {
+                    if(game.players.get(i) != null && game.players.get(i).ipAddress.equals(address) && game.players.get(i).port == port){
+                        game.players.set(i, null);
+                        System.out.println("["+address.getHostName()+"] port: "+port+", has left the game...");
+                        break;
+                    }
+                }
+
                 break;
 
             case MOVE:
@@ -153,7 +161,7 @@ public class GameServer extends Thread{
                 break;
             case MAPCHANGE:
                 Packet06MapChange p6 = new Packet06MapChange(data);
-                System.out.println("["+address.getHostName()+"] port: "+port+", mapchange" + p6.getLevel() + " " + p6.getnChanges());
+                //System.out.println("["+address.getHostName()+"] port: "+port+", mapchange" + p6.getLevel() + " " + p6.getnChanges());
                 sendDataToAllClients(p6.getData());
 
 

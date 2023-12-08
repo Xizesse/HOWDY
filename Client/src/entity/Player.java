@@ -48,7 +48,7 @@ public class Player extends Entity {
         //PLayer stats
         maxHealth = 6;
         currentHealth = maxHealth;
-        //System.out.println("Player created on (" + x + "," + y + ")");
+
     }
 
     public void setDefaultValue() {
@@ -159,10 +159,10 @@ public class Player extends Entity {
             gp.eH.checkEvent();
 
             spriteCounter++;
-            //System.out.println("Player position: playerID = 0, " + this.worldX + "," + this.worldY);
+
             Packet02Move packet = new Packet02Move( 0, this.worldX, this.worldY, this.direction);
             packet.writeData(gp.socketClient);
-            //System.out.println("Sending data to server: "+this.worldX+","+this.worldY);
+
 
             if (spriteCounter > 10) {
                 if (spriteNum == 1 &&( keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed)) {
@@ -231,7 +231,6 @@ public class Player extends Entity {
     private void interactNPC(int npcIndex) {
         if(npcIndex!=999){
             System.out.println("NPC colision");
-
         }
     }
     public void draw(Graphics2D g2d) {
