@@ -32,7 +32,7 @@ public class OBJ_PP extends SuperObject{
             ArrayList<TileChange> changes = new ArrayList<>();
             TileChange change;
             for (int[] ints : changeArray) {
-                change = new TileChange(ints[0], ints[1], ints[2]);
+                change = new TileChange(gp.currentMap, ints[0], ints[1], ints[2]);
                 changes.add(change);
                 System.out.println(changes + "\n");
             }
@@ -52,7 +52,7 @@ public class OBJ_PP extends SuperObject{
             TileChange change;
 
             for (int[] ints : defaultArray) {
-                change = new TileChange(ints[0], ints[1], ints[2]);
+                change = new TileChange(gp.currentMap, ints[0], ints[1], ints[2]);
                 changes.add(change);
                 System.out.println(changes + "\n");
             }

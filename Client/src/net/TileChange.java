@@ -1,9 +1,10 @@
 package net;
 
 public class TileChange {
-    private int x, y, newTile;
+    private int mapIndex, x, y, newTile;
 
-    public TileChange(int x, int y, int newTile) {
+    public TileChange(int mapIndex, int x, int y, int newTile) {
+        this.mapIndex = mapIndex;
         this.x = x;
         this.y = y;
         this.newTile = newTile;

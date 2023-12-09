@@ -90,9 +90,9 @@ public class GameServer extends Thread {
             case LOGIN:
                 //print all objects
                 System.out.println("Objects in the game: ");
-                for (int i = 0; i < game.obj.length; i++) {
-                    if (game.obj[i] != null) {
-                        System.out.println("Object " + i + "has ID: " + game.obj[i].id);
+                for (int i = 0; i < game.obj[0].length; i++) {
+                    if (game.obj[0][i] != null) {
+                        System.out.println("Object " + i + "has ID: " + game.obj[0][i].id);
                     }
                 }
                 if (game.players.get(0) == null) {
@@ -148,7 +148,7 @@ public class GameServer extends Thread {
                 if (game.obj[p4.getitemIndex()] != null) {
                     //check if the item is already given
                     //send packet back to the player -> he recieves the item
-                    System.out.println("GIVE ITEM TO [" + address.getHostName() + "] port: " + port + ", object" + (char) p4.getitemIndex() + " " + game.obj[p4.getitemIndex()].name);
+                    System.out.println("GIVE ITEM TO [" + address.getHostName() + "] port: " + port + ", object" + (char) p4.getitemIndex() + " " + game.obj[game.currentMap][p4.getitemIndex()].name);
 
                     Packet04Object p4_2 = new Packet04Object(p4.getitemIndex(), true);
                     sendData(p4_2.getData(), address, port);
@@ -157,7 +157,7 @@ public class GameServer extends Thread {
                     Packet04Object p4_3 = new Packet04Object(p4.getitemIndex(), false);
                     sendDataToAllClientsExceptOne(p4_3.getData(), address, port);
                     //remove the item from the game
-                    game.obj[p4.getitemIndex()] = null;
+                    game.obj[0][p4.getitemIndex()] = null;      //TODO: change to handle currentMap
 
                 }
                 break;

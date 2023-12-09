@@ -67,7 +67,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 break;
             case ATTACK:
                 packet = new Packet03Attack(data);
-                handleAtttack((Packet03Attack)packet);
+                handleAttack((Packet03Attack)packet);
                 System.out.println("Attack packet received");
                 break;
             case OBJECT:
@@ -86,7 +86,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
     }
 
-    private void handleAtttack(Packet03Attack packet) {
+    private void handleAttack(Packet03Attack packet) {
         System.out.println("Attack packet received");
         if (this.game != null) {
             if (packet.getEntityID() == 0) {
@@ -115,14 +115,11 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                         int i = packet.getEntityID() - 1;
 
 
-                        this.game.npc[i].direction = packet.getDirection();
-                        this.game.npc[i].worldX = packet.getX();
-                        this.game.npc[i].worldY = packet.getY();
+                        this.game.npc[0][i].direction = packet.getDirection(); //TODO: Handle mapIndex
+                        this.game.npc[0][i].worldX = packet.getX(); //TODO: Handle mapIndex
+                        this.game.npc[0][i].worldY = packet.getY(); //TODO: Handle mapIndex
                         }
-
                     }
-
-
             }
 
     private void handleObject(Packet04Object packet)
@@ -135,10 +132,10 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 if (packet.getGive()) {
                     System.out.println("\n\nRECEIVED ITEM");
 
-                    game.player.inventory.add(game.obj[packet.getitemIndex()]);
-                    if (Objects.equals(game.obj[packet.getitemIndex()].name, "firefly")) {
-                        game.lightsize += 100;
-                        System.out.println("Light size increased to " + game.lightsize);
+                    game.player.inventory.add(game.obj[0][packet.getitemIndex()]);                      //TODO: Handle mapIndex
+                    if (Objects.equals(game.obj[0][packet.getitemIndex()].name, "firefly")) {       //TODO: Handle mapIndex
+                        game.lightSize += 100;
+                        System.out.println("Light size increased to " + game.lightSize);
                     }
                     System.out.println("Items in the inventory: ");
                     for (int i = 0; i < game.player.inventory.size(); i++) {
@@ -148,10 +145,10 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 //if give is false, give it to the other player
                 else {
                     System.out.println("\n\nDID NOT RECEIVE ITEM");
-                    game.player2.inventory.add(game.obj[packet.getitemIndex()]);
+                    game.player2.inventory.add(game.obj[0][packet.getitemIndex()]);
                 }
                 //delete the object
-                this.game.obj[packet.getitemIndex()] = null;
+                this.game.obj[0][packet.getitemIndex()] = null;     // TODO: Handle mapIndex
             }
 
 
@@ -162,7 +159,8 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
         List<TileChange> changes = packet.getChanges();
 
         for (TileChange change : changes) {
-            this.game.tileM.updateMap(change.getX(), change.getY(), change.getNewTile());
+            this.game.tileM.updateMap(0, change.getX(), change.getY(), change.getNewTile());
+            //TODO: mapIndex is always 0 for now; NEED to fix packet for mapIndex
         }
 
     }

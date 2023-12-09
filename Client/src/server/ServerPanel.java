@@ -38,11 +38,11 @@ public class ServerPanel extends GamePanel {
 
 
 
-        for (int i = 0; i < npc.length; i++) {
+        for (int i = 0; i < npc[0].length; i++) { //TODO: Fix this for multiple maps
 
-            if (npc[i] != null) {
+            if (npc[0][i] != null) {
 
-                Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
+                Packet02Move packet = new Packet02Move( (i+1),npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
                 //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
                 for (NPC_Player player : players) {
                     if (player != null) {
@@ -55,11 +55,11 @@ public class ServerPanel extends GamePanel {
             }
         }
 
-        for (int i = 0; i < npc.length; i++) {
+        for (int i = 0; i < npc[0].length; i++) { //TODO: Fix this for multiple maps
 
-            if (npc[i] != null) {
+            if (npc[0][i] != null) {
 
-                Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
+                Packet02Move packet = new Packet02Move( (i+1),npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
                 //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
                 for (NPC_Player player : players) {
                     if (player != null) {
@@ -110,12 +110,12 @@ public class ServerPanel extends GamePanel {
             //player.update();
             //player2.update(); <- This is done by the client thread
 
-            for (int i = 0; i < npc.length; i++) {
+            for (int i = 0; i < npc[0].length; i++) {
                 //System.out.println("Updating NPC " + (i+1));
                 //System.out.println("NPC " + (i+1) + " is " + npc[i]);
-                if (npc[i] != null) {
-                    npc[i].update();
-                    Packet02Move packet = new Packet02Move( (i+1),npc[i].worldX, npc[i].worldY, npc[i].direction);
+                if (npc[0][i] != null) {
+                    npc[0][i].update();
+                    Packet02Move packet = new Packet02Move( (i+1),npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
                     //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
                     for (NPC_Player player : players) {
                         if (player != null) {

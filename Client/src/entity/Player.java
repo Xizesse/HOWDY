@@ -208,28 +208,27 @@ public class Player extends Entity {
 //            }
             if (i < 0) {
                 i = - i;
-                System.out.println("To aqui porra " + gp.obj[i].isItOn);
-                gp.obj[i].turnOff();
+                gp.obj[gp.currentMap][i].turnOff();
             } else {
-                if (gp.obj[i].id == 1) {//helmet
+                if (gp.obj[gp.currentMap][i].id == 1) {//helmet
                     Packet04Object p4 = new Packet04Object((char) i, true);
                     p4.writeData(gp.socketClient);
                     //System.out.println("Helmet PickUp with id: 1");
 
-                } else if (gp.obj[i].id == 2) {//axe
+                } else if (gp.obj[gp.currentMap][i].id == 2) {//axe
                     Packet04Object p4 = new Packet04Object((char) i, true);
                     p4.writeData(gp.socketClient);
                     System.out.println("Requesting item: " + p4.getitemIndex());
-                } else if (gp.obj[i].id == 3) { //book
+                } else if (gp.obj[gp.currentMap][i].id == 3) { //book
                     Packet04Object p4 = new Packet04Object((char) i, true);
                     p4.writeData(gp.socketClient);
                     System.out.println("Requesting item: " + p4.getitemIndex()); //Sends item INDEX
-                    if (gp.obj[i] != null) {
-                        gp.obj[i].readChapter(gp);
+                    if (gp.obj[gp.currentMap][i] != null) {
+                        gp.obj[gp.currentMap][i].readChapter(gp);
                         gp.gameState = gp.readState;
                     }
-                } else if (Objects.equals(gp.obj[i].name, "PP")) { //pp
-                    gp.obj[i].interact();
+                } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "PP")) { //pp
+                    gp.obj[gp.currentMap][i].interact();
                 }
             }
 

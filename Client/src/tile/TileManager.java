@@ -14,16 +14,17 @@ import java.io.InputStreamReader;
 public class TileManager {
     GamePanel gp;
     public Tile[] tile;
-    public int[][] mapTileNum;
+    public int[][][] mapTileNum;
 
     public TileManager(GamePanel gp){
 
         this.gp = gp;
         tile = new Tile[30];
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+        mapTileNum = new int[gp.maxMaps][gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/map01.txt");
+        loadMap("/maps/map01.txt", 0);
+        loadMap("/maps/map02.txt", 1);
     }
 
     public void getTileImage(){
@@ -64,7 +65,7 @@ public class TileManager {
         }
     }
 
-    public void loadMap(String mapFilePath) {
+    public void loadMap(String mapFilePath, int mapIndex) {
         try {
             InputStream is = getClass().getResourceAsStream(mapFilePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -79,7 +80,7 @@ public class TileManager {
                     char tileChar = line.charAt(col * 2); // Assuming there's a space between each char in the map file
                     int num = charToTileIndex(tileChar); // Convert the character to a tile index
 
-                    mapTileNum[col][row] = num;
+                    mapTileNum[mapIndex][col][row] = num;
                     col++;
                 }
 
@@ -124,9 +125,9 @@ public class TileManager {
         }
     }
 
-    public void updateMap(int x, int y, int newTile){
+    public void updateMap(int mapIndex, int x, int y, int newTile){
 
-        mapTileNum[x][y] = newTile;
+        mapTileNum[mapIndex][x][y] = newTile;
     }
 
     public void draw(Graphics2D g2d){
@@ -137,7 +138,7 @@ public class TileManager {
 
         while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow){
 
-            int tileType = mapTileNum[worldCol][worldRow];
+            int tileType = mapTileNum[gp.currentMap][worldCol][worldRow];
 
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;

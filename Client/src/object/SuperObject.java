@@ -11,12 +11,14 @@ public class SuperObject {
     public BufferedImage up,down,left,right;
     public boolean equippable = false;
     public String name;
+    public String type;
     public byte id;
     public boolean collision = false;
     public int worldX, worldY;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
     public int solidAreaDefaultX = 0;
     public int SolidAreaDefaultY = 0;
+
     public boolean isItOn = false;
 
     UtilityTool uT = new UtilityTool();

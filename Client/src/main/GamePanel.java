@@ -38,6 +38,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxWorldRow = 32;
     public final int worldWidth = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
+    public final int maxMaps = 10;
+    public int currentMap = 0;
 
 
     //FPS
@@ -56,8 +58,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     // ENTITY AND OBJECTS
     public Player player = new Player(this, keyH, 3, 15);
-    public Entity[] npc = new Entity[10];
-    public SuperObject[] obj = new SuperObject[10];
+    public Entity[][] npc = new Entity[maxMaps][10];
+    public SuperObject[][] obj = new SuperObject[maxMaps][10];
 
 
     // Player 2
@@ -80,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     //Effect light
     EffectManager effectManager = new EffectManager(this);
     boolean LIGHT = true;
-    public int lightsize = 400;
+    public int lightSize = 500;
 
     public GamePanel() throws IOException {
         //new GameClient(this, "localhost"); if not an instance of game server
@@ -91,7 +93,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
 
         if (!(this instanceof ServerPanel)) {
-            socketClient = new GameClient(this, "192.168.1.3");
+            socketClient = new GameClient(this, "localhost");
         }
 
     }
@@ -143,7 +145,6 @@ public class GamePanel extends JPanel implements Runnable {
             player.update();
             //player2.update(); <- This is done by the client thread
 
-
             //  will be added upon in the future
         }
         if (gameState == pauseState) {
@@ -182,13 +183,18 @@ public class GamePanel extends JPanel implements Runnable {
             // TILE
             tileM.draw(g2d);
             // OBJECT
-            for (SuperObject superObject : obj) {
-                if (superObject != null) {
-                    superObject.draw(g2d, this);
+            //if (obj[currentMap] != null)
+            for (int i = 0; i < obj[1].length; i++) {
+                if (obj[currentMap] != null) {
+                    if (obj[currentMap][i] != null) {
+                        obj[currentMap][i].draw(g2d, this);
+
+                    }
                 }
+
             }
             // NPC
-            for (Entity entity : npc) {
+            for (Entity entity : npc[currentMap]) {
                 if (entity != null) {
                     entity.draw(g2d);
                 }
@@ -208,13 +214,13 @@ public class GamePanel extends JPanel implements Runnable {
             // TILE
             tileM.draw(g2d);
             // OBJECT
-            for (SuperObject superObject : obj) {
+            for (SuperObject superObject : obj[currentMap]) {
                 if (superObject != null) {
                     superObject.draw(g2d, this);
                 }
             }
             // NPC
-            for (Entity entity : npc) {
+            for (Entity entity : npc[currentMap]) {
                 if (entity != null) {
                     entity.draw(g2d);
                 }
@@ -234,13 +240,13 @@ public class GamePanel extends JPanel implements Runnable {
             // TILE
             tileM.draw(g2d);
             // OBJECT
-            for (SuperObject superObject : obj) {
+            for (SuperObject superObject : obj[currentMap]) {
                 if (superObject != null) {
                     superObject.draw(g2d, this);
                 }
             }
             // NPC
-            for (Entity entity : npc) {
+            for (Entity entity : npc[currentMap]) {
                 if (entity != null) {
                     entity.draw(g2d);
                 }
