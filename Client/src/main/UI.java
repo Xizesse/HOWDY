@@ -88,14 +88,56 @@ public class UI {
 
     private void drawInventory(Graphics2D g2d) {
 
-        int x =  gp.screenWidth - gp.tileSize;
-        int y = gp.screenWidth - gp.tileSize - gp.tileSize/2 ;
+
+
+        int x = gp.screenWidth - 3* gp.tileSize - gp.tileSize/2;
+        int y = gp.screenWidth - gp.tileSize*4 - gp.tileSize ;
+
+        //black square with transparency and a white border
+        Color b = new Color(0,0,0, 100);
+        g2d.setColor(b);
+        g2d.fillRect(x, y, gp.tileSize*3, gp.tileSize*3);
+        Color w = new Color(200,200,200, 100);
+        g2d.setColor(w);
+        g2d.setStroke(new BasicStroke(1));
+        g2d.drawRect(x, y, gp.tileSize*3, gp.tileSize*3);
+        g2d.drawRect(x+ gp.tileSize, y, gp.tileSize, gp.tileSize*3);
+        g2d.drawRect( x, y+gp.tileSize, gp.tileSize*3, gp.tileSize);
+
+
+
+
+        x += gp.tileSize;
+
+        if (gp.player.helmet != null) g2d.drawImage(gp.player.helmet.image, x, y, null);
+        y += gp.tileSize;
+
+        if (gp.player.armour != null) g2d.drawImage(gp.player.armour.image, x, y, null);
+        y += gp.tileSize;
+
+        if (gp.player.boots != null) g2d.drawImage(gp.player.boots.image, x, y, null);
+        y -= gp.tileSize;
+        x -= gp.tileSize;
+
+        if(gp.player.shield != null) g2d.drawImage(gp.player.shield.image, x, y, null);
+        x+= gp.tileSize*2;
+
+        if(gp.player.weapon != null) g2d.drawImage(gp.player.weapon.image, x, y, null);
+
+
+        x =  gp.screenWidth - gp.tileSize - gp.tileSize/2;
+        y = gp.screenWidth - gp.tileSize - gp.tileSize/2 ;
+
 
         for (int i = 0; i < gp.player.inventory.size(); i++) {
 
             //draw a small black square
-            g2d.setColor(Color.black);
+            g2d.setColor(b);
             g2d.fillRect(x, y, gp.tileSize, gp.tileSize);
+            g2d.setColor(w);
+            g2d.setStroke(new BasicStroke(1));
+            g2d.drawRect(x, y, gp.tileSize, gp.tileSize);
+
 
             g2d.drawImage(gp.player.inventory.get(i).image, x, y, null);
             x -= gp.tileSize;

@@ -131,12 +131,8 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 //if give is true, give it to the player
                 if (packet.getGive()) {
                     System.out.println("\n\nRECEIVED ITEM");
+                    game.player.giveItem(game.obj[packet.getMap()][packet.getitemIndex()]);
 
-                    game.player.inventory.add(game.obj[packet.getMap()][packet.getitemIndex()]);                      //kinda done
-                    if (Objects.equals(game.obj[packet.getMap()][packet.getitemIndex()].name, "firefly")) {       //kinda done
-                        game.lightSize += 100;
-                        System.out.println("Light size increased to " + game.lightSize);
-                    }
 
                     this.game.obj[packet.getMap()][packet.getitemIndex()] = null;
                 }

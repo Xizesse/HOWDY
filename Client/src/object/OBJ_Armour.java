@@ -9,7 +9,7 @@ public class OBJ_Armour extends SuperObject{
     String rank = "";
     public OBJ_Armour(GamePanel gp, String rank) {
         name = "Armour";
-        type = "Armour";
+        type = "armour";
         this.rank = rank;
         id = 1;
         equippable = true;

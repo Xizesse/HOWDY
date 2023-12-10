@@ -27,6 +27,7 @@ public class Player extends Entity {
     public SuperObject armour;
     public SuperObject weapon;
     public SuperObject shield;
+    public SuperObject boots;
     //and then standart inventory
     public ArrayList <SuperObject> inventory = new ArrayList<>(10);
 
@@ -316,30 +317,10 @@ public class Player extends Entity {
         }
 
         g2d.drawImage(body, x, y, null);
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).equippable) {
-                if(inventory.get(i).name == "firefly"){
-                    g2d.drawImage(inventory.get(i).image, x, y-gp.tileSize, null);
-                }
-                else {
-                    switch (direction) {
-                        case "up":
-                            g2d.drawImage(inventory.get(i).up, x, y, null);
-                            break;
-                        case "down":
-                            g2d.drawImage(inventory.get(i).down, x, y, null);
-                            break;
-                        case "left":
-                            g2d.drawImage(inventory.get(i).left, x, y, null);
-                            break;
-                        case "right":
-                            g2d.drawImage(inventory.get(i).right, x, y, null);
-                            break;
-                    }
-                }
-            }
 
-        }
+        //draw armour, then helmet, then boots, then weapon, then shield
+        drawitems(g2d, x, y);
+
         //if (helmetOn) {g2d.drawImage(helmet, x, y, null);}
         if (isAttacking)
         {
@@ -357,6 +338,140 @@ public class Player extends Entity {
                     g2d.drawImage(attack, x + + gp.tileSize/2 + gp.tileSize*attackCounter/5, y, null);
                     break;
             }
+        }
+    }
+
+    private void drawitems(Graphics2D g2d, int x, int y) {
+        //this now considers the order of the drawing of the items
+        switch (direction) {
+            case "down":
+                if (boots != null) {
+                    g2d.drawImage(boots.down, x, y, null);
+                }
+                if (armour != null) {
+                    g2d.drawImage(armour.down, x, y, null);
+                }
+                if (helmet != null) {
+                    g2d.drawImage(helmet.down, x, y, null);
+                }
+                if (weapon != null) {
+                    g2d.drawImage(weapon.down, x, y, null);
+                }
+                if (shield != null) {
+                    g2d.drawImage(shield.down, x, y, null);
+                }
+                break;
+            case "up":
+                if (shield != null) {
+                    g2d.drawImage(shield.up, x, y, null);
+                }
+                if (weapon != null) {
+                    g2d.drawImage(weapon.up, x, y, null);
+                }
+                if (boots != null) {
+                    g2d.drawImage(boots.up, x, y, null);
+                }
+                if (armour != null) {
+                    g2d.drawImage(armour.up, x, y, null);
+                }
+                if (helmet != null) {
+                    g2d.drawImage(helmet.up, x, y, null);
+                }
+                break;
+            case "left":
+                if ( helmet != null) {
+                    g2d.drawImage(helmet.left, x, y, null);
+                }
+                if (boots != null) {
+                    g2d.drawImage(boots.left, x, y, null);
+                }
+                if (armour != null) {
+                    g2d.drawImage(armour.left, x, y, null);
+                }
+                if (weapon != null) {
+                    g2d.drawImage(weapon.left, x, y, null);
+                }
+                if (shield != null) {
+                    g2d.drawImage(shield.left, x, y, null);
+                }
+                break;
+            case "right":
+                if ( helmet != null) {
+                    g2d.drawImage(helmet.right, x, y, null);
+                }
+                if (boots != null) {
+                    g2d.drawImage(boots.right, x, y, null);
+                }
+                if (armour != null) {
+                    g2d.drawImage(armour.right, x, y, null);
+                }
+                if (weapon != null) {
+                    g2d.drawImage(weapon.right, x, y, null);
+                }
+                if (shield != null) {
+                    g2d.drawImage(shield.right, x, y, null);
+                }
+                break;
+
+
+
+        }
+
+
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).equippable) {
+                if (inventory.get(i).name == "firefly") {
+                    g2d.drawImage(inventory.get(i).image, x, y - gp.tileSize, null);
+                } else {
+                    switch (direction) {
+                        case "up":
+                            g2d.drawImage(inventory.get(i).up, x, y, null);
+                            break;
+                        case "down":
+                            g2d.drawImage(inventory.get(i).down, x, y, null);
+                            break;
+                        case "left":
+                            g2d.drawImage(inventory.get(i).left, x, y, null);
+                            break;
+                        case "right":
+                            g2d.drawImage(inventory.get(i).right, x, y, null);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void giveItem(SuperObject item)
+    {
+        if (Objects.equals(item.type, "helmet")) {
+            helmet = item;
+            this.maxHealth += 1;
+            this.currentHealth += 1;
+        }
+        else if (Objects.equals(item.type, "armour")) {
+            armour = item;
+            this.maxHealth += 2;
+            this.currentHealth += 2;
+        }
+        else if (Objects.equals(item.type, "weapon")) {
+            weapon = item;
+
+        }
+        else if (Objects.equals(item.type, "shield")) {
+            shield = item;
+        }
+        else if (Objects.equals(item.type, "boots")) {
+            boots = item;
+            this.speed += 2;
+        }
+        else {
+            inventory.add(item);
+        }
+        if (Objects.equals(item.name, "firefly")) {       //kinda done
+            gp.lightSize += 100;
+
         }
     }
 }
