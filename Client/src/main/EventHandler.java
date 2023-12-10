@@ -49,14 +49,42 @@ public class EventHandler {
             if (hit(0, 30, 9, "any")) {
                 dmgPit(gp.readState);
             }
-            if (hit(0, 30, 21, "any")) {
-                teleport( gp.readState, 0, 30, 7);
+
+            //map 1 to 2
+            if (hit(0, 30, 15, "right")) {
+                teleport( gp.playState, 1, 1, 15);
             }
-            if (hit(0, 1, 15, "left")) {
-                teleport( gp.readState, 1,  30, 15);
+            //map 2 to 1
+            if (hit(1, 1, 15, "left")) {
+                teleport( gp.playState, 0,  30, 15);
             }
+            //map 2 to 3
             if (hit(1, 30, 15, "right")) {
-                teleport( gp.readState, 0,  1, 15);
+                gp.LIGHT = !gp.LIGHT;
+                teleport( gp.playState, 2,  1, 15);
+            }
+            //map 3 to 2
+            if (hit(2, 1, 15, "left")) {
+                gp.LIGHT = !gp.LIGHT;
+                teleport( gp.playState, 1,  30, 15);
+            }
+
+            //map 2 to 4
+            if (hit(1, 15, 1, "up")) {
+                teleport( gp.playState, 3,  15, 30);
+            }
+            //map 4 to 2
+            if (hit(3, 15, 30, "down")) {
+                teleport( gp.playState, 1,  15, 1);
+            }
+
+            //map 2 to 5
+            if (hit(1, 15, 30, "down")) {
+                teleport( gp.playState, 4,  15, 1);
+            }
+            //map 5 to 2
+            if (hit(4, 15, 1, "up")) {
+                teleport( gp.playState, 1,  15, 30);
             }
         }
     }

@@ -25,6 +25,10 @@ public class TileManager {
         getTileImage();
         loadMap("/maps/map01.txt", 0);
         loadMap("/maps/map02.txt", 1);
+        loadMap("/maps/map3.txt", 2);
+        loadMap("/maps/map4.txt", 3);
+        loadMap("/maps/map5.txt", 4);
+
     }
 
     public void getTileImage(){
@@ -46,6 +50,13 @@ public class TileManager {
         //door
         setup(5, "/tiles/door_clover5", true);
         setup(13, "/tiles/door_clover_openC", false);
+
+        //outside
+        setup(14, "/tiles/grass1", false);
+        setup(15, "/tiles/grass2", false);
+        setup(16, "/tiles/bush", true);
+
+
 
 
     }
@@ -118,6 +129,10 @@ public class TileManager {
             //door
             case '5': return 5; // door_clover5
             case 'C': return 13; // door_clover open
+
+            case 'G': return 14; // grass1
+            case 'g': return 15; // grass2
+            case 'b': return 16; // bush
 
 
             // ... Add more cases for additional tiles
