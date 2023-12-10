@@ -52,8 +52,11 @@ public class EventHandler {
             if (hit(0, 30, 21, "any")) {
                 teleport( gp.readState, 0, 30, 7);
             }
-            if (hit(0, 30, 15, "any")) {
+            if (hit(0, 1, 15, "left")) {
                 teleport( gp.readState, 1,  30, 15);
+            }
+            if (hit(1, 30, 15, "right")) {
+                teleport( gp.readState, 0,  1, 15);
             }
         }
     }

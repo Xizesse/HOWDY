@@ -115,6 +115,11 @@ public class UI {
         x = getXforCenteredText(text, g2d);
         y = gp.tileSize*2;
         g2d.drawString(text, x, y);
+        if(gp.GOD) g2d.setColor(Color.red);
+        text = "G - GOD MODE";
+        x = getXforCenteredText(text, g2d);
+        y = gp.tileSize*3;
+        g2d.drawString(text, x, y);
 
     }
 

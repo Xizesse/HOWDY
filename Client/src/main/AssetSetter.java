@@ -15,7 +15,7 @@ public class AssetSetter {
     }
 
     public void setObject(){
-        gp.obj[0][0] = new OBJ_Helmet(gp);
+        gp.obj[0][0] = new OBJ_Helmet(gp, "iron");
         gp.obj[0][0].worldX = 8 * gp.tileSize;
         gp.obj[0][0].worldY = 13 * gp.tileSize;
 
@@ -74,6 +74,17 @@ public class AssetSetter {
         gp.obj[0][8] = new OBJ_Firefly(gp);
         gp.obj[0][8].worldX = 8 * gp.tileSize;
         gp.obj[0][8].worldY = 19 * gp.tileSize;
+
+        //map 1
+
+        gp.obj[1][0] = new OBJ_Armour(gp, "gold");
+        gp.obj[1][0].worldX = 28 * gp.tileSize;
+        gp.obj[1][0].worldY = 13 * gp.tileSize;
+
+        gp.obj[1][2] = new OBJ_Helmet(gp, "gold");
+        gp.obj[1][2].worldX = 28 * gp.tileSize;
+        gp.obj[1][2].worldY = 12 * gp.tileSize;
+
     }
 
     public void setPlayer2(){
@@ -102,6 +113,17 @@ public class AssetSetter {
         gp.npc[0][4] = new Monster_Stalker(gp);
         gp.npc[0][4].worldX = 5 * gp.tileSize;
         gp.npc[0][4].worldY = 16 * gp.tileSize;
+
+        //loop to create 10 rats
+        for (int i = 0; i < 10; i++) {
+            gp.npc[1][i] = new NPC_Rat(gp);
+            gp.npc[1][i].worldX =  gp.tileSize * (5+i);
+            gp.npc[1][i].worldY =  gp.tileSize * (17+i);
+        }
+
+
+
+
 //        gp.npc[2] = new NPC_Rat(gp);
 //        gp.npc[2].worldX =  gp.tileSize * 5;
 //        gp.npc[2].worldY =  gp.tileSize * 17;

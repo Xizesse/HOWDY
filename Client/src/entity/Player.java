@@ -105,7 +105,7 @@ public class Player extends Entity {
             if (keyH.upPressed) {
                 collisionOn = false;                                               //reset collision
                 direction = "up";                                                  //set direction
-                gp.cCheck.checkTile(this);                                   //check collision with tile
+                if(!gp.GOD) gp.cCheck.checkTile(this);                                   //check collision with tile
                 int objIndex = gp.cCheck.checkObject(this, true);     //check collision with object
                 pickUpObject(objIndex);                                            //pick up object
                 //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);          //check collision with npc
@@ -118,7 +118,7 @@ public class Player extends Entity {
             if (keyH.downPressed) {
                 collisionOn = false;
                 direction = "down";
-                gp.cCheck.checkTile(this);
+                if(!gp.GOD)gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
                 //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
@@ -132,7 +132,7 @@ public class Player extends Entity {
             {
                 collisionOn = false;
                 direction = "left";
-                gp.cCheck.checkTile(this);
+                if(!gp.GOD)gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
                 //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
@@ -145,7 +145,7 @@ public class Player extends Entity {
             if (keyH.rightPressed) {
                 collisionOn = false;
                 direction = "right";
-                gp.cCheck.checkTile(this);
+                if(!gp.GOD)gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
                 //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
@@ -163,8 +163,8 @@ public class Player extends Entity {
             gp.eH.checkEvent();
 
             spriteCounter++;
-
-            Packet02Move packet = new Packet02Move( 0, this.worldX, this.worldY, this.direction);
+            System.out.println("Moving to " + worldX + ", " + worldY + " map: " + gp.currentMap);
+            Packet02Move packet = new Packet02Move( 0, gp.currentMap, this.worldX, this.worldY, this.direction);
             packet.writeData(gp.socketClient);
 
 
@@ -211,16 +211,16 @@ public class Player extends Entity {
                 gp.obj[gp.currentMap][i].turnOff();
             } else {
                 if (gp.obj[gp.currentMap][i].id == 1) {//helmet
-                    Packet04Object p4 = new Packet04Object((char) i, true);
+                    Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
                     p4.writeData(gp.socketClient);
                     //System.out.println("Helmet PickUp with id: 1");
 
                 } else if (gp.obj[gp.currentMap][i].id == 2) {//axe
-                    Packet04Object p4 = new Packet04Object((char) i, true);
+                    Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
                     p4.writeData(gp.socketClient);
                     System.out.println("Requesting item: " + p4.getitemIndex());
                 } else if (gp.obj[gp.currentMap][i].id == 3) { //book
-                    Packet04Object p4 = new Packet04Object((char) i, true);
+                    Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
                     p4.writeData(gp.socketClient);
                     System.out.println("Requesting item: " + p4.getitemIndex()); //Sends item INDEX
                     if (gp.obj[gp.currentMap][i] != null) {

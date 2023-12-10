@@ -17,6 +17,7 @@ public class ServerPanel extends GamePanel {
     public GameServer socketServer = new GameServer(this);
     //FPS
     final int FPS = 30;
+    boolean flagUpdated = false;
     Thread gameThread;
 
     // Players
@@ -36,13 +37,12 @@ public class ServerPanel extends GamePanel {
         aS.setNPC();
 
 
-
-
-        for (int i = 0; i < npc[0].length; i++) { //TODO: Fix this for multiple maps
+        /*
+        for (int i = 0; i < npc[0].length; i++) { //TODO: Não sei o que é que isto estava a fazer
 
             if (npc[0][i] != null) {
 
-                Packet02Move packet = new Packet02Move( (i+1),npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
+                Packet02Move packet = new Packet02Move( (i+1), 0,npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
                 //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
                 for (NPC_Player player : players) {
                     if (player != null) {
@@ -55,11 +55,11 @@ public class ServerPanel extends GamePanel {
             }
         }
 
-        for (int i = 0; i < npc[0].length; i++) { //TODO: Fix this for multiple maps
+        for (int i = 0; i < npc[0].length; i++) { //TODO: Nem isto
 
             if (npc[0][i] != null) {
 
-                Packet02Move packet = new Packet02Move( (i+1),npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
+                Packet02Move packet = new Packet02Move( (i+1),0,npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
                 //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
                 for (NPC_Player player : players) {
                     if (player != null) {
@@ -70,6 +70,8 @@ public class ServerPanel extends GamePanel {
                 }
             }
         }
+
+         */
         gameState = titleState;
         //playMusic(0);
     }
@@ -110,41 +112,77 @@ public class ServerPanel extends GamePanel {
             //player.update();
             //player2.update(); <- This is done by the client thread
 
-            for (int i = 0; i < npc[0].length; i++) {
-                //System.out.println("Updating NPC " + (i+1));
-                //System.out.println("NPC " + (i+1) + " is " + npc[i]);
-                if (npc[0][i] != null) {
-                    npc[0][i].update();
-                    Packet02Move packet = new Packet02Move( (i+1),npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
-                    //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                    for (NPC_Player player : players) {
+            //TODO: EVERYONE READ THIS
+            //update is called for the maps where players are
+            //IF THERE ARE TWO PLAYERS, if the map is the same, update only once, and set the flagUpdated to true
+            //if flag not true update both maps
+            //é spaghetti mas funciona
+
+            if (players.get(0)!=null && players.get(1)!=null)
+            {
+                if (players.get(0).map == players.get(1).map)
+                {
+                    //we update only once
+
+                    int bothmap = players.get(0).map;
+                    for (int i = 0; i < npc[bothmap].length; i++) {
+                        //System.out.println("Updating NPC " + (i+1));
+                        //System.out.println("NPC " + (i+1) + " is " + npc[i]);
+                        if (npc[bothmap][i] != null) {
+                            npc[bothmap][i].update();
+                            Packet02Move packet = new Packet02Move((i + 1), bothmap, npc[bothmap][i].worldX, npc[bothmap][i].worldY, npc[bothmap][i].direction);
+                            //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                            for (NPC_Player player : players) {
+                                if (player != null) {
+                                    //System.out.println("Sending packet to player ");
+                                    socketServer.sendData(packet.getData(), player.ipAddress, player.port);
+                                }
+                            }
+                        }
+                    }
+                    flagUpdated = true;
+                }
+
+                if (!flagUpdated)
+                {
+                    for (NPC_Player player : players)
+                    {
                         if (player != null) {
-                            //System.out.println("Sending packet to player ");
-                            socketServer.sendData(packet.getData(), player.ipAddress, player.port);
+                            int map = player.map;
+                            for (int i = 0; i < npc[map].length; i++) {
+                                //System.out.println("Updating NPC " + (i+1));
+                                //System.out.println("NPC " + (i+1) + " is " + npc[i]);
+                                if (npc[map][i] != null) {
+                                    npc[map][i].update();
+                                    Packet02Move packet = new Packet02Move((i + 1), map , npc[map][i].worldX, npc[map][i].worldY, npc[map][i].direction);
+                                    //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                                    socketServer.sendData(packet.getData(), player.ipAddress, player.port);
+
+                                }
+                            }
 
                         }
                     }
                 }
+                flagUpdated = false;
+
             }
+
+
+
+
+            }
+
+
+
+
             //  will be added upon in the future
-        }
-        if(gameState == pauseState){
 
-        }
+
 
     }
 
-    public synchronized void updatePlayer2(String direction, int worldX, int worldY) {
-        if(gameState == playState){
-            if(player2 != null) {
-                player2Direction = direction;
-                player2WorldX = worldX;
-                player2WorldY = worldY;
-            }
-        }
-        if(gameState == pauseState){
-        }
-    }
+
 
 
     public void paintComponent(Graphics g) {

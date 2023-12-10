@@ -1,6 +1,7 @@
 package net;
 
 public class Packet04Object extends Packet {
+    private int map;
     private int index;
     private char give; // 'T' for true, 'F' for false
 
@@ -8,22 +9,21 @@ public class Packet04Object extends Packet {
         super(04);
         String[] dataArray = new String(data).trim().split(",");
 
-        if (dataArray.length > 1) {
-            String indexString = dataArray[0].substring(2);
+        if (dataArray.length > 2) {
             try {
-                this.index = Integer.parseInt(indexString);
+                this.map = Integer.parseInt(dataArray[0].substring(2));
+                this.index = Integer.parseInt(dataArray[1]);
+                this.give = dataArray[2].trim().charAt(0);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                // Handle the case where the index is not a valid integer
+                // Handle the case where map or index is not a valid integer
             }
-
-            // Parse the give character
-            this.give = dataArray[1].trim().charAt(0);
         }
     }
 
-    public Packet04Object(int itemID, boolean give) {
+    public Packet04Object(int map, int itemID, boolean give) {
         super(04);
+        this.map = map;
         this.index = itemID;
         this.give = give ? 'T' : 'F';
     }
@@ -36,18 +36,21 @@ public class Packet04Object extends Packet {
 
     @Override
     public void writeData(GameServer server) {
+        // Implement if needed
     }
 
     @Override
     public byte[] getData() {
-        return ("04" + this.index + "," + this.give).getBytes();
+        return ("04" + this.map + "," + this.index + "," + this.give).getBytes();
+    }
+
+    public int getMap() {
+        return this.map;
     }
 
     public int getitemIndex() {
-        return (int) index;
+        return this.index;
     }
-
-
 
     public boolean getGive() {
         return give == 'T';

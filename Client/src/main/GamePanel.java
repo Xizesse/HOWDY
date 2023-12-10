@@ -41,7 +41,6 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxMaps = 10;
     public int currentMap = 0;
 
-
     //FPS
     final int FPS = 30;
 
@@ -59,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
     // ENTITY AND OBJECTS
     public Player player = new Player(this, keyH, 3, 15);
     public Entity[][] npc = new Entity[maxMaps][10];
-    public SuperObject[][] obj = new SuperObject[maxMaps][10];
+    public SuperObject[][] obj = new SuperObject[maxMaps][20];
 
 
     // Player 2
@@ -82,6 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
     //Effect light
     EffectManager effectManager = new EffectManager(this);
     boolean LIGHT = true;
+    public boolean GOD = false;
     public int lightSize = 500;
 
     public GamePanel() throws IOException {
@@ -152,15 +152,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    public synchronized void updatePlayer2(String direction, int worldX, int worldY) {
+    public synchronized void updatePlayer2(String direction,int map, int worldX, int worldY) {
         if (gameState == playState) {
             if (player2 != null) {
+                player2.map = map;
                 player2.direction = direction;
                 player2.worldX = worldX;
                 player2.worldY = worldY;
             }
         }
         if (gameState == pauseState) {
+            //do something ?
         }
     }
 
@@ -204,7 +206,10 @@ public class GamePanel extends JPanel implements Runnable {
             player.draw(g2d);
             // PLAYER2
             if (player2 != null) {
-                player2.draw(g2d);
+                if (player2.map == currentMap)
+                {
+                    player2.draw(g2d);
+                }
             }
 
             if (LIGHT) effectManager.draw(g2d);

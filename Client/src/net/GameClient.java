@@ -108,16 +108,16 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                         //this.game.player2.direction = packet.getDirection();
                         //this.game.player2.worldX = packet.getX();
                         //this.game.player2.worldY = packet.getY();
-                        game.updatePlayer2(packet.getDirection(), packet.getX(), packet.getY());
+                        game.updatePlayer2(packet.getDirection(),packet.getMap(), packet.getX(), packet.getY());
                         //System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
                     }
                     else{
                         int i = packet.getEntityID() - 1;
 
 
-                        this.game.npc[0][i].direction = packet.getDirection(); //TODO: Handle mapIndex
-                        this.game.npc[0][i].worldX = packet.getX(); //TODO: Handle mapIndex
-                        this.game.npc[0][i].worldY = packet.getY(); //TODO: Handle mapIndex
+                        this.game.npc[packet.getMap()][i].direction = packet.getDirection(); //DONE: Handle mapIndex
+                        this.game.npc[packet.getMap()][i].worldX = packet.getX(); //DONE: Handle mapIndex
+                        this.game.npc[packet.getMap()][i].worldY = packet.getY(); //DONE: Handle mapIndex
                         }
                     }
             }
@@ -126,29 +126,28 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
     {
 
         if(this.game != null) {
-            if (this.game.obj[packet.getitemIndex()] != null) {
+            if (this.game.obj[packet.getMap()][packet.getitemIndex()] != null) {
 
                 //if give is true, give it to the player
                 if (packet.getGive()) {
                     System.out.println("\n\nRECEIVED ITEM");
 
-                    game.player.inventory.add(game.obj[0][packet.getitemIndex()]);                      //TODO: Handle mapIndex
-                    if (Objects.equals(game.obj[0][packet.getitemIndex()].name, "firefly")) {       //TODO: Handle mapIndex
+                    game.player.inventory.add(game.obj[packet.getMap()][packet.getitemIndex()]);                      //kinda done
+                    if (Objects.equals(game.obj[packet.getMap()][packet.getitemIndex()].name, "firefly")) {       //kinda done
                         game.lightSize += 100;
                         System.out.println("Light size increased to " + game.lightSize);
                     }
-                    System.out.println("Items in the inventory: ");
-                    for (int i = 0; i < game.player.inventory.size(); i++) {
-                        System.out.println("Item " + i + " has ID: " + game.player.inventory.get(i).id + " and is a " + game.player.inventory.get(i).getClass());
-                    }
+
+                    this.game.obj[packet.getMap()][packet.getitemIndex()] = null;
                 }
                 //if give is false, give it to the other player
                 else {
                     System.out.println("\n\nDID NOT RECEIVE ITEM");
-                    game.player2.inventory.add(game.obj[0][packet.getitemIndex()]);
+                    game.player2.inventory.add(game.obj[packet.getMap()][packet.getitemIndex()]); // kinda done
+                    this.game.obj[packet.getMap()][packet.getitemIndex()] = null;
                 }
                 //delete the object
-                this.game.obj[0][packet.getitemIndex()] = null;     // TODO: Handle mapIndex
+                   //
             }
 
 
@@ -169,7 +168,7 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
      {
          DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
          try{
-             System.out.println("Sending packet to " + ipAddress + " to port:" + packet.getPort());
+             //System.out.println("Sending packet to " + ipAddress + " to port:" + packet.getPort());
              socket.send(packet);
          } catch(IOException e){
              e.printStackTrace();

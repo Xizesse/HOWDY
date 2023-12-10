@@ -78,6 +78,10 @@ public class KeyHandler implements KeyListener {
             else if (code == KeyEvent.VK_L) {
                 gp.LIGHT = !gp.LIGHT;
             }
+            else if (code == KeyEvent.VK_G) {
+                gp.GOD = !gp.GOD;
+                gp.LIGHT = !gp.LIGHT;
+            }
 
         }
         //PAUSE

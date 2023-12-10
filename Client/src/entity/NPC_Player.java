@@ -18,7 +18,10 @@ public class NPC_Player extends Entity
     public ArrayList<SuperObject> inventory = new ArrayList<>(10);
     BufferedImage heartFull, heartHalf, heartEmpty;
     public boolean helmetOn = false;
+    public int map;
+
     public int screenX, screenY;
+    public int currentHealth, maxHealth;
     public int port;
     public NPC_Player(InetAddress ipAddress, int port, int x, int y, String direction, GamePanel gp) {
         super(gp);
