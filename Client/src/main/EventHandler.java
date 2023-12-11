@@ -86,6 +86,27 @@ public class EventHandler {
             if (hit(4, 15, 1, "up")) {
                 teleport( gp.playState, 1,  15, 30);
             }
+
+            //infinite loop on bridge
+            if (hit(2, 19, 10, "right")) {
+                teleport( gp.playState, 2,  18, gp.player.worldY/ gp.tileSize);
+                System.out.println("Teleorting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
+            }
+            if (hit(2, 19, 11, "right")) {
+                teleport( gp.playState, 2,  18, gp.player.worldY/ gp.tileSize);
+                System.out.println("Teleorting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
+
+            }
+            if (hit(2, 19, 12, "right")) {
+                System.out.println("Teleorting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
+
+                teleport( gp.playState, 2,  18, gp.player.worldY/ gp.tileSize);
+            }
+            if (hit(2, 19, 13, "right")) {
+
+                System.out.println("Teleorting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
+                teleport( gp.playState, 2,  18, gp.player.worldY/ gp.tileSize);
+            }
         }
     }
     public boolean hit(int map, int col, int row, String reqDirection){

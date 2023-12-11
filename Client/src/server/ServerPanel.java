@@ -155,6 +155,11 @@ public class ServerPanel extends GamePanel {
                                 if (npc[map][i] != null) {
                                     npc[map][i].update();
                                     Packet02Move packet = new Packet02Move((i + 1), map , npc[map][i].worldX, npc[map][i].worldY, npc[map][i].direction);
+                                    //if is a shark print
+                                    if (npc[map][i] instanceof NPC_Shark)
+                                    {
+                                        System.out.println("Moving Shark " + (i+1) + " to " + npc[map][i].worldX + ", " + npc[map][i].worldY + " facing " + npc[map][i].direction);
+                                    }
                                     //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
                                     socketServer.sendData(packet.getData(), player.ipAddress, player.port);
 

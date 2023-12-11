@@ -55,7 +55,20 @@ public class TileManager {
         setup(14, "/tiles/grass1", false);
         setup(15, "/tiles/grass2", false);
         setup(16, "/tiles/bush", true);
+        setup(17, "/tiles/water", false);
+        setup(18, "/tiles/upplank", true);
+        setup(19, "/tiles/downplank", true);
+        setup(20, "/tiles/planks", false);
+        setup(21, "/tiles/leftSand", true);
+        setup(22, "/tiles/rightSand", true);
 
+        setup(23, "/tiles/rockright", true);
+        setup(24, "/tiles/rockleft", true);
+
+        setup(25, "/tiles/rockupleft", true);
+        setup(26, "/tiles/rockupright", true);
+        setup(27, "/tiles/rockdownleft", true);
+        setup(28, "/tiles/rockdownright", true);
 
 
 
@@ -133,6 +146,23 @@ public class TileManager {
             case 'G': return 14; // grass1
             case 'g': return 15; // grass2
             case 'b': return 16; // bush
+
+            //outside
+            case 'W' : return 17; // water
+            case 'P':return 18; // plank top
+            case 'p':return 19; // plank bottom
+            case 'B':return 20; // bridge
+
+            case 's': return 21; // sandLeft
+            case 'S': return 22; // sandRight
+
+            case 'r': return 23; // rockright
+            case 'l': return 24; // rockleft
+
+            case 'u': return 25; // rockupleft
+            case 'U': return 26; // rockupright
+            case 'd': return 27; // rockdownleft
+            case 'D': return 28; // rockdownright
 
 
             // ... Add more cases for additional tiles

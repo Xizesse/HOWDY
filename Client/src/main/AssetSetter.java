@@ -2,6 +2,7 @@ package main;
 
 import entity.NPC_Rat;
 import entity.NPC_Player;
+import entity.NPC_Shark;
 import monster.Monster_Spike;
 import monster.Monster_Stalker;
 import object.*;
@@ -121,16 +122,25 @@ public class AssetSetter {
             gp.npc[1][i].worldY =  gp.tileSize * (17+i);
         }
 
+        //map 3
+        gp.npc[2][0] = new NPC_Shark(gp);
+        gp.npc[2][0].worldX =  gp.tileSize * 11;
+        gp.npc[2][0].worldY =  gp.tileSize * 4;
+        gp.npc[2][1] = new NPC_Shark(gp);
+        gp.npc[2][1].worldX =  gp.tileSize * 12;
+        gp.npc[2][1].worldY =  gp.tileSize *22;
+        gp.npc[2][2] = new NPC_Shark(gp);
+        gp.npc[2][2].worldX =  gp.tileSize * 12;
+        gp.npc[2][2].worldY =  gp.tileSize * 5;
+        gp.npc[2][3] = new NPC_Shark(gp);
+        gp.npc[2][3].worldX =  gp.tileSize * 5;
+        gp.npc[2][3].worldY =  gp.tileSize * 23;
+        gp.npc[2][4] = new NPC_Shark(gp);
+        gp.npc[2][4].worldX =  gp.tileSize * 5;
+        gp.npc[2][4].worldY =  gp.tileSize * 6;
 
 
 
-//        gp.npc[2] = new NPC_Rat(gp);
-//        gp.npc[2].worldX =  gp.tileSize * 5;
-//        gp.npc[2].worldY =  gp.tileSize * 17;
-//
-//        gp.npc[3] = new NPC_Rat(gp);
-//        gp.npc[3].worldX =  gp.tileSize * 3;
-//        gp.npc[3].worldY =  gp.tileSize * 17;
 
     }
 
