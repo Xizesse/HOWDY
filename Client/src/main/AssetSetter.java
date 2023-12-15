@@ -8,9 +8,7 @@ import monster.Monster_Stalker;
 import object.*;
 
 public class AssetSetter {
-
     GamePanel gp;
-
     public AssetSetter(GamePanel gp){
         this.gp = gp;
     }
@@ -123,6 +121,7 @@ public class AssetSetter {
         }
 
         //map 3
+        /*
         gp.npc[2][0] = new NPC_Shark(gp);
         gp.npc[2][0].worldX =  gp.tileSize * 11;
         gp.npc[2][0].worldY =  gp.tileSize * 4;
@@ -138,7 +137,7 @@ public class AssetSetter {
         gp.npc[2][4] = new NPC_Shark(gp);
         gp.npc[2][4].worldX =  gp.tileSize * 5;
         gp.npc[2][4].worldY =  gp.tileSize * 6;
-
+        */
 
 
 
