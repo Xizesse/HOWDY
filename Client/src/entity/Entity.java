@@ -47,6 +47,8 @@ public class Entity {
 
     public Entity(GamePanel gp) {
         this.gp = gp;
+        bodyDown1 = bodyDown2 = bodyUp1 = bodyUp2 = BodyLeft1 = BodyLeft2 = BodyRight1 = BodyRight2 = setup("defaultTexture/defaultTexture");
+        attackUp = attackLeft = attackDown = attackRight = setup("defaultTexture/defaultTexture");
     }
 
     public void setAction() {
