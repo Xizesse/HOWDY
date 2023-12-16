@@ -128,10 +128,11 @@ public class GameServer extends Thread {
                 Packet03Attack p3 = new Packet03Attack(data);
                 System.out.println("[" + address.getHostName() + "] port: " + port + ", entity" + p3.getEntityID() + " attacked " + p3.getAttacks() + " times");
                 sendDataToAllClientsExceptOne(p3.getData(), address, port);
+                //TODO check collision with entities
+                //TODO send corresponding health packets to the players
                 break;
             case OBJECT:
                 Packet04Object p4 = new Packet04Object(data);
-
                 //check witch player is sending the packet
                 for (int i = 0; i < game.players.size(); i++)
                 {

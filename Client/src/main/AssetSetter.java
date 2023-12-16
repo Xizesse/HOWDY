@@ -3,6 +3,7 @@ package main;
 import entity.NPC_Rat;
 import entity.NPC_Player;
 import entity.NPC_Shark;
+import monster.Monster_Eye;
 import monster.Monster_Spike;
 import monster.Monster_Stalker;
 import object.*;
@@ -74,13 +75,29 @@ public class AssetSetter {
         gp.obj[0][8].worldX = 8 * gp.tileSize;
         gp.obj[0][8].worldY = 19 * gp.tileSize;
 
+        gp.obj[0][9] = new OBJ_Rune(gp, 'l');
+        gp.obj[0][9].worldX = 1 * gp.tileSize;
+        gp.obj[0][9].worldY = 14 * gp.tileSize;
+
+        gp.obj[0][10] = new OBJ_Rune(gp, 'p');
+        gp.obj[0][10].worldX = 1 * gp.tileSize;
+        gp.obj[0][10].worldY = 15 * gp.tileSize;
+
+        gp.obj[0][11] = new OBJ_Rune(gp, 'x');
+        gp.obj[0][11].worldX = 1 * gp.tileSize;
+        gp.obj[0][11].worldY = 16 * gp.tileSize;
+
+        gp.obj[0][12] = new OBJ_Rune(gp, 'f');
+        gp.obj[0][12].worldX = 1 * gp.tileSize;
+        gp.obj[0][12].worldY = 17 * gp.tileSize;
+
         //map 1
 
-        gp.obj[1][0] = new OBJ_Armour(gp, "gold");
-        gp.obj[1][0].worldX = 28 * gp.tileSize;
-        gp.obj[1][0].worldY = 13 * gp.tileSize;
+        gp.obj[1][0] = new OBJ_Armour(gp, "iron");
+        gp.obj[1][0].worldX = 26 * gp.tileSize;
+        gp.obj[1][0].worldY = 12 * gp.tileSize;
 
-        gp.obj[1][2] = new OBJ_Helmet(gp, "gold");
+        gp.obj[1][2] = new OBJ_Helmet(gp, "iron");
         gp.obj[1][2].worldX = 28 * gp.tileSize;
         gp.obj[1][2].worldY = 12 * gp.tileSize;
 
@@ -94,10 +111,10 @@ public class AssetSetter {
 
     public void setNPC(){
 
-        gp.npc[0][0] = new NPC_Rat(gp);
+        gp.npc[0][0] = new Monster_Eye(gp);
         gp.npc[0][0].worldX =  gp.tileSize * 5;
         gp.npc[0][0].worldY =  gp.tileSize * 15;
-        gp.npc[0][1] = new NPC_Rat(gp);
+        gp.npc[0][1] = new Monster_Eye(gp);
         gp.npc[0][1].worldX =  gp.tileSize * 7;
         gp.npc[0][1].worldY =  gp.tileSize * 15;
 

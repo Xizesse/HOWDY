@@ -14,7 +14,7 @@ import java.lang.reflect.Array;
 import java.util.Objects;
 
 public class Entity {
-    GamePanel gp;
+    public GamePanel gp;
     public int worldX, worldY;
     public int previousWorldX, previousWorldY;
     public int speed;
