@@ -25,6 +25,8 @@ public class Entity {
     public int spriteCounter = 0;
     public int actionCounter = 0;
     public int attackCounter = 0;
+
+    public int demageAnimationCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
 
@@ -93,12 +95,20 @@ public class Entity {
                     } else if (spriteNum == 2) {
                         body = bodyUp2;
                     }
+                    if (demageAnimationCounter > 0 && attackUp != null) {
+                        demageAnimationCounter--;
+                        body = attackUp;
+                    }
                     break;
                 case "down":                   //need to change to the correct sprites later on
                     if (spriteNum == 1) {
                         body = bodyDown1;
                     } else if (spriteNum == 2) {
                         body = bodyDown2;
+                    }
+                    if (demageAnimationCounter > 0 && attackDown != null) {
+                        demageAnimationCounter--;
+                        body = attackDown;
                     }
                     break;
                 case "left":
@@ -107,12 +117,21 @@ public class Entity {
                     } else if (spriteNum == 2) {
                         body = BodyLeft2;
                     }
+                    if (demageAnimationCounter > 0 && attackLeft != null) {
+                        demageAnimationCounter--;
+                        body = attackLeft;
+                    }
                     break;
                 case "right":
                     if (spriteNum == 1) {
                         body = BodyRight1;
-                    } else if (spriteNum == 2)
+                    } else if (spriteNum == 2) {
                         body = BodyRight2;
+                    }
+                    if (demageAnimationCounter > 0 && attackRight != null) {
+                        demageAnimationCounter--;
+                        body = attackRight;
+                    }
                     break;
             }
 

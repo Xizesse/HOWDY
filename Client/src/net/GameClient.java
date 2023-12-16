@@ -102,6 +102,7 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
             } else {
                 int i = packet.getEntityID();
                 this.game.npc[packet.getMap()][i].currentHealth = packet.getHealth(); //DONE: Handle mapIndex
+                this.game.npc[packet.getMap()][i].demageAnimationCounter = 15;
                 if (this.game.npc[packet.getMap()][i].currentHealth <= 0) {
                     this.game.npc[packet.getMap()][i].alive = false;
                 }

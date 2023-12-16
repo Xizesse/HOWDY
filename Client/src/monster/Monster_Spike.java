@@ -28,6 +28,11 @@ public class Monster_Spike extends Entity {
         BodyLeft2 = setup("monster_spike/spike_left2");
         BodyRight1 = setup("monster_spike/spike_right1");
         BodyRight2 = setup("monster_spike/spike_right2");
+
+        attackUp = setup("monster_spike/spike_attack_left");
+        attackDown = setup("monster_spike/spike_attack_right");
+        attackLeft = setup("monster_spike/spike_attack_left");
+        attackRight = setup("monster_spike/spike_attack_right");
     }
 
     @Override
@@ -47,6 +52,7 @@ public class Monster_Spike extends Entity {
             }
             actionCounter = 0;
         }
+
 
     }
 }
