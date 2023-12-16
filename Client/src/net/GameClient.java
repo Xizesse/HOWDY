@@ -75,7 +75,11 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                 packet = new Packet04Object(data);
                 handleObject((Packet04Object)packet);
                 break;
-
+            case HEALTH:
+                packet = new Packet05Health(data);
+                System.out.println("Health packet received");
+                handleHealth((Packet05Health)packet);
+                break;
             case MAPCHANGE:
                 packet = new Packet06MapChange(data);
                 System.out.println("Map change packet received");
@@ -84,6 +88,24 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
         }
 
+    }
+
+    private void handleHealth(Packet05Health packet) {
+        //if id is -1 it is me
+        //if it is -2 it is the other player
+        //0 to 20 is npc index on that map
+        System.out.println("ID = " + packet.getEntityID() + " Health = " + packet.getHealth() + " Map = " + packet.getMap());
+        if (this.game != null) {
+            if (packet.getEntityID() == -1) {
+                //System.out.println("Player 1 attacked");
+                game.player.currentHealth = packet.getHealth();
+            } else if (packet.getEntityID() == -2) {
+                game.player2.currentHealth = packet.getHealth();
+            } else {
+                //int i = packet.getEntityID();
+                //this.game.npc[packet.getMap()][i].health = packet.getHealth(); //DONE: Handle mapIndex
+            }
+        }
     }
 
     private void handleAttack(Packet03Attack packet) {

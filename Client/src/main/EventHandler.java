@@ -1,5 +1,7 @@
 package main;
 
+import net.Packet05Health;
+
 import java.awt.*;
 
 public class EventHandler {
@@ -136,6 +138,9 @@ public class EventHandler {
         gp.gameState = gameState;
         gp.ui.currentText = "You fell into a pit!";
         gp.player.currentHealth -= 1;
+        Packet05Health packet = new Packet05Health(-2, gp.player.currentHealth, gp.currentMap);
+        gp.socketClient.sendData(packet.getData());
+
         canTouch = false;
         //eventRect[col][row].eventDone = true;
     }

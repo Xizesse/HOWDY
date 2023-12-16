@@ -171,6 +171,11 @@ public class GameServer extends Thread {
                 Packet06MapChange p6 = new Packet06MapChange(data);
                 sendDataToAllClients(p6.getData());
                 break;
+
+            case HEALTH:
+                Packet05Health p5 = new Packet05Health(data);
+                System.out.println("[" + address.getHostName() + "] port: " + port + ", entity" + p5.getEntityID() + " health " + p5.getHealth());
+                sendDataToAllClientsExceptOne(p5.getData(), address, port);
         }
 
 

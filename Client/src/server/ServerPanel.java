@@ -37,41 +37,7 @@ public class ServerPanel extends GamePanel {
         aS.setNPC();
 
 
-        /*
-        for (int i = 0; i < npc[0].length; i++) { //TODO: Não sei o que é que isto estava a fazer
 
-            if (npc[0][i] != null) {
-
-                Packet02Move packet = new Packet02Move( (i+1), 0,npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
-                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                for (NPC_Player player : players) {
-                    if (player != null) {
-                        //System.out.println("Sending packet to player ");
-                        socketServer.sendData(packet.getData(), player.ipAddress, player.port);
-
-                    }
-                }
-
-            }
-        }
-
-        for (int i = 0; i < npc[0].length; i++) { //TODO: Nem isto
-
-            if (npc[0][i] != null) {
-
-                Packet02Move packet = new Packet02Move( (i+1),0,npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
-                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                for (NPC_Player player : players) {
-                    if (player != null) {
-                        System.out.println("Sending packet to player ");
-                        socketServer.sendData(packet.getData(), player.ipAddress, player.port);
-
-                    }
-                }
-            }
-        }
-
-         */
         gameState = titleState;
         //playMusic(0);
     }

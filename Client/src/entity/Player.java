@@ -164,7 +164,7 @@ public class Player extends Entity {
             gp.eH.checkEvent();
 
             spriteCounter++;
-            System.out.println("Moving to " + worldX + ", " + worldY + " map: " + gp.currentMap);
+            //System.out.println("Moving to " + worldX + ", " + worldY + " map: " + gp.currentMap);
             Packet02Move packet = new Packet02Move( 0, gp.currentMap, this.worldX, this.worldY, this.direction);
             packet.writeData(gp.socketClient);
 

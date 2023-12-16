@@ -30,14 +30,14 @@ public class NPC_Player extends Entity
         this.worldX = x;
         this.worldY = y;
         this.direction = direction;
-        currentHealth = 3;
+        currentHealth = 6;
         maxHealth = 6;
         //solidAreaDefaultX = solidArea.x;
         //solidAreaDefaultY = solidArea.y;
     }
     public NPC_Player(GamePanel gp) {
         super(gp);
-        currentHealth = 3;
+        currentHealth = 6;
         maxHealth = 6;
         direction = "down";
         speed = 4;
