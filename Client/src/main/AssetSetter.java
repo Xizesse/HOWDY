@@ -91,16 +91,25 @@ public class AssetSetter {
         gp.obj[0][12].worldX = 1 * gp.tileSize;
         gp.obj[0][12].worldY = 17 * gp.tileSize;
 
+
+
+        gp.obj[0][13] = new OBJ_Armour(gp, "iron");
+        gp.obj[0][13].worldX = 2 * gp.tileSize;
+        gp.obj[0][13].worldY = 14 * gp.tileSize;
+
+        gp.obj[0][14] = new OBJ_Helmet(gp, "iron");
+        gp.obj[0][14].worldX = 2 * gp.tileSize;
+        gp.obj[0][14].worldY = 13 * gp.tileSize;
+
+        gp.obj[0][15] = new OBJ_Armour(gp, "gold");
+        gp.obj[0][15].worldX = 2 * gp.tileSize;
+        gp.obj[0][15].worldY = 15 * gp.tileSize;
+
+        gp.obj[0][16] = new OBJ_Helmet(gp, "gold");
+        gp.obj[0][16].worldX = 2 * gp.tileSize;
+        gp.obj[0][16].worldY = 16 * gp.tileSize;
+
         //map 1
-
-        gp.obj[1][0] = new OBJ_Armour(gp, "iron");
-        gp.obj[1][0].worldX = 26 * gp.tileSize;
-        gp.obj[1][0].worldY = 12 * gp.tileSize;
-
-        gp.obj[1][2] = new OBJ_Helmet(gp, "iron");
-        gp.obj[1][2].worldX = 28 * gp.tileSize;
-        gp.obj[1][2].worldY = 12 * gp.tileSize;
-
     }
 
     public void setPlayer2(){

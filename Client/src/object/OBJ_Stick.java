@@ -10,6 +10,7 @@ public class OBJ_Stick extends SuperObject{
     public OBJ_Stick(GamePanel gp){
         name = "Stick";
         type = "weapon";
+        tier = 1;
         id = 1;
 
         try{

@@ -11,6 +11,11 @@ public class OBJ_Armour extends SuperObject{
         name = "Armour";
         type = "armour";
         this.rank = rank;
+        if (rank.equals("gold")) {
+            this.tier = 2;
+        } else if (rank.equals("iron")) {
+            this.tier = 1;
+        }
         id = 1;
         equippable = true;
 

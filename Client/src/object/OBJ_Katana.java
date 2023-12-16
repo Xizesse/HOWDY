@@ -10,6 +10,7 @@ public class OBJ_Katana extends SuperObject{
     public OBJ_Katana(GamePanel gp){
         name = "Katana";
         type = "weapon";
+        tier = 2;
         id = 1;
         equippable = true;
         try{

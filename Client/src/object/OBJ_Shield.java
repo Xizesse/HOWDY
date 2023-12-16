@@ -13,6 +13,7 @@ public class OBJ_Shield extends SuperObject {
         name = "Stick";
         type = "shield";
         id = 1;
+        tier = 1;
         equippable = true;
         try{
             image = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/shield/shield.png"));
