@@ -121,26 +121,52 @@ public class GameServer extends Thread {
 
             case MOVE:
                 Packet02Move p = new Packet02Move(data);
-                updatePlayer(address, port,p.getMap(), p.getX(), p.getY(), p.getDirection());
+                updatePlayer(address, port, p.getMap(), p.getX(), p.getY(), p.getDirection());
                 sendDataToAllClientsExceptOne(p.getData(), address, port);
                 break;
             case ATTACK:
                 Packet03Attack p3 = new Packet03Attack(data);
                 System.out.println("[" + address.getHostName() + "] port: " + port + ", entity" + p3.getEntityID() + " attacked " + p3.getAttacks() + " times");
                 sendDataToAllClientsExceptOne(p3.getData(), address, port);
-                //TODO check collision with entities
-                //TODO send corresponding health packets to the players
+                for (int i = 0; i < game.players.size(); i++) {
+                    if (game.players.get(i) != null && game.players.get(i).ipAddress.equals(address) && game.players.get(i).port == port) {
+                        int map = game.players.get(i).map;
+//                        int damage = game.players.get(i).damage;
+                        int damage = 1;
+                        for (int j = 0; j < game.npc[map].length; j++) {
+                            if (game.npc[map][j] != null) {
+                                //check colision with player
+                                if (game.cCheck.checkAttack(game.players.get(i), game.npc[map][j])) {
+                                    game.npc[map][j].currentHealth -= damage;
+                                    Packet05Health p5 = new Packet05Health(j, game.npc[map][j].currentHealth, map);
+                                    sendDataToAllClients(p5.getData());
+                                    System.out.println("npc " + j + " health: " + game.npc[map][j].currentHealth);
+                                    if (game.npc[map][j].currentHealth <= 0) {
+                                        game.npc[map][j].alive = false;
+                                        System.out.println("npc " + j + " died");
+                                    }
+                                }
+
+                            }
+                        }
+
+
+                        //players npcplayers
+                        //monsters entities
+
+
+                    }
+                }
+
                 break;
             case OBJECT:
                 Packet04Object p4 = new Packet04Object(data);
+
                 //check witch player is sending the packet
-                for (int i = 0; i < game.players.size(); i++)
-                {
-                    if (game.players.get(i) != null && game.players.get(i).ipAddress.equals(address) && game.players.get(i).port == port)
-                    {
+                for (int i = 0; i < game.players.size(); i++) {
+                    if (game.players.get(i) != null && game.players.get(i).ipAddress.equals(address) && game.players.get(i).port == port) {
                         int map = game.players.get(i).map;
-                        if (game.obj[map][p4.getitemIndex()] != null)
-                        {
+                        if (game.obj[map][p4.getitemIndex()] != null) {
                             //check if the item is already given
                             //send packet back to the player -> he recieves the item
 
@@ -153,9 +179,7 @@ public class GameServer extends Thread {
                             //remove the item from the game
                             game.obj[map][p4.getitemIndex()] = null;      //DONE: change to handle currentMap
 
-                        }
-                        else
-                        {
+                        } else {
                             //send packet back to the player -> he does not recieve the item
                             System.out.println("item from map " + map + " index " + p4.getitemIndex() + " given to player " + i);
                             Packet04Object p4_2 = new Packet04Object(map, p4.getitemIndex(), false);

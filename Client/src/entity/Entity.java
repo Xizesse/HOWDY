@@ -27,25 +27,36 @@ public class Entity {
     public int attackCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
-    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
+
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
     public boolean isAttacking = false;
+
+    public int attackCoolDown = 5;
     //Character stats
+
     public int maxHealth;
     public int currentHealth;
+    int dyingCounter = 0;
 
+    public boolean alive = true;
+    boolean dying = false;
 
 
     public Entity(GamePanel gp) {
         this.gp = gp;
     }
 
-    public void setAction(){}
+    public void setAction() {
+    }
 
-    public void setDefaultValue(){}
+    public void setDefaultValue() {
+    }
 
     public void draw(Graphics2D g2d) {
+
+        if (!alive) return;
+
 
         BufferedImage body = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
@@ -110,7 +121,7 @@ public class Entity {
 
     }
 
-    public BufferedImage setup (String imagePath){
+    public BufferedImage setup(String imagePath) {
         UtilityTool uT = new UtilityTool();
         BufferedImage scaledImage = null;
         try {
@@ -122,7 +133,7 @@ public class Entity {
         return scaledImage;
     }
 
-    public BufferedImage setupScaled (String imagePath, int width, int height){
+    public BufferedImage setupScaled(String imagePath, int width, int height) {
         UtilityTool uT = new UtilityTool();
         BufferedImage scaledImage = null;
         try {
@@ -136,11 +147,12 @@ public class Entity {
 
     public void update() {
 
+
         setAction();
         collisionOn = false;
         gp.cCheck.checkTile(this);
 
-        gp.cCheck.checkObject(this,false);      //check collision with objects
+        gp.cCheck.checkObject(this, false);      //check collision with objects
 
 
         /*
@@ -154,24 +166,27 @@ public class Entity {
 
         }
     */
-        if(!collisionOn){
+        if (!collisionOn) {
             switch (direction) {
-                case "up": worldY -= speed;
+                case "up":
+                    worldY -= speed;
                     break;
-                case "down": worldY += speed;
+                case "down":
+                    worldY += speed;
                     break;
-                case "left": worldX -= speed;
+                case "left":
+                    worldX -= speed;
                     break;
-                case "right": worldX += speed;
+                case "right":
+                    worldX += speed;
                     break;
             }
         }
-        spriteCounter ++;
-        if (spriteCounter > 12){
-            if (spriteNum == 1 ){
+        spriteCounter++;
+        if (spriteCounter > 12) {
+            if (spriteNum == 1) {
                 spriteNum = 2;
-            }
-            else if (spriteNum == 2){
+            } else if (spriteNum == 2) {
                 spriteNum = 1;
             }
             spriteCounter = 0;

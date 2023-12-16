@@ -15,10 +15,12 @@ import java.util.Objects;
 public class Player extends Entity {
 
 
-
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
+
+    private int attackingX = 0;
+    private int attackingY = 0;
 
     public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
@@ -29,7 +31,7 @@ public class Player extends Entity {
     public SuperObject shield;
     public SuperObject boots;
     //and then standart inventory
-    public ArrayList <SuperObject> inventory = new ArrayList<>(10);
+    public ArrayList<SuperObject> inventory = new ArrayList<>(10);
 
     public Player(GamePanel gp, KeyHandler keyH, int x, int y) {
         super(gp);
@@ -38,17 +40,14 @@ public class Player extends Entity {
         screenX = gp.screenWidth / 2 - gp.tileSize / 2;
         screenY = gp.screenHeight / 2 - gp.tileSize / 2;
 
-        solidArea = new Rectangle(16,16, 16, 24);
+        solidArea = new Rectangle(16, 16, 16, 24);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
-        attackArea.height = 36;
-        attackArea.width = 36;
-
         speed = 8;
         direction = "down";
-        this.worldX = gp.tileSize* x;
-        this.worldY = gp.tileSize* y;
+        this.worldX = gp.tileSize * x;
+        this.worldY = gp.tileSize * y;
         getPlayerImage();
         //PLayer stats
         maxHealth = 6;
@@ -61,7 +60,6 @@ public class Player extends Entity {
         worldY = gp.tileSize * 15;
         speed = 4;
         direction = "down";
-
 
 
     }
@@ -79,7 +77,6 @@ public class Player extends Entity {
         titleArt = setup("player1/boy_title_art");
 
 
-
         attackUp = setup("attack/attack_up");
         attackDown = setup("attack/attack_down");
         attackLeft = setup("attack/attack_left");
@@ -89,13 +86,13 @@ public class Player extends Entity {
     }
 
 
-@Override
+    @Override
     public void update() {
-        if (isAttacking){
+        if (isAttacking) {
             attack();
         }
         //MOVEMENT AND COLLISION CHECKING
-        else if (keyH.downPressed|| keyH.upPressed|| keyH.leftPressed|| keyH.rightPressed || keyH.spacePressed) {
+        else if (keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed || keyH.spacePressed) {
             if (keyH.spacePressed) {
                 isAttacking = true;
                 Packet03Attack packet = new Packet03Attack(0, 1);
@@ -106,7 +103,7 @@ public class Player extends Entity {
             if (keyH.upPressed) {
                 collisionOn = false;                                               //reset collision
                 direction = "up";                                                  //set direction
-                if(!gp.GOD) gp.cCheck.checkTile(this);                                   //check collision with tile
+                if (!gp.GOD) gp.cCheck.checkTile(this);                                   //check collision with tile
                 int objIndex = gp.cCheck.checkObject(this, true);     //check collision with object
                 pickUpObject(objIndex);                                            //pick up object
                 //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);          //check collision with npc
@@ -119,7 +116,7 @@ public class Player extends Entity {
             if (keyH.downPressed) {
                 collisionOn = false;
                 direction = "down";
-                if(!gp.GOD)gp.cCheck.checkTile(this);
+                if (!gp.GOD) gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
                 //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
@@ -129,11 +126,10 @@ public class Player extends Entity {
                     worldY += speed;
                 }
             }
-            if (keyH.leftPressed)
-            {
+            if (keyH.leftPressed) {
                 collisionOn = false;
                 direction = "left";
-                if(!gp.GOD)gp.cCheck.checkTile(this);
+                if (!gp.GOD) gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
                 //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
@@ -146,7 +142,7 @@ public class Player extends Entity {
             if (keyH.rightPressed) {
                 collisionOn = false;
                 direction = "right";
-                if(!gp.GOD)gp.cCheck.checkTile(this);
+                if (!gp.GOD) gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
                 //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
@@ -165,12 +161,12 @@ public class Player extends Entity {
 
             spriteCounter++;
             //System.out.println("Moving to " + worldX + ", " + worldY + " map: " + gp.currentMap);
-            Packet02Move packet = new Packet02Move( 0, gp.currentMap, this.worldX, this.worldY, this.direction);
+            Packet02Move packet = new Packet02Move(0, gp.currentMap, this.worldX, this.worldY, this.direction);
             packet.writeData(gp.socketClient);
 
 
             if (spriteCounter > 10) {
-                if (spriteNum == 1 &&( keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed)) {
+                if (spriteNum == 1 && (keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed)) {
                     spriteNum = 2;
                 } else if (spriteNum == 2) {
                     spriteNum = 1;
@@ -182,22 +178,26 @@ public class Player extends Entity {
 
     private void attack() {
         attackCounter++;
-        if (attackCounter > 5){
+        if (attackCounter > attackCoolDown) {
             isAttacking = false;
             attackCounter = 0;
         }
 
-        switch(direction){
+        switch (direction) {
             case "up":
-                attackArea.x = worldX + gp.tileSize/2 - attackArea.width/2;
-                attackArea.y = worldY - gp.tileSize/2 - attackArea.height/2 - gp.tileSize*attackCounter/5;
+                break;
+            case "down":
+                break;
+            case "left":
+                break;
+            case "right":
                 break;
         }
     }
 
 
-    public void pickUpObject(int i){
-        if(i!=999){
+    public void pickUpObject(int i) {
+        if (i != 999) {
             //print all objects and their iD
 //            for(int j = 0; j < gp.obj.length; j++){
 //                if(gp.obj[j] != null){
@@ -208,16 +208,16 @@ public class Player extends Entity {
 //                }
 //            }
             if (i < 0) {
-                i = - i;
+                i = -i;
                 gp.obj[gp.currentMap][i].turnOff();
             } else {
                 if (gp.obj[gp.currentMap][i].id == 1) {//helmet
-                    Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
+                    Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
                     p4.writeData(gp.socketClient);
                     //System.out.println("Helmet PickUp with id: 1");
 
                 } else if (gp.obj[gp.currentMap][i].id == 2) {//axe
-                    Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
+                    Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
                     p4.writeData(gp.socketClient);
                     System.out.println("Requesting item: " + p4.getitemIndex());
                 } else if (gp.obj[gp.currentMap][i].id == 3) { //book
@@ -237,10 +237,11 @@ public class Player extends Entity {
     }
 
     private void interactNPC(int npcIndex) {
-        if(npcIndex!=999){
+        if (npcIndex != 999) {
             System.out.println("NPC colision");
         }
     }
+
     public void draw(Graphics2D g2d) {
 
 
@@ -294,25 +295,24 @@ public class Player extends Entity {
         }
 
 
-
         int x = screenX;
         int y = screenY;
 
         //Stop camera movement at the edge of the map
         //left
-        if(screenX > worldX){
+        if (screenX > worldX) {
             x = worldX;
         }
         //top
-        if(screenY > worldY){
+        if (screenY > worldY) {
             y = worldY;
         }
         //right
-        if(screenX < worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth){
+        if (screenX < worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth) {
             x = worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth;
         }
         //bottom
-        if(screenY < worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight){
+        if (screenY < worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight) {
             y = worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight;
         }
 
@@ -322,20 +322,19 @@ public class Player extends Entity {
         drawitems(g2d, x, y, body);
 
         //if (helmetOn) {g2d.drawImage(helmet, x, y, null);}
-        if (isAttacking)
-        {
+        if (isAttacking) {
             switch (direction) {
                 case "up":
-                    g2d.drawImage(attack, x, y - gp.tileSize/2 - gp.tileSize*attackCounter/5, null);
+                    g2d.drawImage(attack, x, y - gp.tileSize / 2 - gp.tileSize * attackCounter / attackCoolDown, null);
                     break;
                 case "down":
-                    g2d.drawImage(attack, x, y + gp.tileSize/2 + gp.tileSize*attackCounter/5, null);
+                    g2d.drawImage(attack, x, y + gp.tileSize / 2 + gp.tileSize * attackCounter / attackCoolDown, null);
                     break;
                 case "left":
-                    g2d.drawImage(attack, x - gp.tileSize/2 - gp.tileSize*attackCounter/5 , y, null);
+                    g2d.drawImage(attack, x - gp.tileSize / 2 - gp.tileSize * attackCounter / attackCoolDown, y, null);
                     break;
                 case "right":
-                    g2d.drawImage(attack, x + + gp.tileSize/2 + gp.tileSize*attackCounter/5, y, null);
+                    g2d.drawImage(attack, x + +gp.tileSize / 2 + gp.tileSize * attackCounter / attackCoolDown, y, null);
                     break;
             }
         }
@@ -382,7 +381,7 @@ public class Player extends Entity {
                 break;
             case "left":
                 g2d.drawImage(body, x, y, null);
-                if ( helmet != null) {
+                if (helmet != null) {
                     g2d.drawImage(helmet.left, x, y, null);
                 }
                 if (boots != null) {
@@ -400,7 +399,7 @@ public class Player extends Entity {
                 break;
             case "right":
                 g2d.drawImage(body, x, y, null);
-                if ( helmet != null) {
+                if (helmet != null) {
                     g2d.drawImage(helmet.right, x, y, null);
                 }
                 if (boots != null) {
@@ -418,9 +417,7 @@ public class Player extends Entity {
                 break;
 
 
-
         }
-
 
 
         for (int i = 0; i < inventory.size(); i++) {
@@ -447,30 +444,24 @@ public class Player extends Entity {
         }
     }
 
-    public void giveItem(SuperObject item)
-    {
+    public void giveItem(SuperObject item) {
         if (Objects.equals(item.type, "helmet")) {
             helmet = item;
             this.maxHealth += 1;
             this.currentHealth += 1;
-        }
-        else if (Objects.equals(item.type, "armour")) {
+        } else if (Objects.equals(item.type, "armour")) {
             armour = item;
             this.maxHealth += 2;
             this.currentHealth += 2;
-        }
-        else if (Objects.equals(item.type, "weapon")) {
+        } else if (Objects.equals(item.type, "weapon")) {
             weapon = item;
 
-        }
-        else if (Objects.equals(item.type, "shield")) {
+        } else if (Objects.equals(item.type, "shield")) {
             shield = item;
-        }
-        else if (Objects.equals(item.type, "boots")) {
+        } else if (Objects.equals(item.type, "boots")) {
             boots = item;
             this.speed += 2;
-        }
-        else {
+        } else {
             inventory.add(item);
         }
         if (Objects.equals(item.name, "firefly")) {       //kinda done
