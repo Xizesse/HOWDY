@@ -13,7 +13,7 @@ public class Monster_Eye extends Entity {
         super(gp);
         direction = "down";
         speed = 3;
-        maxHealth = 1;
+        maxHealth = 10;
         currentHealth = maxHealth;
         solidArea = new Rectangle(0, 0, 48, 48);
         getImage();

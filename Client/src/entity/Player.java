@@ -20,7 +20,10 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    public BufferedImage HelmetUp, HewlmetDown, HelmetLeft, HelmetRight;
+    private int attackingX = 0;
+    private int attackingY = 0;
+
+    public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
     //Inventory and slots
     public SuperObject helmet;
@@ -211,76 +214,15 @@ public class Player extends Entity {
                 i = - i;
                 gp.obj[gp.currentMap][i].turnOff();
             } else {
-                if (gp.obj[gp.currentMap][i].id == 1) {//normal item
+                if (gp.obj[gp.currentMap][i].id == 1) {//helmet
+                    Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
+                    p4.writeData(gp.socketClient);
+                    //System.out.println("Helmet PickUp with id: 1");
 
-                    //if I have a item of that type, see if it is better than the one I have
-                    if(gp.obj[gp.currentMap][i].type.equals("helmet")){
-                        if(helmet != null){
-                            if(helmet.tier < gp.obj[gp.currentMap][i].tier){
-                                Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                                p4.writeData(gp.socketClient);
-                                System.out.println("Requesting item: " + p4.getitemIndex());
-                            }
-                        }else{
-                            Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                            p4.writeData(gp.socketClient);
-                            System.out.println("Requesting item: " + p4.getitemIndex());
-                        }
-                    }else if(gp.obj[gp.currentMap][i].type.equals("armour")){
-                        if(armour != null){
-                            if(armour.tier < gp.obj[gp.currentMap][i].tier){
-                                Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                                p4.writeData(gp.socketClient);
-                                System.out.println("Requesting item: " + p4.getitemIndex());
-                            }
-                        }else{
-                            Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                            p4.writeData(gp.socketClient);
-                            System.out.println("Requesting item: " + p4.getitemIndex());
-                        }
-                    }else if(gp.obj[gp.currentMap][i].type.equals("weapon")){
-                        if(weapon != null){
-                            if(weapon.tier < gp.obj[gp.currentMap][i].tier){
-                                Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                                p4.writeData(gp.socketClient);
-                                System.out.println("Requesting item: " + p4.getitemIndex());
-                            }
-                        }else{
-                            Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                            p4.writeData(gp.socketClient);
-                            System.out.println("Requesting item: " + p4.getitemIndex());
-                        }
-                    }else if(gp.obj[gp.currentMap][i].type.equals("shield")){
-
-                        if(shield != null){
-                            if(shield.tier < gp.obj[gp.currentMap][i].tier){
-                                Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                                p4.writeData(gp.socketClient);
-                                System.out.println("Requesting item: " + p4.getitemIndex());
-                            }
-                        }else{
-                            Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                            p4.writeData(gp.socketClient);
-                            System.out.println("Requesting item: " + p4.getitemIndex());
-                        }
-                    }else if(gp.obj[gp.currentMap][i].type.equals("boots")){
-                        if(boots != null){
-                            if(boots.tier < gp.obj[gp.currentMap][i].tier){
-                                Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                                p4.writeData(gp.socketClient);
-                                System.out.println("Requesting item: " + p4.getitemIndex());
-                            }
-                        }else{
-                            Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                            p4.writeData(gp.socketClient);
-                            System.out.println("Requesting item: " + p4.getitemIndex());
-                        }
-                    }else{
-                        Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
-                        p4.writeData(gp.socketClient);
-                        System.out.println("Requesting item: " + p4.getitemIndex());
-                    }
-
+                } else if (gp.obj[gp.currentMap][i].id == 2) {//axe
+                    Packet04Object p4 = new Packet04Object(gp.currentMap,(char) i, true);
+                    p4.writeData(gp.socketClient);
+                    System.out.println("Requesting item: " + p4.getitemIndex());
                 } else if (gp.obj[gp.currentMap][i].id == 3) { //book
                     Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
                     p4.writeData(gp.socketClient);
