@@ -165,7 +165,6 @@ public class GameServer extends Thread {
                     }
                 }
 
-
                 break;
             case MAPCHANGE:
                 Packet06MapChange p6 = new Packet06MapChange(data);
