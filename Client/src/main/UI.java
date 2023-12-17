@@ -34,7 +34,6 @@ public class UI {
         g2d.setFont(TimesRoman);
         g2d.setColor(Color.WHITE);
 
-
         //title state
         if (gp.gameState == gp.titleState) {
             drawTitleScreen(g2d);
@@ -191,7 +190,7 @@ public class UI {
 
     }
 
-    public void drawPauseScreen(Graphics2D g2d) {
+    private void drawPauseScreen(Graphics2D g2d) {
         String text = "PAUSED";
         int x = getXforCenteredText(text, g2d);
         int y = gp.screenHeight / 2;
@@ -277,7 +276,7 @@ public class UI {
 
     }
 
-    public void drawOptionsScreen(Graphics2D g2d) {
+    private void drawOptionsScreen(Graphics2D g2d) {
         int x = gp.tileSize * 4;
         int y = gp.tileSize * 2;
         int width = gp.tileSize * 8;
@@ -308,7 +307,7 @@ public class UI {
         gp.keyH.keysPressed[keyH.attackKey] = false;
     }
 
-    public void options_top(int frameX, int frameY, Graphics2D g2d) {
+    private void options_top(int frameX, int frameY, Graphics2D g2d) {
         int textX;
         int textY;
         String text = "Options";
@@ -395,7 +394,7 @@ public class UI {
         gp.config.saveConfig();
     }
 
-    public void options_fullScreenNotification(int frameX, int frameY, Graphics2D g2d) {
+    private void options_fullScreenNotification(int frameX, int frameY, Graphics2D g2d) {
         int textX = frameX + gp.tileSize;
         int textY = frameY + gp.tileSize * 3;
 
@@ -416,7 +415,7 @@ public class UI {
         }
     }
 
-    public void options_control(int frameX, int frameY, Graphics2D g2d) {
+    private void options_control(int frameX, int frameY, Graphics2D g2d) {
         int textX;
         int textY;
 
@@ -467,7 +466,7 @@ public class UI {
         }
     }
 
-    public void options_endGameConfirmation(int x, int y, Graphics2D g2d) {
+    private void options_endGameConfirmation(int x, int y, Graphics2D g2d) {
         int textX = x + gp.tileSize;
         int textY = y + gp.tileSize * 3;
 
@@ -503,7 +502,7 @@ public class UI {
         }
     }
 
-    public void drawSubWindow(int x, int y, int width, int height, Graphics2D g2d) {
+    private void drawSubWindow(int x, int y, int width, int height, Graphics2D g2d) {
         Color c = new Color(200, 200, 200, 175);
         g2d.setColor(c);
         g2d.fillRoundRect(x, y, width, height, 35, 35);

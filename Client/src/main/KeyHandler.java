@@ -9,20 +9,21 @@ public class KeyHandler implements KeyListener {
 
     GamePanel gp;
 
+    public boolean[] keysPressed = new boolean[999];
 
-    public static boolean[] keysPressed = new boolean[999];
 
     //User defined key bindings
-    public static int upKey = KeyEvent.VK_UP;
-    public static int downKey = KeyEvent.VK_DOWN;
-    public static int leftKey = KeyEvent.VK_LEFT;
-    public static int rightKey = KeyEvent.VK_RIGHT;
-    public static int backKey = KeyEvent.VK_ESCAPE;
-    public static int attackKey = KeyEvent.VK_SPACE;
-    public static int confirmKey = KeyEvent.VK_ENTER;
-    public static int godKey = KeyEvent.VK_G;
-    public static int lightKey = KeyEvent.VK_L;
-    public static int pauseKey = KeyEvent.VK_P;
+    public int upKey = KeyEvent.VK_UP;
+    public int downKey = KeyEvent.VK_DOWN;
+    public int leftKey = KeyEvent.VK_LEFT;
+    public int rightKey = KeyEvent.VK_RIGHT;
+    public int backKey = KeyEvent.VK_ESCAPE;
+    public int attackKey = KeyEvent.VK_SPACE;
+    public int confirmKey = KeyEvent.VK_ENTER;
+    public int godKey = KeyEvent.VK_G;
+    public int lightKey = KeyEvent.VK_L;
+    public int pauseKey = KeyEvent.VK_P;
+
 
     public static int devKey = KeyEvent.VK_T;
 
@@ -54,6 +55,53 @@ public class KeyHandler implements KeyListener {
         }
         // JOIN STATE
         else if (gp.gameState == gp.joinState) {
+
+            for (int i = KeyEvent.VK_A; i <= KeyEvent.VK_Z; i++) {
+                if (keysPressed[i]) {
+                    gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                            += (char) i;
+                    System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
+                    keysPressed[i] = false;
+                }
+            }
+
+            for (int i = KeyEvent.VK_0; i <= KeyEvent.VK_9; i++) {
+                if (keysPressed[i]) {
+                    gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                            += (char) i - KeyEvent.VK_0;
+                    System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
+                    keysPressed[i] = false;
+                }
+            }
+
+            for (int i = KeyEvent.VK_NUMPAD0; i <= KeyEvent.VK_NUMPAD9; i++) {
+                if (keysPressed[i]) {
+                    gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                            += (char) i - KeyEvent.VK_NUMPAD0;
+                    System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
+                    keysPressed[i] = false;
+                }
+            }
+
+            if (keysPressed[KeyEvent.VK_DECIMAL] || keysPressed[KeyEvent.VK_PERIOD]) {
+                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                        += ".";
+                keysPressed[KeyEvent.VK_SPACE] = false;
+            }
+
+
+            if (keysPressed[KeyEvent.VK_BACK_SPACE]) {
+                if (gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond.length() > 0) {
+                    gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                            = gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                            .substring(0, gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                                    .length() - 1);
+                }
+            }
+
+            if (keysPressed[confirmKey]) {
+                gp.new_gameState = gp.titleState;
+            }
 
         }
         //PLAY STATE

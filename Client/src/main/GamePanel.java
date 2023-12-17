@@ -43,6 +43,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxMaps = 10;
     public int currentMap = 0;
 
+    public String AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond = "";
+
     //FPS
     final int FPS = 30;
 
