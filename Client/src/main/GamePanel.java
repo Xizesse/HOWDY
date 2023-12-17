@@ -85,6 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2;
     public final int readState = 3;
     public final int optionsState = 4;
+    public final int joinState = 5;
     public int endGame = 0;
     public int optionsBack = 0;
 
@@ -195,6 +196,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void drawToTempScreen() {
+        g2d.setColor(Color.black);
+        g2d.drawRect(0, 0, screenWidth, screenHeight);
+        g2d.fillRect(0, 0, screenWidth, screenHeight);
         // DEBUG
         long drawStartTime = 0;
         if (DEV_MODE) {
@@ -205,6 +209,9 @@ public class GamePanel extends JPanel implements Runnable {
         //System.out.println(gameState);
 
         if (gameState == titleState) {
+            ui.draw(g2d);
+
+        } else if (gameState == joinState) {
             ui.draw(g2d);
 
         } else if (gameState == playState) {
@@ -368,6 +375,7 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
+//        g2d.dispose();
     }
 
     public void playMusic(int i) {
