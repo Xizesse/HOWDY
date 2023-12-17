@@ -7,7 +7,6 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.List;
-import java.util.Objects;
 
 import main.GamePanel;
 
@@ -95,14 +94,14 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
         System.out.println("ID = " + packet.getEntityID() + " Health = " + packet.getHealth() + " Map = " + packet.getMap());
         if (this.game != null) {
             if (packet.getEntityID() == -1) {
-                //System.out.println("Player 1 attacked");
+                System.out.println("Player 1 attacked");
                 game.player.currentHealth = packet.getHealth();
             } else if (packet.getEntityID() == -2) {
                 game.player2.currentHealth = packet.getHealth();
             } else {
                 int i = packet.getEntityID();
                 this.game.npc[packet.getMap()][i].currentHealth = packet.getHealth(); //DONE: Handle mapIndex
-                this.game.npc[packet.getMap()][i].demageAnimationCounter = 15;
+                this.game.npc[packet.getMap()][i].damageAnimationCounter = this.game.npc[packet.getMap()][i].defDamageAnimationCounter;
                 if (this.game.npc[packet.getMap()][i].currentHealth <= 0) {
                     this.game.npc[packet.getMap()][i].alive = false;
                 }

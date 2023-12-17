@@ -13,6 +13,9 @@ public class Monster_Spike extends Entity {
         direction = "down";
         speed = 1;
         maxHealth = 20;
+        damage = 1;
+        defAttackCoolDown = 60;
+        attackRange = 50;
         currentHealth = maxHealth;
         solidArea = new Rectangle(0, 0, 48, 48);
         getImage();

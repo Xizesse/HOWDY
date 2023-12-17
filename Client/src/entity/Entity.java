@@ -2,15 +2,14 @@ package entity;
 
 import main.GamePanel;
 import main.UtilityTool;
-import object.SuperObject;
-import org.w3c.dom.css.Rect;
+import net.Packet03Attack;
+import net.Packet05Health;
 import server.ServerPanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Objects;
 
 public class Entity {
@@ -27,7 +26,8 @@ public class Entity {
     public int actionCounter = 0;
     public int attackCounter = 0;
 
-    public int demageAnimationCounter = 0;
+    public int defDamageAnimationCounter = 15;
+    public int damageAnimationCounter = 0;
     public int spriteNum = 1;
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
@@ -35,9 +35,13 @@ public class Entity {
     public boolean collisionOn = false;
     public boolean isAttacking = false;
 
-    public int attackCoolDown = 5;
     //Character stats
 
+    public int attackRange = 0;
+    public int defAttackCoolDown = 5;
+    public int attackCoolDown = 5;
+
+    public int damage = 0;
     public int maxHealth;
     public int currentHealth;
     int dyingCounter = 0;
@@ -92,6 +96,8 @@ public class Entity {
                 worldY > gp.player.worldY - gp.screenHeight &&
                 worldY < gp.player.worldY + gp.screenHeight) {
 
+            System.out.println("damageAnimationCounter: " + damageAnimationCounter);
+
             switch (direction) { //get the correct sprite for the direction the entity is facing
                 case "up":
                     if (spriteNum == 1) {
@@ -99,8 +105,8 @@ public class Entity {
                     } else if (spriteNum == 2) {
                         body = bodyUp2;
                     }
-                    if (demageAnimationCounter > 0 && attackUp != null) {
-                        demageAnimationCounter--;
+                    if (damageAnimationCounter > 0 && attackUp != null) {
+                        damageAnimationCounter--;
                         body = attackUp;
                     }
                     break;
@@ -110,8 +116,8 @@ public class Entity {
                     } else if (spriteNum == 2) {
                         body = bodyDown2;
                     }
-                    if (demageAnimationCounter > 0 && attackDown != null) {
-                        demageAnimationCounter--;
+                    if (damageAnimationCounter > 0 && attackDown != null) {
+                        damageAnimationCounter--;
                         body = attackDown;
                     }
                     break;
@@ -121,8 +127,8 @@ public class Entity {
                     } else if (spriteNum == 2) {
                         body = BodyLeft2;
                     }
-                    if (demageAnimationCounter > 0 && attackLeft != null) {
-                        demageAnimationCounter--;
+                    if (damageAnimationCounter > 0 && attackLeft != null) {
+                        damageAnimationCounter--;
                         body = attackLeft;
                     }
                     break;
@@ -132,8 +138,8 @@ public class Entity {
                     } else if (spriteNum == 2) {
                         body = BodyRight2;
                     }
-                    if (demageAnimationCounter > 0 && attackRight != null) {
-                        demageAnimationCounter--;
+                    if (damageAnimationCounter > 0 && attackRight != null) {
+                        damageAnimationCounter--;
                         body = attackRight;
                     }
                     break;
@@ -168,6 +174,43 @@ public class Entity {
         return scaledImage;
     }
 
+    void attackPlayer() {
+
+        if (this instanceof NPC_Player) { //players don't attack automatically
+            return;
+        }
+
+
+        for (NPC_Player player : gp.players) {
+//            System.out.println("player: " + player);
+            if (player != null) {
+
+                int distance = (int) Math.sqrt(Math.pow(player.worldX - worldX, 2) + Math.pow(player.worldY - worldY, 2));
+
+                if (player.map == map) {
+//                    System.out.println("distance: " + distance);
+//                    System.out.println("attackCoolDown: " + attackCoolDown);
+
+                    if (distance <= attackRange && attackCoolDown == 0) {
+                        System.out.println("Attack");
+                        attackCoolDown = defAttackCoolDown;
+                        player.currentHealth -= damage;
+
+                        Packet05Health p5 = new Packet05Health(-1, damage, map);
+                        p5.writeData(((ServerPanel) gp).socketServer);
+                        Packet05Health p5_2 = new Packet05Health(-2, damage, map);
+                        p5_2.writeData(((ServerPanel) gp).socketServer);
+
+
+                    }
+                }
+            }
+        }
+        if (attackCoolDown > 0) {
+            attackCoolDown--;
+        }
+    }
+
     public void update() {
 
 
@@ -177,6 +220,7 @@ public class Entity {
 
         gp.cCheck.checkObject(this, false);      //check collision with objects
 
+//        attackPlayer();
 
         /*
         if (gp instanceof ServerPanel) {

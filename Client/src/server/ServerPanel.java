@@ -1,4 +1,5 @@
 package server;
+
 import entity.*;
 import main.*;
 import net.*;
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 //Server panel class, similar to the game panel class, but with a few differences, implementing
 //just what the server needs. No graphic part
 public class ServerPanel extends GamePanel {
@@ -27,6 +29,7 @@ public class ServerPanel extends GamePanel {
     public ServerPanel() throws IOException {
         super();
     }
+
     public void setupGame() {
         System.out.println("Setting up game");
         socketServer.start();
@@ -35,7 +38,6 @@ public class ServerPanel extends GamePanel {
         //aS.setPlayer2();
         //aS.setPlayers
         aS.setNPC();
-
 
 
         gameState = titleState;
@@ -51,20 +53,19 @@ public class ServerPanel extends GamePanel {
     }
 
 
-
     @Override
     public void run() {
         gameState = playState;
-        double deltaInterval = (double)1000000000 / FPS;
+        double deltaInterval = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
 
-        while(gameThread != null) {
+        while (gameThread != null) {
             currentTime = System.nanoTime();
             delta += (currentTime - lastTime) / deltaInterval;
             lastTime = currentTime;
-            if(delta >= 1) {
+            if (delta >= 1) {
                 update();
                 //repaint();
                 delta--;
@@ -72,20 +73,44 @@ public class ServerPanel extends GamePanel {
         }
     }
 
+    void attackPlayers() {
+
+        for (NPC_Player player : players) {
+            if (player == null) return;
+            int map = player.map;
+            for (int npcIndex = 0; npcIndex < npc[map].length; npcIndex++) {
+                System.out.println("npc: " + npc[map][npcIndex] + " on map " + map);
+                if (npc[map][npcIndex] == null) return;
+                int distance = (int) Math.sqrt(Math.pow(player.worldX - npc[map][npcIndex].worldX, 2) + Math.pow(player.worldY - npc[map][npcIndex].worldY, 2));
+                if (distance <= npc[map][npcIndex].attackRange && npc[map][npcIndex].attackCoolDown == 0) {
+                    System.out.println("Attack");
+                    npc[map][npcIndex].attackCoolDown = npc[map][npcIndex].defAttackCoolDown;
+                    player.currentHealth -= npc[map][npcIndex].damage;
+                    Packet05Health p5 = new Packet05Health(-1, npc[map][npcIndex].damage, map);
+                    p5.writeData(socketServer);
+                    Packet05Health p5_2 = new Packet05Health(-2, npc[map][npcIndex].damage, map);
+                    p5_2.writeData(socketServer);
+                }
+            }
+
+
+        }
+    }
+
     public void update() {
 
-        if(gameState == playState){
+        if (gameState == playState) {
             //player.update();
             //player2.update(); <- This is done by the client thread
 
 
-            if (players.get(0)!=null && players.get(1)!=null)
-            {
+            if (players.get(0) != null && players.get(1) != null) {
                 if (players.get(0).map == players.get(1).map)
                 //both on the same map
                 {
                     //we update only once
                     int bothmap = players.get(0).map;
+                    attackPlayers();
                     //all the npcs on the both map
                     for (int i = 0; i < npc[bothmap].length; i++) {
                         if (npc[bothmap][i] != null) {
@@ -104,43 +129,41 @@ public class ServerPanel extends GamePanel {
                 }
 
 
-                }
-                flagUpdated = false;
-
-            }
-            if (!flagUpdated)
-            //se não tiver dado update, ou estão em mapas diferentes ou um deles está null
-            {
-                for (NPC_Player player : players) {
-                    if (player != null) {
-                        int map = player.map;
-                        System.out.println("Updating map " + map);
-                        for (int i = 0; i < npc[map].length; i++) {
-                            //System.out.println("Updating NPC " + (i+1));
-                            //System.out.println("NPC " + (i+1) + " is " + npc[i]);
-                            if (npc[map][i] != null) {
-                                npc[map][i].update();
-                                Packet02Move packet = new Packet02Move((i + 1), map, npc[map][i].worldX, npc[map][i].worldY, npc[map][i].direction);
-                                //if is a shark print
-
-                                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                                socketServer.sendData(packet.getData(), player.ipAddress, player.port);
-
-                            }
-                        }
-
-                    }
-                }
-
-
             }
             flagUpdated = false;
 
+        }
+        if (!flagUpdated)
+        //se não tiver dado update, ou estão em mapas diferentes ou um deles está null
+        {
+            attackPlayers();
+            for (NPC_Player player : players) {
+                if (player != null) {
+                    int map = player.map;
+//                        System.out.println("Updating map " + map);
+                    for (int i = 0; i < npc[map].length; i++) {
+                        //System.out.println("Updating NPC " + (i+1));
+                        //System.out.println("NPC " + (i+1) + " is " + npc[i]);
+                        if (npc[map][i] != null) {
+                            npc[map][i].update();
+                            Packet02Move packet = new Packet02Move((i + 1), map, npc[map][i].worldX, npc[map][i].worldY, npc[map][i].direction);
+                            //if is a shark print
+
+                            //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                            socketServer.sendData(packet.getData(), player.ipAddress, player.port);
+
+                        }
+                    }
+
+                }
+            }
+
+
+        }
+        flagUpdated = false;
 
 
     }
-
-
 
 
     public void paintComponent(Graphics g) {

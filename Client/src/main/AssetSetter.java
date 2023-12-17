@@ -10,11 +10,12 @@ import object.*;
 
 public class AssetSetter {
     GamePanel gp;
-    public AssetSetter(GamePanel gp){
+
+    public AssetSetter(GamePanel gp) {
         this.gp = gp;
     }
 
-    public void setObject(){
+    public void setObject() {
         gp.obj[0][0] = new OBJ_Helmet(gp, "iron");
         gp.obj[0][0].worldX = 8 * gp.tileSize;
         gp.obj[0][0].worldY = 13 * gp.tileSize;
@@ -27,26 +28,26 @@ public class AssetSetter {
         gp.obj[0][2].worldY = 17 * gp.tileSize;
 
         int[][] temp = {
-            {14, 17, 12},
-            {14, 16, 8},
-            {14, 15, 8},
-            {14, 14, 13}
+                {14, 17, 12},
+                {14, 16, 8},
+                {14, 15, 8},
+                {14, 14, 13}
         };
         int[][] temp2 = {
-            {14, 17, 4},
-            {14, 16, 11},
-            {14, 15, 11},
-            {14, 14, 5}
+                {14, 17, 4},
+                {14, 16, 11},
+                {14, 15, 11},
+                {14, 14, 5}
         };
-        gp.obj[0][3] = new OBJ_PP(gp, 4,temp, temp2);
+        gp.obj[0][3] = new OBJ_PP(gp, 4, temp, temp2);
         gp.obj[0][3].worldX = 14 * gp.tileSize;
         gp.obj[0][3].worldY = 17 * gp.tileSize;
 
         temp = new int[][]{
-            {17, 14, 12},
-            {17, 15, 8},
-            {17, 16, 8},
-            {17, 17, 13}
+                {17, 14, 12},
+                {17, 15, 8},
+                {17, 16, 8},
+                {17, 17, 13}
         };
         temp2 = new int[][]{
                 {17, 14, 4},
@@ -92,7 +93,6 @@ public class AssetSetter {
         gp.obj[0][12].worldY = 17 * gp.tileSize;
 
 
-
         gp.obj[0][13] = new OBJ_Armour(gp, "iron");
         gp.obj[0][13].worldX = 2 * gp.tileSize;
         gp.obj[0][13].worldY = 14 * gp.tileSize;
@@ -112,44 +112,44 @@ public class AssetSetter {
         //map 1
     }
 
-    public void setPlayer2(){
+    public void setPlayer2() {
         gp.player2 = new NPC_Player(gp, 0);
         gp.player2.worldX = gp.tileSize * 3;
         gp.player2.worldY = gp.tileSize * 15;
     }
 
-    public void setNPC(){
+    public void setNPC() {
 
-        gp.npc[0][0] = new Monster_Eye(gp, 0);
-        gp.npc[0][0].worldX =  gp.tileSize * 5;
-        gp.npc[0][0].worldY =  gp.tileSize * 15;
-        gp.npc[0][1] = new Monster_Eye(gp,0);
-        gp.npc[0][1].worldX =  gp.tileSize * 7;
-        gp.npc[0][1].worldY =  gp.tileSize * 15;
-
+//        gp.npc[0][0] = new Monster_Eye(gp, 0);
+//        gp.npc[0][0].worldX =  gp.tileSize * 5;
+//        gp.npc[0][0].worldY =  gp.tileSize * 15;
+//        gp.npc[0][1] = new Monster_Eye(gp,0);
+//        gp.npc[0][1].worldX =  gp.tileSize * 7;
+//        gp.npc[0][1].worldY =  gp.tileSize * 15;
+//
         gp.npc[0][2] = new Monster_Spike(gp, 0);
         gp.npc[0][2].worldX = 4 * gp.tileSize;
         gp.npc[0][2].worldY = 15 * gp.tileSize;
-
-        gp.npc[0][3] = new Monster_Spike(gp,0);
-        gp.npc[0][3].worldX = 6 * gp.tileSize;
-        gp.npc[0][3].worldY = 16 * gp.tileSize;
-
-        gp.npc[0][4] = new Monster_Stalker(gp,0);
-        gp.npc[0][4].worldX = 5 * gp.tileSize;
-        gp.npc[0][4].worldY = 16 * gp.tileSize;
+//
+//        gp.npc[0][3] = new Monster_Spike(gp,0);
+//        gp.npc[0][3].worldX = 6 * gp.tileSize;
+//        gp.npc[0][3].worldY = 16 * gp.tileSize;
+//
+//        gp.npc[0][4] = new Monster_Stalker(gp,0);
+//        gp.npc[0][4].worldX = 5 * gp.tileSize;
+//        gp.npc[0][4].worldY = 16 * gp.tileSize;
 
 
         //map 2
-        gp.npc[1][0] = new Monster_Eye(gp,1);
+        gp.npc[1][0] = new Monster_Eye(gp, 1);
         gp.npc[1][0].worldX = 16 * gp.tileSize;
         gp.npc[1][0].worldY = 16 * gp.tileSize;
 
-        gp.npc[1][1] = new Monster_Eye(gp,1);
+        gp.npc[1][1] = new Monster_Eye(gp, 1);
         gp.npc[1][1].worldX = 1 * gp.tileSize;
         gp.npc[1][1].worldY = 2 * gp.tileSize;
 
-        gp.npc[1][2] = new Monster_Spike(gp,1);
+        gp.npc[1][2] = new Monster_Spike(gp, 1);
         gp.npc[1][2].worldX = 1 * gp.tileSize;
         gp.npc[1][2].worldY = 3 * gp.tileSize;
 
@@ -172,7 +172,6 @@ public class AssetSetter {
         gp.npc[2][4].worldX =  gp.tileSize * 5;
         gp.npc[2][4].worldY =  gp.tileSize * 6;
         */
-
 
 
     }
