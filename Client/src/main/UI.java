@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 public class UI {
     GamePanel gp;
     //Graphics2D g2d;
+    KeyHandler keyH;
     Font TimesRoman;
     BufferedImage heartFull, heartHalf, heartEmpty;
 
@@ -18,7 +19,8 @@ public class UI {
     int subState = 0;
     public String currentText = "";
 
-    public UI(GamePanel gp) {
+    public UI(GamePanel gp, KeyHandler keyH) {
+        this.keyH = keyH;
         this.gp = gp;
         TimesRoman = new Font("TimesRoman", Font.PLAIN, 40);
 
@@ -304,7 +306,7 @@ public class UI {
                 break;
         }
 
-        gp.keyH.spacePressed = false;
+        gp.keyH.keysPressed[keyH.attackKey] = false;
     }
 
     public void options_top(int frameX, int frameY, Graphics2D g2d) {
@@ -320,7 +322,7 @@ public class UI {
         g2d.drawString("Full Screen", textX, textY);
         if (commandNum == 0) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.spacePressed) {
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 if (!gp.fullScreenOn) {
                     gp.fullScreenOn = true;
                 } else if (gp.fullScreenOn) {
@@ -346,7 +348,7 @@ public class UI {
         g2d.drawString("Control", textX, textY);
         if (commandNum == 3) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.spacePressed) {
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 subState = 2;
                 commandNum = 0;
             }
@@ -356,7 +358,7 @@ public class UI {
         g2d.drawString("End Game", textX, textY);
         if (commandNum == 4) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.spacePressed) {
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 subState = 3;
                 commandNum = 0;
             }
@@ -367,7 +369,7 @@ public class UI {
         g2d.drawString("Back", textX, textY);
         if (commandNum == 5) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.spacePressed) {
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 gp.optionsBack = 1;
                 commandNum = 0;
             }
@@ -409,7 +411,7 @@ public class UI {
         g2d.drawString("Back", textX, textY);
         if (commandNum == 0) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.spacePressed) {
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 subState = 0;
             }
         }
@@ -459,7 +461,7 @@ public class UI {
         g2d.drawString("Back", textX, textY);
         if (commandNum == 0) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.spacePressed) {
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 subState = 0;
                 commandNum = 3;
             }
@@ -482,7 +484,7 @@ public class UI {
         g2d.drawString(text, textX, textY);
         if (commandNum == 0) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.spacePressed) {
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 subState = 0;
                 gp.gameState = gp.titleState;
                 gp.new_gameState = gp.titleState;
@@ -495,7 +497,7 @@ public class UI {
         g2d.drawString(text, textX, textY);
         if (commandNum == 1) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.spacePressed) {
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 subState = 0;
                 commandNum = 4;
             }
