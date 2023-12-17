@@ -153,15 +153,10 @@ public class Player extends Entity {
                 if (!gp.GOD) gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
-                //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
-                //interactNPC(npcIndex);
 
-
-                //int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
                 if (!collisionOn) {
                     worldX += speed;
                 }
-
             }
 
             //CHECK EVENT
@@ -202,24 +197,102 @@ public class Player extends Entity {
 
     public void pickUpObject(int i) {
         if (i != 999) {
-            //print all objects and their iD
-//            for(int j = 0; j < gp.obj.length; j++){
-//                if(gp.obj[j] != null){
-//                        System.out.println("Object index: "+j+" Object NAME: " + gp.obj[j].name);
-//                        if (Objects.equals(gp.obj[j].name, "PP")) {
-//                            System.out.println(gp.obj[j].isItOn);
-//                        }
-//                }
-//            }
+
             if (i < 0) {
                 i = -i;
                 gp.obj[gp.currentMap][i].turnOff();
-            } else {
-                if (gp.obj[gp.currentMap][i].id == 1) {//helmet
-                    Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
-                    p4.writeData(gp.socketClient);
-                    //System.out.println("Helmet PickUp with id: 1");
+            }
+            else if (Objects.equals(gp.obj[gp.currentMap][i].name, "PP"))
+            { //pp
+                gp.obj[gp.currentMap][i].interact();
+                return;
+            }
+            else {
+                String type = gp.obj[gp.currentMap][i].type;
+                switch (type)
+                {
+                    case "helmet":
+                        if ( helmet != null)
+                        {
+                            if (helmet.tier >= gp.obj[gp.currentMap][i].tier)
+                            {
+                                return;
+                            }
+                        }
+                        Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "armour":
+                        if ( armour != null)
+                        {
+                            if (armour.tier >= gp.obj[gp.currentMap][i].tier)
+                            {
+                                return;
+                            }
+                        }
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "weapon":
+                        if ( weapon != null)
+                        {
+                            if (weapon.tier >= gp.obj[gp.currentMap][i].tier)
+                            {
+                                return;
+                            }
+                        }
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "shield":
+                        if ( shield != null)
+                        {
+                            if (shield.tier >= gp.obj[gp.currentMap][i].tier)
+                            {
+                                return;
+                            }
+                        }
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "boots":
+                        if ( boots != null)
+                        {
+                            if (boots.tier >= gp.obj[gp.currentMap][i].tier)
+                            {
+                                return;
+                            }
+                        }
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "book":
+                        //giveItem(gp.obj[gp.currentMap][i]);
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        gp.obj[gp.currentMap][i].readChapter(gp);
+                        gp.gameState = gp.readState;
+                        break;
 
+
+
+                    default:
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+
+            }
+
+
+
+                /*
                 } else if (gp.obj[gp.currentMap][i].id == 2) {//axe
                     Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
                     p4.writeData(gp.socketClient);
@@ -231,14 +304,12 @@ public class Player extends Entity {
                     if (gp.obj[gp.currentMap][i] != null) {
                         gp.obj[gp.currentMap][i].readChapter(gp);
                         gp.gameState = gp.readState;
-                    }
-                } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "PP")) { //pp
-                    gp.obj[gp.currentMap][i].interact();
+                    }*/
                 }
             }
 
         }
-    }
+
 
     private void interactNPC(int npcIndex) {
         if (npcIndex != 999) {

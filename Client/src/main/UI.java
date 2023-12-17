@@ -83,8 +83,7 @@ public class UI {
                 drawPlayerLife(g2d);
                 drawInventory(g2d);
                 drawInstructions(g2d);
-            }
-            else if(gp.prev_gameState == gp.pauseState){
+            } else if (gp.prev_gameState == gp.pauseState) {
                 drawPauseScreen(g2d);
                 drawPlayerLife(g2d);
                 drawInventory(g2d);
@@ -214,9 +213,7 @@ public class UI {
     private void drawTitleScreen(Graphics2D g2d) {
 
         //TITLE NAME
-        
         g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
-        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 100));
         String text = "Heroes of War: Die Young";
         int x = 2;
         int y = gp.tileSize * 3;
@@ -242,31 +239,31 @@ public class UI {
         x = getXforCenteredText(text, g2d);
         y += gp.tileSize * 5;
         g2d.drawString(text, x, y);
-        if(commandNum == 0){
-            g2d.drawString(">", x-gp.tileSize, y);
+        if (commandNum == 0) {
+            g2d.drawString(">", x - gp.tileSize, y);
         }
 
         text = "JOIN GAME";
         x = getXforCenteredText(text, g2d);
         y += gp.tileSize;
         g2d.drawString(text, x, y);
-        if(commandNum == 1){
-            g2d.drawString(">", x-gp.tileSize, y);
+        if (commandNum == 1) {
+            g2d.drawString(">", x - gp.tileSize, y);
         }
 
         text = "QUIT";
         x = getXforCenteredText(text, g2d);
         y += gp.tileSize;
         g2d.drawString(text, x, y);
-        if(commandNum == 2){
-            g2d.drawString(">", x-gp.tileSize, y);
+        if (commandNum == 2) {
+            g2d.drawString(">", x - gp.tileSize, y);
         }
 
     }
 
     public int getXforCenteredText(String text, Graphics2D g2d){
 
-        int length = (int)g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         return (gp.screenWidth - length) / 2;
 
     }
@@ -289,7 +286,7 @@ public class UI {
 
     }
 
-    public void drawOptionsScreen(Graphics2D g2d) {
+    private void drawOptionsScreen(Graphics2D g2d) {
         int x = gp.tileSize * 4;
         int y = gp.tileSize * 2;
         int width = gp.tileSize * 8;
@@ -320,7 +317,7 @@ public class UI {
         gp.keyH.keysPressed[keyH.attackKey] = false;
     }
 
-    public void options_top(int frameX, int frameY, Graphics2D g2d){
+    private void options_top(int frameX, int frameY, Graphics2D g2d) {
         int textX;
         int textY;
         String text = "Options";
@@ -408,7 +405,7 @@ public class UI {
         gp.config.saveConfig();
     }
 
-    public void options_fullScreenNotification(int frameX, int frameY, Graphics2D g2d){
+    private void options_fullScreenNotification(int frameX, int frameY, Graphics2D g2d) {
         int textX = frameX + gp.tileSize;
         int textY = frameY + gp.tileSize * 3;
 
@@ -428,7 +425,8 @@ public class UI {
             }
         }
     }
-    public void options_control(int frameX, int frameY, Graphics2D g2d){
+
+    private void options_control(int frameX, int frameY, Graphics2D g2d) {
         int textX;
         int textY;
 
@@ -479,7 +477,7 @@ public class UI {
         }
     }
 
-    public void options_endGameConfirmation(int x, int y, Graphics2D g2d){
+    private void options_endGameConfirmation(int x, int y, Graphics2D g2d){
         int textX = x + gp.tileSize;
         int textY = y + gp.tileSize * 3;
 
@@ -515,7 +513,7 @@ public class UI {
         }
     }
 
-    public void drawSubWindow(int x, int y, int width, int height, Graphics2D g2d){
+    private void drawSubWindow(int x, int y, int width, int height, Graphics2D g2d) {
         Color c = new Color(200, 200, 200, 175);
         g2d.setColor(c);
         g2d.fillRoundRect(x, y, width, height, 35, 35);
