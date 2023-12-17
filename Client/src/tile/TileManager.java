@@ -19,7 +19,7 @@ public class TileManager {
     public TileManager(GamePanel gp){
 
         this.gp = gp;
-        tile = new Tile[40];
+        tile = new Tile[99];
         mapTileNum = new int[gp.maxMaps][gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
@@ -50,6 +50,8 @@ public class TileManager {
         //door
         setup(5, "/tiles/door_clover5", true);
         setup(13, "/tiles/door_clover_openC", false);
+        setup(51, "/tiles/DoorL", true);
+        setup(53, "/tiles/door_pauseP", true);
 
         //outside
         setup(14, "/tiles/grass1", false);
@@ -152,7 +154,8 @@ public class TileManager {
             //door
             case '5': return 5; // door_clover5
             case 'C': return 13; // door_clover open
-
+            case '!': return 51; // DoorL
+            case '#': return 53; // door_pauseP
 
 
             //outside

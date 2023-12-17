@@ -30,7 +30,7 @@ public class Player extends Entity {
     public SuperObject weapon;
     public SuperObject shield;
     public SuperObject boots;
-    //and then standart inventory
+    //and then standard inventory
     public ArrayList<SuperObject> inventory = new ArrayList<>(10);
 
     public Player(GamePanel gp, KeyHandler keyH, int x, int y, int map) {
@@ -197,7 +197,6 @@ public class Player extends Entity {
 
     public void pickUpObject(int i) {
         if (i != 999) {
-
             if (i < 0) {
                 i = -i;
                 gp.obj[gp.currentMap][i].turnOff();
@@ -287,7 +286,7 @@ public class Player extends Entity {
                         p4.writeData(gp.socketClient);
                         System.out.println("Requesting item: " + p4.getitemIndex());
                         break;
-
+                }
             }
 
 
@@ -304,11 +303,16 @@ public class Player extends Entity {
                     if (gp.obj[gp.currentMap][i] != null) {
                         gp.obj[gp.currentMap][i].readChapter(gp);
                         gp.gameState = gp.readState;
+                    }
+                } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "PP")) { //pp
+                    gp.obj[gp.currentMap][i].interact();
+                } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "RuneDoor")) { //rune door
+                    gp.obj[gp.currentMap][i].interact();
+                    gp.obj[gp.currentMap][i] = null;
                     }*/
                 }
             }
 
-        }
 
 
     private void interactNPC(int npcIndex) {

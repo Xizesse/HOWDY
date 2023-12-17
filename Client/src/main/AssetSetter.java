@@ -76,10 +76,6 @@ public class AssetSetter {
         gp.obj[0][8].worldX = 8 * gp.tileSize;
         gp.obj[0][8].worldY = 19 * gp.tileSize;
 
-        gp.obj[0][9] = new OBJ_Rune(gp, 'l');
-        gp.obj[0][9].worldX = 1 * gp.tileSize;
-        gp.obj[0][9].worldY = 14 * gp.tileSize;
-
         gp.obj[0][10] = new OBJ_Rune(gp, 'p');
         gp.obj[0][10].worldX = 1 * gp.tileSize;
         gp.obj[0][10].worldY = 15 * gp.tileSize;
@@ -110,6 +106,7 @@ public class AssetSetter {
         gp.obj[0][16].worldY = 16 * gp.tileSize;
 
         //map 1
+
 
         temp = new int[][]{
                 {7, 8, 12},
@@ -275,6 +272,14 @@ public class AssetSetter {
         gp.obj[1][6] = new OBJ_PP(gp, 16, temp, temp2);
         gp.obj[1][6].worldX = 20 * gp.tileSize;
         gp.obj[1][6].worldY = 12 * gp.tileSize;
+
+        gp.obj[1][0] = new OBJ_Rune(gp, 'l');
+        gp.obj[1][0].worldX = 7 * gp.tileSize;
+        gp.obj[1][0].worldY = 29 * gp.tileSize;
+
+        gp.obj[1][7] = new OBJ_RuneDoor(gp, 'l');
+        gp.obj[1][7].worldX = 12 * gp.tileSize;
+        gp.obj[1][7].worldY = 24 * gp.tileSize;
     }
 
     public void setPlayer2() {
