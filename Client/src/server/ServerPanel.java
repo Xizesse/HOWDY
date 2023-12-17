@@ -131,6 +131,7 @@ public class ServerPanel extends GamePanel {
     public void update() {
 
         if (gameState == playState) {
+
             //player.update();
             //player2.update(); <- This is done by the client thread
 

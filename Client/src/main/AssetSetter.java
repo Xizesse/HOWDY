@@ -242,15 +242,6 @@ public class AssetSetter {
         gp.npc[0][2] = new Monster_Spike(gp, 0);
         gp.npc[0][2].worldX = 4 * gp.tileSize;
         gp.npc[0][2].worldY = 15 * gp.tileSize;
-//
-//        gp.npc[0][3] = new Monster_Spike(gp,0);
-//        gp.npc[0][3].worldX = 6 * gp.tileSize;
-//        gp.npc[0][3].worldY = 16 * gp.tileSize;
-//
-//        gp.npc[0][4] = new Monster_Stalker(gp,0);
-//        gp.npc[0][4].worldX = 5 * gp.tileSize;
-//        gp.npc[0][4].worldY = 16 * gp.tileSize;
-
 
         //map 2
         gp.npc[1][0] = new Monster_Eye(gp, 1);
@@ -266,24 +257,6 @@ public class AssetSetter {
         gp.npc[1][2].worldY = 3 * gp.tileSize;
 
 
-        //map 3
-        /*
-        gp.npc[2][0] = new NPC_Shark(gp);
-        gp.npc[2][0].worldX =  gp.tileSize * 11;
-        gp.npc[2][0].worldY =  gp.tileSize * 4;
-        gp.npc[2][1] = new NPC_Shark(gp);
-        gp.npc[2][1].worldX =  gp.tileSize * 12;
-        gp.npc[2][1].worldY =  gp.tileSize *22;
-        gp.npc[2][2] = new NPC_Shark(gp);
-        gp.npc[2][2].worldX =  gp.tileSize * 12;
-        gp.npc[2][2].worldY =  gp.tileSize * 5;
-        gp.npc[2][3] = new NPC_Shark(gp);
-        gp.npc[2][3].worldX =  gp.tileSize * 5;
-        gp.npc[2][3].worldY =  gp.tileSize * 23;
-        gp.npc[2][4] = new NPC_Shark(gp);
-        gp.npc[2][4].worldX =  gp.tileSize * 5;
-        gp.npc[2][4].worldY =  gp.tileSize * 6;
-        */
 
 
     }
