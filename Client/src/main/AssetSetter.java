@@ -284,6 +284,88 @@ public class AssetSetter {
         gp.obj[1][9] = new OBJ_RuneDoor(gp, 'p');
         gp.obj[1][9].worldX = 26 * gp.tileSize;
         gp.obj[1][9].worldY = 15 * gp.tileSize;
+
+        temp = new int[][]{
+                {7, 23, 12},
+                {7, 26, 13}
+        };
+        temp2 = new int[][]{
+                {7, 23, 4},
+                {7, 30, 4},
+                {7, 26, 5}
+        };
+        gp.obj[1][10] = new OBJ_PP(gp, 3, temp, temp2);
+        gp.obj[1][10].worldX = 7 * gp.tileSize;
+        gp.obj[1][10].worldY = 23 * gp.tileSize;
+
+        temp = new int[][]{
+                {7, 30, 12},
+                {7, 26, 13}
+        };
+        temp2 = new int[][]{};
+        gp.obj[1][11] = new OBJ_PP(gp, 13, temp, temp2);
+        gp.obj[1][11].worldX = 7 * gp.tileSize;
+        gp.obj[1][11].worldY = 30 * gp.tileSize;
+
+        temp = new int[][]{
+                {25, 24, 12},
+                {25, 26, 13}
+        };
+        temp2 = new int[][]{
+                {25, 24, 4},
+                {25, 30, 4},
+                {25, 26, 5}
+        };
+        gp.obj[1][12] = new OBJ_PP(gp, 3, temp, temp2);
+        gp.obj[1][12].worldX = 25 * gp.tileSize;
+        gp.obj[1][12].worldY = 24 * gp.tileSize;
+
+        temp = new int[][]{
+                {25, 30, 12},
+                {25, 26, 13}
+        };
+        temp2 = new int[][]{};
+        gp.obj[1][13] = new OBJ_PP(gp, 13, temp, temp2);
+        gp.obj[1][13].worldX = 25 * gp.tileSize;
+        gp.obj[1][13].worldY = 30 * gp.tileSize;
+
+        temp = new int[][]{
+                {15, 23, 12},
+                {16, 24, 9},
+                {17, 24, 8},
+                {17, 23, 8},
+                {17, 22, 8},
+                {17, 21, 9},
+                {16, 21, 13}
+        };
+        temp2 = new int[][]{
+                {15, 23, 4},
+                {16, 24, 10},
+                {17, 24, 11},
+                {17, 23, 11},
+                {17, 22, 11},
+                {17, 21, 10},
+                {16, 21, 5}
+        };
+        gp.obj[1][14] = new OBJ_PP(gp, 3, temp, temp2);
+        gp.obj[1][14].worldX = 15 * gp.tileSize;
+        gp.obj[1][14].worldY = 23 * gp.tileSize;
+
+        temp = new int[][]{
+                {14, 20, 12},
+                {14, 21, 9},
+                {15, 21, 9},
+                {16, 21, 13}
+        };
+        temp2 = new int[][]{
+                {14, 20, 4},
+                {14, 21, 10},
+                {15, 21, 10},
+                {16, 21, 5}
+        };
+        gp.obj[1][15] = new OBJ_PP(gp, 3, temp, temp2);
+        gp.obj[1][15].worldX = 14 * gp.tileSize;
+        gp.obj[1][15].worldY = 20 * gp.tileSize;
     }
 
     public void setPlayer2() {
