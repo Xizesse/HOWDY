@@ -75,6 +75,21 @@ public class Config {
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(appDataPath + "/HOWDY/config.txt"));
+            String s = br.readLine();
+            if(s.equals("On")){
+                gp.fullScreenOn = true;
+            }
+            if(s.equals("Off")) {
+                gp.fullScreenOn = false;
+            }
+
+            s = br.readLine();
+            gp.music.volumeScale = Integer.parseInt(s);
+
+            s = br.readLine();
+            //gp.se.volumeScale = Integer.parseInt(s);
+
+            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
