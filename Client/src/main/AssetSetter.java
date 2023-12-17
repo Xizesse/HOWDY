@@ -76,10 +76,6 @@ public class AssetSetter {
         gp.obj[0][8].worldX = 8 * gp.tileSize;
         gp.obj[0][8].worldY = 19 * gp.tileSize;
 
-        gp.obj[0][10] = new OBJ_Rune(gp, 'p');
-        gp.obj[0][10].worldX = 1 * gp.tileSize;
-        gp.obj[0][10].worldY = 15 * gp.tileSize;
-
         gp.obj[0][11] = new OBJ_Rune(gp, 'x');
         gp.obj[0][11].worldX = 1 * gp.tileSize;
         gp.obj[0][11].worldY = 16 * gp.tileSize;
