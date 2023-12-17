@@ -31,173 +31,196 @@ public class KeyHandler implements KeyListener {
         this.gp = gp;
     }
 
+    private void titleKeys() {
+        if (keysPressed[upKey]) {
+            gp.ui.commandNum--;
+            if (gp.ui.commandNum < 0) gp.ui.commandNum = 2;
+        }
+        if (keysPressed[downKey]) {
+            gp.ui.commandNum++;
+            if (gp.ui.commandNum > 2) gp.ui.commandNum = 0;
+
+        }
+        if (keysPressed[confirmKey]) {
+            if (gp.ui.commandNum == 0) {
+                gp.new_gameState = gp.playState;
+            } else if (gp.ui.commandNum == 1) {
+                gp.new_gameState = gp.joinState;
+                // LOAD GAME
+            } else if (gp.ui.commandNum == 2) {
+                System.exit(0);
+            }
+        }
+
+    }
+
+    private void joinKeys() {
+        for (int i = KeyEvent.VK_A; i <= KeyEvent.VK_Z; i++) {
+            if (keysPressed[i]) {
+                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                        += (char) i;
+                System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
+                keysPressed[i] = false;
+            }
+        }
+
+        for (int i = KeyEvent.VK_0; i <= KeyEvent.VK_9; i++) {
+            if (keysPressed[i]) {
+                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                        += (char) i - KeyEvent.VK_0;
+                System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
+                keysPressed[i] = false;
+            }
+        }
+
+        for (int i = KeyEvent.VK_NUMPAD0; i <= KeyEvent.VK_NUMPAD9; i++) {
+            if (keysPressed[i]) {
+                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                        += (char) i - KeyEvent.VK_NUMPAD0;
+                System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
+                keysPressed[i] = false;
+            }
+        }
+
+        if (keysPressed[KeyEvent.VK_DECIMAL] || keysPressed[KeyEvent.VK_PERIOD]) {
+            gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                    += ".";
+            keysPressed[KeyEvent.VK_SPACE] = false;
+        }
+
+
+        if (keysPressed[KeyEvent.VK_BACK_SPACE]) {
+            if (gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond.length() > 0) {
+                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                        = gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                        .substring(0, gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                                .length() - 1);
+            }
+        }
+
+        if (keysPressed[confirmKey]) {
+            gp.new_gameState = gp.titleState;
+        }
+    }
+
+    private void playKeys() {
+        if (keysPressed[attackKey]) {
+            keysPressed[attackKey] = true;
+        } else if (keysPressed[pauseKey]) {
+            gp.new_gameState = gp.pauseState;
+        } else if (keysPressed[devKey]) {
+            DEV_MODE = !DEV_MODE;
+        } else if (keysPressed[lightKey]) {
+            gp.LIGHT = !gp.LIGHT;
+        } else if (keysPressed[backKey]) {
+            gp.new_gameState = gp.optionsState;
+            gp.prev_gameState = gp.playState;
+        } else if (keysPressed[godKey]) {
+            gp.GOD = !gp.GOD;
+            gp.LIGHT = !gp.LIGHT;
+        }
+    }
+
+    private void pauseKeys() {
+        if (keysPressed[pauseKey]) {
+            gp.new_gameState = gp.playState;
+        } else if (keysPressed[backKey]) {
+            gp.new_gameState = gp.optionsState;
+            gp.prev_gameState = gp.pauseState;
+        }
+    }
+
+    private void optionsKeys() {
+        if (keysPressed[backKey]) {
+            gp.new_gameState = gp.prev_gameState;
+            gp.prev_gameState = gp.optionsState;
+        }
+        if (keysPressed[attackKey]) {
+            keysPressed[attackKey] = true;
+        }
+        int maxcommandNum = 0;
+        switch (gp.ui.subState) {
+            case 0:
+                maxcommandNum = 5;
+                break;
+            case 3:
+                maxcommandNum = 1;
+                break;
+        }
+        if (keysPressed[upKey]) {
+            gp.ui.commandNum--;
+            //gp.playSE(9);
+            if (gp.ui.commandNum < 0) {
+                gp.ui.commandNum = maxcommandNum;
+            }
+        }
+        if (keysPressed[downKey]) {
+            gp.ui.commandNum++;
+            //gp.playSE(9);
+            if (gp.ui.commandNum > maxcommandNum) {
+                gp.ui.commandNum = 0;
+            }
+        }
+        if (keysPressed[leftKey]) {
+            if (gp.ui.subState == 0) {
+                if (gp.ui.commandNum == 1 && gp.music.volumeScale > 0) {
+                    gp.music.volumeScale--;
+                    gp.music.checkVolume();
+                    //gp.playSE(9);
+                }
+                    /*if(gp.ui.commandNum == 2 && gp.se.volumeScale > 0){
+                        gp.se.volumeScale--;
+                        gp.playSE(9);
+                    }*/
+            }
+        }
+
+        if (keysPressed[rightKey]) {
+            if (gp.ui.subState == 0) {
+                if (gp.ui.commandNum == 1 && gp.music.volumeScale < 5) {
+                    gp.music.volumeScale++;
+                    gp.music.checkVolume();
+                    //gp.playSE(9);
+                }
+                    /*if(gp.ui.commandNum == 2 && gp.se.volumeScale < 5){
+                        gp.se.volumeScale++;
+                        gp.playSE(9);
+                    }*/
+            }
+        }
+    }
+
+    private void readKeys() {
+        if (keysPressed[attackKey]) {
+            gp.new_gameState = gp.playState;
+        }
+    }
+
     private void handleKeys() {
         if (gp.gameState == gp.titleState) {
-            if (keysPressed[upKey]) {
-                gp.ui.commandNum--;
-                if (gp.ui.commandNum < 0) gp.ui.commandNum = 2;
-            }
-            if (keysPressed[downKey]) {
-                gp.ui.commandNum++;
-                if (gp.ui.commandNum > 2) gp.ui.commandNum = 0;
-
-            }
-            if (keysPressed[confirmKey]) {
-                if (gp.ui.commandNum == 0) {
-                    gp.new_gameState = gp.playState;
-                } else if (gp.ui.commandNum == 1) {
-                    gp.new_gameState = gp.joinState;
-                    // LOAD GAME
-                } else if (gp.ui.commandNum == 2) {
-                    System.exit(0);
-                }
-            }
+            titleKeys();
         }
         // JOIN STATE
         else if (gp.gameState == gp.joinState) {
-
-            for (int i = KeyEvent.VK_A; i <= KeyEvent.VK_Z; i++) {
-                if (keysPressed[i]) {
-                    gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                            += (char) i;
-                    System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
-                    keysPressed[i] = false;
-                }
-            }
-
-            for (int i = KeyEvent.VK_0; i <= KeyEvent.VK_9; i++) {
-                if (keysPressed[i]) {
-                    gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                            += (char) i - KeyEvent.VK_0;
-                    System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
-                    keysPressed[i] = false;
-                }
-            }
-
-            for (int i = KeyEvent.VK_NUMPAD0; i <= KeyEvent.VK_NUMPAD9; i++) {
-                if (keysPressed[i]) {
-                    gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                            += (char) i - KeyEvent.VK_NUMPAD0;
-                    System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
-                    keysPressed[i] = false;
-                }
-            }
-
-            if (keysPressed[KeyEvent.VK_DECIMAL] || keysPressed[KeyEvent.VK_PERIOD]) {
-                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                        += ".";
-                keysPressed[KeyEvent.VK_SPACE] = false;
-            }
-
-
-            if (keysPressed[KeyEvent.VK_BACK_SPACE]) {
-                if (gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond.length() > 0) {
-                    gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                            = gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                            .substring(0, gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                                    .length() - 1);
-                }
-            }
-
-            if (keysPressed[confirmKey]) {
-                gp.new_gameState = gp.titleState;
-            }
+            joinKeys();
 
         }
         //PLAY STATE
         else if (gp.gameState == gp.playState) {
 
-            if (keysPressed[attackKey]) {
-                keysPressed[attackKey] = true;
-            } else if (keysPressed[pauseKey]) {
-                gp.new_gameState = gp.pauseState;
-            } else if (keysPressed[devKey]) {
-                DEV_MODE = !DEV_MODE;
-            } else if (keysPressed[lightKey]) {
-                gp.LIGHT = !gp.LIGHT;
-            } else if (keysPressed[backKey]) {
-                gp.new_gameState = gp.optionsState;
-                gp.prev_gameState = gp.playState;
-            } else if (keysPressed[godKey]) {
-                gp.GOD = !gp.GOD;
-                gp.LIGHT = !gp.LIGHT;
-            }
+            playKeys();
         }
         //PAUSE
         else if (gp.gameState == gp.pauseState) {
-            if (keysPressed[pauseKey]) {
-                gp.new_gameState = gp.playState;
-            } else if (keysPressed[backKey]) {
-                gp.new_gameState = gp.optionsState;
-                gp.prev_gameState = gp.pauseState;
-            }
+            pauseKeys();
         }
         //READ
         else if (gp.gameState == gp.readState) {
-            if (keysPressed[attackKey]) {
-                gp.new_gameState = gp.playState;
-            }
+            readKeys();
         }
         //OPTIONS STATE
         else if (gp.gameState == gp.optionsState) {
-            if (keysPressed[backKey]) {
-                gp.new_gameState = gp.prev_gameState;
-                gp.prev_gameState = gp.optionsState;
-            }
-            if (keysPressed[attackKey]) {
-                keysPressed[attackKey] = true;
-            }
-
-            int maxcommandNum = 0;
-            switch (gp.ui.subState) {
-                case 0:
-                    maxcommandNum = 5;
-                    break;
-                case 3:
-                    maxcommandNum = 1;
-                    break;
-            }
-            if (keysPressed[upKey]) {
-                gp.ui.commandNum--;
-                //gp.playSE(9);
-                if (gp.ui.commandNum < 0) {
-                    gp.ui.commandNum = maxcommandNum;
-                }
-            }
-            if (keysPressed[downKey]) {
-                gp.ui.commandNum++;
-                //gp.playSE(9);
-                if (gp.ui.commandNum > maxcommandNum) {
-                    gp.ui.commandNum = 0;
-                }
-            }
-            if (keysPressed[leftKey]) {
-                if (gp.ui.subState == 0) {
-                    if (gp.ui.commandNum == 1 && gp.music.volumeScale > 0) {
-                        gp.music.volumeScale--;
-                        gp.music.checkVolume();
-                        //gp.playSE(9);
-                    }
-                    /*if(gp.ui.commandNum == 2 && gp.se.volumeScale > 0){
-                        gp.se.volumeScale--;
-                        gp.playSE(9);
-                    }*/
-                }
-            }
-
-            if (keysPressed[rightKey]) {
-                if (gp.ui.subState == 0) {
-                    if (gp.ui.commandNum == 1 && gp.music.volumeScale < 5) {
-                        gp.music.volumeScale++;
-                        gp.music.checkVolume();
-                        //gp.playSE(9);
-                    }
-                    /*if(gp.ui.commandNum == 2 && gp.se.volumeScale < 5){
-                        gp.se.volumeScale++;
-                        gp.playSE(9);
-                    }*/
-                }
-            }
+            optionsKeys();
         }
         gp.gameState = gp.new_gameState;
     }

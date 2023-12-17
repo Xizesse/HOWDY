@@ -94,11 +94,22 @@ public class UI {
 
     private void drawJoinScreen(Graphics2D g2d) {
         //TITLE NAME
-        String text = "join";
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 18f));
+        String text = "Insert server ip address format (xxx.xxx.xxx.xxx) non zero";
         int x = getXforCenteredText(text, g2d);
-        int y = gp.screenHeight / 2;
-
+        int y = gp.screenHeight / 4;
         g2d.drawString(text, x, y);
+
+        text = "IP: " + gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond;
+        x = getXforCenteredText(text, g2d);
+        y += gp.tileSize * 2;
+        g2d.drawString(text, x, y);
+
+        text = "Press Enter to confirm";
+        x = getXforCenteredText(text, g2d);
+        y += gp.tileSize * 2;
+        g2d.drawString(text, x, y);
+
     }
 
     private void drawPlayerLife(Graphics2D g2d) {
