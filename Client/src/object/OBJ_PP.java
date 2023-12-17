@@ -37,7 +37,7 @@ public class OBJ_PP extends SuperObject{
                 changes.add(change);
                 //System.out.println(changes + "\n" + gp.currentMap);
             }
-            Packet06MapChange p6 = new Packet06MapChange(0, changes);
+            Packet06MapChange p6 = new Packet06MapChange(gp.currentMap, changes);
             System.out.println("Sending map change packet");
             String[] dataArray = p6.readData(p6.getData()).split(",");
             p6.writeData(this.gp.socketClient);
@@ -58,7 +58,7 @@ public class OBJ_PP extends SuperObject{
                 System.out.println(changes + "\n");
             }
 
-            Packet06MapChange p6 = new Packet06MapChange(0, changes);
+            Packet06MapChange p6 = new Packet06MapChange(gp.currentMap, changes);
             System.out.println("Sending map change back");
             String[] dataArray = p6.readData(p6.getData()).split(",");
             p6.writeData(this.gp.socketClient);
