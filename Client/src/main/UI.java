@@ -34,7 +34,6 @@ public class UI {
         g2d.setFont(TimesRoman);
         g2d.setColor(Color.WHITE);
 
-        System.out.println(gp.gameState);
 
         //title state
         if (gp.gameState == gp.titleState) {

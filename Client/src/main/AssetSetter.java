@@ -243,6 +243,38 @@ public class AssetSetter {
         gp.obj[1][4] = new OBJ_PP(gp, 13,temp, temp2);
         gp.obj[1][4].worldX = 7 * gp.tileSize;
         gp.obj[1][4].worldY = 1 * gp.tileSize;
+
+        temp = new int[][]{
+                {12, 12, 12},
+                {13, 12, 10},
+                {14, 12, 10},
+                {15, 12, 10}
+        };
+        temp2 = new int[][]{
+                {12, 12, 4},
+                {13, 12, 9},
+                {14, 12, 9},
+                {15, 12, 9}
+        };
+        gp.obj[1][5] = new OBJ_PP(gp, 15, temp, temp2);
+        gp.obj[1][5].worldX = 12 * gp.tileSize;
+        gp.obj[1][5].worldY = 12 * gp.tileSize;
+
+        temp = new int[][]{
+                {20, 12, 12},
+                {19, 12, 10},
+                {18, 12, 10},
+                {17, 12, 10}
+        };
+        temp2 = new int[][]{
+                {20, 12, 4},
+                {19, 12, 9},
+                {18, 12, 9},
+                {17, 12, 9}
+        };
+        gp.obj[1][6] = new OBJ_PP(gp, 16, temp, temp2);
+        gp.obj[1][6].worldX = 20 * gp.tileSize;
+        gp.obj[1][6].worldY = 12 * gp.tileSize;
     }
 
     public void setPlayer2() {
