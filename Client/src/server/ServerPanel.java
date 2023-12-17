@@ -141,8 +141,8 @@ public class ServerPanel extends GamePanel {
                 {
                     //we update only once
                     int bothmap = players.get(0).map;
-                    attackPlayers(players.get(0));
-                    attackPlayers(players.get(1));
+                    //attackPlayers(players.get(0));
+                    //attackPlayers(players.get(1));
                     //all the npcs on the both map
                     for (int i = 0; i < npc[bothmap].length; i++) {
                         if (npc[bothmap][i] != null) {
@@ -160,25 +160,27 @@ public class ServerPanel extends GamePanel {
                                     //System.out.println("range: " + npc[map][npcIndex].attackRange);
                                     if (distance <= npc[bothmap][i].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/)
                                     {
-                                        System.out.println("Attack");
+                                        System.out.println("Attack ? CoolDown: " + npc[bothmap][i].attackCoolDown);
+                                        if (npc[bothmap][i].attackCoolDown > 0) continue;
+
                                         npc[bothmap][i].attackCoolDown = npc[bothmap][i].defAttackCoolDown;
                                         player.currentHealth -= npc[bothmap][i].damage;
-                                        Packet03Attack p3 = new Packet03Attack(i, 1, bothmap);
-                                        socketServer.sendData(p3.getData(), player.ipAddress, player.port);
 
-                                        Packet05Health p5 = new Packet05Health(-1, npc[bothmap][i].damage, bothmap);
+
+                                        Packet05Health p5 = new Packet05Health(-1, player.currentHealth, bothmap);
                                         socketServer.sendData(p5.getData(), player.ipAddress, player.port);
 
                                         for (NPC_Player player2 : players)
                                         {
+                                            Packet03Attack p3 = new Packet03Attack(i, 1, bothmap);
+                                            socketServer.sendData(p3.getData(), player2.ipAddress, player2.port);
                                             if (player2 != null) {
                                                 if (player2 != player){
 
 
-                                                    Packet05Health p5_2 = new Packet05Health(-2, npc[bothmap][i].damage, bothmap);
+                                                    Packet05Health p5_2 = new Packet05Health(-2, player.currentHealth, bothmap);
                                                     socketServer.sendData(p5_2.getData(), player2.ipAddress, player2.port);
-                                                    p3 = new Packet03Attack(i, 1, bothmap);
-                                                    socketServer.sendData(p3.getData(), player.ipAddress, player.port);
+
                                                 }
                                             }
                                         }
@@ -221,16 +223,17 @@ public class ServerPanel extends GamePanel {
                         //System.out.println("range: " + npc[map][npcIndex].attackRange);
                         if (distance <= npc[map][i].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/)
                         {
-                            System.out.println("Attack");
+                            System.out.println("Attack ? CoolDown: " + npc[map][i].attackCoolDown);
+                            if (npc[map][i].attackCoolDown > 0) continue;
                             npc[map][i].attackCoolDown = npc[map][i].defAttackCoolDown;
-                            player.currentHealth -= npc[map][i].damage;
+                            if (player.currentHealth > 0) player.currentHealth-= npc[map][i].damage;
                             Packet03Attack p3 = new Packet03Attack(i, 1, map);
                             socketServer.sendData(p3.getData(), player.ipAddress, player.port);
 
-                            Packet05Health p5 = new Packet05Health(-1, npc[map][i].damage, map);
+                            Packet05Health p5 = new Packet05Health(-1, player.currentHealth, map);
                             socketServer.sendData(p5.getData(), player.ipAddress, player.port);
 
-                            Packet05Health p5_2 = new Packet05Health(-2, npc[map][i].damage, map);
+                            Packet05Health p5_2 = new Packet05Health(-2, player.currentHealth, map);
                             for (NPC_Player player2 : players) {
                                 if (player2 != null) {
                                     if (player2 != player)

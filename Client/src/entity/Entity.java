@@ -213,26 +213,16 @@ public class Entity {
 
     public void update() {
 
-
+        if(attackCoolDown > 0){
+            attackCoolDown--;
+            System.out.println("attackCoolDown: " + attackCoolDown);
+        }
         setAction();
         collisionOn = false;
         gp.cCheck.checkTile(this);
 
         gp.cCheck.checkObject(this, false);      //check collision with objects
 
-//        attackPlayer();
-
-        /*
-        if (gp instanceof ServerPanel) {
-            if (gp.players != null) {
-                gp.cCheck.checkNPC_players(this, gp.players);
-
-            }
-            //print if collision is on
-
-
-        }
-    */
         if (!collisionOn) {
             switch (direction) {
                 case "up":

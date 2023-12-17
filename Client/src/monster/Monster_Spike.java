@@ -15,6 +15,7 @@ public class Monster_Spike extends Entity {
         maxHealth = 20;
         damage = 1;
         defAttackCoolDown = 60;
+        attackCoolDown = 0;
         attackRange = 50;
         currentHealth = maxHealth;
         solidArea = new Rectangle(0, 0, 48, 48);
