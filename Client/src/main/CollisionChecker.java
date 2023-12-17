@@ -37,16 +37,16 @@ public class CollisionChecker {
         switch (entity.direction) {
             case "left":
                 entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;                 // add speed to the left most edge of the solid area to get the new left most edge of the solid area
-                tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];                    // get the tile index beneath the top vertex of the left most edge of the solid area
-                tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];                 // get the tile index beneath the bottom vertex of the left most edge of the solid area
+                tileNum1 = gp.tileM.mapTileNum[entity.map][entityLeftCol][entityTopRow];                    // get the tile index beneath the top vertex of the left most edge of the solid area
+                tileNum2 = gp.tileM.mapTileNum[entity.map][entityLeftCol][entityBottomRow];                 // get the tile index beneath the bottom vertex of the left most edge of the solid area
                 if (gp.tileM.tile[tileNum1].Collision || gp.tileM.tile[tileNum2].Collision) {    // check if either of the tiles are solid
                     entity.collisionOn = true;                                                  // if they are, set collisionOn to true
                 }
                 break;
             case "right":
                 entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;               // add speed to the right most edge of the solid area to get the new right most edge of the solid area
-                tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];                   // get the tile index beneath the top vertex of the right most edge of the solid area
-                tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];                // get the tile index beneath the bottom vertex of the right most edge of the solid area
+                tileNum1 = gp.tileM.mapTileNum[entity.map][entityRightCol][entityTopRow];                   // get the tile index beneath the top vertex of the right most edge of the solid area
+                tileNum2 = gp.tileM.mapTileNum[entity.map][entityRightCol][entityBottomRow];                // get the tile index beneath the bottom vertex of the right most edge of the solid area
                 if (gp.tileM.tile[tileNum1].Collision || gp.tileM.tile[tileNum2].Collision) {    // check if either of the tiles are solid
                     entity.collisionOn = true;                                                  // if they are, set collisionOn to true
                 }
@@ -54,16 +54,16 @@ public class CollisionChecker {
                 break;
             case "up":
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;                    // add speed to the top most edge of the solid area to get the new top most edge of the solid area
-                tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityTopRow];                    // get the tile index beneath the left vertex of the top most edge of the solid area
-                tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityTopRow];                   // get the tile index beneath the right vertex of the top most edge of the solid area
+                tileNum1 = gp.tileM.mapTileNum[entity.map][entityLeftCol][entityTopRow];                    // get the tile index beneath the left vertex of the top most edge of the solid area
+                tileNum2 = gp.tileM.mapTileNum[entity.map][entityRightCol][entityTopRow];                   // get the tile index beneath the right vertex of the top most edge of the solid area
                 if (gp.tileM.tile[tileNum1].Collision || gp.tileM.tile[tileNum2].Collision) {    // check if either of the tiles are solid
                     entity.collisionOn = true;                                                  // if they are, set collisionOn to true
                 }
                 break;
             case "down":
                 entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;              // add speed to the bottom most edge of the solid area to get the new bottom most edge of the solid area
-                tileNum1 = gp.tileM.mapTileNum[gp.currentMap][entityLeftCol][entityBottomRow];                 // get the tile index beneath the left vertex of the bottom most edge of the solid area
-                tileNum2 = gp.tileM.mapTileNum[gp.currentMap][entityRightCol][entityBottomRow];                // get the tile index beneath the right vertex of the bottom most edge of the solid area
+                tileNum1 = gp.tileM.mapTileNum[entity.map][entityLeftCol][entityBottomRow];                 // get the tile index beneath the left vertex of the bottom most edge of the solid area
+                tileNum2 = gp.tileM.mapTileNum[entity.map][entityRightCol][entityBottomRow];                // get the tile index beneath the right vertex of the bottom most edge of the solid area
                 if (gp.tileM.tile[tileNum1].Collision || gp.tileM.tile[tileNum2].Collision) {    // check if either of the tiles are solid
                     entity.collisionOn = true;                                                  // if they are, set collisionOn to true
                 }

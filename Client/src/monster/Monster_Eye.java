@@ -9,8 +9,8 @@ import java.util.Random;
 
 public class Monster_Eye extends Entity {
 
-    public Monster_Eye(GamePanel gp) {
-        super(gp);
+    public Monster_Eye(GamePanel gp, int map) {
+        super(gp, map);
         direction = "down";
         speed = 3;
         maxHealth = 10;
@@ -42,6 +42,9 @@ public class Monster_Eye extends Entity {
 
         // Find the closest player
         for (NPC_Player player : gp.players) {
+            if (player == null) {
+                continue;
+            }
             double distance = Math.sqrt(Math.pow(worldX - player.worldX, 2) + Math.pow(worldY - player.worldY, 2));
             if (distance < closestDistance) {
                 closestDistance = distance;

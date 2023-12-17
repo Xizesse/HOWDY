@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Monster_Spike extends Entity {
 
-    public Monster_Spike(GamePanel gp) {
-        super(gp);
+    public Monster_Spike(GamePanel gp, int map) {
+        super(gp, map);
         direction = "down";
         speed = 1;
         maxHealth = 20;

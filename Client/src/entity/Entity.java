@@ -16,6 +16,7 @@ import java.util.Objects;
 public class Entity {
     public GamePanel gp;
     public int worldX, worldY;
+    public int map;
     public int previousWorldX, previousWorldY;
     public int speed;
     public BufferedImage titleArt, bodyUp1, bodyUp2, bodyDown1, bodyDown2, BodyLeft1, BodyLeft2, BodyRight1, BodyRight2;
@@ -45,8 +46,9 @@ public class Entity {
     boolean dying = false;
 
 
-    public Entity(GamePanel gp) {
+    public Entity(GamePanel gp, int map) {
         this.gp = gp;
+        this.map = map;
     }
 
     public void setAction() {
@@ -174,17 +176,6 @@ public class Entity {
         gp.cCheck.checkObject(this, false);      //check collision with objects
 
 
-        /*
-        if (gp instanceof ServerPanel) {
-            if (gp.players != null) {
-                gp.cCheck.checkNPC_players(this, gp.players);
-
-            }
-            //print if collision is on
-
-
-        }
-    */
         if (!collisionOn) {
             switch (direction) {
                 case "up":

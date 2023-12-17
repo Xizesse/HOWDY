@@ -34,8 +34,8 @@ public class Player extends Entity {
     //and then standart inventory
     public ArrayList <SuperObject> inventory = new ArrayList<>(10);
 
-    public Player(GamePanel gp, KeyHandler keyH, int x, int y) {
-        super(gp);
+    public Player(GamePanel gp, KeyHandler keyH, int x, int y, int map) {
+        super(gp, map);
         this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - gp.tileSize / 2;

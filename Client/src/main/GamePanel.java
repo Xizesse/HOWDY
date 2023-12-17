@@ -56,13 +56,13 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
 
     // ENTITY AND OBJECTS
-    public Player player = new Player(this, keyH, 3, 15);
+    public Player player = new Player(this, keyH, 3, 15, 0);
     public Entity[][] npc = new Entity[maxMaps][10];
     public SuperObject[][] obj = new SuperObject[maxMaps][20];
 
 
     // Player 2
-    public NPC_Player player2 = new NPC_Player(this);
+    public NPC_Player player2 = new NPC_Player(this, 0);
     public String player2Direction = "down";
     public int player2WorldX = 3;
     public int player2WorldY = 15;
@@ -104,7 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
         aS.setNPC();
         effectManager.setup();
         gameState = titleState;
-        playMusic(0);
+        //playMusic(0);
     }
 
 

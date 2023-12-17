@@ -113,38 +113,46 @@ public class AssetSetter {
     }
 
     public void setPlayer2(){
-        gp.player2 = new NPC_Player(gp);
+        gp.player2 = new NPC_Player(gp, 0);
         gp.player2.worldX = gp.tileSize * 3;
         gp.player2.worldY = gp.tileSize * 15;
     }
 
     public void setNPC(){
 
-        gp.npc[0][0] = new Monster_Eye(gp);
+        gp.npc[0][0] = new Monster_Eye(gp, 0);
         gp.npc[0][0].worldX =  gp.tileSize * 5;
         gp.npc[0][0].worldY =  gp.tileSize * 15;
-        gp.npc[0][1] = new Monster_Eye(gp);
+        gp.npc[0][1] = new Monster_Eye(gp,0);
         gp.npc[0][1].worldX =  gp.tileSize * 7;
         gp.npc[0][1].worldY =  gp.tileSize * 15;
 
-        gp.npc[0][2] = new Monster_Spike(gp);
+        gp.npc[0][2] = new Monster_Spike(gp, 0);
         gp.npc[0][2].worldX = 4 * gp.tileSize;
         gp.npc[0][2].worldY = 15 * gp.tileSize;
 
-        gp.npc[0][3] = new Monster_Spike(gp);
+        gp.npc[0][3] = new Monster_Spike(gp,0);
         gp.npc[0][3].worldX = 6 * gp.tileSize;
         gp.npc[0][3].worldY = 16 * gp.tileSize;
 
-        gp.npc[0][4] = new Monster_Stalker(gp);
+        gp.npc[0][4] = new Monster_Stalker(gp,0);
         gp.npc[0][4].worldX = 5 * gp.tileSize;
         gp.npc[0][4].worldY = 16 * gp.tileSize;
 
-        //loop to create 10 rats
-        for (int i = 0; i < 10; i++) {
-            gp.npc[1][i] = new NPC_Rat(gp);
-            gp.npc[1][i].worldX =  gp.tileSize * (5+i);
-            gp.npc[1][i].worldY =  gp.tileSize * (17+i);
-        }
+
+        //map 2
+        gp.npc[1][0] = new Monster_Eye(gp,1);
+        gp.npc[1][0].worldX = 16 * gp.tileSize;
+        gp.npc[1][0].worldY = 16 * gp.tileSize;
+
+        gp.npc[1][1] = new Monster_Eye(gp,1);
+        gp.npc[1][1].worldX = 1 * gp.tileSize;
+        gp.npc[1][1].worldY = 2 * gp.tileSize;
+
+        gp.npc[1][2] = new Monster_Spike(gp,1);
+        gp.npc[1][2].worldX = 1 * gp.tileSize;
+        gp.npc[1][2].worldY = 3 * gp.tileSize;
+
 
         //map 3
         /*

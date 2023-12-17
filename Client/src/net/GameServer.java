@@ -90,12 +90,12 @@ public class GameServer extends Thread {
             case LOGIN:
                 //print all objects
                 if (game.players.get(0) == null) {
-                    game.players.set(0, new NPC_Player(address, port, 0, 0, "down", game));
+                    game.players.set(0, new NPC_Player(address, port, 0, 0, "down", game, 0));
                     System.out.println("LOGIN player 1 from [" + game.players.get(0).ipAddress.getHostAddress() + "] port: " + game.players.get(0).port);
                     break;
                 }
                 if (game.players.get(1) == null) {
-                    game.players.set(1, new NPC_Player(address, port, 0, 0, "down", game));
+                    game.players.set(1, new NPC_Player(address, port, 0, 0, "down", game, 0));
                     System.out.println("LOGIN player 2 from [" + game.players.get(1).ipAddress.getHostAddress() + "] port: " + game.players.get(1).port);
                     game.gameState = game.playState;
                     break;

@@ -8,8 +8,8 @@ import java.util.Random;
 public class NPC_Shark extends Entity {
 
 
-    public NPC_Shark(GamePanel gp) {
-        super(gp);
+    public NPC_Shark(GamePanel gp, int map) {
+        super(gp, map);
 
 
         direction = "down";

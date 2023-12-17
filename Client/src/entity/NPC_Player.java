@@ -23,8 +23,8 @@ public class NPC_Player extends Entity
     public int screenX, screenY;
     public int currentHealth, maxHealth;
     public int port;
-    public NPC_Player(InetAddress ipAddress, int port, int x, int y, String direction, GamePanel gp) {
-        super(gp);
+    public NPC_Player(InetAddress ipAddress, int port, int x, int y, String direction, GamePanel gp, int map) {
+        super(gp, map);
         this.ipAddress = ipAddress;
         this.port = port;
         this.worldX = x;
@@ -35,8 +35,8 @@ public class NPC_Player extends Entity
         //solidAreaDefaultX = solidArea.x;
         //solidAreaDefaultY = solidArea.y;
     }
-    public NPC_Player(GamePanel gp) {
-        super(gp);
+    public NPC_Player(GamePanel gp, int map) {
+        super(gp, map);
         currentHealth = 6;
         maxHealth = 6;
         direction = "down";

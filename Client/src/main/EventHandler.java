@@ -148,6 +148,7 @@ public class EventHandler {
         gp.gameState = gameState;
         gp.ui.currentText = "Get teleported, idiot";
         gp.currentMap = newMap;
+        gp.player.map = newMap;
         gp.player.worldX = newX * gp.tileSize;
         gp.player.worldY = newY * gp.tileSize;
     }
