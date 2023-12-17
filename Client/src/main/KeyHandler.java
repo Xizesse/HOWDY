@@ -42,6 +42,7 @@ public class KeyHandler implements KeyListener {
                 if (gp.ui.commandNum == 0) {
                     gp.new_gameState = gp.playState;
                 } else if (gp.ui.commandNum == 1) {
+                    gp.new_gameState = gp.joinState;
                     // LOAD GAME
                 } else if (gp.ui.commandNum == 2) {
                     System.exit(0);
@@ -70,8 +71,7 @@ public class KeyHandler implements KeyListener {
             } else if (code == KeyEvent.VK_ESCAPE) {
                 gp.new_gameState = gp.optionsState;
                 gp.prev_gameState = gp.playState;
-            }
-            else if (code == KeyEvent.VK_G) {
+            } else if (code == KeyEvent.VK_G) {
                 gp.GOD = !gp.GOD;
                 gp.LIGHT = !gp.LIGHT;
             }
