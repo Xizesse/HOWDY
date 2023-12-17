@@ -59,8 +59,8 @@ public class TileManager {
         setup(18, "/tiles/upplank", true);
         setup(19, "/tiles/downplank", true);
         setup(20, "/tiles/planks", false);
-        setup(21, "/tiles/leftSand", true);
-        setup(22, "/tiles/rightSand", true);
+        setup(21, "/tiles/leftsand", true);
+        setup(22, "/tiles/rightsand", true);
 
         setup(23, "/tiles/rockright", true);
         setup(24, "/tiles/rockleft", true);

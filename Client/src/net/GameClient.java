@@ -175,8 +175,7 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
         List<TileChange> changes = packet.getChanges();
 
         for (TileChange change : changes) {
-            this.game.tileM.updateMap(0, change.getX(), change.getY(), change.getNewTile());
-            //TODO: mapIndex is always 0 for now; NEED to fix packet for mapIndex
+            this.game.tileM.updateMap(packet.getLevel(), change.getX(), change.getY(), change.getNewTile());
         }
 
     }

@@ -100,13 +100,13 @@ public class EventHandler {
 
             }
             if (hit(2, 19, 12, "right")) {
-                System.out.println("Teleorting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
+                System.out.println("Teleporting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
 
                 teleport( gp.playState, 2,  18, gp.player.worldY/ gp.tileSize);
             }
             if (hit(2, 19, 13, "right")) {
 
-                System.out.println("Teleorting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
+                System.out.println("Teleporting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
                 teleport( gp.playState, 2,  18, gp.player.worldY/ gp.tileSize);
             }
         }
