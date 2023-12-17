@@ -118,14 +118,14 @@ public class GamePanel extends JPanel implements Runnable {
         playMusic(0);
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-        g2d = (Graphics2D)tempScreen.getGraphics();
+        g2d = (Graphics2D) tempScreen.getGraphics();
 
-        if(fullScreenOn){
+        if (fullScreenOn) {
             setFullScreen();
         }
     }
 
-    public void setFullScreen(){
+    public void setFullScreen() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         gd.setFullScreenWindow(Main.window);
@@ -180,7 +180,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    public synchronized void updatePlayer2(String direction,int map, int worldX, int worldY) {
+    public synchronized void updatePlayer2(String direction, int map, int worldX, int worldY) {
         if (gameState == playState) {
             if (player2 != null) {
                 player2.map = map;
@@ -193,6 +193,7 @@ public class GamePanel extends JPanel implements Runnable {
             //do something ?
         }
     }
+
     public void drawToTempScreen() {
         // DEBUG
         long drawStartTime = 0;
@@ -232,8 +233,7 @@ public class GamePanel extends JPanel implements Runnable {
             player.draw(g2d);
             // PLAYER2
             if (player2 != null) {
-                if (player2.map == currentMap)
-                {
+                if (player2.map == currentMap) {
                     player2.draw(g2d);
                 }
             }
@@ -291,8 +291,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
-        }
-        else if(gameState == optionsState){
+        } else if (gameState == optionsState) {
             if (prev_gameState == playState) {
 
                 // TILE
@@ -336,7 +335,6 @@ public class GamePanel extends JPanel implements Runnable {
                 }
 
 
-
                 // PLAYER1
                 player.draw(g2d);
                 // PLAYER2
@@ -365,11 +363,13 @@ public class GamePanel extends JPanel implements Runnable {
             System.out.println("Draw Time: " + (float) drawTime / 1000000 + "ms");
         }
     }
-    public void drawToScreen(){
+
+    public void drawToScreen() {
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
     }
+
     public void playMusic(int i) {
         music.setFile(i);
         music.play();
