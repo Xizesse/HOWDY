@@ -3,6 +3,7 @@ package server;
 import entity.*;
 import main.*;
 import net.*;
+import tile.Tile;
 
 import java.awt.*;
 import java.io.IOException;
@@ -142,6 +143,7 @@ public class ServerPanel extends GamePanel {
                 {
                     //we update only once
                     int bothmap = players.get(0).map;
+                    if (bothmap == 1) checkCage();
                     //attackPlayers(players.get(0));
                     //attackPlayers(players.get(1));
                     //all the npcs on the both map
@@ -161,7 +163,6 @@ public class ServerPanel extends GamePanel {
                                     //System.out.println("range: " + npc[map][npcIndex].attackRange);
                                     if (distance <= npc[bothmap][i].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/)
                                     {
-                                        System.out.println("Attack ? CoolDown: " + npc[bothmap][i].attackCoolDown);
                                         if (npc[bothmap][i].attackCoolDown > 0) continue;
 
                                         npc[bothmap][i].attackCoolDown = npc[bothmap][i].defAttackCoolDown;
@@ -210,6 +211,7 @@ public class ServerPanel extends GamePanel {
                 //attackPlayers(player);
 
                 int map = player.map;
+                if (map == 1)checkCage();
 //                        System.out.println("Updating map " + map);
                 for (int i = 0; i < npc[map].length; i++) {
                     //System.out.println("Updating NPC " + (i+1));
@@ -254,6 +256,55 @@ public class ServerPanel extends GamePanel {
         }
         flagUpdated = false;
 
+
+    }
+
+    private void checkCage() {
+        //if both pressure plates are pressed, open the cage
+        System.out.println("PP LEFT: " + tileM.mapTileNum[1][20][12] + " PP RIGHT: " + tileM.mapTileNum[1][12][12]);
+        if(tileM.mapTileNum[1][20][12] == 12 && tileM.mapTileNum[1][12][12] == 12)
+        {
+            System.out.println("Cage open");
+            //Send a packet to all players to open the cage
+            ArrayList<TileChange> cage = new ArrayList<>();
+            cage.add(new TileChange(1, 16, 12, 10));
+            cage.add(new TileChange(1, 16, 13, 10));
+            cage.add(new TileChange(1, 16, 14, 10));
+            cage.add(new TileChange(1, 17, 14, 0));
+            cage.add(new TileChange(1, 15, 14, 0));
+            cage.add(new TileChange(1, 15, 14, 0));
+            cage.add(new TileChange(1, 14, 15, 0));
+            cage.add(new TileChange(1, 18, 15, 0));
+            cage.add(new TileChange(1, 14, 16, 0));
+            cage.add(new TileChange(1, 18, 16, 0));
+            cage.add(new TileChange(1, 14, 17, 0));
+            cage.add(new TileChange(1, 18, 17, 0));
+            cage.add(new TileChange(1, 14, 18, 0));
+            cage.add(new TileChange(1, 15, 18, 0));
+            cage.add(new TileChange(1, 16, 18, 0));
+            cage.add(new TileChange(1, 17, 18, 0));
+            cage.add(new TileChange(1, 18, 18, 0));
+
+            Packet06MapChange p6 = new Packet06MapChange(1, cage);
+            //send to all players
+            for(NPC_Player player : players)
+            {
+                if(player != null)
+                {
+                    socketServer.sendData(p6.getData(), player.ipAddress, player.port);
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+        }
 
     }
 

@@ -53,6 +53,8 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
             case LOGIN:
                 packet = new Packet00Login();
                 System.out.println("[" + address.getHostAddress() + "][port: " + port + "] has joined the game...");
+                game.gameState = game.playState;
+                game.new_gameState = game.playState;
                 break;
             case LOGOUT:
                 break;

@@ -5,6 +5,7 @@ import server.ServerPanel;
 
 import java.net.*;
 import java.io.IOException;
+import java.util.List;
 
 
 //00 for login
@@ -92,11 +93,15 @@ public class GameServer extends Thread {
                 if (game.players.get(0) == null) {
                     game.players.set(0, new NPC_Player(address, port, 0, 0, "down", game, 0));
                     System.out.println("LOGIN player 1 from [" + game.players.get(0).ipAddress.getHostAddress() + "] port: " + game.players.get(0).port);
+                    //confirm with the same packet to the player
+                    sendData(data, address, port);
                     break;
                 }
                 if (game.players.get(1) == null) {
                     game.players.set(1, new NPC_Player(address, port, 0, 0, "down", game, 0));
                     System.out.println("LOGIN player 2 from [" + game.players.get(1).ipAddress.getHostAddress() + "] port: " + game.players.get(1).port);
+                    //confirm with the same packet to the player
+                    sendData(data, address, port);
                     game.gameState = game.playState;
                     break;
 
@@ -193,6 +198,13 @@ public class GameServer extends Thread {
             case MAPCHANGE:
                 Packet06MapChange p6 = new Packet06MapChange(data);
                 sendDataToAllClients(p6.getData());
+                //change on the server
+                List<TileChange> changes = p6.getChanges();
+
+                for (TileChange change : changes) {
+                    this.game.tileM.updateMap(p6.getLevel(), change.getX(), change.getY(), change.getNewTile());
+                }
+
                 break;
 
             case HEALTH:

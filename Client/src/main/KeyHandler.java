@@ -99,7 +99,8 @@ public class KeyHandler implements KeyListener {
         }
 
         if (keysPressed[confirmKey]) {
-            gp.new_gameState = gp.titleState;
+            gp.ipInserted = true;
+            //gp.new_gameState = gp.titleState;
         }
     }
 
