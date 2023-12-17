@@ -37,7 +37,7 @@ public class OBJ_PP extends SuperObject{
                 changes.add(change);
                 //System.out.println(changes + "\n" + gp.currentMap);
             }
-            Packet06MapChange p6 = new Packet06MapChange(gp.currentMap, changes);
+            Packet06MapChange p6 = new Packet06MapChange(0, changes);
             System.out.println("Sending map change packet");
             String[] dataArray = p6.readData(p6.getData()).split(",");
             p6.writeData(this.gp.socketClient);
@@ -55,16 +55,14 @@ public class OBJ_PP extends SuperObject{
             for (int[] ints : defaultArray) {
                 change = new TileChange(gp.currentMap, ints[0], ints[1], ints[2]);
                 changes.add(change);
-                //System.out.println(changes + "\n" + gp.currentMap);
+                System.out.println(changes + "\n");
             }
 
-            Packet06MapChange p6 = new Packet06MapChange(gp.currentMap, changes);
+            Packet06MapChange p6 = new Packet06MapChange(0, changes);
             System.out.println("Sending map change back");
             String[] dataArray = p6.readData(p6.getData()).split(",");
-            System.out.print(Arrays.toString(dataArray) + "\n");
             p6.writeData(this.gp.socketClient);
             this.isItOn = false;
-            System.out.println(this.isItOn);
         }
     }
 }

@@ -65,7 +65,7 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
             case ATTACK:
                 packet = new Packet03Attack(data);
                 handleAttack((Packet03Attack) packet);
-                System.out.println("Attack packet received");
+                //System.out.println("Attack packet received");
                 break;
             case OBJECT:
                 System.out.println("Object packet received");
@@ -94,10 +94,11 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
         System.out.println("ID = " + packet.getEntityID() + " Health = " + packet.getHealth() + " Map = " + packet.getMap());
         if (this.game != null) {
             if (packet.getEntityID() == -1) {
-                System.out.println("Player 1 attacked");
+                System.out.println("This player was attacked");
                 game.player.currentHealth = packet.getHealth();
             } else if (packet.getEntityID() == -2) {
                 game.player2.currentHealth = packet.getHealth();
+                System.out.println("Other player was attacked");
             } else {
                 int i = packet.getEntityID();
                 this.game.npc[packet.getMap()][i].currentHealth = packet.getHealth(); //DONE: Handle mapIndex
@@ -110,14 +111,15 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
     }
 
     private void handleAttack(Packet03Attack packet) {
-        System.out.println("Attack packet received");
+        //System.out.println("Attack packet received");
         if (this.game != null) {
             if (packet.getEntityID() == 0) {
                 //System.out.println("Player 1 attacked");
                 game.player2.isAttacking = true;
             } else {
-
-
+                this.game.npc[packet.getMap()][packet.getEntityID()].isAttacking = true; //DONE: Handle mapIndex
+                System.out.println("NPC " + packet.getEntityID() + " attacked" + " on map " + packet.getMap());
+                this.game.npc[packet.getMap()][packet.getEntityID()].damageAnimationCounter = this.game.npc[packet.getMap()][packet.getEntityID()].defDamageAnimationCounter;
             }
         }
     }

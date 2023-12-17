@@ -13,7 +13,7 @@ public class Config {
         //String currentDir = System.getProperty("user.dir");
         //String filePath = currentDir + File.separator + "Client" + File.separator+ "config.txt";
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("Client/config.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("config.txt"));
             if(gp.fullScreenOn){
                 bw.write("On");
             }
@@ -40,7 +40,7 @@ public class Config {
         //String filePath = currentDir + File.separator + "Client" + File.separator + "config.txt";
         //System.out.println(filePath);
         try {
-            BufferedReader br = new BufferedReader(new FileReader("Client/config.txt"));
+            BufferedReader br = new BufferedReader(new FileReader("config.txt"));
 
             String s = br.readLine();
             if(s.equals("On")){

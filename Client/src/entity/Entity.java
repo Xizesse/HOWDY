@@ -96,7 +96,7 @@ public class Entity {
                 worldY > gp.player.worldY - gp.screenHeight &&
                 worldY < gp.player.worldY + gp.screenHeight) {
 
-            System.out.println("damageAnimationCounter: " + damageAnimationCounter);
+            //System.out.println("damageAnimationCounter: " + damageAnimationCounter);
 
             switch (direction) { //get the correct sprite for the direction the entity is facing
                 case "up":
@@ -174,7 +174,7 @@ public class Entity {
         return scaledImage;
     }
 
-    void attackPlayer() {
+    /*void attackPlayer() {
 
         if (this instanceof NPC_Player) { //players don't attack automatically
             return;
@@ -209,7 +209,7 @@ public class Entity {
         if (attackCoolDown > 0) {
             attackCoolDown--;
         }
-    }
+    }*/
 
     public void update() {
 

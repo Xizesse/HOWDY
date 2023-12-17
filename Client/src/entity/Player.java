@@ -101,7 +101,7 @@ public class Player extends Entity {
         else if (keyH.downPressed|| keyH.upPressed|| keyH.leftPressed|| keyH.rightPressed || keyH.spacePressed) {
             if (keyH.spacePressed) {
                 isAttacking = true;
-                Packet03Attack packet = new Packet03Attack(0, 1);
+                Packet03Attack packet = new Packet03Attack(0, 1, map);
                 packet.writeData(gp.socketClient);
                 attackCounter = 0;
 

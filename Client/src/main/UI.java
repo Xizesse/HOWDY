@@ -78,7 +78,8 @@ public class UI {
         //gp.player.currentHealth = 3;
 
         int x =  gp.tileSize/2;
-        int y = gp.screenWidth - gp.tileSize - gp.tileSize/2 ;
+        //int y = gp.screenWidth - gp.tileSize - gp.tileSize/2 ;
+        int y = 0;
         int i=0;
 
         while (i < (gp.player.maxHealth / 2)) {
@@ -102,8 +103,8 @@ public class UI {
 
 
 
-        int x = gp.screenWidth - 3* gp.tileSize - gp.tileSize/2;
-        int y = gp.screenWidth - gp.tileSize*4 - gp.tileSize ;
+        int x = gp.screenWidth2 - 3* gp.tileSize - gp.tileSize/2;
+        int y =  gp.screenWidth2 - gp.tileSize*4 - gp.tileSize ;
 
         //black square with transparency and a white border
         Color b = new Color(0,0,0, 100);
@@ -115,8 +116,6 @@ public class UI {
         g2d.drawRect(x, y, gp.tileSize*3, gp.tileSize*3);
         g2d.drawRect(x+ gp.tileSize, y, gp.tileSize, gp.tileSize*3);
         g2d.drawRect( x, y+gp.tileSize, gp.tileSize*3, gp.tileSize);
-
-
 
 
         x += gp.tileSize;
