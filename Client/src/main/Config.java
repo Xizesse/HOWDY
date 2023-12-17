@@ -10,7 +10,9 @@ public class Config {
     }
 
     public void saveConfig() {
-        String path = System.getenv("APPDATA") + "/HOWDY/config.txt";
+        String appDataPath = getappDataPath();
+        String path = appDataPath + "/HOWDY/config.txt";
+
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(path));
             if (gp.fullScreenOn) {
