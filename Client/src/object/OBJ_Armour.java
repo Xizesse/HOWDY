@@ -11,6 +11,11 @@ public class OBJ_Armour extends SuperObject{
         name = "Armour";
         type = "armour";
         this.rank = rank;
+        if (rank.equals("gold")) {
+            this.tier = 2;
+        } else if (rank.equals("iron")) {
+            this.tier = 1;
+        }
         id = 1;
         equippable = true;
 
@@ -31,17 +36,16 @@ public class OBJ_Armour extends SuperObject{
             }
         } else if (rank.equals("iron")) {
             try {
-                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/goldArmour/goldArmour.png"));
-                up = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/goldArmour/goldArmour_up.png"));
-                down = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/goldArmour/goldArmour_down.png"));
-                left = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/goldArmour/goldArmour_left.png"));
-                right = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/goldArmour/goldArmour_right.png"));
+                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/armour/armour.png"));
+                up = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/armour/armour_up.png"));
+                down = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/armour/armour_down.png"));
+                right = ImageIO.read(ClassLoader.getSystemResourceAsStream("items/armour/armour_right.png"));
 
                 image = uT.scaleImage(image, gp.tileSize, gp.tileSize);
                 up = uT.scaleImage(up, gp.tileSize, gp.tileSize);
                 down = uT.scaleImage(down, gp.tileSize, gp.tileSize);
-                left = uT.scaleImage(left, gp.tileSize, gp.tileSize);
                 right = uT.scaleImage(right, gp.tileSize, gp.tileSize);
+                left = down;
             } catch (IOException e) {
                 e.printStackTrace();
             }

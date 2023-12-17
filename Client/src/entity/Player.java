@@ -20,6 +20,9 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    private int attackingX = 0;
+    private int attackingY = 0;
+
     public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
     //Inventory and slots
@@ -31,8 +34,8 @@ public class Player extends Entity {
     //and then standart inventory
     public ArrayList <SuperObject> inventory = new ArrayList<>(10);
 
-    public Player(GamePanel gp, KeyHandler keyH, int x, int y) {
-        super(gp);
+    public Player(GamePanel gp, KeyHandler keyH, int x, int y, int map) {
+        super(gp, map);
         this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - gp.tileSize / 2;
@@ -164,7 +167,7 @@ public class Player extends Entity {
             gp.eH.checkEvent();
 
             spriteCounter++;
-            System.out.println("Moving to " + worldX + ", " + worldY + " map: " + gp.currentMap);
+            //System.out.println("Moving to " + worldX + ", " + worldY + " map: " + gp.currentMap);
             Packet02Move packet = new Packet02Move( 0, gp.currentMap, this.worldX, this.worldY, this.direction);
             packet.writeData(gp.socketClient);
 
@@ -316,10 +319,10 @@ public class Player extends Entity {
             y = worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight;
         }
 
-        g2d.drawImage(body, x, y, null);
+        //g2d.drawImage(body, x, y, null);
 
         //draw armour, then helmet, then boots, then weapon, then shield
-        drawitems(g2d, x, y);
+        drawitems(g2d, x, y, body);
 
         //if (helmetOn) {g2d.drawImage(helmet, x, y, null);}
         if (isAttacking)
@@ -341,10 +344,11 @@ public class Player extends Entity {
         }
     }
 
-    private void drawitems(Graphics2D g2d, int x, int y) {
+    private void drawitems(Graphics2D g2d, int x, int y, BufferedImage body) {
         //this now considers the order of the drawing of the items
         switch (direction) {
             case "down":
+                g2d.drawImage(body, x, y, null);
                 if (boots != null) {
                     g2d.drawImage(boots.down, x, y, null);
                 }
@@ -365,6 +369,7 @@ public class Player extends Entity {
                 if (shield != null) {
                     g2d.drawImage(shield.up, x, y, null);
                 }
+                g2d.drawImage(body, x, y, null);
                 if (weapon != null) {
                     g2d.drawImage(weapon.up, x, y, null);
                 }
@@ -379,6 +384,7 @@ public class Player extends Entity {
                 }
                 break;
             case "left":
+                g2d.drawImage(body, x, y, null);
                 if ( helmet != null) {
                     g2d.drawImage(helmet.left, x, y, null);
                 }
@@ -396,6 +402,7 @@ public class Player extends Entity {
                 }
                 break;
             case "right":
+                g2d.drawImage(body, x, y, null);
                 if ( helmet != null) {
                     g2d.drawImage(helmet.right, x, y, null);
                 }

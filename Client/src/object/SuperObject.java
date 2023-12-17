@@ -12,6 +12,7 @@ public class SuperObject {
     public boolean equippable = false;
     public String name;
     public String type;
+    public int tier;
     public byte id;
     public boolean collision = false;
     public int worldX, worldY;

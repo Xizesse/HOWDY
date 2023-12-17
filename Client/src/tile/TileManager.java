@@ -19,7 +19,7 @@ public class TileManager {
     public TileManager(GamePanel gp){
 
         this.gp = gp;
-        tile = new Tile[30];
+        tile = new Tile[40];
         mapTileNum = new int[gp.maxMaps][gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
@@ -70,6 +70,10 @@ public class TileManager {
         setup(27, "/tiles/rockdownleft", true);
         setup(28, "/tiles/rockdownright", true);
 
+        setup(29, "/tiles/ffdown", true);
+        setup(30, "/tiles/ffup", true);
+        setup(31, "/tiles/ffleft", true);
+        setup(32, "/tiles/ffright", true);
 
 
     }
@@ -136,6 +140,12 @@ public class TileManager {
             case '3': return 3; // wall_moss3
             case 'H': return 10; // wall_crack_horH
             case 'V': return 11; // wall_crack_vertV
+
+            //force field
+            case 'X': return 10; // force field down
+            case 'Y': return 11; // force field up
+            case 'Z': return 12; // force field left
+
             //pp
             case '4': return 4; // pp_clover4
             case 'A': return 12; // pp_clover4
@@ -143,11 +153,12 @@ public class TileManager {
             case '5': return 5; // door_clover5
             case 'C': return 13; // door_clover open
 
-            case 'G': return 14; // grass1
-            case 'g': return 15; // grass2
-            case 'b': return 16; // bush
+
 
             //outside
+            case 'g': return 14; // grass1
+            case 'G': return 15; // grass2
+            case 'b': return 16; // bush
             case 'W' : return 17; // water
             case 'P':return 18; // plank top
             case 'p':return 19; // plank bottom
@@ -164,9 +175,16 @@ public class TileManager {
             case 'd': return 27; // rockdownleft
             case 'D': return 28; // rockdownright
 
+            //force field
+            case 'F': return 29; // force field down
+            case 'K': return 30; // force field up
+            case 'I': return 31; // force field left
+            case 'J': return 32; // force field right
 
             // ... Add more cases for additional tiles
-            default: return -1; // Error case, character not recognized
+            default:
+                System.out .println("Unrecognized character: " + tileChar);
+                return -1; // Error case, character not recognized
         }
     }
 

@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Monster_Stalker extends Entity {
 
-    public Monster_Stalker(GamePanel gp) {
-        super(gp);
+    public Monster_Stalker(GamePanel gp, int map) {
+        super(gp, map);
         direction = "down";
         speed = 1;
         maxHealth = 1;

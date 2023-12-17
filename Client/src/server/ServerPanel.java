@@ -22,7 +22,7 @@ public class ServerPanel extends GamePanel {
 
     // Players
     //Array of NPC_Player2
-    public List<NPC_Player> players = new ArrayList<>(); //created and controlled by the clients
+    //public List<NPC_Player> players = new ArrayList<>(); //created and controlled by the clients
     // GAME STATE
     public ServerPanel() throws IOException {
         super();
@@ -37,41 +37,7 @@ public class ServerPanel extends GamePanel {
         aS.setNPC();
 
 
-        /*
-        for (int i = 0; i < npc[0].length; i++) { //TODO: Não sei o que é que isto estava a fazer
 
-            if (npc[0][i] != null) {
-
-                Packet02Move packet = new Packet02Move( (i+1), 0,npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
-                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                for (NPC_Player player : players) {
-                    if (player != null) {
-                        //System.out.println("Sending packet to player ");
-                        socketServer.sendData(packet.getData(), player.ipAddress, player.port);
-
-                    }
-                }
-
-            }
-        }
-
-        for (int i = 0; i < npc[0].length; i++) { //TODO: Nem isto
-
-            if (npc[0][i] != null) {
-
-                Packet02Move packet = new Packet02Move( (i+1),0,npc[0][i].worldX, npc[0][i].worldY, npc[0][i].direction);
-                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                for (NPC_Player player : players) {
-                    if (player != null) {
-                        System.out.println("Sending packet to player ");
-                        socketServer.sendData(packet.getData(), player.ipAddress, player.port);
-
-                    }
-                }
-            }
-        }
-
-         */
         gameState = titleState;
         //playMusic(0);
     }
@@ -112,22 +78,16 @@ public class ServerPanel extends GamePanel {
             //player.update();
             //player2.update(); <- This is done by the client thread
 
-            //TODO: EVERYONE READ THIS
-            //update is called for the maps where players are
-            //IF THERE ARE TWO PLAYERS, if the map is the same, update only once, and set the flagUpdated to true
-            //if flag not true update both maps
-            //é spaghetti mas funciona
 
             if (players.get(0)!=null && players.get(1)!=null)
             {
                 if (players.get(0).map == players.get(1).map)
+                //both on the same map
                 {
                     //we update only once
-
                     int bothmap = players.get(0).map;
+                    //all the npcs on the both map
                     for (int i = 0; i < npc[bothmap].length; i++) {
-                        //System.out.println("Updating NPC " + (i+1));
-                        //System.out.println("NPC " + (i+1) + " is " + npc[i]);
                         if (npc[bothmap][i] != null) {
                             npc[bothmap][i].update();
                             Packet02Move packet = new Packet02Move((i + 1), bothmap, npc[bothmap][i].worldX, npc[bothmap][i].worldY, npc[bothmap][i].direction);
@@ -143,45 +103,38 @@ public class ServerPanel extends GamePanel {
                     flagUpdated = true;
                 }
 
-                if (!flagUpdated)
-                {
-                    for (NPC_Player player : players)
-                    {
-                        if (player != null) {
-                            int map = player.map;
-                            for (int i = 0; i < npc[map].length; i++) {
-                                //System.out.println("Updating NPC " + (i+1));
-                                //System.out.println("NPC " + (i+1) + " is " + npc[i]);
-                                if (npc[map][i] != null) {
-                                    npc[map][i].update();
-                                    Packet02Move packet = new Packet02Move((i + 1), map , npc[map][i].worldX, npc[map][i].worldY, npc[map][i].direction);
-                                    //if is a shark print
-                                    if (npc[map][i] instanceof NPC_Shark)
-                                    {
-                                        System.out.println("Moving Shark " + (i+1) + " to " + npc[map][i].worldX + ", " + npc[map][i].worldY + " facing " + npc[map][i].direction);
-                                    }
-                                    //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
-                                    socketServer.sendData(packet.getData(), player.ipAddress, player.port);
 
-                                }
-                            }
-
-                        }
-                    }
                 }
                 flagUpdated = false;
 
             }
+            if (!flagUpdated)
+            //se não tiver dado update, ou estão em mapas diferentes ou um deles está null
+            {
+                for (NPC_Player player : players) {
+                    if (player != null) {
+                        int map = player.map;
+                        System.out.println("Updating map " + map);
+                        for (int i = 0; i < npc[map].length; i++) {
+                            //System.out.println("Updating NPC " + (i+1));
+                            //System.out.println("NPC " + (i+1) + " is " + npc[i]);
+                            if (npc[map][i] != null) {
+                                npc[map][i].update();
+                                Packet02Move packet = new Packet02Move((i + 1), map, npc[map][i].worldX, npc[map][i].worldY, npc[map][i].direction);
+                                //if is a shark print
 
+                                //System.out.println("Moving NPC " + (i+1) + " to " + npc[i].worldX + ", " + npc[i].worldY + " facing " + npc[i].direction);
+                                socketServer.sendData(packet.getData(), player.ipAddress, player.port);
 
+                            }
+                        }
+
+                    }
+                }
 
 
             }
-
-
-
-
-            //  will be added upon in the future
+            flagUpdated = false;
 
 
 

@@ -8,8 +8,8 @@ import java.util.Random;
 public class NPC_Rat extends Entity {
 
 
-    public NPC_Rat(GamePanel gp) {
-        super(gp);
+    public NPC_Rat(GamePanel gp, int map) {
+        super(gp, map);
 
 
         direction = "down";

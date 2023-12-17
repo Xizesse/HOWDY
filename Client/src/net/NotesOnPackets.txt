@@ -5,11 +5,12 @@
 02 - Move -
 
 03 - Attack -
-Sends the attacked areas and the damage dealth
+
 
 04 - object -
 
-05 - take damage - //TODO
+05 - health - //TODO
+send a map id health
 
 06 - mapChange -
 when collision to a pressure plate

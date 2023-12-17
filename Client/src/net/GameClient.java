@@ -11,51 +11,49 @@ import java.util.Objects;
 
 import main.GamePanel;
 
-public class GameClient extends Thread{ // extends Thread so we can run it in the background
+public class GameClient extends Thread { // extends Thread so we can run it in the background
     private InetAddress ipAddress;// IP address of the server
     private DatagramSocket socket;// socket to send and receive packets
     private GamePanel game; // reference to the game panel
 
-    public GameClient(GamePanel game, String ipAddress){
+    public GameClient(GamePanel game, String ipAddress) {
         this.game = game; // set the reference to the game panel
         try {
             this.socket = new DatagramSocket(); // create a new socket
             this.ipAddress = InetAddress.getByName(ipAddress); // get the IP address of the server
-        } catch(SocketException e){
+        } catch (SocketException e) {
             e.printStackTrace();// print the error
-        } catch(UnknownHostException e){
+        } catch (UnknownHostException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void run(){// this method is called when we start the thread
-        while(true){
+    public void run() {// this method is called when we start the thread
+        while (true) {
             byte[] data = new byte[1024];// create a byte array to store the data we receive
             DatagramPacket packet = new DatagramPacket(data, data.length);//putting data into the packets
             try {
                 socket.receive(packet); // receive the data
                 this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort()); // parse the packet
-            } catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace(); // print the error
             }
 
         }
     }
 
-    private void parsePacket(byte[] data, InetAddress address, int port)
-    {
-        String message = new String(data,0,data.length).trim();
-        Packet.PacketTypes type = Packet.lookupPacket(message.substring(0,2));
+    private void parsePacket(byte[] data, InetAddress address, int port) {
+        String message = new String(data, 0, data.length).trim();
+        Packet.PacketTypes type = Packet.lookupPacket(message.substring(0, 2));
         Packet packet = null;
-        switch (type)
-        {
+        switch (type) {
             default:
             case INVALID:
                 break;
             case LOGIN:
                 packet = new Packet00Login();
-                System.out.println("["+address.getHostAddress()+"][port: "+port+"] has joined the game...");
+                System.out.println("[" + address.getHostAddress() + "][port: " + port + "] has joined the game...");
                 break;
             case LOGOUT:
                 break;
@@ -63,27 +61,53 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
             case MOVE:
                 //System.out.println("Move packet received");
                 packet = new Packet02Move(data);
-                handleMove((Packet02Move)packet);
+                handleMove((Packet02Move) packet);
                 break;
             case ATTACK:
                 packet = new Packet03Attack(data);
-                handleAttack((Packet03Attack)packet);
+                handleAttack((Packet03Attack) packet);
                 System.out.println("Attack packet received");
                 break;
             case OBJECT:
                 System.out.println("Object packet received");
                 packet = new Packet04Object(data);
-                handleObject((Packet04Object)packet);
+                handleObject((Packet04Object) packet);
                 break;
-
+            case HEALTH:
+                packet = new Packet05Health(data);
+                System.out.println("Health packet received");
+                handleHealth((Packet05Health) packet);
+                break;
             case MAPCHANGE:
                 packet = new Packet06MapChange(data);
                 System.out.println("Map change packet received");
-                handleMapChange((Packet06MapChange)packet);
+                handleMapChange((Packet06MapChange) packet);
                 break;
 
         }
 
+    }
+
+    private void handleHealth(Packet05Health packet) {
+        //if id is -1 it is me
+        //if it is -2 it is the other player
+        //0 to 20 is npc index on that map
+        System.out.println("ID = " + packet.getEntityID() + " Health = " + packet.getHealth() + " Map = " + packet.getMap());
+        if (this.game != null) {
+            if (packet.getEntityID() == -1) {
+                //System.out.println("Player 1 attacked");
+                game.player.currentHealth = packet.getHealth();
+            } else if (packet.getEntityID() == -2) {
+                game.player2.currentHealth = packet.getHealth();
+            } else {
+                int i = packet.getEntityID();
+                this.game.npc[packet.getMap()][i].currentHealth = packet.getHealth(); //DONE: Handle mapIndex
+                this.game.npc[packet.getMap()][i].demageAnimationCounter = 15;
+                if (this.game.npc[packet.getMap()][i].currentHealth <= 0) {
+                    this.game.npc[packet.getMap()][i].alive = false;
+                }
+            }
+        }
     }
 
     private void handleAttack(Packet03Attack packet) {
@@ -101,31 +125,29 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
 
     private void handleMove(Packet02Move packet) {
-                if(this.game != null){
-                    //System.out.println("ID = " + packet.getEntityID() + " X = " + packet.getX() + " Y = " + packet.getY() + " Direction = " + packet.getDirection());
-                    if(packet.getEntityID() == 0){
+        if (this.game != null) {
+            //System.out.println("ID = " + packet.getEntityID() + " X = " + packet.getX() + " Y = " + packet.getY() + " Direction = " + packet.getDirection());
+            if (packet.getEntityID() == 0) {
 
-                        //this.game.player2.direction = packet.getDirection();
-                        //this.game.player2.worldX = packet.getX();
-                        //this.game.player2.worldY = packet.getY();
-                        game.updatePlayer2(packet.getDirection(),packet.getMap(), packet.getX(), packet.getY());
-                        //System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
-                    }
-                    else{
-                        int i = packet.getEntityID() - 1;
+                //this.game.player2.direction = packet.getDirection();
+                //this.game.player2.worldX = packet.getX();
+                //this.game.player2.worldY = packet.getY();
+                game.updatePlayer2(packet.getDirection(), packet.getMap(), packet.getX(), packet.getY());
+                //System.out.println("Player 2 moved to " + packet.getX() + "," + packet.getY() + " direction: " + packet.getDirection());
+            } else {
+                int i = packet.getEntityID() - 1;
 
 
-                        this.game.npc[packet.getMap()][i].direction = packet.getDirection(); //DONE: Handle mapIndex
-                        this.game.npc[packet.getMap()][i].worldX = packet.getX(); //DONE: Handle mapIndex
-                        this.game.npc[packet.getMap()][i].worldY = packet.getY(); //DONE: Handle mapIndex
-                        }
-                    }
+                this.game.npc[packet.getMap()][i].direction = packet.getDirection(); //DONE: Handle mapIndex
+                this.game.npc[packet.getMap()][i].worldX = packet.getX(); //DONE: Handle mapIndex
+                this.game.npc[packet.getMap()][i].worldY = packet.getY(); //DONE: Handle mapIndex
             }
+        }
+    }
 
-    private void handleObject(Packet04Object packet)
-    {
+    private void handleObject(Packet04Object packet) {
 
-        if(this.game != null) {
+        if (this.game != null) {
             if (this.game.obj[packet.getMap()][packet.getitemIndex()] != null) {
 
                 //if give is true, give it to the player
@@ -143,14 +165,14 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
                     this.game.obj[packet.getMap()][packet.getitemIndex()] = null;
                 }
                 //delete the object
-                   //
+                //
             }
 
 
         }
     }
-    private void handleMapChange(Packet06MapChange packet)
-    {
+
+    private void handleMapChange(Packet06MapChange packet) {
         List<TileChange> changes = packet.getChanges();
 
         for (TileChange change : changes) {
@@ -160,16 +182,15 @@ public class GameClient extends Thread{ // extends Thread so we can run it in th
 
     }
 
-     public void sendData(byte[] data)
-     {
-         DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
-         try{
-             //System.out.println("Sending packet to " + ipAddress + " to port:" + packet.getPort());
-             socket.send(packet);
-         } catch(IOException e){
-             e.printStackTrace();
-         }
-     }
+    public void sendData(byte[] data) {
+        DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 1331);// create a packet to send to the server
+        try {
+            //System.out.println("Sending packet to " + ipAddress + " to port:" + packet.getPort());
+            socket.send(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void close() {
         /*
