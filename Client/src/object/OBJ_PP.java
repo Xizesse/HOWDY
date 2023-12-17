@@ -7,6 +7,7 @@ import net.TileChange;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class OBJ_PP extends SuperObject{
@@ -34,9 +35,9 @@ public class OBJ_PP extends SuperObject{
             for (int[] ints : changeArray) {
                 change = new TileChange(gp.currentMap, ints[0], ints[1], ints[2]);
                 changes.add(change);
-                System.out.println(changes + "\n");
+                //System.out.println(changes + "\n" + gp.currentMap);
             }
-            Packet06MapChange p6 = new Packet06MapChange(0, changes);
+            Packet06MapChange p6 = new Packet06MapChange(gp.currentMap, changes);
             System.out.println("Sending map change packet");
             String[] dataArray = p6.readData(p6.getData()).split(",");
             p6.writeData(this.gp.socketClient);
@@ -57,7 +58,7 @@ public class OBJ_PP extends SuperObject{
                 System.out.println(changes + "\n");
             }
 
-            Packet06MapChange p6 = new Packet06MapChange(0, changes);
+            Packet06MapChange p6 = new Packet06MapChange(gp.currentMap, changes);
             System.out.println("Sending map change back");
             String[] dataArray = p6.readData(p6.getData()).split(",");
             p6.writeData(this.gp.socketClient);

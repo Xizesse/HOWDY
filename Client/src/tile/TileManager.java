@@ -133,8 +133,8 @@ public class TileManager {
             case '2': return 2; // floor_moss2
             case '6': return 6; // floor_vert_magic6
             case '7': return 7; // floor_hor_magic7
-            case '8': return 8; // wall_vert_magic8
-            case '9': return 9; // wall_hor_magic9
+            case 'v': return 8; // wall_vert_magic8
+            case 'h': return 9; // wall_hor_magic9
             //wall
             case '1': return 1; // wall1
             case '3': return 3; // wall_moss3

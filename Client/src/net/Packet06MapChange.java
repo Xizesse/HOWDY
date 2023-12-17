@@ -37,7 +37,7 @@ public class Packet06MapChange extends Packet{
                 int y = Integer.parseInt(dataArray[index + 1]);
                 int newTile = Integer.parseInt(dataArray[index + 2]);
 
-                this.changes.add(new TileChange(0, x, y, newTile)); //TODO: mapIndex is always 0 for now
+                this.changes.add(new TileChange(this.level, x, y, newTile));
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();

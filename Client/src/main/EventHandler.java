@@ -47,6 +47,9 @@ public class EventHandler {
         if (dist > gp.tileSize){
             canTouch = true;
         }
+        if (gp.player.currentHealth <= 0){
+            death(gp.readState, 0, 3, 15);
+        }
         if (canTouch) {
             if (hit(0, 30, 9, "any")) {
                 dmgPit(gp.readState);
@@ -100,13 +103,13 @@ public class EventHandler {
 
             }
             if (hit(2, 19, 12, "right")) {
-                System.out.println("Teleorting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
+                System.out.println("Teleporting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
 
                 teleport( gp.playState, 2,  18, gp.player.worldY/ gp.tileSize);
             }
             if (hit(2, 19, 13, "right")) {
 
-                System.out.println("Teleorting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
+                System.out.println("Teleporting from "+ gp.player.worldX + ", " + gp.player.worldY + " to " + gp.player.worldX + ", " + gp.player.worldY/ gp.tileSize);
                 teleport( gp.playState, 2,  18, gp.player.worldY/ gp.tileSize);
             }
         }
@@ -149,6 +152,17 @@ public class EventHandler {
         gp.ui.currentText = "Get teleported, idiot";
         gp.currentMap = newMap;
         gp.player.map = newMap;
+        gp.player.worldX = newX * gp.tileSize;
+        gp.player.worldY = newY * gp.tileSize;
+    }
+    public void death(int gameState, int newMap,  int newX, int newY) {
+        gp.gameState = gameState;
+        gp.ui.currentText = "YOU DIED!";
+        gp.currentMap = newMap;
+        gp.player.map = newMap;
+        gp.player.currentHealth = gp.player.maxHealth;
+        Packet05Health packet = new Packet05Health(-2, gp.player.currentHealth, gp.currentMap);
+        gp.socketClient.sendData(packet.getData());
         gp.player.worldX = newX * gp.tileSize;
         gp.player.worldY = newY * gp.tileSize;
     }

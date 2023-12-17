@@ -47,9 +47,9 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 30;
 
     // SYSTEM
-    public UI ui = new UI(this);
     public TileManager tileM = new TileManager(this);
-    public KeyHandler keyH = new KeyHandler(ui.gp);
+    public KeyHandler keyH = new KeyHandler(this);
+    public UI ui = new UI(this, keyH);
     Sound music = new Sound();
     Sound sfx = new Sound();
     public CollisionChecker cCheck = new CollisionChecker(this);
@@ -85,6 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2;
     public final int readState = 3;
     public final int optionsState = 4;
+    public final int joinState = 5;
     public int endGame = 0;
     public int optionsBack = 0;
 
@@ -180,7 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    public synchronized void updatePlayer2(String direction,int map, int worldX, int worldY) {
+    public synchronized void updatePlayer2(String direction, int map, int worldX, int worldY) {
         if (gameState == playState) {
             if (player2 != null) {
                 player2.map = map;
@@ -193,7 +194,11 @@ public class GamePanel extends JPanel implements Runnable {
             //do something ?
         }
     }
+
     public void drawToTempScreen() {
+        g2d.setColor(Color.black);
+        g2d.drawRect(0, 0, screenWidth, screenHeight);
+        g2d.fillRect(0, 0, screenWidth, screenHeight);
         // DEBUG
         long drawStartTime = 0;
         if (DEV_MODE) {
@@ -201,8 +206,11 @@ public class GamePanel extends JPanel implements Runnable {
         }
         endGame = 0;
         optionsBack = 0;
-
+        
         if (gameState == titleState) {
+            ui.draw(g2d);
+
+        } else if (gameState == joinState) {
             ui.draw(g2d);
 
         } else if (gameState == playState) {
@@ -231,8 +239,7 @@ public class GamePanel extends JPanel implements Runnable {
             player.draw(g2d);
             // PLAYER2
             if (player2 != null) {
-                if (player2.map == currentMap)
-                {
+                if (player2.map == currentMap) {
                     player2.draw(g2d);
                 }
             }
@@ -290,8 +297,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
-        }
-        else if(gameState == optionsState){
+        } else if (gameState == optionsState) {
             if (prev_gameState == playState) {
 
                 // TILE
@@ -335,7 +341,6 @@ public class GamePanel extends JPanel implements Runnable {
                 }
 
 
-
                 // PLAYER1
                 player.draw(g2d);
                 // PLAYER2
@@ -364,11 +369,13 @@ public class GamePanel extends JPanel implements Runnable {
             System.out.println("Draw Time: " + (float) drawTime / 1000000 + "ms");
         }
     }
-    public void drawToScreen(){
+
+    public void drawToScreen() {
         Graphics g = getGraphics();
         g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
         g.dispose();
     }
+
     public void playMusic(int i) {
         music.setFile(i);
         music.play();

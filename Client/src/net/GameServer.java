@@ -197,8 +197,24 @@ public class GameServer extends Thread {
 
             case HEALTH:
                 Packet05Health p5 = new Packet05Health(data);
-                System.out.println("[" + address.getHostName() + "] port: " + port + ", entity" + p5.getEntityID() + " health " + p5.getHealth());
-                sendDataToAllClientsExceptOne(p5.getData(), address, port);
+                Packet05Health p5_1 = new Packet05Health(-1, p5.getHealth(), p5.getMap());
+                Packet05Health p5_2 = new Packet05Health(-2, p5.getHealth(), p5.getMap());
+
+                //update the health for the NPC Player that sent this
+                for (NPC_Player player : game.players) {
+                    if (player != null && player.ipAddress.equals(address) && player.port == port) {
+                        player.currentHealth = p5.getHealth();
+                        sendData(p5_1.getData(), address, port);
+                        System.out.println("[" + address.getHostName() + "] port: " + port + ", entity" + p5.getEntityID() + " health " + p5.getHealth());
+                        break;
+                    }
+                    else
+                    {
+                        sendData(p5_2.getData(), address, port);
+                        System.out.println("[" + address.getHostName() + "] port: " + port + ", entity" + p5.getEntityID() + " health " + p5.getHealth());
+                    }
+                }
+
         }
 
 

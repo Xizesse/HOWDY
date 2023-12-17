@@ -25,7 +25,7 @@ public class Main {
         window.add(gamePanel);
 
         gamePanel.config.loadConfig();
-        if(gamePanel.fullScreenOn){
+        if (gamePanel.fullScreenOn) {
             window.setUndecorated(true);
         }
 
@@ -46,7 +46,6 @@ public class Main {
                 //System.out.println("Closing window...");
 
                 // Dispose the window and exit the application
-                window.dispose();
                 System.exit(0);
             }
         });

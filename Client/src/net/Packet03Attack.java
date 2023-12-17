@@ -3,6 +3,7 @@ package net;
 public class Packet03Attack extends Packet{
     private int entityID;
     int attacks;
+    int map;
     //0 for the other player
     //private int x,y;
     //private String direction;
@@ -12,14 +13,16 @@ public class Packet03Attack extends Packet{
         String[] dataArray = readData(data).split(",");
         this.entityID = Integer.parseInt(dataArray[0]);
         this.attacks = Integer.parseInt(dataArray[1]);
+        this.map = Integer.parseInt(dataArray[2]);
 
 
     }
 
-    public Packet03Attack(int entityID, int attacks) {
+    public Packet03Attack(int entityID, int attacks, int map) {
         super(03);
         this.entityID = entityID;
         this.attacks = attacks;
+        this.map = map;
 
 
     }
@@ -35,8 +38,7 @@ public class Packet03Attack extends Packet{
 
     @Override
     public byte[] getData() {
-        return ("03" + this.entityID + "," + this.attacks).getBytes();
-    }
+        return ("03" + this.entityID + "," + this.attacks + "," + this.map).getBytes();}
 
 
     public int getEntityID(){
@@ -46,4 +48,7 @@ public class Packet03Attack extends Packet{
         return attacks;
     }
 
+    public int getMap() {
+        return map;
+    }
 }
