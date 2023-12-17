@@ -10,6 +10,7 @@ import tile.TileManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +29,11 @@ public class GamePanel extends JPanel implements Runnable {
     public final int originalTileSize = 16; // 16x16 pixels
     public final int scale = 3; // 3x scale
     public final int tileSize = originalTileSize * scale; // 48x48 pixels
-    public final int maxScreenCol = 16; // 16 tiles wide
+    public final int maxScreenCol = 28; // 16 tiles wide
     public final int maxScreenRow = 16; // 16 tiles tall
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels wide
     public final int screenHeight = tileSize * maxScreenRow; // 768 pixels tal
+    public boolean fullScreenOn = false;
 
     // WORLD SETTINGS
     public final int maxWorldCol = 32;
@@ -53,6 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cCheck = new CollisionChecker(this);
     public AssetSetter aS = new AssetSetter(this);
     public EventHandler eH = new EventHandler(this);
+    Config config = new Config(this);
     Thread gameThread;
 
     // ENTITY AND OBJECTS
@@ -60,6 +63,11 @@ public class GamePanel extends JPanel implements Runnable {
     public Entity[][] npc = new Entity[maxMaps][10];
     public SuperObject[][] obj = new SuperObject[maxMaps][20];
 
+    //FULL SCREEN
+    int screenWidth2 = screenWidth;
+    int screenHeight2 = screenHeight;
+    BufferedImage tempScreen;
+    Graphics2D g2d;
 
     // Player 2
     public NPC_Player player2 = new NPC_Player(this);
@@ -71,11 +79,14 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     // GAME STATE
-    public int gameState;
+    public int gameState, prev_gameState, new_gameState;
     public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
     public final int readState = 3;
+    public final int optionsState = 4;
+    public int endGame = 0;
+    public int optionsBack = 0;
 
 
     //Effect light
@@ -105,8 +116,24 @@ public class GamePanel extends JPanel implements Runnable {
         effectManager.setup();
         gameState = titleState;
         playMusic(0);
+
+        tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+        g2d = (Graphics2D)tempScreen.getGraphics();
+
+        if(fullScreenOn){
+            setFullScreen();
+        }
     }
 
+    public void setFullScreen(){
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+        gd.setFullScreenWindow(Main.window);
+
+        screenWidth2 = Main.window.getWidth();
+        screenHeight2 = Main.window.getHeight();
+
+    }
 
     public void startGameThread() {
         gameThread = new Thread(this);
@@ -133,7 +160,9 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
             if (delta >= 1) {
                 update();
-                repaint();
+                //repaint();
+                drawToTempScreen();
+                drawToScreen();
                 delta--;
             }
         }
@@ -165,21 +194,19 @@ public class GamePanel extends JPanel implements Runnable {
             //do something ?
         }
     }
-
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-
+    public void drawToTempScreen() {
         // DEBUG
         long drawStartTime = 0;
         if (DEV_MODE) {
             drawStartTime = System.nanoTime();
         }
-
+        endGame = 0;
+        optionsBack = 0;
+        System.out.println(gameState);
 
         if (gameState == titleState) {
             ui.draw(g2d);
+
         } else if (gameState == playState) {
 
             // TILE
@@ -266,9 +293,71 @@ public class GamePanel extends JPanel implements Runnable {
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
         }
+        else if(gameState == optionsState){
+            if (prev_gameState == playState) {
+
+                // TILE
+                tileM.draw(g2d);
+                // OBJECT
+                for (SuperObject superObject : obj[currentMap]) {
+                    if (superObject != null) {
+                        superObject.draw(g2d, this);
+                    }
+                }
+                // NPC
+                for (Entity entity : npc[currentMap]) {
+                    if (entity != null) {
+                        entity.draw(g2d);
+                    }
+                }
+
+                // PLAYER1
+                player.draw(g2d);
+                // PLAYER2
+                if (player2 != null) {
+                    player2.draw(g2d);
+                }
+
+                if (LIGHT) effectManager.draw(g2d);
+
+            } else if (prev_gameState == pauseState) {
+                // TILE
+                tileM.draw(g2d);
+                // OBJECT
+                for (SuperObject superObject : obj[currentMap]) {
+                    if (superObject != null) {
+                        superObject.draw(g2d, this);
+                    }
+                }
+                // NPC
+                for (Entity entity : npc[currentMap]) {
+                    if (entity != null) {
+                        entity.draw(g2d);
+                    }
+                }
 
 
 
+                // PLAYER1
+                player.draw(g2d);
+                // PLAYER2
+                if (player2 != null) {
+                    player2.draw(g2d);
+                }
+
+
+                if (LIGHT) effectManager.draw(g2d);
+            }
+            ui.draw(g2d);
+            /*if(endGame == 1){
+                new_gameState = titleState;
+                prev_gameState = optionsState;
+            }
+            if(optionsBack == 1){
+                new_gameState = prev_gameState;
+                prev_gameState = optionsState;
+            }*/
+        }
         // DEBUG
         if (DEV_MODE) {
             long drawEndTime = System.nanoTime();
@@ -276,10 +365,12 @@ public class GamePanel extends JPanel implements Runnable {
             g2d.setColor(Color.WHITE);
             System.out.println("Draw Time: " + (float) drawTime / 1000000 + "ms");
         }
-
-        g2d.dispose();
     }
-
+    public void drawToScreen(){
+        Graphics g = getGraphics();
+        g.drawImage(tempScreen, 0, 0, screenWidth2, screenHeight2, null);
+        g.dispose();
+    }
     public void playMusic(int i) {
         music.setFile(i);
         music.play();

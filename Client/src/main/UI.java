@@ -2,8 +2,10 @@ package main;
 
 import object.OBJ_Heart;
 import object.SuperObject;
+import org.w3c.dom.Text;
 
 import java.awt.*;
+import java.awt.desktop.AppReopenedEvent;
 import java.awt.image.BufferedImage;
 
 public class UI {
@@ -13,7 +15,8 @@ public class UI {
     BufferedImage heartFull, heartHalf, heartEmpty;
 
     public int commandNum = 0;
-    public String currentText = "";
+    int subState = 0;
+    public String currentText = "" ;
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -29,22 +32,19 @@ public class UI {
         g2d.setFont(TimesRoman);
         g2d.setColor(Color.WHITE);
 
-
         //title state
-        if(gp.gameState == gp.titleState) {
+        if(gp.gameState == gp.titleState){
             drawTitleScreen(g2d);
-
-
         }
-        if(gp.gameState == gp.playState){
 
+        if(gp.gameState == gp.playState){
             drawPlayerLife(g2d);
             drawInventory(g2d);
             drawInstructions(g2d);
 
         }
 
-        else if (gp.gameState == gp.pauseState) {
+        if (gp.gameState == gp.pauseState){
             drawPauseScreen(g2d);
             drawPlayerLife(g2d);
             drawInventory(g2d);
@@ -52,14 +52,26 @@ public class UI {
 
         }
         //read state
-        else if (gp.gameState == gp.readState) {
+        if (gp.gameState == gp.readState) {
             drawReadScreen(g2d);
             drawPlayerLife(g2d);
             drawInventory(g2d);
             drawInstructions(g2d);
         }
-
-
+        //options state
+        if(gp.gameState == gp.optionsState){
+            if(gp.prev_gameState == gp.playState){
+                drawPlayerLife(g2d);
+                drawInventory(g2d);
+                drawInstructions(g2d);
+            }
+            else if(gp.prev_gameState == gp.pauseState){
+                drawPauseScreen(g2d);
+                drawPlayerLife(g2d);
+                drawInventory(g2d);
+            }
+            drawOptionsScreen(g2d);
+        }
     }
 
     private void drawPlayerLife(Graphics2D g2d) {
@@ -176,6 +188,10 @@ public class UI {
     private void drawTitleScreen(Graphics2D g2d) {
 
         //TITLE NAME
+
+        g2d.setColor(Color.black);
+        g2d.drawRect(0, 0, gp.screenWidth, gp.screenHeight);
+        g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 100));
         String text = "HOWDY";
         int x = getXforCenteredText(text, g2d);
@@ -251,6 +267,210 @@ public class UI {
 
     }
 
+    public void drawOptionsScreen(Graphics2D g2d){
+        int x = gp.tileSize*4;
+        int y = gp.tileSize*2;
+        int width = gp.tileSize*8;
+        int height = gp.tileSize*10;
+        Color c = new Color(0, 0, 0, 210);
+        g2d.setColor(c);
+        g2d.fillRoundRect(x, y, width, height, 35, 35);
+        c = new Color(255, 255, 255);
+        g2d.setColor(c);
+        g2d.setStroke(new BasicStroke(5));
+        g2d.drawRoundRect(x+5, y+5, width-10, height-10, 25, 25);
+
+        switch(subState){
+            case 0: options_top(x, y, g2d); break;
+            case 1: options_fullScreenNotification(x,y, g2d); break;
+            case 2: options_control(x, y, g2d); break;
+            case 3: options_endGameConfirmation(x, y, g2d); break;
+        }
+
+        gp.keyH.spacePressed = false;
+    }
+
+    public void options_top(int frameX, int frameY, Graphics2D g2d){
+        int textX;
+        int textY;
+        String text = "Options";
+        textX = getXforCenteredText(text, g2d);
+        textY = frameY + gp.tileSize;
+        g2d.drawString(text, textX, textY);
+
+        textX = frameX + gp.tileSize;
+        textY += gp.tileSize*2;
+        g2d.drawString("Full Screen", textX, textY);
+        if(commandNum == 0){
+            g2d.drawString(">", textX-25, textY);
+            if(gp.keyH.spacePressed){
+                if(!gp.fullScreenOn){
+                    gp.fullScreenOn = true;
+                }
+                else if(gp.fullScreenOn){
+                    gp.fullScreenOn = false;
+                }
+                subState = 1;
+            }
+        }
+
+        textY += gp.tileSize;
+        g2d.drawString("Music", textX, textY);
+        if(commandNum == 1){
+            g2d.drawString(">", textX-25, textY);
+        }
+
+        textY += gp.tileSize;
+        g2d.drawString("SE", textX, textY);
+        if(commandNum == 2){
+            g2d.drawString(">", textX-25, textY);
+        }
+
+        textY += gp.tileSize;
+        g2d.drawString("Control", textX, textY);
+        if(commandNum == 3){
+            g2d.drawString(">", textX-25, textY);
+            if(gp.keyH.spacePressed){
+                subState = 2;
+                commandNum = 0;
+            }
+        }
+
+        textY += gp.tileSize;
+        g2d.drawString("End Game", textX, textY);
+        if(commandNum == 4){
+            g2d.drawString(">", textX-25, textY);
+            if(gp.keyH.spacePressed){
+                subState = 3;
+                commandNum = 0;
+            }
+        }
+
+
+        textY += gp.tileSize*2;
+        g2d.drawString("Back", textX, textY);
+        if(commandNum == 5){
+            g2d.drawString(">", textX-25, textY);
+            if(gp.keyH.spacePressed){
+                gp.optionsBack = 1;
+                commandNum = 0;
+            }
+        }
+
+        textX = frameX + (int)(gp.tileSize*4.5);
+        textY = frameY + gp.tileSize*2 + 24;
+        g2d.setStroke(new BasicStroke(3));
+        g2d.drawRect(textX, textY, 24, 24);
+        if(gp.fullScreenOn){
+            g2d.fillRect(textX, textY, 24, 24);
+        }
+
+        textY += gp.tileSize;
+        g2d.drawRect(textX, textY, 120, 24);
+        int volumeWidth = 24 * gp.music.volumeScale;
+        g2d.fillRect(textX, textY, volumeWidth, 24);
+
+        textY += gp.tileSize;
+        g2d.drawRect(textX, textY, 120, 24);
+        //volumeWidth = 24 * gp.se.volumeScale;
+        g2d.fillRect(textX, textY, volumeWidth, 24);
+
+        gp.config.saveConfig();
+    }
+
+    public void options_fullScreenNotification(int frameX, int frameY, Graphics2D g2d){
+        int textX = frameX + gp.tileSize;
+        int textY = frameY + gp.tileSize*3;
+
+        currentText = "The change will take \neffect after restarting \nthe game.";
+
+        for(String line: currentText.split("\n")){
+            g2d.drawString(line, textX, textY);
+            textY += 40;
+        }
+
+        textY = frameY + gp.tileSize*9;
+        g2d.drawString("Back", textX, textY);
+        if(commandNum == 0){
+            g2d.drawString(">", textX-25, textY);
+            if(gp.keyH.spacePressed){
+                subState = 0;
+            }
+        }
+    }
+    public void options_control(int frameX, int frameY, Graphics2D g2d){
+        int textX;
+        int textY;
+
+        String text = "Control";
+        textX = getXforCenteredText(text, g2d);
+        textY = frameY + gp.tileSize;
+        g2d.drawString(text, textX, textY);
+
+        textX = frameX + gp.tileSize;
+        textY += gp.tileSize;
+        g2d.drawString("Move", textX, textY); textY += gp.tileSize;
+        g2d.drawString("Confirm/Attack", textX, textY); textY += gp.tileSize;
+        g2d.drawString("Shoot/Cast", textX, textY); textY += gp.tileSize;
+        g2d.drawString("Character Screen", textX, textY); textY += gp.tileSize;
+        g2d.drawString("Pause", textX, textY); textY += gp.tileSize;
+        g2d.drawString("Options", textX, textY); textY += gp.tileSize;
+
+        textX = frameX + gp.tileSize*6;
+        textY = frameY + gp.tileSize*2;
+        g2d.drawString("ARROWS", textX, textY); textY += gp.tileSize;
+        g2d.drawString("SPACE", textX, textY); textY += gp.tileSize;
+        g2d.drawString("F", textX, textY); textY += gp.tileSize;
+        g2d.drawString("C", textX, textY); textY += gp.tileSize;
+        g2d.drawString("P", textX, textY); textY += gp.tileSize;
+        g2d.drawString("ESC", textX, textY); textY += gp.tileSize;
+
+        textX = frameX + gp.tileSize;
+        textY = frameY + gp.tileSize*9;
+        g2d.drawString("Back", textX, textY);
+        if(commandNum == 0){
+            g2d.drawString(">", textX-25, textY);
+            if(gp.keyH.spacePressed){
+                subState = 0;
+                commandNum = 3;
+            }
+        }
+    }
+    public void options_endGameConfirmation(int x, int y, Graphics2D g2d){
+        int textX = x + gp.tileSize;
+        int textY = y + gp.tileSize*3;
+
+        currentText = "Quit the game and \nreturn to the title screen?";
+        for(String line: currentText.split("\n")){
+            g2d.drawString(line, textX, textY);
+            textY += 40;
+        }
+
+        String text = "Yes";
+        textX = getXforCenteredText(text, g2d);
+        textY += gp.tileSize*3;
+        g2d.drawString(text, textX, textY);
+        if(commandNum == 0){
+            g2d.drawString(">", textX-25, textY);
+            if(gp.keyH.spacePressed){
+               subState = 0;
+               gp.gameState = gp.titleState;
+               gp.new_gameState = gp.titleState;
+            }
+        }
+
+        text = "No";
+        textX = getXforCenteredText(text, g2d);
+        textY += gp.tileSize;
+        g2d.drawString(text, textX, textY);
+        if(commandNum == 1){
+            g2d.drawString(">", textX-25, textY);
+            if(gp.keyH.spacePressed){
+                subState = 0;
+                commandNum = 4;
+            }
+        }
+    }
     public void drawSubWindow(int x, int y , int width, int height, Graphics2D g2d)
     {
         Color c = new Color(200,200,200, 175);
@@ -263,4 +483,5 @@ public class UI {
         g2d.drawRoundRect(x+5, y+5, width-10, height-10, 35, 35);
 
     }
+
 }
