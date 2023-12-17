@@ -46,8 +46,10 @@ public class Entity {
     boolean dying = false;
 
 
-    public Entity(GamePanel gp, int map) {
+    public Entity(GamePanel gp) {
         this.gp = gp;
+        bodyDown1 = bodyDown2 = bodyUp1 = bodyUp2 = BodyLeft1 = BodyLeft2 = BodyRight1 = BodyRight2 = setup("defaultTexture/defaultTexture");
+        attackUp = attackLeft = attackDown = attackRight = setup("defaultTexture/defaultTexture");
         this.map = map;
     }
 
@@ -176,6 +178,17 @@ public class Entity {
         gp.cCheck.checkObject(this, false);      //check collision with objects
 
 
+        /*
+        if (gp instanceof ServerPanel) {
+            if (gp.players != null) {
+                gp.cCheck.checkNPC_players(this, gp.players);
+
+            }
+            //print if collision is on
+
+
+        }
+    */
         if (!collisionOn) {
             switch (direction) {
                 case "up":
