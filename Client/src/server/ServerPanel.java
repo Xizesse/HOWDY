@@ -196,8 +196,12 @@ public class ServerPanel extends GamePanel {
                     }
                     flagUpdated = true;
                 }
-
-
+                if (players.get(0).map == 2 && players.get(1).map == 2){
+                    System.out.println(players.get(0).worldX/tileSize + " , " + players.get(1).worldX/tileSize);
+                    if (players.get(0).worldX/tileSize > 26 && players.get(1).worldX/tileSize > 26){
+                        System.out.println("ya win"); //TODO: send win packet
+                    }
+                }
             }
 
         }
@@ -261,7 +265,6 @@ public class ServerPanel extends GamePanel {
 
     private void checkCage() {
         //if both pressure plates are pressed, open the cage
-        System.out.println("PP LEFT: " + tileM.mapTileNum[1][20][12] + " PP RIGHT: " + tileM.mapTileNum[1][12][12]);
         if(tileM.mapTileNum[1][20][12] == 12 && tileM.mapTileNum[1][12][12] == 12)
         {
             System.out.println("Cage open");
