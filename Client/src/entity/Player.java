@@ -205,6 +205,10 @@ public class Player extends Entity {
             { //pp
                 gp.obj[gp.currentMap][i].interact();
                 return;
+            } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "RuneDoor"))
+            { //RuneDoor
+                gp.obj[gp.currentMap][i].interact();
+                return;
             }
             else {
                 String type = gp.obj[gp.currentMap][i].type;

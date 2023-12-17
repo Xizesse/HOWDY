@@ -280,6 +280,14 @@ public class AssetSetter {
         gp.obj[1][7] = new OBJ_RuneDoor(gp, 'l');
         gp.obj[1][7].worldX = 12 * gp.tileSize;
         gp.obj[1][7].worldY = 24 * gp.tileSize;
+
+        gp.obj[1][8] = new OBJ_Rune(gp, 'p');
+        gp.obj[1][8].worldX = 16 * gp.tileSize;
+        gp.obj[1][8].worldY = 16 * gp.tileSize;
+
+        gp.obj[1][9] = new OBJ_RuneDoor(gp, 'p');
+        gp.obj[1][9].worldX = 26 * gp.tileSize;
+        gp.obj[1][9].worldY = 15 * gp.tileSize;
     }
 
     public void setPlayer2() {

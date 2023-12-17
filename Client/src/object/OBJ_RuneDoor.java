@@ -28,7 +28,7 @@ public OBJ_RuneDoor(GamePanel gp, char shape) {
                     this.collision = false;
                     ArrayList<TileChange> changes = new ArrayList<>();
                     TileChange change;
-                    change = new TileChange(gp.currentMap, this.worldX /gp.tileSize, this.worldY/gp.tileSize, 13);
+                    change = new TileChange(gp.currentMap, this.worldX /gp.tileSize, this.worldY/gp.tileSize, 50);
                     changes.add(change);
                     Packet06MapChange p6 = new Packet06MapChange(gp.currentMap, changes);
                     System.out.println("Sending map change packet");
