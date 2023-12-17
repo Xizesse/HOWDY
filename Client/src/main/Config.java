@@ -10,10 +10,9 @@ public class Config {
     }
 
     public void saveConfig(){
-        //String currentDir = System.getProperty("user.dir");
-        //String filePath = currentDir + File.separator + "Client" + File.separator+ "config.txt";
+        String path = System.getenv("APPDATA") + "/HOWDY/config.txt";
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("Client/config.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(path));
             if(gp.fullScreenOn){
                 bw.write("On");
             }
@@ -36,29 +35,67 @@ public class Config {
 
     }
     public void loadConfig(){
-        //String currentDir = System.getProperty("user.dir");
-        //String filePath = currentDir + File.separator + "Client" + File.separator + "config.txt";
-        //System.out.println(filePath);
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("Client/config.txt"));
+        String osName = System.getProperty("os.name").toLowerCase();
+        String appDataPath = null;
+        if(osName.contains("win")) {
+            appDataPath = System.getenv("APPDATA");
+        } else if(osName.contains("mac")){
+            appDataPath = System.getProperty("user.home") + "/Library/Application Support";
+        } else if(osName.contains("linux")){
+            appDataPath = System.getProperty("user.home");
+        }
+        File directory = new File(appDataPath + "/HOWDY");
+        File config = new File(appDataPath + "/HOWDY/config.txt");
 
-            String s = br.readLine();
-            if(s.equals("On")){
-                gp.fullScreenOn = true;
+        if(directory.exists()) {
+            if (config.exists()) {
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(appDataPath + "/HOWDY/config.txt"));
+
+                    String s = br.readLine();
+                    if (s.equals("On")) {
+                        gp.fullScreenOn = true;
+                    }
+                    if (s.equals("Off")) {
+                        gp.fullScreenOn = false;
+                    }
+
+                    s = br.readLine();
+                    gp.music.volumeScale = Integer.parseInt(s);
+
+                    s = br.readLine();
+                    //gp.se.volumeScale = Integer.parseInt(s);
+
+                    br.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    config.createNewFile();
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(appDataPath + "/HOWDY/config.txt"));
+                    bw.write("Off");
+                    bw.newLine();
+                    bw.write("3");
+                    bw.newLine();
+                    bw.write("3");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            if(s.equals("Off")) {
-                gp.fullScreenOn = false;
+        } else{
+            try {
+                directory.mkdirs();
+                config.createNewFile();
+                BufferedWriter bw = new BufferedWriter(new FileWriter(appDataPath + "/HOWDY/config.txt"));
+                bw.write("Off");
+                bw.newLine();
+                bw.write("3");
+                bw.newLine();
+                bw.write("3");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-
-            s = br.readLine();
-            gp.music.volumeScale = Integer.parseInt(s);
-
-            s = br.readLine();
-            //gp.se.volumeScale = Integer.parseInt(s);
-
-            br.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

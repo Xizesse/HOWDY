@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int originalTileSize = 16; // 16x16 pixels
     public final int scale = 3; // 3x scale
     public final int tileSize = originalTileSize * scale; // 48x48 pixels
-    public final int maxScreenCol = 28; // 16 tiles wide
+    public final int maxScreenCol = 24; // 28 tiles wide
     public final int maxScreenRow = 16; // 16 tiles tall
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels wide
     public final int screenHeight = tileSize * maxScreenRow; // 768 pixels tal
@@ -201,7 +201,6 @@ public class GamePanel extends JPanel implements Runnable {
         }
         endGame = 0;
         optionsBack = 0;
-        System.out.println(gameState);
 
         if (gameState == titleState) {
             ui.draw(g2d);

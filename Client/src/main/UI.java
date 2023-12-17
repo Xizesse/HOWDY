@@ -7,11 +7,13 @@ import org.w3c.dom.Text;
 import java.awt.*;
 import java.awt.desktop.AppReopenedEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UI {
     GamePanel gp;
     //Graphics2D g2d;
-    Font TimesRoman;
+    Font PraxisFontis, OldEnglish;
     BufferedImage heartFull, heartHalf, heartEmpty;
 
     public int commandNum = 0;
@@ -20,7 +22,16 @@ public class UI {
 
     public UI(GamePanel gp) {
         this.gp = gp;
-        TimesRoman = new Font("TimesRoman", Font.PLAIN, 40);
+        try {
+            InputStream is = getClass().getResourceAsStream("/fonts/PraxisFontis.ttf");
+            PraxisFontis = Font.createFont(Font.TRUETYPE_FONT, is);
+            is = getClass().getResourceAsStream("/fonts/OLDENGL.TTF");
+            OldEnglish = Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         SuperObject heart = new OBJ_Heart(gp);
         heartFull = heart.image;
@@ -29,7 +40,7 @@ public class UI {
     }
 
     public void draw(Graphics2D g2d) {
-        g2d.setFont(TimesRoman);
+        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 20f));
         g2d.setColor(Color.WHITE);
 
         //title state
@@ -189,12 +200,13 @@ public class UI {
 
         //TITLE NAME
 
+        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
         g2d.setColor(Color.black);
         g2d.drawRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 100));
-        String text = "HOWDY";
-        int x = getXforCenteredText(text, g2d);
+        String text = "Heroes of War: Die Young";
+        int x = 2;
         int y = gp.tileSize * 3;
 
         //SHADOW
@@ -352,7 +364,8 @@ public class UI {
         if(commandNum == 5){
             g2d.drawString(">", textX-25, textY);
             if(gp.keyH.spacePressed){
-                gp.optionsBack = 1;
+                gp.gameState = gp.prev_gameState;
+                gp.new_gameState = gp.prev_gameState;
                 commandNum = 0;
             }
         }
