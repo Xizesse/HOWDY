@@ -5,18 +5,18 @@ import java.io.*;
 public class Config {
     GamePanel gp;
 
-    public Config(GamePanel gp){
+    public Config(GamePanel gp) {
         this.gp = gp;
     }
 
-    public void saveConfig(){
+    public void saveConfig() {
         String path = System.getenv("APPDATA") + "/HOWDY/config.txt";
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(path));
-            if(gp.fullScreenOn){
+            if (gp.fullScreenOn) {
                 bw.write("On");
             }
-            if(!gp.fullScreenOn){
+            if (!gp.fullScreenOn) {
                 bw.write("Off");
             }
             bw.newLine();
@@ -34,40 +34,15 @@ public class Config {
         }
 
     }
-    public void loadConfig(){
-        String osName = System.getProperty("os.name").toLowerCase();
-        String appDataPath = null;
-        if(osName.contains("win")) {
-            appDataPath = System.getenv("APPDATA");
-        } else if(osName.contains("mac")){
-            appDataPath = System.getProperty("user.home") + "/Library/Application Support";
-        } else if(osName.contains("linux")){
-            appDataPath = System.getProperty("user.home");
-        }
+
+    public void loadConfig() {
+
+        String appDataPath = getappDataPath();
+
         File directory = new File(appDataPath + "/HOWDY");
         File config = new File(appDataPath + "/HOWDY/config.txt");
 
-        if(directory.exists()) {
-            if (config.exists()) {
-                try {
-                    BufferedReader br = new BufferedReader(new FileReader(appDataPath + "/HOWDY/config.txt"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                try {
-                    config.createNewFile();
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(appDataPath + "/HOWDY/config.txt"));
-                    bw.write("Off");
-                    bw.newLine();
-                    bw.write("3");
-                    bw.newLine();
-                    bw.write("3");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else{
+        if (!directory.exists()) { // if the directory does not exist, create it
             try {
                 directory.mkdirs();
                 config.createNewFile();
@@ -77,9 +52,46 @@ public class Config {
                 bw.write("3");
                 bw.newLine();
                 bw.write("3");
+                bw.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        if (!config.exists()) { // if the config file does not exist, create it
+            try {
+                config.createNewFile();
+                BufferedWriter bw = new BufferedWriter(new FileWriter(appDataPath + "/HOWDY/config.txt"));
+                bw.write("Off");
+                bw.newLine();
+                bw.write("3");
+                bw.newLine();
+                bw.write("3");
+                bw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(appDataPath + "/HOWDY/config.txt"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    String getappDataPath() {
+        String osName = System.getProperty("os.name").toLowerCase();
+        String appDataPath = null;
+        if (osName.contains("win")) {
+            appDataPath = System.getenv("APPDATA");
+        } else if (osName.contains("mac")) {
+            appDataPath = System.getProperty("user.home") + "/Library/Application Support";
+        } else if (osName.contains("linux")) {
+            appDataPath = System.getProperty("user.home");
+        }
+
+        return appDataPath;
     }
 }
