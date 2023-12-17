@@ -43,11 +43,11 @@ public class UI {
     }
 
     public void draw(Graphics2D g2d) {
-        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 20f));
+//        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 20f));
         g2d.setColor(Color.WHITE);
 
         //title state
-        if(gp.gameState == gp.titleState){
+        if (gp.gameState == gp.titleState) {
             drawTitleScreen(g2d);
         }
 
@@ -63,7 +63,7 @@ public class UI {
 
         }
 
-        if (gp.gameState == gp.pauseState){
+        if (gp.gameState == gp.pauseState) {
             drawPauseScreen(g2d);
             drawPlayerLife(g2d);
             drawInventory(g2d);
@@ -78,8 +78,8 @@ public class UI {
             drawInstructions(g2d);
         }
         //options state
-        if(gp.gameState == gp.optionsState){
-            if(gp.prev_gameState == gp.playState){
+        if (gp.gameState == gp.optionsState) {
+            if (gp.prev_gameState == gp.playState) {
                 drawPlayerLife(g2d);
                 drawInventory(g2d);
                 drawInstructions(g2d);
@@ -213,7 +213,7 @@ public class UI {
 
     }
 
-    public void drawPauseScreen(Graphics2D g2d){
+    public void drawPauseScreen(Graphics2D g2d) {
         String text = "PAUSED";
         int x = getXforCenteredText(text, g2d);
         int y = gp.screenHeight / 2;
@@ -224,9 +224,9 @@ public class UI {
     private void drawTitleScreen(Graphics2D g2d) {
 
         //TITLE NAME
-        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
+//        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
         String text = "Heroes of War: Die Young";
-        int x = 2;
+        int x = getXforCenteredText(text, g2d);
         int y = gp.tileSize * 3;
 
         //SHADOW
@@ -272,7 +272,7 @@ public class UI {
 
     }
 
-    public int getXforCenteredText(String text, Graphics2D g2d){
+    public int getXforCenteredText(String text, Graphics2D g2d) {
 
         int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         return (gp.screenWidth - length) / 2;
@@ -290,7 +290,7 @@ public class UI {
         y += gp.tileSize;
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 30f));
         g2d.setColor(Color.black);
-        for(String line: currentText.split("\n")){
+        for (String line : currentText.split("\n")) {
             g2d.drawString(line, x, y);
             y += gp.tileSize / 1.5;
         }
@@ -386,9 +386,9 @@ public class UI {
 
         textY += gp.tileSize * 2;
         g2d.drawString("Back", textX, textY);
-        if(commandNum == 5){
-            g2d.drawString(">", textX-25, textY);
-            if(gp.keyH.keysPressed[keyH.attackKey]){
+        if (commandNum == 5) {
+            g2d.drawString(">", textX - 25, textY);
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 gp.gameState = gp.prev_gameState;
                 gp.new_gameState = gp.prev_gameState;
                 commandNum = 0;
@@ -399,7 +399,7 @@ public class UI {
         textY = frameY + gp.tileSize * 2 + 24;
         g2d.setStroke(new BasicStroke(3));
         g2d.drawRect(textX, textY, 24, 24);
-        if(gp.fullScreenOn){
+        if (gp.fullScreenOn) {
             g2d.fillRect(textX, textY, 24, 24);
         }
 
@@ -422,7 +422,7 @@ public class UI {
 
         currentText = "The change will take \neffect after restarting \nthe game.";
 
-        for(String line: currentText.split("\n")){
+        for (String line : currentText.split("\n")) {
             g2d.drawString(line, textX, textY);
             textY += 40;
         }
@@ -488,12 +488,12 @@ public class UI {
         }
     }
 
-    private void options_endGameConfirmation(int x, int y, Graphics2D g2d){
+    private void options_endGameConfirmation(int x, int y, Graphics2D g2d) {
         int textX = x + gp.tileSize;
         int textY = y + gp.tileSize * 3;
 
         currentText = "Quit the game and \nreturn to the title screen?";
-        for(String line: currentText.split("\n")){
+        for (String line : currentText.split("\n")) {
             g2d.drawString(line, textX, textY);
             textY += 40;
         }
@@ -515,9 +515,9 @@ public class UI {
         textX = getXforCenteredText(text, g2d);
         textY += gp.tileSize;
         g2d.drawString(text, textX, textY);
-        if(commandNum == 1){
+        if (commandNum == 1) {
             g2d.drawString(">", textX - 25, textY);
-            if(gp.keyH.keysPressed[keyH.attackKey]){
+            if (gp.keyH.keysPressed[keyH.attackKey]) {
                 subState = 0;
                 commandNum = 4;
             }

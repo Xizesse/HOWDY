@@ -58,7 +58,7 @@ public class KeyHandler implements KeyListener {
         for (int i = KeyEvent.VK_A; i <= KeyEvent.VK_Z; i++) {
             if (keysPressed[i]) {
                 gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                        += (char) i;
+                        += (char) (i + (int) 'a' - (int) 'A');
                 System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
                 keysPressed[i] = false;
             }
