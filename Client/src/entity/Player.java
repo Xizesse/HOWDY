@@ -94,6 +94,7 @@ public class Player extends Entity {
 
 @Override
     public void update() {
+        if (gp.GOD){this.speed = 20;} else {this.speed = 8;}
         if (isAttacking){
             attack();
         }
