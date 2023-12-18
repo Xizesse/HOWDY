@@ -525,15 +525,14 @@ public class Player extends Entity {
     public void giveItem(SuperObject item) {
         if (Objects.equals(item.type, "helmet")) {
             helmet = item;
-            this.maxHealth += 1;
-            this.currentHealth += 1;
+            this.maxHealth += 2 * item.tier;
+            this.currentHealth += 2 * item.tier;
         } else if (Objects.equals(item.type, "armour")) {
             armour = item;
-            this.maxHealth += 2;
-            this.currentHealth += 2;
+            this.maxHealth += 2 * item.tier;
+            this.currentHealth += 2 * item.tier;
         } else if (Objects.equals(item.type, "weapon")) {
             weapon = item;
-
         } else if (Objects.equals(item.type, "shield")) {
             shield = item;
         } else if (Objects.equals(item.type, "boots")) {
@@ -541,10 +540,6 @@ public class Player extends Entity {
             this.speed += 2;
         } else {
             inventory.add(item);
-        }
-        if (Objects.equals(item.name, "firefly")) {       //kinda done
-            gp.lightSize += 100;
-
         }
     }
 }

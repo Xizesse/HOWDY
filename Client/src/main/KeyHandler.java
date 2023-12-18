@@ -41,6 +41,10 @@ public class KeyHandler implements KeyListener {
     }
 
     private void titleKeys() {
+        if (keysPressed[backKey]) {
+            gp.new_gameState = gp.optionsState;
+            gp.prev_gameState = gp.titleState;
+        }
         if (keysPressed[upKey]) {
             gp.ui.commandNum--;
             if (gp.ui.commandNum < 0) gp.ui.commandNum = 4;
