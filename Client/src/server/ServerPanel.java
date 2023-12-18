@@ -74,60 +74,6 @@ public class ServerPanel extends GamePanel {
         }
     }
 
-    void attackPlayers(NPC_Player player) {
-
-            if (player == null) return;
-            int map = player.map;
-            //System.out.println("Checking attack for player " + player + " on map " + map);
-            //iterate through all the npcs on the map
-            for (int npcIndex = 0; npcIndex < npc[map].length; npcIndex++) {
-                System.out.println("npc: " + npc[map][npcIndex] + " on map " + map);
-                if (npc[map][npcIndex] == null) return;
-                int distance = (int) Math.sqrt(Math.pow(player.worldX - npc[map][npcIndex].worldX, 2) + Math.pow(player.worldY - npc[map][npcIndex].worldY, 2));
-                //System.out.println("distance: " + distance);
-                //System.out.println("range: " + npc[map][npcIndex].attackRange);
-                if (distance <= npc[map][npcIndex].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/) {
-                    System.out.println("Attack");
-                    npc[map][npcIndex].attackCoolDown = npc[map][npcIndex].defAttackCoolDown;
-                    player.currentHealth -= npc[map][npcIndex].damage;
-                    Packet03Attack p3 = new Packet03Attack(npcIndex, 0, map);
-                    socketServer.sendData(p3.getData(), player.ipAddress, player.port);
-
-                    Packet05Health p5 = new Packet05Health(-1, npc[map][npcIndex].damage, map);
-                    socketServer.sendData(p5.getData(), player.ipAddress, player.port);
-
-                    Packet05Health p5_2 = new Packet05Health(-2, npc[map][npcIndex].damage, map);
-                    for(NPC_Player player2 : players){
-                        if(player2 != null){
-                            if(player2 != player)
-                            socketServer.sendData(p5_2.getData(), player2.ipAddress, player2.port);
-                        }
-                    }
-
-
-
-
-            }
-
-            /*
-            for (int npcIndex = 0; npcIndex < npc[map].length; npcIndex++) {
-                System.out.println("npc: " + npc[map][npcIndex] + " on map " + map);
-                if (npc[map][npcIndex] == null) return;
-                int distance = (int) Math.sqrt(Math.pow(player.worldX - npc[map][npcIndex].worldX, 2) + Math.pow(player.worldY - npc[map][npcIndex].worldY, 2));
-                if (distance <= npc[map][npcIndex].attackRange && npc[map][npcIndex].attackCoolDown == 0) {
-                    System.out.println("Attack");
-                    npc[map][npcIndex].attackCoolDown = npc[map][npcIndex].defAttackCoolDown;
-                    player.currentHealth -= npc[map][npcIndex].damage;
-                    Packet05Health p5 = new Packet05Health(-1, npc[map][npcIndex].damage, map);
-                    p5.writeData(socketServer);
-                    Packet05Health p5_2 = new Packet05Health(-2, npc[map][npcIndex].damage, map);
-                    p5_2.writeData(socketServer);
-                }
-            }*/
-
-
-        }
-    }
 
     public void update() {
 
@@ -161,9 +107,8 @@ public class ServerPanel extends GamePanel {
                                     int distance = (int) Math.sqrt(Math.pow(player.worldX - npc[bothmap][i].worldX, 2) + Math.pow(player.worldY - npc[bothmap][i].worldY, 2));
                                     //System.out.println("distance: " + distance);
                                     //System.out.println("range: " + npc[map][npcIndex].attackRange);
-                                    if (distance <= npc[bothmap][i].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/)
-                                    {
-                                        if (npc[bothmap][i].attackCoolDown > 0) continue;
+                                    if (distance <= npc[bothmap][i].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/) {
+                                        if (npc[bothmap][i].attackCoolDown > 0 || !npc[bothmap][i].alive) continue;
 
                                         npc[bothmap][i].attackCoolDown = npc[bothmap][i].defAttackCoolDown;
                                         player.currentHealth -= npc[bothmap][i].damage;
@@ -172,12 +117,11 @@ public class ServerPanel extends GamePanel {
                                         Packet05Health p5 = new Packet05Health(-1, player.currentHealth, bothmap);
                                         socketServer.sendData(p5.getData(), player.ipAddress, player.port);
 
-                                        for (NPC_Player player2 : players)
-                                        {
+                                        for (NPC_Player player2 : players) {
                                             Packet03Attack p3 = new Packet03Attack(i, 1, bothmap);
                                             socketServer.sendData(p3.getData(), player2.ipAddress, player2.port);
                                             if (player2 != null) {
-                                                if (player2 != player){
+                                                if (player2 != player) {
 
 
                                                     Packet05Health p5_2 = new Packet05Health(-2, player.currentHealth, bothmap);
@@ -188,7 +132,6 @@ public class ServerPanel extends GamePanel {
                                         }
 
 
-
                                     }
                                 }
                             }
@@ -196,9 +139,9 @@ public class ServerPanel extends GamePanel {
                     }
                     flagUpdated = true;
                 }
-                if (players.get(0).map == 2 && players.get(1).map == 2){    // win condition
-                    System.out.println(players.get(0).worldX/tileSize + " , " + players.get(1).worldX/tileSize);
-                    if (players.get(0).worldX/tileSize > 26 && players.get(1).worldX/tileSize > 26){
+                if (players.get(0).map == 2 && players.get(1).map == 2) {    // win condition
+                    System.out.println(players.get(0).worldX / tileSize + " , " + players.get(1).worldX / tileSize);
+                    if (players.get(0).worldX / tileSize > 26 && players.get(1).worldX / tileSize > 26) {
                         System.out.println("ya win"); //TODO: send win packet
                     }
                 }
@@ -215,7 +158,7 @@ public class ServerPanel extends GamePanel {
                 //attackPlayers(player);
 
                 int map = player.map;
-                if (map == 1)checkCage();
+                if (map == 1) checkCage();
 //                        System.out.println("Updating map " + map);
                 for (int i = 0; i < npc[map].length; i++) {
                     //System.out.println("Updating NPC " + (i+1));
@@ -228,12 +171,11 @@ public class ServerPanel extends GamePanel {
                         int distance = (int) Math.sqrt(Math.pow(player.worldX - npc[map][i].worldX, 2) + Math.pow(player.worldY - npc[map][i].worldY, 2));
                         //System.out.println("distance: " + distance);
                         //System.out.println("range: " + npc[map][npcIndex].attackRange);
-                        if (distance <= npc[map][i].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/)
-                        {
+                        if (distance <= npc[map][i].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/) {
                             System.out.println("Attack ? CoolDown: " + npc[map][i].attackCoolDown);
-                            if (npc[map][i].attackCoolDown > 0) continue;
+                            if (npc[map][i].attackCoolDown > 0 || !npc[map][i].alive) continue;
                             npc[map][i].attackCoolDown = npc[map][i].defAttackCoolDown;
-                            if (player.currentHealth > 0) player.currentHealth-= npc[map][i].damage;
+                            if (player.currentHealth > 0) player.currentHealth -= npc[map][i].damage;
                             Packet03Attack p3 = new Packet03Attack(i, 1, map);
                             socketServer.sendData(p3.getData(), player.ipAddress, player.port);
 
@@ -247,7 +189,6 @@ public class ServerPanel extends GamePanel {
                                         socketServer.sendData(p5_2.getData(), player2.ipAddress, player2.port);
                                 }
                             }
-
 
 
                         }
@@ -265,8 +206,7 @@ public class ServerPanel extends GamePanel {
 
     private void checkCage() {
         //if both pressure plates are pressed, open the cage
-        if(tileM.mapTileNum[1][20][12] == 12 && tileM.mapTileNum[1][12][12] == 12)
-        {
+        if (tileM.mapTileNum[1][20][12] == 12 && tileM.mapTileNum[1][12][12] == 12) {
             System.out.println("Cage open");
             //Send a packet to all players to open the cage
             ArrayList<TileChange> cage = new ArrayList<>();
@@ -290,21 +230,11 @@ public class ServerPanel extends GamePanel {
 
             Packet06MapChange p6 = new Packet06MapChange(1, cage);
             //send to all players
-            for(NPC_Player player : players)
-            {
-                if(player != null)
-                {
+            for (NPC_Player player : players) {
+                if (player != null) {
                     socketServer.sendData(p6.getData(), player.ipAddress, player.port);
                 }
             }
-
-
-
-
-
-
-
-
 
 
         }
