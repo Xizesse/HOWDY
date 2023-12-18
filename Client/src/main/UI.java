@@ -116,6 +116,16 @@ public class UI {
         y += gp.tileSize * 2;
         g2d.drawString(text, x, y);
 
+        if (keyH.invalidIPinserted) {
+            text = "Pede para a sua mae te ensinar a escrever um IP";
+            x = getXforCenteredText(text, g2d);
+            y = gp.screenHeight - gp.tileSize * 2;
+
+            Color prevColor = g2d.getColor();
+            g2d.setColor(Color.red);
+            g2d.drawString(text, x, y);
+            g2d.setColor(prevColor);
+        }
     }
 
     private void drawWaitingScreen(Graphics2D g2d) {
@@ -196,6 +206,7 @@ public class UI {
         textWidth = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         x = (gp.screenWidth * 4 / 6) + ((gp.tileSize * scale) - textWidth) / 2;
         g2d.drawString(text, x, y);
+
 
     }
 
