@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     public TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
     public UI ui = new UI(this, keyH);
-    public boolean Ijustbecameready = false;
+    public boolean waitingRoomUpdate = false;
 
     Sound music = new Sound();
     Sound sfx = new Sound();
@@ -209,11 +209,11 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         if (gameState == waitingState) {
-            if (Ijustbecameready) {
+            if (waitingRoomUpdate) {
                 Packet07Ready readyPacket = new Packet07Ready(playerIsReady ? 1 : 0, player1Skin, 0);
                 System.out.println("Sending ready packet " + readyPacket.getReady());
                 readyPacket.writeData(socketClient);
-                Ijustbecameready = false;
+                waitingRoomUpdate = false;
             }
         }
         if (gameState == playState) {
@@ -255,14 +255,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gameState == titleState) {
             ui.draw(g2d);
-        }
-        else if (gameState == joinState) {
+        } else if (gameState == joinState) {
             ui.draw(g2d);
-        }
-        else if (gameState == waitingState) {
+        } else if (gameState == waitingState) {
             ui.draw(g2d);
-        }
-        else if (gameState == playState) {
+        } else if (gameState == playState) {
 
             // TILE
             tileM.draw(g2d);
@@ -296,8 +293,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (LIGHT) effectManager.draw(g2d);
 
             ui.draw(g2d);
-        }
-        else if (gameState == pauseState) {
+        } else if (gameState == pauseState) {
             // TILE
             tileM.draw(g2d);
             // OBJECT
@@ -323,8 +319,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
-        }
-        else if (gameState == readState) {
+        } else if (gameState == readState) {
             // TILE
             tileM.draw(g2d);
             // OBJECT
@@ -348,8 +343,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
-        }
-        else if (gameState == optionsState) {
+        } else if (gameState == optionsState) {
             if (prev_gameState == playState) {
 
                 // TILE
@@ -412,8 +406,7 @@ public class GamePanel extends JPanel implements Runnable {
                 new_gameState = prev_gameState;
                 prev_gameState = optionsState;
             }*/
-        }
-        else if (gameState == endState) {
+        } else if (gameState == endState) {
             ui.draw(g2d);
         }
         // DEBUG

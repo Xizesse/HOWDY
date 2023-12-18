@@ -2,7 +2,6 @@ package main;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -132,17 +131,21 @@ public class KeyHandler implements KeyListener {
             gp.new_gameState = gp.optionsState;
             gp.prev_gameState = gp.gameState;
         }
-        if (keysPressed[rightKey] ) {
-            gp.player1Skin++;
-            gp.Ijustbecameready = true;
+        if (keysPressed[rightKey]) {
+            if (!gp.playerIsReady) {
+                gp.player1Skin++;
+                gp.waitingRoomUpdate = true;
+            }
             if (gp.player1Skin > 1) {
                 gp.player1Skin = 0;
             }
         }
 
         if (keysPressed[leftKey]) {
-            gp.player1Skin--;
-            gp.Ijustbecameready = true;
+            if (!gp.playerIsReady) {
+                gp.player1Skin--;
+                gp.waitingRoomUpdate = true;
+            }
 
             if (gp.player1Skin < 1) {
                 gp.player1Skin = 1;
@@ -151,32 +154,26 @@ public class KeyHandler implements KeyListener {
 
         if (keysPressed[confirmKey]) {
             gp.playerIsReady = !gp.playerIsReady;
-            gp.Ijustbecameready = true;
+            gp.waitingRoomUpdate = true;
         }
     }
 
     private void playKeys() {
         if (keysPressed[attackKey]) {
             keysPressed[attackKey] = true;
-        }
-        else if (keysPressed[pauseKey]) {
+        } else if (keysPressed[pauseKey]) {
             gp.new_gameState = gp.pauseState;
-        }
-        else if (keysPressed[devKey]) {
+        } else if (keysPressed[devKey]) {
             DEV_MODE = !DEV_MODE;
-        }
-        else if (keysPressed[lightKey]) {
+        } else if (keysPressed[lightKey]) {
             gp.LIGHT = !gp.LIGHT;
-        }
-        else if (keysPressed[backKey]) {
+        } else if (keysPressed[backKey]) {
             gp.new_gameState = gp.optionsState;
             gp.prev_gameState = gp.gameState;
-        }
-        else if (keysPressed[godKey]) {
+        } else if (keysPressed[godKey]) {
             gp.GOD = !gp.GOD;
             gp.LIGHT = !gp.LIGHT;
-        }
-        else if (keysPressed[KeyEvent.VK_E]){   //TODO: This is temporary, should star with win packet. Remove this line
+        } else if (keysPressed[KeyEvent.VK_E]) {   //TODO: This is temporary, should star with win packet. Remove this line
             gp.new_gameState = gp.endState;
         }
     }
@@ -284,7 +281,7 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.optionsState) {
             optionsKeys();
         } else if (gp.gameState == gp.endState) {
-            if(keysPressed[confirmKey]){
+            if (keysPressed[confirmKey]) {
                 gp.new_gameState = gp.titleState;   //TODO: title state reset server
             }
         }
