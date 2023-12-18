@@ -12,7 +12,7 @@ public class Monster_Stalker extends Entity {
         super(gp, map);
         direction = "down";
         speed = 1;
-        maxHealth = 1;
+        maxHealth = 5;
         currentHealth = maxHealth;
         solidArea = new Rectangle(0, 0, 48, 48);
         getImage();

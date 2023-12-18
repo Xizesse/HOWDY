@@ -11,8 +11,12 @@ public class Monster_Eye extends Entity {
     public Monster_Eye(GamePanel gp, int map) {
         super(gp, map);
         direction = "down";
-        speed = 3;
+        speed = 10;
         maxHealth = 10;
+        damage = 2;
+        defAttackCoolDown = 60;
+        attackCoolDown = 0;
+        attackRange = 50;
         currentHealth = maxHealth;
         solidArea = new Rectangle(0, 0, 48, 48);
         getImage();

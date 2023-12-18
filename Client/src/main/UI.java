@@ -750,14 +750,16 @@ public class UI {
 
     private void drawEndGameScreen(int i, Graphics2D g2d) {
         String text = "Heroes Of War\n"
-                + "Die Young\n"
-                + "\n\n\n\n\n"
-                + "by: Kiko\n"
-                + "Lucca\n"
-                + "Pedro\n"
-                + "Érico\n"
-                + "\n\nThe End\n\n"
-                + "Press Enter to return\nto the title screen";
+                    + "Die Young\n"
+                    + "\n\n\n\n\n"
+                    + "by: \n"
+                    + " \n"
+                    + "Xizesse\n"
+                    + "Lucca\n"
+                    + "Xanax\n"
+                    + "Érico\n"
+                    + "\n\nThe End\n\n"
+                    + "Press Enter to return\nto the title screen" ;
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2d.setColor(Color.WHITE);

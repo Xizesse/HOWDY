@@ -280,7 +280,6 @@ public class KeyHandler implements KeyListener {
         }
         //PLAY STATE
         else if (gp.gameState == gp.playState) {
-
             playKeys();
         }
         //PAUSE
@@ -295,7 +294,10 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.optionsState) {
             optionsKeys();
         } else if (gp.gameState == gp.endState) {
+
             if (keysPressed[confirmKey]) {
+                //envia a packet de close connection
+
                 gp.new_gameState = gp.titleState;   //TODO: title state reset server
             }
         }

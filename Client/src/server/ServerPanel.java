@@ -143,6 +143,7 @@ public class ServerPanel extends GamePanel {
                     System.out.println(players.get(0).worldX / tileSize + " , " + players.get(1).worldX / tileSize);
                     if (players.get(0).worldX / tileSize > 26 && players.get(1).worldX / tileSize > 26) {
                         System.out.println("ya win"); //TODO: send win packet
+
                     }
                 }
             }
