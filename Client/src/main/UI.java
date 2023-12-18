@@ -1,5 +1,7 @@
 package main;
 
+import net.Packet00Login;
+import net.Packet10Leave;
 import object.OBJ_Heart;
 import object.SuperObject;
 
@@ -23,6 +25,7 @@ public class UI {
     public int commandNum = 0;
     int subState = 0;
     public String currentText = "";
+    int i = 0
     private BufferedImage background;
 
     public UI(GamePanel gp, KeyHandler keyH) {
@@ -94,6 +97,21 @@ public class UI {
             drawInstructions(g2d);
         }
 
+        if (gp.gameState == gp.endState) {
+
+            long delta = 0;
+            long lastTime = System.currentTimeMillis();
+            while (true){
+                delta = System.currentTimeMillis() - lastTime;
+                if (delta >= 10) {
+                    if (i < 50) {
+                        drawEndGameScreen(0, g2d);
+                    } else { drawEndGameScreen (i-50, g2d);}
+                    if (i<=1150){i++;}
+                    break;
+                }
+            }
+        }
         //options state
         if (gp.gameState == gp.optionsState) {
             if (gp.prev_gameState == gp.playState) {
@@ -309,7 +327,6 @@ public class UI {
             g2d.drawImage(gp.player.inventory.get(i).image, x, y, null);
             x -= gp.tileSize;
         }
-
     }
 
     private void drawInstructions(Graphics2D g2d) {
@@ -684,5 +701,27 @@ public class UI {
         g2d.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 35, 35);
 
     }
-
+    private void drawEndGameScreen(int i, Graphics2D g2d) {
+        String text = "Heroes Of War\n"
+                    + "Die Young\n"
+                    + "\n\n\n\n\n"
+                    + "by: Kiko\n"
+                    + "Lucca\n"
+                    + "Pedro\n"
+                    + "Érico\n"
+                    + "\n\nThe End\n\n"
+                    + "Press Enter to return\nto the title screen" ;
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 60f));
+        int x ;
+        int y = gp.screenHeight / 3;
+        for (String line : text.split("\n")) {
+            x = getXforCenteredText(line, g2d);
+            g2d.drawString(line, x, y - i);
+            y += 80;
+        }
+        System.out.println(i);
+    }
 }
