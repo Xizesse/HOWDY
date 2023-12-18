@@ -1,9 +1,15 @@
 package main;
 
+import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Objects;
 
 public class UtilityTool {
+
+
     public BufferedImage scaleImage(BufferedImage original, int width, int height) {
 
         BufferedImage scaledImage = new BufferedImage(width, height, original.getType());

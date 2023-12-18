@@ -59,9 +59,9 @@ public class KeyHandler implements KeyListener {
             if (keysPressed[i]) {
                 gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
                         += (char) (i + (int) 'a' - (int) 'A');
-                System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
                 keysPressed[i] = false;
             }
+
         }
 
         for (int i = KeyEvent.VK_0; i <= KeyEvent.VK_9; i++) {
@@ -99,8 +99,31 @@ public class KeyHandler implements KeyListener {
         }
 
         if (keysPressed[confirmKey]) {
-            gp.ipInserted = true;
-            //gp.new_gameState = gp.titleState;
+            gp.new_gameState = gp.waitingState;
+        }
+    }
+
+    private void waitingKeys() {
+        if (keysPressed[backKey]) {
+            gp.new_gameState = gp.optionsState;
+            gp.prev_gameState = gp.gameState;
+        }
+        if (keysPressed[rightKey]) {
+            gp.player1Skin++;
+            if (gp.player1Skin > 1) {
+                gp.player1Skin = 0;
+            }
+        }
+
+        if (keysPressed[leftKey]) {
+            gp.player1Skin--;
+            if (gp.player1Skin < 1) {
+                gp.player1Skin = 1;
+            }
+        }
+
+        if (keysPressed[confirmKey]) {
+            gp.playerIsReady = !gp.playerIsReady;
         }
     }
 
@@ -115,7 +138,7 @@ public class KeyHandler implements KeyListener {
             gp.LIGHT = !gp.LIGHT;
         } else if (keysPressed[backKey]) {
             gp.new_gameState = gp.optionsState;
-            gp.prev_gameState = gp.playState;
+            gp.prev_gameState = gp.gameState;
         } else if (keysPressed[godKey]) {
             gp.GOD = !gp.GOD;
             gp.LIGHT = !gp.LIGHT;
@@ -135,9 +158,6 @@ public class KeyHandler implements KeyListener {
         if (keysPressed[backKey]) {
             gp.new_gameState = gp.prev_gameState;
             gp.prev_gameState = gp.optionsState;
-        }
-        if (keysPressed[attackKey]) {
-            keysPressed[attackKey] = true;
         }
         int maxcommandNum = 0;
         switch (gp.ui.subState) {
@@ -205,6 +225,8 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.joinState) {
             joinKeys();
 
+        } else if (gp.gameState == gp.waitingState) {
+            waitingKeys();
         }
         //PLAY STATE
         else if (gp.gameState == gp.playState) {

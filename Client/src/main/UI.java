@@ -2,10 +2,8 @@ package main;
 
 import object.OBJ_Heart;
 import object.SuperObject;
-import org.w3c.dom.Text;
 
 import java.awt.*;
-import java.awt.desktop.AppReopenedEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,6 +54,12 @@ public class UI {
             drawJoinScreen(g2d);
         }
 
+        //waiting state
+        if (gp.gameState == gp.waitingState) {
+            drawWaitingScreen(g2d);
+        }
+
+        //play state
         if (gp.gameState == gp.playState) {
             drawPlayerLife(g2d);
             drawInventory(g2d);
@@ -63,6 +67,7 @@ public class UI {
 
         }
 
+        //pause state
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen(g2d);
             drawPlayerLife(g2d);
@@ -70,6 +75,7 @@ public class UI {
 
 
         }
+
         //read state
         if (gp.gameState == gp.readState) {
             drawReadScreen(g2d);
@@ -77,6 +83,7 @@ public class UI {
             drawInventory(g2d);
             drawInstructions(g2d);
         }
+
         //options state
         if (gp.gameState == gp.optionsState) {
             if (gp.prev_gameState == gp.playState) {
@@ -108,6 +115,87 @@ public class UI {
         text = "Press Enter to confirm";
         x = getXforCenteredText(text, g2d);
         y += gp.tileSize * 2;
+        g2d.drawString(text, x, y);
+
+    }
+
+    private void drawWaitingScreen(Graphics2D g2d) {
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 30f));
+        String text = "Select your character bitch Using the fucking arrows you little boomer";
+        int x = getXforCenteredText(text, g2d);
+        int y = gp.screenHeight / 9;
+        g2d.drawString(text, x, y);
+
+        BufferedImage[] skin = new BufferedImage[2];
+
+        int scale = 3;
+
+        skin[0] = gp.player.setup("player1/boy_title_art");
+
+        skin[1] = gp.player.setup("girl/girl_title_art");
+
+        //draw first player
+        x = gp.screenWidth / 6;
+        y = gp.screenHeight / 3;
+        g2d.drawImage(skin[gp.player1Skin], x, y, gp.tileSize * scale, gp.tileSize * scale, null);
+
+        //draw character selecting arrows
+        text = "<";
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 60f));
+        int textHeight = (int) g2d.getFont().getLineMetrics(text, g2d.getFontRenderContext()).getHeight();
+        int textWidth = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        y = (gp.screenHeight / 3) + gp.tileSize * scale + textHeight * 2 / 3;
+        x -= textWidth / 2;
+        g2d.drawString(text, x, y);
+        text = ">";
+        x += gp.tileSize * scale;
+        g2d.drawString(text, x, y);
+
+
+        //Draw Second player
+        y = gp.screenHeight / 3;
+        x = gp.screenWidth * 4 / 6;
+        g2d.drawImage(skin[gp.player2Skin], x, y, gp.tileSize * scale, gp.tileSize * scale, null);
+
+        //set font to color to gray and draw arrows
+        text = "<";
+        g2d.setColor(Color.gray);
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 60f));
+        textHeight = (int) g2d.getFont().getLineMetrics(text, g2d.getFontRenderContext()).getHeight();
+        textWidth = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        y = (gp.screenHeight / 3) + gp.tileSize * scale + textHeight * 2 / 3;
+        x -= textWidth / 2;
+        g2d.drawString(text, x, y);
+        text = ">";
+        x += gp.tileSize * scale;
+        g2d.drawString(text, x, y);
+
+
+        //draw player 1 state
+        if (gp.playerIsReady) {
+            g2d.setColor(Color.green);
+            text = "Ready";
+        } else {
+            g2d.setColor(Color.red);
+            text = "Not Ready";
+        }
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 30f));
+        textWidth = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        x = (gp.screenWidth / 6) + ((gp.tileSize * scale) - textWidth) / 2;
+        y += (int) g2d.getFont().getLineMetrics(text, g2d.getFontRenderContext()).getHeight();
+        g2d.drawString(text, x, y);
+
+        //draw player 2 state
+        if (gp.player2IsReady) {
+            g2d.setColor(Color.green);
+            text = "a putinha esta pronta";
+        } else {
+            g2d.setColor(Color.red);
+            text = "a putinha nao esta pronta";
+        }
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 30f));
+        textWidth = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        x = (gp.screenWidth * 4 / 6) + ((gp.tileSize * scale) - textWidth) / 2;
         g2d.drawString(text, x, y);
 
     }
@@ -325,7 +413,7 @@ public class UI {
                 break;
         }
 
-        gp.keyH.keysPressed[keyH.attackKey] = false;
+        gp.keyH.keysPressed[keyH.confirmKey] = false;
     }
 
     private void options_top(int frameX, int frameY, Graphics2D g2d) {
@@ -341,7 +429,7 @@ public class UI {
         g2d.drawString("Full Screen", textX, textY);
         if (commandNum == 0) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.keysPressed[keyH.attackKey]) {
+            if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 if (!gp.fullScreenOn) {
                     gp.fullScreenOn = true;
                 } else if (gp.fullScreenOn) {
@@ -367,17 +455,17 @@ public class UI {
         g2d.drawString("Control", textX, textY);
         if (commandNum == 3) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.keysPressed[keyH.attackKey]) {
+            if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 2;
                 commandNum = 0;
             }
         }
 
         textY += gp.tileSize;
-        g2d.drawString("End Game", textX, textY);
+        g2d.drawString("Exit to main menu", textX, textY);
         if (commandNum == 4) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.keysPressed[keyH.attackKey]) {
+            if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 3;
                 commandNum = 0;
             }
@@ -388,7 +476,7 @@ public class UI {
         g2d.drawString("Back", textX, textY);
         if (commandNum == 5) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.keysPressed[keyH.attackKey]) {
+            if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 gp.gameState = gp.prev_gameState;
                 gp.new_gameState = gp.prev_gameState;
                 commandNum = 0;
@@ -413,7 +501,8 @@ public class UI {
         //volumeWidth = 24 * gp.se.volumeScale;
         g2d.fillRect(textX, textY, volumeWidth, 24);
 
-        gp.config.saveConfig();
+        gp.config.
+                saveConfig();
     }
 
     private void options_fullScreenNotification(int frameX, int frameY, Graphics2D g2d) {
@@ -431,7 +520,7 @@ public class UI {
         g2d.drawString("Back", textX, textY);
         if (commandNum == 0) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.keysPressed[keyH.attackKey]) {
+            if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
             }
         }
@@ -481,7 +570,7 @@ public class UI {
         g2d.drawString("Back", textX, textY);
         if (commandNum == 0) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.keysPressed[keyH.attackKey]) {
+            if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
                 commandNum = 3;
             }
@@ -504,7 +593,7 @@ public class UI {
         g2d.drawString(text, textX, textY);
         if (commandNum == 0) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.keysPressed[keyH.attackKey]) {
+            if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
                 gp.gameState = gp.titleState;
                 gp.new_gameState = gp.titleState;
@@ -517,7 +606,7 @@ public class UI {
         g2d.drawString(text, textX, textY);
         if (commandNum == 1) {
             g2d.drawString(">", textX - 25, textY);
-            if (gp.keyH.keysPressed[keyH.attackKey]) {
+            if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
                 commandNum = 4;
             }

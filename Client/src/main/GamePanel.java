@@ -53,6 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
     public TileManager tileM = new TileManager(this);
     public KeyHandler keyH = new KeyHandler(this);
     public UI ui = new UI(this, keyH);
+
     Sound music = new Sound();
     Sound sfx = new Sound();
     public CollisionChecker cCheck = new CollisionChecker(this);
@@ -65,6 +66,12 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyH, 3, 15, 0);
     public Entity[][] npc = new Entity[maxMaps][10];
     public SuperObject[][] obj = new SuperObject[maxMaps][20];
+
+    public int player1Skin = 0;
+    public int player2Skin = 1;
+    public boolean playerIsReady = false;
+    public boolean player2IsReady = false;
+    public boolean playerIsHoast = false;
 
     //FULL SCREEN
     int screenWidth2 = screenWidth;
@@ -89,6 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int readState = 3;
     public final int optionsState = 4;
     public final int joinState = 5;
+    public final int waitingState = 6;
     public int endGame = 0;
     public int optionsBack = 0;
 
@@ -120,14 +128,14 @@ public class GamePanel extends JPanel implements Runnable {
         playMusic(0);
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-        g2d = (Graphics2D)tempScreen.getGraphics();
+        g2d = (Graphics2D) tempScreen.getGraphics();
 
-        if(fullScreenOn){
+        if (fullScreenOn) {
             setFullScreen();
         }
     }
 
-    public void setFullScreen(){
+    public void setFullScreen() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice gd = ge.getDefaultScreenDevice();
         gd.setFullScreenWindow(Main.window);
@@ -217,11 +225,12 @@ public class GamePanel extends JPanel implements Runnable {
         }
         endGame = 0;
         optionsBack = 0;
-        
+
         if (gameState == titleState) {
             ui.draw(g2d);
-
         } else if (gameState == joinState) {
+            ui.draw(g2d);
+        } else if (gameState == waitingState) {
             ui.draw(g2d);
 
         } else if (gameState == playState) {
