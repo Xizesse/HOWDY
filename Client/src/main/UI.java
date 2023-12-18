@@ -157,7 +157,7 @@ public class UI {
         g2d.drawString(text, x, y);
 
         if (keyH.invalidIPinserted) {
-            text = "Servidor nao encontrado";
+            text = "Server not found";
             x = getXforCenteredText(text, g2d);
             y = gp.screenHeight - gp.tileSize * 2;
 
@@ -166,14 +166,21 @@ public class UI {
             g2d.drawString(text, x, y);
             g2d.setColor(prevColor);
         }
+
+        drawInstructions(g2d);
     }
 
     private void drawWaitingScreen(Graphics2D g2d) {
         g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 30f));
-        String text = "Select your character using the arrow keys";
+        String text = "Select your character using the arrow keys ";
         int x = getXforCenteredText(text, g2d);
         int y = gp.screenHeight / 9;
         g2d.drawString(text, x, y);
+        text = "Press Enter to confirm";
+        x = getXforCenteredText(text, g2d);
+        y += (int) g2d.getFont().getLineMetrics(text, g2d.getFontRenderContext()).getHeight();
+        g2d.drawString(text, x, y);
+        y -= (int) g2d.getFont().getLineMetrics(text, g2d.getFontRenderContext()).getHeight();
 
         BufferedImage[] skin = new BufferedImage[2];
 
@@ -354,7 +361,8 @@ public class UI {
 
         g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 35f));
         g2d.setColor(Color.WHITE);
-        g2d.drawString("< ESC", gp.tileSize / 2, gp.tileSize);
+        if (gp.gameState == gp.titleState) g2d.drawString("< ESC for Options", gp.tileSize / 2, gp.tileSize);
+        else g2d.drawString("< ESC", gp.tileSize / 2, gp.tileSize);
     }
 
     public void drawPauseScreen(Graphics2D g2d) {
@@ -469,6 +477,7 @@ public class UI {
         if (commandNum == 4) {
             g2d.drawString(">", x - gp.tileSize, y);
         }
+        drawInstructions(g2d);
 
     }
 
@@ -719,6 +728,10 @@ public class UI {
                     gp.gameState = gp.titleState;
                     gp.new_gameState = gp.titleState;
                     return;
+                } else if (gp.prev_gameState == gp.titleState) {
+                    gp.gameState = gp.titleState;
+                    gp.new_gameState = gp.titleState;
+
                 } else {
                     Packet01Logout logoutPacket = new Packet01Logout(0);
                     logoutPacket.writeData(gp.socketClient);
