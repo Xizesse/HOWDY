@@ -107,8 +107,8 @@ public class ServerPanel extends GamePanel {
                                     int distance = (int) Math.sqrt(Math.pow(player.worldX - npc[bothmap][i].worldX, 2) + Math.pow(player.worldY - npc[bothmap][i].worldY, 2));
                                     //System.out.println("distance: " + distance);
                                     //System.out.println("range: " + npc[map][npcIndex].attackRange);
-                                    if (distance <= npc[bothmap][i].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/) {
-                                        if (npc[bothmap][i].attackCoolDown > 0 || !npc[bothmap][i].alive) continue;
+                                    if (distance <= npc[bothmap][i].attackRange && npc[bothmap][i].attackCoolDown == 0) {
+                                        if (npc[bothmap][i].attackCoolDown > 0) continue;
 
                                         npc[bothmap][i].attackCoolDown = npc[bothmap][i].defAttackCoolDown;
                                         player.currentHealth -= npc[bothmap][i].damage;
@@ -171,9 +171,9 @@ public class ServerPanel extends GamePanel {
                         int distance = (int) Math.sqrt(Math.pow(player.worldX - npc[map][i].worldX, 2) + Math.pow(player.worldY - npc[map][i].worldY, 2));
                         //System.out.println("distance: " + distance);
                         //System.out.println("range: " + npc[map][npcIndex].attackRange);
-                        if (distance <= npc[map][i].attackRange /*&& npc[map][npcIndex].attackCoolDown == 0*/) {
+                        if (distance <= npc[map][i].attackRange && npc[map][i].attackCoolDown == 0) {
                             System.out.println("Attack ? CoolDown: " + npc[map][i].attackCoolDown);
-                            if (npc[map][i].attackCoolDown > 0 || !npc[map][i].alive) continue;
+                            if (npc[map][i].attackCoolDown > 0) continue;
                             npc[map][i].attackCoolDown = npc[map][i].defAttackCoolDown;
                             if (player.currentHealth > 0) player.currentHealth -= npc[map][i].damage;
                             Packet03Attack p3 = new Packet03Attack(i, 1, map);
