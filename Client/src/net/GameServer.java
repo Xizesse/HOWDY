@@ -175,11 +175,13 @@ public class GameServer extends Thread {
                         if (game.obj[map][p4.getitemIndex()] != null) {
                             //check if the item is already given
                             //send packet back to the player -> he recieves the item
-
                             Packet04Object p4_2 = new Packet04Object(map, p4.getitemIndex(), true);
                             System.out.println("item from map " + map + " index " + p4.getitemIndex() + " given to player " + i);
+                            if (game.obj[map][p4.getitemIndex()].equippable) {
+                                game.players.get(i).inventory.add(game.obj[map][p4.getitemIndex()]);
+                            }
                             sendData(p4_2.getData(), address, port);
-                            //send packet back to the other player -> he does not recieve the item
+                            //send packet back to the other player -> he does not receive the item
                             Packet04Object p4_3 = new Packet04Object(map, p4.getitemIndex(), false);
                             sendDataToAllClientsExceptOne(p4_3.getData(), address, port);
                             //remove the item from the game
