@@ -55,6 +55,7 @@ public class KeyHandler implements KeyListener {
             if (gp.ui.commandNum == 0) {
                 try {
                     Main.launchServer();
+                    gp.ui.commandNum = -1;
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -259,7 +260,7 @@ public class KeyHandler implements KeyListener {
     }
 
     private void readKeys() {
-        if (keysPressed[attackKey]) {
+        if (keysPressed[confirmKey]) {
             gp.new_gameState = gp.playState;
         }
     }
