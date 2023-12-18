@@ -1,7 +1,5 @@
 package main;
 
-import net.Packet00Login;
-import net.Packet10Leave;
 import object.OBJ_Heart;
 import object.SuperObject;
 
@@ -9,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -24,9 +23,7 @@ public class UI {
     public int commandNum = 0;
     int subState = 0;
     public String currentText = "";
-    int i = 0;
-
-
+    private BufferedImage background;
 
     public UI(GamePanel gp, KeyHandler keyH) {
         this.keyH = keyH;
@@ -50,6 +47,8 @@ public class UI {
         heartFull = heart.image;
         heartHalf = heart.image2;
         heartEmpty = heart.image3;
+
+        background = loadTitleScreen();
     }
 
     public void draw(Graphics2D g2d) {
@@ -95,21 +94,6 @@ public class UI {
             drawInstructions(g2d);
         }
 
-        if (gp.gameState == gp.endState) {
-
-            long delta = 0;
-            long lastTime = System.currentTimeMillis();
-            while (true){
-                delta = System.currentTimeMillis() - lastTime;
-                if (delta >= 10) {
-                    if (i < 50) {
-                        drawEndGameScreen(0, g2d);
-                    } else { drawEndGameScreen (i-50, g2d);}
-                    i++;
-                    break;
-                }
-            }
-        }
         //options state
         if (gp.gameState == gp.optionsState) {
             if (gp.prev_gameState == gp.playState) {
@@ -125,7 +109,15 @@ public class UI {
         }
     }
 
-
+    private BufferedImage loadTitleScreen(){
+        background = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_RGB);
+        try {
+            background = ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("title_screen/titleScreen.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return background;
+    }
 
     private void drawJoinScreen(Graphics2D g2d) {
         //TITLE NAME
@@ -317,6 +309,7 @@ public class UI {
             g2d.drawImage(gp.player.inventory.get(i).image, x, y, null);
             x -= gp.tileSize;
         }
+
     }
 
     private void drawInstructions(Graphics2D g2d) {
@@ -348,13 +341,6 @@ public class UI {
     }
 
     private void drawTitleScreen(Graphics2D g2d) {
-        BufferedImage background = new BufferedImage(gp.screenWidth2, gp.screenHeight2, BufferedImage.TYPE_INT_RGB);
-        try {
-            background = ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("title_screen/titleScreen.png")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         g2d.drawImage(background, 0,0, gp.screenWidth2, gp.screenHeight2, null);
         Color c = new Color(0, 0, 0, 0.35f);
         g2d.setColor(c);
@@ -669,12 +655,8 @@ public class UI {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
-                //send leave packet
-                Packet10Leave leavePacket = new Packet10Leave();
-                leavePacket.writeData(gp.socketClient);
-                System.out.println("leave packet sent");
-                //gp.gameState = gp.titleState;
-                //gp.new_gameState = gp.titleState;
+                gp.gameState = gp.titleState;
+                gp.new_gameState = gp.titleState;
             }
         }
 
@@ -702,27 +684,5 @@ public class UI {
         g2d.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 35, 35);
 
     }
-    private void drawEndGameScreen(int i, Graphics2D g2d) {
-        String text = "Heroes Of War\n"
-                    + "Die Young\n"
-                    + "\n\n\n\n\n"
-                    + "by: Kiko\n"
-                    + "Lucca\n"
-                    + "Pedro\n"
-                    + "Érico\n"
-                    + "\n\nThe End\n\n"
-                    + "Press Enter to return\nto the title screen" ;
-        g2d.setColor(Color.BLACK);
-        g2d.fillRect(0,0,gp.screenWidth,gp.screenHeight);
-        g2d.setColor(Color.WHITE);
-        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 60f));
-        int x ;
-        int y = gp.screenHeight / 3;
-        for (String line : text.split("\n")) {
-            x = getXforCenteredText(line, g2d);
-            g2d.drawString(line, x, y - i);
-            y += 80;
-        }
-        System.out.println(i);
-    }
+
 }
