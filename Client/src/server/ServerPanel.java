@@ -18,6 +18,7 @@ public class ServerPanel extends GamePanel {
     // WORLD SETTINGS
     //NET
     public GameServer socketServer = new GameServer(this);
+    private volatile boolean kamikazeRequest = false;
     //FPS
     final int FPS = 30;
     boolean flagUpdated = false;
@@ -248,5 +249,9 @@ public class ServerPanel extends GamePanel {
 
 
     public void paintComponent(Graphics g) {
+    }
+
+    public void requestShutdown() {
+        this.kamikazeRequest = true;
     }
 }

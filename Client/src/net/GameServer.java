@@ -15,6 +15,8 @@ import java.util.List;
 public class GameServer extends Thread {
     private DatagramSocket socket;
 
+    private volatile boolean kamikazeRequest = false;
+
 
     private ServerPanel game;
 
@@ -38,7 +40,7 @@ public class GameServer extends Thread {
 
     public void run() {
         Thread heartbeatThread = new Thread(() -> {
-            while (true) {
+            while (!kamikazeRequest) {
                 System.out.println("Server running");
                 //print ips from players connected
                 for (NPC_Player player : game.players) {
@@ -53,6 +55,7 @@ public class GameServer extends Thread {
                     e.printStackTrace();
                 }
             }
+            System.out.println("BOOM KAMIKAZE ON THE Hearthbeat THREAD");
         });
         heartbeatThread.start();
 
@@ -60,7 +63,7 @@ public class GameServer extends Thread {
         game.players.add(null);
         game.players.add(null);
 
-        while (true) {
+        while (!kamikazeRequest) {
             byte[] data = new byte[1024];
             DatagramPacket packet = new DatagramPacket(data, data.length);
             try {
@@ -78,6 +81,8 @@ public class GameServer extends Thread {
             //    sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
 
         }
+        socket.close();
+        System.out.println("BOOM KAMIKAZE ON THE GAME SERVER");
     }
 
     private void parsePacket(byte[] data, InetAddress address, int port) {
@@ -121,7 +126,8 @@ public class GameServer extends Thread {
                 game.players.set(0, null);
                 game.players.set(1, null);
 
-
+                //start the kamikaze of the server
+                this.requestShutdown();
 
 
                 break;
@@ -332,5 +338,9 @@ public class GameServer extends Thread {
                 return;
             }
         }
+    }
+
+    public void requestShutdown() {
+        this.kamikazeRequest = true;
     }
 }
