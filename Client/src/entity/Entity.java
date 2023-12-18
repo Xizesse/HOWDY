@@ -213,7 +213,9 @@ public class Entity {
 
     public void update() {
 
-
+        if (attackCoolDown > 0) {
+            attackCoolDown--;
+        }
         setAction();
         collisionOn = false;
         gp.cCheck.checkTile(this);

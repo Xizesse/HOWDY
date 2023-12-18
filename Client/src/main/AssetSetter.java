@@ -60,9 +60,6 @@ public class AssetSetter {
         gp.obj[0][4].worldY = 14 * gp.tileSize;
 
         //print all objects and their iD
-        gp.obj[0][5] = new OBJ_Katana(gp);
-        gp.obj[0][5].worldX = 8 * gp.tileSize;
-        gp.obj[0][5].worldY = 15 * gp.tileSize;
 
         gp.obj[0][6] = new OBJ_Stick(gp);
         gp.obj[0][6].worldX = 8 * gp.tileSize;
@@ -93,13 +90,6 @@ public class AssetSetter {
         gp.obj[0][14].worldX = 2 * gp.tileSize;
         gp.obj[0][14].worldY = 13 * gp.tileSize;
 
-        gp.obj[0][15] = new OBJ_Armour(gp, "gold");
-        gp.obj[0][15].worldX = 2 * gp.tileSize;
-        gp.obj[0][15].worldY = 15 * gp.tileSize;
-
-        gp.obj[0][16] = new OBJ_Helmet(gp, "gold");
-        gp.obj[0][16].worldX = 2 * gp.tileSize;
-        gp.obj[0][16].worldY = 16 * gp.tileSize;
 
         //map 1
 
@@ -366,6 +356,18 @@ public class AssetSetter {
         gp.obj[1][15] = new OBJ_PP(gp, 3, temp, temp2);
         gp.obj[1][15].worldX = 14 * gp.tileSize;
         gp.obj[1][15].worldY = 20 * gp.tileSize;
+
+        gp.obj[1][16] = new OBJ_Helmet(gp, "gold");
+        gp.obj[1][16].worldX = 7 * gp.tileSize;
+        gp.obj[1][16].worldY = 2 * gp.tileSize;
+
+        gp.obj[1][17] = new OBJ_Armour(gp, "gold");
+        gp.obj[1][17].worldX = 25 * gp.tileSize;
+        gp.obj[1][17].worldY = 2 * gp.tileSize;
+
+        gp.obj[1][18] = new OBJ_Katana(gp);
+        gp.obj[1][18].worldX = 25 * gp.tileSize;
+        gp.obj[1][18].worldY = 29 * gp.tileSize;
     }
 
     public void setPlayer2() {

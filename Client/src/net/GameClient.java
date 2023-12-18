@@ -138,6 +138,8 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
                 this.game.npc[packet.getMap()][i].damageAnimationCounter = this.game.npc[packet.getMap()][i].defDamageAnimationCounter;
                 if (this.game.npc[packet.getMap()][i].currentHealth <= 0) {
                     this.game.npc[packet.getMap()][i].alive = false;
+                    this.game.npc[packet.getMap()][i] = null;
+                    System.out.println("npc " + i + " died");
                 }
             }
         }

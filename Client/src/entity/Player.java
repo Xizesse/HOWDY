@@ -273,11 +273,11 @@ public class Player extends Entity {
                         break;
                     case "book":
                         //giveItem(gp.obj[gp.currentMap][i]);
+                        gp.obj[gp.currentMap][i].readChapter(gp);
+                        gp.gameState = gp.readState;
                         p4 = new Packet04Object(gp.currentMap, (char) i, true);
                         p4.writeData(gp.socketClient);
                         System.out.println("Requesting item: " + p4.getitemIndex());
-                        gp.obj[gp.currentMap][i].readChapter(gp);
-                        gp.gameState = gp.readState;
                         break;
 
 

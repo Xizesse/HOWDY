@@ -1,5 +1,7 @@
 package main;
 
+import net.Packet00Login;
+import net.Packet10Leave;
 import net.Packet01Logout;
 import object.OBJ_Heart;
 import object.SuperObject;
@@ -24,6 +26,7 @@ public class UI {
     public int commandNum = 0;
     int subState = 0;
     public String currentText = "";
+    int i = 0;
     private BufferedImage background;
 
     public UI(GamePanel gp, KeyHandler keyH) {
@@ -95,12 +98,26 @@ public class UI {
             drawInstructions(g2d);
         }
 
+        if (gp.gameState == gp.endState) {
+
+            long delta = 0;
+            long lastTime = System.currentTimeMillis();
+            while (true){
+                delta = System.currentTimeMillis() - lastTime;
+                if (delta >= 10) {
+                    if (i < 50) {
+                        drawEndGameScreen(0, g2d);
+                    } else { drawEndGameScreen (i-50, g2d);}
+                    if (i<=1150){i++;}
+                    break;
+                }
+            }
+        }
         //options state
         if (gp.gameState == gp.optionsState) {
             if (gp.prev_gameState == gp.playState) {
                 drawPlayerLife(g2d);
                 drawInventory(g2d);
-                drawInstructions(g2d);
             } else if (gp.prev_gameState == gp.pauseState) {
                 drawPauseScreen(g2d);
                 drawPlayerLife(g2d);
@@ -233,11 +250,14 @@ public class UI {
     }
 
     private void drawPlayerLife(Graphics2D g2d) {
-        //gp.player.currentHealth = 3;
-
         int x = gp.tileSize / 2;
-        //int y = gp.screenWidth - gp.tileSize - gp.tileSize/2 ;
-        int y = 0;
+        int y;
+
+        if(gp.fullScreenOn){
+            y = gp.screenHeight - gp.tileSize * 2;
+        } else{
+            y = gp.screenHeight - gp.tileSize * 3;
+        }
         int i = 0;
 
         while (i < (gp.player.maxHealth / 2)) {
@@ -258,10 +278,13 @@ public class UI {
     }
 
     private void drawInventory(Graphics2D g2d) {
-
-
-        int x = gp.screenWidth2 - 3 * gp.tileSize - gp.tileSize / 2;
-        int y = gp.screenWidth2 - gp.tileSize * 4 - gp.tileSize;
+        int x = gp.screenWidth - gp.tileSize * 4;
+        int y;
+        if(gp.fullScreenOn){
+            y = gp.screenHeight - gp.tileSize * 6;
+        } else{
+            y = gp.screenHeight - gp.tileSize * 7;
+        }
 
         //black square with transparency and a white border
         Color b = new Color(0, 0, 0, 100);
@@ -293,8 +316,12 @@ public class UI {
         if (gp.player.weapon != null) g2d.drawImage(gp.player.weapon.image, x, y, null);
 
 
-        x = gp.screenWidth - gp.tileSize - gp.tileSize / 2;
-        y = gp.screenWidth - gp.tileSize - gp.tileSize / 2;
+        x = gp.screenWidth - gp.tileSize * 2;
+        if(gp.fullScreenOn){
+            y = gp.screenHeight - gp.tileSize * 2;
+        } else{
+            y = gp.screenHeight - gp.tileSize * 3;
+        }
 
 
         for (int i = 0; i < gp.player.inventory.size(); i++) {
@@ -315,22 +342,9 @@ public class UI {
 
     private void drawInstructions(Graphics2D g2d) {
 
-        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 20f));
+        g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 35f));
         g2d.setColor(Color.WHITE);
-        String text = "P - Pause";
-        int x = getXforCenteredText(text, g2d);
-        int y = gp.tileSize;
-        g2d.drawString(text, x, y);
-        text = "L - Light Effects";
-        x = getXforCenteredText(text, g2d);
-        y = gp.tileSize * 2;
-        g2d.drawString(text, x, y);
-        if (gp.GOD) g2d.setColor(Color.red);
-        text = "G - GOD MODE";
-        x = getXforCenteredText(text, g2d);
-        y = gp.tileSize * 3;
-        g2d.drawString(text, x, y);
-
+        g2d.drawString("< ESC", gp.tileSize/2, gp.tileSize);
     }
 
     public void drawPauseScreen(Graphics2D g2d) {
@@ -342,7 +356,8 @@ public class UI {
     }
 
     private void drawTitleScreen(Graphics2D g2d) {
-        g2d.drawImage(background, 0,0, gp.screenWidth2, gp.screenHeight2, null);
+        g2d.drawImage(background, 0,0, gp.screenWidth, gp.screenHeight
+                , null);
         Color c = new Color(0, 0, 0, 0.35f);
         g2d.setColor(c);
         g2d.drawRect(0, 0, gp.screenWidth, gp.screenHeight);
@@ -689,5 +704,26 @@ public class UI {
         g2d.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 35, 35);
 
     }
-
+    private void drawEndGameScreen(int i, Graphics2D g2d) {
+        String text = "Heroes Of War\n"
+                    + "Die Young\n"
+                    + "\n\n\n\n\n"
+                    + "by: Kiko\n"
+                    + "Lucca\n"
+                    + "Pedro\n"
+                    + "Érico\n"
+                    + "\n\nThe End\n\n"
+                    + "Press Enter to return\nto the title screen" ;
+        g2d.setColor(Color.BLACK);
+        g2d.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 60f));
+        int x ;
+        int y = gp.screenHeight / 3;
+        for (String line : text.split("\n")) {
+            x = getXforCenteredText(line, g2d);
+            g2d.drawString(line, x, y - i);
+            y += 80;
+        }
+    }
 }

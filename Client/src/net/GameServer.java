@@ -150,6 +150,7 @@ public class GameServer extends Thread {
                                     System.out.println("npc " + j + " health: " + game.npc[map][j].currentHealth);
                                     if (game.npc[map][j].currentHealth <= 0) {
                                         game.npc[map][j].alive = false;
+                                        game.npc[map][j] = null;
                                         System.out.println("npc " + j + " died");
                                     }
                                 }
@@ -221,19 +222,17 @@ public class GameServer extends Thread {
                         sendData(p5_1.getData(), address, port);
                         System.out.println("[" + address.getHostName() + "] port: " + port + ", entity" + p5.getEntityID() + " health " + p5.getHealth());
                         break;
-                    }
-                    else
-                    {
+                    } else {
                         sendData(p5_2.getData(), address, port);
                         System.out.println("[" + address.getHostName() + "] port: " + port + ", entity" + p5.getEntityID() + " health " + p5.getHealth());
                     }
                 }
-            break;
-                case READY:
-                    Packet07Ready p7 = new Packet07Ready(data);
-                    System.out.println("[" + address.getHostName() + "] ready " + p7.getReady());
-                    //i received a ready packet from a player
-                    //check witch player is sending the packet
+                break;
+            case READY:
+                Packet07Ready p7 = new Packet07Ready(data);
+                System.out.println("[" + address.getHostName() + "] ready " + p7.getReady());
+                //i received a ready packet from a player
+                //check witch player is sending the packet
 
                     for( NPC_Player player : game.players)
                     {

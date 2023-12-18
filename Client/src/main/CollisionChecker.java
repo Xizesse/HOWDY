@@ -4,6 +4,7 @@ import entity.Entity;
 import entity.NPC_Player;
 import monster.Monster_Spike;
 import object.OBJ_PP;
+import object.OBJ_RuneDoor;
 
 import java.awt.*;
 import java.util.List;
@@ -87,9 +88,16 @@ public class CollisionChecker {
             entity.solidArea.x = entity.worldX + entity.solidArea.x; //get the entity worldX coordinate of the left most edge of the solid area
             entity.solidArea.y = entity.worldY + entity.solidArea.y; //get the entity worldY coordinate of the top most edge of the solid area
 
+
+
             // Object's solid area position
             gp.obj[gp.currentMap][i].solidArea.x = gp.obj[gp.currentMap][i].worldX + gp.obj[gp.currentMap][i].solidArea.x; //get the object worldX coordinate of the left most edge of the solid area
             gp.obj[gp.currentMap][i].solidArea.y = gp.obj[gp.currentMap][i].worldY + gp.obj[gp.currentMap][i].solidArea.y; //get the object worldY coordinate of the top most edge of the solid area
+
+            if (gp.obj[gp.currentMap][i] instanceof OBJ_RuneDoor) {
+                gp.obj[gp.currentMap][i].solidArea.x -= 1;
+                gp.obj[gp.currentMap][i].solidArea.y -= 1;
+            }
 
             switch (entity.direction) {
 
