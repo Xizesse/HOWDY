@@ -22,7 +22,9 @@ public class Player extends Entity {
     private int attackingX = 0;
     private int attackingY = 0;
 
-    public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
+
+    //Player images [skin][direction]
+    BufferedImage[][] sprites = new BufferedImage[2][8];
 
     //Inventory and slots
     public SuperObject helmet;
@@ -69,15 +71,25 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
-        bodyUp1 = setup("player1/boy_up_1");
-        bodyUp2 = setup("player1/boy_up_2");
-        bodyDown1 = setup("player1/boy_down_1");
-        bodyDown2 = setup("player1/boy_down_2");
-        BodyLeft1 = setup("player1/boy_left_1");
-        BodyLeft2 = setup("player1/boy_left_2");
-        BodyRight1 = setup("player1/boy_right_1");
-        BodyRight2 = setup("player1/boy_right_2");
+        sprites[0][0] = setup("player1/boy_up_1");
+        sprites[0][1] = setup("player1/boy_up_2");
+        sprites[0][2] = setup("player1/boy_down_1");
+        sprites[0][3] = setup("player1/boy_down_2");
+        sprites[0][4] = setup("player1/boy_left_1");
+        sprites[0][5] = setup("player1/boy_left_2");
+        sprites[0][6] = setup("player1/boy_right_1");
+        sprites[0][7] = setup("player1/boy_right_2");
         titleArt = setup("player1/boy_title_art");
+
+        sprites[1][0] = setup("girl/girl_up_1");
+        sprites[1][1] = setup("girl/girl_up_2");
+        sprites[1][2] = setup("girl/girl_down_1");
+        sprites[1][3] = setup("girl/girl_down_2");
+        sprites[1][4] = setup("girl/girl_left_1");
+        sprites[1][5] = setup("girl/girl_left_2");
+        sprites[1][6] = setup("girl/girl_right_1");
+        sprites[1][7] = setup("girl/girl_right_2");
+        titleArt = setup("girl/girl_title_art");
 
 
         attackUp = setup("attack/attack_up");
@@ -200,25 +212,18 @@ public class Player extends Entity {
             if (i < 0) {
                 i = -i;
                 gp.obj[gp.currentMap][i].turnOff();
-            }
-            else if (Objects.equals(gp.obj[gp.currentMap][i].name, "PP"))
-            { //pp
+            } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "PP")) { //pp
                 gp.obj[gp.currentMap][i].interact();
                 return;
-            } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "RuneDoor"))
-            { //RuneDoor
+            } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "RuneDoor")) { //RuneDoor
                 gp.obj[gp.currentMap][i].interact();
                 return;
-            }
-            else {
+            } else {
                 String type = gp.obj[gp.currentMap][i].type;
-                switch (type)
-                {
+                switch (type) {
                     case "helmet":
-                        if ( helmet != null)
-                        {
-                            if (helmet.tier >= gp.obj[gp.currentMap][i].tier)
-                            {
+                        if (helmet != null) {
+                            if (helmet.tier >= gp.obj[gp.currentMap][i].tier) {
                                 return;
                             }
                         }
@@ -227,10 +232,8 @@ public class Player extends Entity {
                         System.out.println("Requesting item: " + p4.getitemIndex());
                         break;
                     case "armour":
-                        if ( armour != null)
-                        {
-                            if (armour.tier >= gp.obj[gp.currentMap][i].tier)
-                            {
+                        if (armour != null) {
+                            if (armour.tier >= gp.obj[gp.currentMap][i].tier) {
                                 return;
                             }
                         }
@@ -239,10 +242,8 @@ public class Player extends Entity {
                         System.out.println("Requesting item: " + p4.getitemIndex());
                         break;
                     case "weapon":
-                        if ( weapon != null)
-                        {
-                            if (weapon.tier >= gp.obj[gp.currentMap][i].tier)
-                            {
+                        if (weapon != null) {
+                            if (weapon.tier >= gp.obj[gp.currentMap][i].tier) {
                                 return;
                             }
                         }
@@ -251,10 +252,8 @@ public class Player extends Entity {
                         System.out.println("Requesting item: " + p4.getitemIndex());
                         break;
                     case "shield":
-                        if ( shield != null)
-                        {
-                            if (shield.tier >= gp.obj[gp.currentMap][i].tier)
-                            {
+                        if (shield != null) {
+                            if (shield.tier >= gp.obj[gp.currentMap][i].tier) {
                                 return;
                             }
                         }
@@ -263,10 +262,8 @@ public class Player extends Entity {
                         System.out.println("Requesting item: " + p4.getitemIndex());
                         break;
                     case "boots":
-                        if ( boots != null)
-                        {
-                            if (boots.tier >= gp.obj[gp.currentMap][i].tier)
-                            {
+                        if (boots != null) {
+                            if (boots.tier >= gp.obj[gp.currentMap][i].tier) {
                                 return;
                             }
                         }
@@ -282,7 +279,6 @@ public class Player extends Entity {
                         gp.obj[gp.currentMap][i].readChapter(gp);
                         gp.gameState = gp.readState;
                         break;
-
 
 
                     default:
@@ -314,9 +310,8 @@ public class Player extends Entity {
                     gp.obj[gp.currentMap][i].interact();
                     gp.obj[gp.currentMap][i] = null;
                     }*/
-                }
-            }
-
+        }
+    }
 
 
     private void interactNPC(int npcIndex) {
@@ -338,9 +333,9 @@ public class Player extends Entity {
                     attack = attackUp;
                 }
                 if (spriteNum == 1) {
-                    body = bodyUp1;
+                    body = sprites[gp.player1Skin][0];
                 } else if (spriteNum == 2) {
-                    body = bodyUp2;
+                    body = sprites[gp.player1Skin][1];
                 }
 
                 break;
@@ -349,9 +344,9 @@ public class Player extends Entity {
                     attack = attackDown;
                 }
                 if (spriteNum == 1) {
-                    body = bodyDown1;
+                    body = sprites[gp.player1Skin][2];
                 } else if (spriteNum == 2) {
-                    body = bodyDown2;
+                    body = sprites[gp.player1Skin][3];
                 }
 
                 break;
@@ -360,9 +355,9 @@ public class Player extends Entity {
                     attack = attackLeft;
                 }
                 if (spriteNum == 1) {
-                    body = BodyLeft1;
+                    body = sprites[gp.player1Skin][4];
                 } else if (spriteNum == 2) {
-                    body = BodyLeft2;
+                    body = sprites[gp.player1Skin][5];
                 }
 
                 break;
@@ -371,9 +366,9 @@ public class Player extends Entity {
                     attack = attackRight;
                 }
                 if (spriteNum == 1) {
-                    body = BodyRight1;
+                    body = sprites[gp.player1Skin][6];
                 } else if (spriteNum == 2)
-                    body = BodyRight2;
+                    body = sprites[gp.player1Skin][7];
                 break;
         }
 

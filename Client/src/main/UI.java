@@ -16,7 +16,7 @@ import java.util.Objects;
 public class UI {
     GamePanel gp;
     //Graphics2D g2d;
-    Font PraxisFontis, OldEnglish;
+    Font PraxisFontis, OldEnglish, JimNightshade, IngridDarling;
     KeyHandler keyH;
     Font TimesRoman;
     BufferedImage heartFull, heartHalf, heartEmpty;
@@ -33,6 +33,10 @@ public class UI {
             PraxisFontis = Font.createFont(Font.TRUETYPE_FONT, is);
             is = getClass().getResourceAsStream("/fonts/OLDENGL.TTF");
             OldEnglish = Font.createFont(Font.TRUETYPE_FONT, is);
+            is = getClass().getResourceAsStream("/fonts/JimNightshade-Regular.ttf");
+            JimNightshade = Font.createFont(Font.TRUETYPE_FONT, is);
+            is = getClass().getResourceAsStream("/fonts/IngridDarling-Regular.ttf");
+            IngridDarling = Font.createFont(Font.TRUETYPE_FONT, is);
         } catch (FontFormatException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -332,13 +336,16 @@ public class UI {
             e.printStackTrace();
         }
 
-        g2d.drawImage(background, 0, 0, gp.screenWidth2, gp.screenHeight2, null);
-
+        g2d.drawImage(background, 0,0, gp.screenWidth2, gp.screenHeight2, null);
+        Color c = new Color(0, 0, 0, 0.35f);
+        g2d.setColor(c);
+        g2d.drawRect(0, 0, gp.screenWidth, gp.screenHeight);
+        g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         //TITLE NAME
-//        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
+        g2d.setFont(JimNightshade.deriveFont(Font.BOLD, 80f));
         String text = "Heroes Of War:";
-        int x = 56;
-        int y = 132;
+        int x = getXforCenteredText(text, g2d);
+        int y = 170;
         g2d.setColor(Color.WHITE);
         g2d.drawString(text, x, y);
 
@@ -350,31 +357,31 @@ public class UI {
         g2d.drawImage(gp.player.titleArt, x, y, gp.tileSize * scale, gp.tileSize * scale, null);*/
 
         text = "Die Young";
-        x = 338;
-        y = 210;
+        x = 688;
+        y = 246;
         AffineTransform affineTransform = new AffineTransform();
         affineTransform.rotate(Math.toRadians(-20.31), 0, 0);
-//        g2d.setFont(OldEnglish.deriveFont(affineTransform));
-        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 50f));
-        Color c = new Color(214, 61, 61);
+        g2d.setFont(IngridDarling.deriveFont(affineTransform));
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 65f));
+        c = new Color(214, 61, 61);
         g2d.setColor(c);
         g2d.drawString(text, x, y);
 
         //MENU
         affineTransform.rotate(Math.toRadians(20.31), 0, 0);
-//        g2d.setFont(OldEnglish.deriveFont(affineTransform));
+        g2d.setFont(IngridDarling.deriveFont(affineTransform));
         g2d.setColor(Color.WHITE);
-        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 48f));
+        g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 48f));
 
-        text = "HOST GAME";
+        text = "Host Game";
         x = getXforCenteredText(text, g2d);
-        y += gp.tileSize * 5;
+        y += gp.tileSize + 30;
         g2d.drawString(text, x, y);
         if (commandNum == 0) {
             g2d.drawString(">", x - gp.tileSize, y);
         }
 
-        text = "JOIN GAME";
+        text = "Join Game";
         x = getXforCenteredText(text, g2d);
         y += gp.tileSize;
         g2d.drawString(text, x, y);
@@ -382,11 +389,27 @@ public class UI {
             g2d.drawString(">", x - gp.tileSize, y);
         }
 
-        text = "QUIT";
+        text = "Instructions";
         x = getXforCenteredText(text, g2d);
         y += gp.tileSize;
         g2d.drawString(text, x, y);
         if (commandNum == 2) {
+            g2d.drawString(">", x - gp.tileSize, y);
+        }
+
+        text = "About";
+        x = getXforCenteredText(text, g2d);
+        y += gp.tileSize;
+        g2d.drawString(text, x, y);
+        if (commandNum == 3) {
+            g2d.drawString(">", x - gp.tileSize, y);
+        }
+
+        text = "Quit";
+        x = getXforCenteredText(text, g2d);
+        y += gp.tileSize;
+        g2d.drawString(text, x, y);
+        if (commandNum == 4) {
             g2d.drawString(">", x - gp.tileSize, y);
         }
 
