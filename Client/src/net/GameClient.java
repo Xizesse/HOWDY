@@ -89,15 +89,26 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
                 System.out.println("Ready packet received");
                 handleReady((Packet07Ready) packet);
                 break;
-
+            case LEAVE:
+                System.out.println("Leave packet received");
+                handleLeave();
+                break;
 
         }
 
     }
 
+    private void handleLeave() {
+        game.gameState = game.titleState;
+        game.new_gameState = game.titleState;
+    }
+
     private void handleReady(Packet07Ready packet) {
         if (this.game != null) {
             if (packet.getStart() == 1) {
+                //reset ready
+                game.playerIsReady = false;
+                game.player2IsReady = false;
                 game.gameState = game.playState;
                 game.new_gameState = game.playState;
             } else {

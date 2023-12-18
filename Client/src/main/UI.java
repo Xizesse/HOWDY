@@ -1,5 +1,7 @@
 package main;
 
+import net.Packet00Login;
+import net.Packet10Leave;
 import object.OBJ_Heart;
 import object.SuperObject;
 
@@ -625,8 +627,12 @@ public class UI {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
-                gp.gameState = gp.titleState;
-                gp.new_gameState = gp.titleState;
+                //send leave packet
+                Packet10Leave leavePacket = new Packet10Leave();
+                leavePacket.writeData(gp.socketClient);
+                System.out.println("leave packet sent");
+                //gp.gameState = gp.titleState;
+                //gp.new_gameState = gp.titleState;
             }
         }
 

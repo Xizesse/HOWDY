@@ -132,7 +132,7 @@ public class KeyHandler implements KeyListener {
             gp.new_gameState = gp.optionsState;
             gp.prev_gameState = gp.gameState;
         }
-        if (keysPressed[rightKey]) {
+        if (keysPressed[rightKey] ) {
             gp.player1Skin++;
             gp.Ijustbecameready = true;
             if (gp.player1Skin > 1) {
