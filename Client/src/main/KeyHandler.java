@@ -158,18 +158,26 @@ public class KeyHandler implements KeyListener {
     private void playKeys() {
         if (keysPressed[attackKey]) {
             keysPressed[attackKey] = true;
-        } else if (keysPressed[pauseKey]) {
+        }
+        else if (keysPressed[pauseKey]) {
             gp.new_gameState = gp.pauseState;
-        } else if (keysPressed[devKey]) {
+        }
+        else if (keysPressed[devKey]) {
             DEV_MODE = !DEV_MODE;
-        } else if (keysPressed[lightKey]) {
+        }
+        else if (keysPressed[lightKey]) {
             gp.LIGHT = !gp.LIGHT;
-        } else if (keysPressed[backKey]) {
+        }
+        else if (keysPressed[backKey]) {
             gp.new_gameState = gp.optionsState;
             gp.prev_gameState = gp.gameState;
-        } else if (keysPressed[godKey]) {
+        }
+        else if (keysPressed[godKey]) {
             gp.GOD = !gp.GOD;
             gp.LIGHT = !gp.LIGHT;
+        }
+        else if (keysPressed[KeyEvent.VK_E]){   //TODO: This is temporary, should star with win packet. Remove this line
+            gp.new_gameState = gp.endState;
         }
     }
 
@@ -275,6 +283,10 @@ public class KeyHandler implements KeyListener {
         //OPTIONS STATE
         else if (gp.gameState == gp.optionsState) {
             optionsKeys();
+        } else if (gp.gameState == gp.endState) {
+            if(keysPressed[confirmKey]){
+                gp.new_gameState = gp.titleState;   //TODO: title state reset server
+            }
         }
         gp.gameState = gp.new_gameState;
     }

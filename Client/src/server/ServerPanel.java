@@ -196,7 +196,7 @@ public class ServerPanel extends GamePanel {
                     }
                     flagUpdated = true;
                 }
-                if (players.get(0).map == 2 && players.get(1).map == 2){
+                if (players.get(0).map == 2 && players.get(1).map == 2){    // win condition
                     System.out.println(players.get(0).worldX/tileSize + " , " + players.get(1).worldX/tileSize);
                     if (players.get(0).worldX/tileSize > 26 && players.get(1).worldX/tileSize > 26){
                         System.out.println("ya win"); //TODO: send win packet

@@ -100,6 +100,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int optionsState = 4;
     public final int joinState = 5;
     public final int waitingState = 6;
+    public final int endState = 7;
     public int endGame = 0;
     public int optionsBack = 0;
 
@@ -250,12 +251,14 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gameState == titleState) {
             ui.draw(g2d);
-        } else if (gameState == joinState) {
+        }
+        else if (gameState == joinState) {
             ui.draw(g2d);
-        } else if (gameState == waitingState) {
+        }
+        else if (gameState == waitingState) {
             ui.draw(g2d);
-
-        } else if (gameState == playState) {
+        }
+        else if (gameState == playState) {
 
             // TILE
             tileM.draw(g2d);
@@ -289,7 +292,8 @@ public class GamePanel extends JPanel implements Runnable {
             if (LIGHT) effectManager.draw(g2d);
 
             ui.draw(g2d);
-        } else if (gameState == pauseState) {
+        }
+        else if (gameState == pauseState) {
             // TILE
             tileM.draw(g2d);
             // OBJECT
@@ -315,7 +319,8 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
-        } else if (gameState == readState) {
+        }
+        else if (gameState == readState) {
             // TILE
             tileM.draw(g2d);
             // OBJECT
@@ -339,7 +344,8 @@ public class GamePanel extends JPanel implements Runnable {
             }
             if (LIGHT) effectManager.draw(g2d);
             ui.draw(g2d);
-        } else if (gameState == optionsState) {
+        }
+        else if (gameState == optionsState) {
             if (prev_gameState == playState) {
 
                 // TILE
@@ -402,6 +408,9 @@ public class GamePanel extends JPanel implements Runnable {
                 new_gameState = prev_gameState;
                 prev_gameState = optionsState;
             }*/
+        }
+        else if (gameState == endState) {
+            ui.draw(g2d);
         }
         // DEBUG
         if (DEV_MODE) {
