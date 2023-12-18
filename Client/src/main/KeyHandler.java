@@ -60,7 +60,7 @@ public class KeyHandler implements KeyListener {
             }
             //exit
             else if (gp.ui.commandNum == 4) {
-                System.exit(0);
+                gp.exitgame = true;
             }
         }
 

@@ -62,6 +62,8 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aS = new AssetSetter(this);
     public EventHandler eH = new EventHandler(this);
     Config config = new Config(this);
+
+    public boolean exitgame = false;
     Thread gameThread;
 
     // ENTITY AND OBJECTS
@@ -173,6 +175,8 @@ public class GamePanel extends JPanel implements Runnable {
                 drawToScreen();
                 delta--;
             }
+            if (exitgame)
+                System.exit(0);
         }
     }
 
