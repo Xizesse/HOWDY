@@ -116,7 +116,6 @@ public class UI {
             if (gp.prev_gameState == gp.playState) {
                 drawPlayerLife(g2d);
                 drawInventory(g2d);
-                drawInstructions(g2d);
             } else if (gp.prev_gameState == gp.pauseState) {
                 drawPauseScreen(g2d);
                 drawPlayerLife(g2d);
@@ -340,22 +339,9 @@ public class UI {
 
     private void drawInstructions(Graphics2D g2d) {
 
-        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 20f));
+        g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 35f));
         g2d.setColor(Color.WHITE);
-        String text = "P - Pause";
-        int x = getXforCenteredText(text, g2d);
-        int y = gp.tileSize;
-        g2d.drawString(text, x, y);
-        text = "L - Light Effects";
-        x = getXforCenteredText(text, g2d);
-        y = gp.tileSize * 2;
-        g2d.drawString(text, x, y);
-        if (gp.GOD) g2d.setColor(Color.red);
-        text = "G - GOD MODE";
-        x = getXforCenteredText(text, g2d);
-        y = gp.tileSize * 3;
-        g2d.drawString(text, x, y);
-
+        g2d.drawString("< ESC", gp.tileSize/2, gp.tileSize);
     }
 
     public void drawPauseScreen(Graphics2D g2d) {
