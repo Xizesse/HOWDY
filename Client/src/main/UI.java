@@ -3,10 +3,13 @@ package main;
 import object.OBJ_Heart;
 import object.SuperObject;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public class UI {
     GamePanel gp;
@@ -116,6 +119,16 @@ public class UI {
         y += gp.tileSize * 2;
         g2d.drawString(text, x, y);
 
+        if (keyH.invalidIPinserted) {
+            text = "Pede para a sua mae te ensinar a escrever um IP";
+            x = getXforCenteredText(text, g2d);
+            y = gp.screenHeight - gp.tileSize * 2;
+
+            Color prevColor = g2d.getColor();
+            g2d.setColor(Color.red);
+            g2d.drawString(text, x, y);
+            g2d.setColor(prevColor);
+        }
     }
 
     private void drawWaitingScreen(Graphics2D g2d) {
@@ -196,6 +209,7 @@ public class UI {
         textWidth = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         x = (gp.screenWidth * 4 / 6) + ((gp.tileSize * scale) - textWidth) / 2;
         g2d.drawString(text, x, y);
+
 
     }
 
@@ -309,28 +323,45 @@ public class UI {
     }
 
     private void drawTitleScreen(Graphics2D g2d) {
+        BufferedImage background = new BufferedImage(gp.screenWidth2, gp.screenHeight2, BufferedImage.TYPE_INT_RGB);
+        try {
+            background = ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("title_screen/titleScreen.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        g2d.drawImage(background, 0,0, gp.screenWidth2, gp.screenHeight2, null);
 
         //TITLE NAME
-//        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
-        String text = "Heroes of War: Die Young";
-        int x = getXforCenteredText(text, g2d);
-        int y = gp.tileSize * 3;
-
-        //SHADOW
-        g2d.setColor(Color.gray);
-        g2d.drawString(text, x + 3, y + 3);
-
-        //MAIN TEXT COLOR
+        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
+        String text = "Heroes Of War:";
+        int x = 56;
+        int y = 132;
         g2d.setColor(Color.WHITE);
         g2d.drawString(text, x, y);
 
+        /*
         //HERO IMAGE
         int scale = 3;
         x = gp.screenWidth / 2 - (gp.tileSize * scale) / 2;
         y += gp.tileSize;
-        g2d.drawImage(gp.player.titleArt, x, y, gp.tileSize * scale, gp.tileSize * scale, null);
+        g2d.drawImage(gp.player.titleArt, x, y, gp.tileSize * scale, gp.tileSize * scale, null);*/
+
+        text = "Die Young";
+        x = 338;
+        y = 210;
+        AffineTransform affineTransform = new AffineTransform();
+        affineTransform.rotate(Math.toRadians(-20.31), 0, 0);
+        g2d.setFont(OldEnglish.deriveFont(affineTransform));
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 50f));
+        Color c = new Color(214, 61, 61);
+        g2d.setColor(c);
+        g2d.drawString(text, x, y);
 
         //MENU
+        affineTransform.rotate(Math.toRadians(20.31), 0, 0);
+        g2d.setFont(OldEnglish.deriveFont(affineTransform));
+        g2d.setColor(Color.WHITE);
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 48f));
 
         text = "HOST GAME";

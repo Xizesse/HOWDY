@@ -2,6 +2,7 @@ package main;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +14,9 @@ public class KeyHandler implements KeyListener {
     GamePanel gp;
 
     public boolean[] keysPressed = new boolean[999];
-    
+
+    public boolean invalidIPinserted = false;
+
     //User defined key bindings
     public int upKey = KeyEvent.VK_UP;
     public int downKey = KeyEvent.VK_DOWN;
@@ -43,12 +46,19 @@ public class KeyHandler implements KeyListener {
 
         }
         if (keysPressed[confirmKey]) {
+            //host
             if (gp.ui.commandNum == 0) {
-                gp.new_gameState = gp.playState;
-            } else if (gp.ui.commandNum == 1) {
+                gp.playerIsHoast = true;
+
+                gp.new_gameState = gp.waitingState;
+            }
+            //join
+            else if (gp.ui.commandNum == 1) {
                 gp.new_gameState = gp.joinState;
-                // LOAD GAME
-            } else if (gp.ui.commandNum == 2) {
+
+            }
+            //exit
+            else if (gp.ui.commandNum == 2) {
                 System.exit(0);
             }
         }
@@ -69,7 +79,6 @@ public class KeyHandler implements KeyListener {
             if (keysPressed[i]) {
                 gp.userInputedServerIP
                         += (char) i - KeyEvent.VK_0;
-                System.out.println(gp.userInputedServerIP);
                 keysPressed[i] = false;
             }
         }
@@ -78,7 +87,6 @@ public class KeyHandler implements KeyListener {
             if (keysPressed[i]) {
                 gp.userInputedServerIP
                         += (char) i - KeyEvent.VK_NUMPAD0;
-                System.out.println(gp.userInputedServerIP);
                 keysPressed[i] = false;
             }
         }
@@ -88,7 +96,6 @@ public class KeyHandler implements KeyListener {
                     += ".";
             keysPressed[KeyEvent.VK_SPACE] = false;
         }
-
 
         if (keysPressed[KeyEvent.VK_BACK_SPACE]) {
             if (gp.userInputedServerIP.length() > 0) {
@@ -100,7 +107,12 @@ public class KeyHandler implements KeyListener {
         }
 
         if (keysPressed[confirmKey]) {
-            if (!IPisValid(gp.userInputedServerIP)) return;
+            if (!IPisValid(gp.userInputedServerIP)) {
+                invalidIPinserted = true;
+                return;
+            }
+
+            invalidIPinserted = false;
 
             System.out.println("IP is valid");
 
@@ -265,7 +277,7 @@ public class KeyHandler implements KeyListener {
             return true;
         }
 
-        Pattern p = Pattern.compile("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$");
+        Pattern p = Pattern.compile("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$");
         Matcher m = p.matcher(gp.userInputedServerIP);
         return m.find();
     }
