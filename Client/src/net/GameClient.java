@@ -105,8 +105,8 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
             }
             else
             {
-                game.player2.character = packet.getCharacter();
-                game.player2.ready = packet.getReady();
+                game.player2Skin = packet.getCharacter();
+                game.player2IsReady = packet.getReady() == 1 ? true : false;
             }
         }
     }
