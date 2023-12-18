@@ -2,6 +2,9 @@ package main;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static main.Main.DEV_MODE;
 
@@ -10,8 +13,7 @@ public class KeyHandler implements KeyListener {
     GamePanel gp;
 
     public boolean[] keysPressed = new boolean[999];
-
-
+    
     //User defined key bindings
     public int upKey = KeyEvent.VK_UP;
     public int downKey = KeyEvent.VK_DOWN;
@@ -23,7 +25,6 @@ public class KeyHandler implements KeyListener {
     public int godKey = KeyEvent.VK_G;
     public int lightKey = KeyEvent.VK_L;
     public int pauseKey = KeyEvent.VK_P;
-
 
     public static int devKey = KeyEvent.VK_T;
 
@@ -57,7 +58,7 @@ public class KeyHandler implements KeyListener {
     private void joinKeys() {
         for (int i = KeyEvent.VK_A; i <= KeyEvent.VK_Z; i++) {
             if (keysPressed[i]) {
-                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                gp.userInputedServerIP
                         += (char) (i + (int) 'a' - (int) 'A');
                 keysPressed[i] = false;
             }
@@ -66,42 +67,49 @@ public class KeyHandler implements KeyListener {
 
         for (int i = KeyEvent.VK_0; i <= KeyEvent.VK_9; i++) {
             if (keysPressed[i]) {
-                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                gp.userInputedServerIP
                         += (char) i - KeyEvent.VK_0;
-                System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
+                System.out.println(gp.userInputedServerIP);
                 keysPressed[i] = false;
             }
         }
 
         for (int i = KeyEvent.VK_NUMPAD0; i <= KeyEvent.VK_NUMPAD9; i++) {
             if (keysPressed[i]) {
-                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+                gp.userInputedServerIP
                         += (char) i - KeyEvent.VK_NUMPAD0;
-                System.out.println(gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
+                System.out.println(gp.userInputedServerIP);
                 keysPressed[i] = false;
             }
         }
 
         if (keysPressed[KeyEvent.VK_DECIMAL] || keysPressed[KeyEvent.VK_PERIOD]) {
-            gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+            gp.userInputedServerIP
                     += ".";
             keysPressed[KeyEvent.VK_SPACE] = false;
         }
 
 
         if (keysPressed[KeyEvent.VK_BACK_SPACE]) {
-            if (gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond.length() > 0) {
-                gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                        = gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
-                        .substring(0, gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond
+            if (gp.userInputedServerIP.length() > 0) {
+                gp.userInputedServerIP
+                        = gp.userInputedServerIP
+                        .substring(0, gp.userInputedServerIP
                                 .length() - 1);
             }
         }
 
         if (keysPressed[confirmKey]) {
-            gp.new_gameState = gp.waitingState;
+            if (!IPisValid(gp.userInputedServerIP)) return;
+
+            System.out.println("IP is valid");
+
+            gp.ipInserted = true;
+
+//            gp.new_gameState = gp.waitingState;
         }
     }
+
 
     private void waitingKeys() {
         if (keysPressed[backKey]) {
@@ -248,6 +256,15 @@ public class KeyHandler implements KeyListener {
         gp.gameState = gp.new_gameState;
     }
 
+    private boolean IPisValid(String ip) {
+        if (Objects.equals(ip, "localhost")) {
+            return true;
+        }
+
+        Pattern p = Pattern.compile("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$");
+        Matcher m = p.matcher(gp.userInputedServerIP);
+        return m.find();
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {

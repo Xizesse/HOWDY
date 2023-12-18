@@ -107,7 +107,7 @@ public class UI {
         int y = gp.screenHeight / 4;
         g2d.drawString(text, x, y);
 
-        text = "IP: " + gp.AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond;
+        text = "IP: " + gp.userInputedServerIP;
         x = getXforCenteredText(text, g2d);
         y += gp.tileSize * 2;
         g2d.drawString(text, x, y);

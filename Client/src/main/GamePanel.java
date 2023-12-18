@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int originalTileSize = 16; // 16x16 pixels
     public final int scale = 3; // 3x scale
     public final int tileSize = originalTileSize * scale; // 48x48 pixels
-    public final int maxScreenCol = 16; // 28 tiles wide
+    public final int maxScreenCol = 24; // 24 tiles wide
     public final int maxScreenRow = 16; // 16 tiles tall
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels wide
     public final int screenHeight = tileSize * maxScreenRow; // 768 pixels tal
@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxMaps = 10;
     public int currentMap = 0;
 
-    public String AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond = "";
+    public String userInputedServerIP = "";
 
     public boolean ipInserted = false;
     //FPS
@@ -116,7 +116,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
 
 
-
     }
 
     public void setupGame() throws IOException {
@@ -174,12 +173,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        if (gameState == joinState)
-        {
-            if ( ipInserted )
-            {
+        if (gameState == joinState) {
+            if (ipInserted) {
                 if (!(this instanceof ServerPanel)) {
-                    socketClient = new GameClient(this, AccordingtoallknownlawsofaviationthereisnowayabeeshouldbeabletoflyItswingsaretoosmalltogetitsfatlittlebodyoffthegroundThebeeofcoursefliesanywaybecausebeesdontcarewhathumansthinkisimpossibleYellowblackYellowblackYellowblackYellowblackOohblackandyellowLetsshakeitupalittleBarryBreakfastisreadyComingHangonasecond);
+                    socketClient = new GameClient(this, userInputedServerIP);
                     socketClient.start();
                     Packet00Login loginPacket = new Packet00Login();
                     loginPacket.writeData(socketClient);
@@ -413,7 +410,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void performClosingActions() {
 
-        if(socketClient != null) {
+        if (socketClient != null) {
             Packet01Logout logoutPacket = new Packet01Logout();
             logoutPacket.writeData(socketClient);
             System.out.println("DISCONNECTING");
