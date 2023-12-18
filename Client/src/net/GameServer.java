@@ -249,6 +249,10 @@ public class GameServer extends Thread {
                         }
                     }
                     //if both players are ready
+                    if(game.players.get(0) == null || game.players.get(1) == null)
+                    {
+                        break;
+                    }
                     if(game.players.get(0).ready == 1 && game.players.get(1).ready == 1)
                     {
                         //send a packet to both players to start the game

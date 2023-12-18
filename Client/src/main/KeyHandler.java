@@ -118,6 +118,7 @@ public class KeyHandler implements KeyListener {
         }
         if (keysPressed[rightKey]) {
             gp.player1Skin++;
+            gp.Ijustbecameready = true;
             if (gp.player1Skin > 1) {
                 gp.player1Skin = 0;
             }
@@ -125,6 +126,8 @@ public class KeyHandler implements KeyListener {
 
         if (keysPressed[leftKey]) {
             gp.player1Skin--;
+            gp.Ijustbecameready = true;
+
             if (gp.player1Skin < 1) {
                 gp.player1Skin = 1;
             }
