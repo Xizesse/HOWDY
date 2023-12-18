@@ -249,11 +249,14 @@ public class UI {
     }
 
     private void drawPlayerLife(Graphics2D g2d) {
-        //gp.player.currentHealth = 3;
-
         int x = gp.tileSize / 2;
-        //int y = gp.screenWidth - gp.tileSize - gp.tileSize/2 ;
-        int y = 0;
+        int y;
+
+        if(gp.fullScreenOn){
+            y = gp.screenHeight - gp.tileSize * 2;
+        } else{
+            y = gp.screenHeight - gp.tileSize * 3;
+        }
         int i = 0;
 
         while (i < (gp.player.maxHealth / 2)) {
@@ -275,7 +278,12 @@ public class UI {
 
     private void drawInventory(Graphics2D g2d) {
         int x = gp.screenWidth - gp.tileSize * 4;
-        int y = gp.screenHeight - gp.tileSize * 7;
+        int y;
+        if(gp.fullScreenOn){
+            y = gp.screenHeight - gp.tileSize * 6;
+        } else{
+            y = gp.screenHeight - gp.tileSize * 7;
+        }
 
         //black square with transparency and a white border
         Color b = new Color(0, 0, 0, 100);
@@ -308,7 +316,11 @@ public class UI {
 
 
         x = gp.screenWidth - gp.tileSize * 2;
-        y = gp.screenHeight - gp.tileSize * 3;
+        if(gp.fullScreenOn){
+            y = gp.screenHeight - gp.tileSize * 2;
+        } else{
+            y = gp.screenHeight - gp.tileSize * 3;
+        }
 
 
         for (int i = 0; i < gp.player.inventory.size(); i++) {
