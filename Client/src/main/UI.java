@@ -777,6 +777,9 @@ public class UI {
                 + "Lucca\n"
                 + "Xanax\n"
                 + "Érico\n"
+                + " \n"
+                + "Huge thanks to RyiSnow \n"
+                + " \n"
                 + "\n\nThe End\n\n"
                 + "Press Enter to return\nto the title screen";
         g2d.setColor(Color.BLACK);
