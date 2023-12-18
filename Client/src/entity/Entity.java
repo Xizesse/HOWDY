@@ -174,42 +174,7 @@ public class Entity {
         return scaledImage;
     }
 
-    /*void attackPlayer() {
 
-        if (this instanceof NPC_Player) { //players don't attack automatically
-            return;
-        }
-
-
-        for (NPC_Player player : gp.players) {
-//            System.out.println("player: " + player);
-            if (player != null) {
-
-                int distance = (int) Math.sqrt(Math.pow(player.worldX - worldX, 2) + Math.pow(player.worldY - worldY, 2));
-
-                if (player.map == map) {
-//                    System.out.println("distance: " + distance);
-//                    System.out.println("attackCoolDown: " + attackCoolDown);
-
-                    if (distance <= attackRange && attackCoolDown == 0) {
-                        System.out.println("Attack");
-                        attackCoolDown = defAttackCoolDown;
-                        player.currentHealth -= damage;
-
-                        Packet05Health p5 = new Packet05Health(-1, damage, map);
-                        p5.writeData(((ServerPanel) gp).socketServer);
-                        Packet05Health p5_2 = new Packet05Health(-2, damage, map);
-                        p5_2.writeData(((ServerPanel) gp).socketServer);
-
-
-                    }
-                }
-            }
-        }
-        if (attackCoolDown > 0) {
-            attackCoolDown--;
-        }
-    }*/
 
     public void update() {
 
@@ -222,19 +187,6 @@ public class Entity {
 
         gp.cCheck.checkObject(this, false);      //check collision with objects
 
-//        attackPlayer();
-
-        /*
-        if (gp instanceof ServerPanel) {
-            if (gp.players != null) {
-                gp.cCheck.checkNPC_players(this, gp.players);
-
-            }
-            //print if collision is on
-
-
-        }
-    */
         if (!collisionOn) {
             switch (direction) {
                 case "up":

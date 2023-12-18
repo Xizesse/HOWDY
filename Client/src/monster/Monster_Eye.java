@@ -12,13 +12,13 @@ public class Monster_Eye extends Entity {
         super(gp, map);
         direction = "down";
         speed = 10;
-        maxHealth = 10;
+        maxHealth = 15;
         damage = 2;
         defAttackCoolDown = 60;
         attackCoolDown = 0;
-        attackRange = 50;
+        attackRange = 70;
         currentHealth = maxHealth;
-        solidArea = new Rectangle(0, 0, 48, 48);
+        solidArea = new Rectangle(0, 0, 30, 30);
         getImage();
 
     }

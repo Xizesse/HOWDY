@@ -1,7 +1,5 @@
 package main;
 
-import net.Packet00Login;
-import net.Packet10Leave;
 import net.Packet01Logout;
 import object.OBJ_Heart;
 import object.SuperObject;
@@ -10,13 +8,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Objects;
 
 public class UI {
