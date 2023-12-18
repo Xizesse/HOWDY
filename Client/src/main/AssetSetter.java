@@ -17,12 +17,12 @@ public class AssetSetter {
 
     public void setObject() {
         gp.obj[0][0] = new OBJ_Helmet(gp, "iron");
-        gp.obj[0][0].worldX = 8 * gp.tileSize;
-        gp.obj[0][0].worldY = 13 * gp.tileSize;
+        gp.obj[0][0].worldX = 20 * gp.tileSize;
+        gp.obj[0][0].worldY = 10 * gp.tileSize;
 
         gp.obj[0][1] = new OBJ_Axe(gp);
-        gp.obj[0][1].worldX = 8 * gp.tileSize;
-        gp.obj[0][1].worldY = 14 * gp.tileSize;
+        gp.obj[0][1].worldX = 1 * gp.tileSize;
+        gp.obj[0][1].worldY = 12 * gp.tileSize;
         gp.obj[0][2] = new OBJ_Book(gp);
         gp.obj[0][2].worldX = 6 * gp.tileSize;
         gp.obj[0][2].worldY = 17 * gp.tileSize;
@@ -66,16 +66,16 @@ public class AssetSetter {
         gp.obj[0][6].worldY = 16 * gp.tileSize;
 
         gp.obj[0][7] = new OBJ_Shield(gp);
-        gp.obj[0][7].worldX = 8 * gp.tileSize;
+        gp.obj[0][7].worldX = 30 * gp.tileSize;
         gp.obj[0][7].worldY = 17 * gp.tileSize;
 
-        gp.obj[0][8] = new OBJ_Firefly(gp);
-        gp.obj[0][8].worldX = 8 * gp.tileSize;
-        gp.obj[0][8].worldY = 19 * gp.tileSize;
+//        gp.obj[0][8] = new OBJ_Firefly(gp);
+//        gp.obj[0][8].worldX = 8 * gp.tileSize;
+//        gp.obj[0][8].worldY = 19 * gp.tileSize;
 
         gp.obj[0][11] = new OBJ_Rune(gp, 'x');
-        gp.obj[0][11].worldX = 1 * gp.tileSize;
-        gp.obj[0][11].worldY = 16 * gp.tileSize;
+        gp.obj[0][11].worldX = 20 * gp.tileSize;
+        gp.obj[0][11].worldY = 15 * gp.tileSize;
 
         gp.obj[0][12] = new OBJ_Rune(gp, 'f');
         gp.obj[0][12].worldX = 1 * gp.tileSize;
@@ -83,14 +83,12 @@ public class AssetSetter {
 
 
         gp.obj[0][13] = new OBJ_Armour(gp, "iron");
-        gp.obj[0][13].worldX = 2 * gp.tileSize;
-        gp.obj[0][13].worldY = 14 * gp.tileSize;
+        gp.obj[0][13].worldX = 30 * gp.tileSize;
+        gp.obj[0][13].worldY = 13 * gp.tileSize;
 
         gp.obj[0][14] = new OBJ_Helmet(gp, "iron");
-        gp.obj[0][14].worldX = 2 * gp.tileSize;
-        gp.obj[0][14].worldY = 13 * gp.tileSize;
-
-
+        gp.obj[0][14].worldX = 20 * gp.tileSize;
+        gp.obj[0][14].worldY = 20 * gp.tileSize;
         //map 1
 
 
@@ -149,7 +147,7 @@ public class AssetSetter {
                 {25, 1, 4},
                 {25, 5, 5}
         };
-        gp.obj[1][1] = new OBJ_PP(gp, 11,temp, temp2);
+        gp.obj[1][1] = new OBJ_PP(gp, 11, temp, temp2);
         gp.obj[1][1].worldX = 7 * gp.tileSize;
         gp.obj[1][1].worldY = 8 * gp.tileSize;
 
@@ -204,7 +202,7 @@ public class AssetSetter {
                 {7, 1, 4},
                 {7, 5, 5}
         };
-        gp.obj[1][2] = new OBJ_PP(gp, 12,temp, temp2);
+        gp.obj[1][2] = new OBJ_PP(gp, 12, temp, temp2);
         gp.obj[1][2].worldX = 25 * gp.tileSize;
         gp.obj[1][2].worldY = 8 * gp.tileSize;
 
@@ -214,7 +212,7 @@ public class AssetSetter {
                 {25, 5, 13}
         };
         temp2 = new int[][]{};
-        gp.obj[1][3] = new OBJ_PP(gp, 13,temp, temp2);
+        gp.obj[1][3] = new OBJ_PP(gp, 13, temp, temp2);
         gp.obj[1][3].worldX = 25 * gp.tileSize;
         gp.obj[1][3].worldY = 1 * gp.tileSize;
 
@@ -223,7 +221,7 @@ public class AssetSetter {
                 {7, 5, 13}
         };
         temp2 = new int[][]{};
-        gp.obj[1][4] = new OBJ_PP(gp, 13,temp, temp2);
+        gp.obj[1][4] = new OBJ_PP(gp, 13, temp, temp2);
         gp.obj[1][4].worldX = 7 * gp.tileSize;
         gp.obj[1][4].worldY = 1 * gp.tileSize;
 
@@ -385,9 +383,35 @@ public class AssetSetter {
 //        gp.npc[0][1].worldX =  gp.tileSize * 7;
 //        gp.npc[0][1].worldY =  gp.tileSize * 15;
 //
+        // map 1
+        gp.npc[0][0] = new NPC_Rat(gp, 0);
+        gp.npc[0][0].worldX = 9 * gp.tileSize;
+        gp.npc[0][0].worldY = 11 * gp.tileSize;
+
+        gp.npc[0][1] = new NPC_Rat(gp, 0);
+        gp.npc[0][1].worldX = 10 * gp.tileSize;
+        gp.npc[0][1].worldY = 19 * gp.tileSize;
+
+
         gp.npc[0][2] = new Monster_Spike(gp, 0);
-        gp.npc[0][2].worldX = 4 * gp.tileSize;
-        gp.npc[0][2].worldY = 15 * gp.tileSize;
+        gp.npc[0][2].worldX = 25 * gp.tileSize;
+        gp.npc[0][2].worldY = 14 * gp.tileSize;
+
+        gp.npc[0][3] = new NPC_Rat(gp, 0);
+        gp.npc[0][3].worldX = 3 * gp.tileSize;
+        gp.npc[0][3].worldY = 12 * gp.tileSize;
+
+        gp.npc[0][4] = new NPC_Rat(gp, 0);
+        gp.npc[0][4].worldX = 22 * gp.tileSize;
+        gp.npc[0][4].worldY = 15 * gp.tileSize;
+
+        gp.npc[0][5] = new NPC_Rat(gp, 0);
+        gp.npc[0][5].worldX = 27 * gp.tileSize;
+        gp.npc[0][5].worldY = 16 * gp.tileSize;
+
+        gp.npc[0][6] = new NPC_Rat(gp, 0);
+        gp.npc[0][6].worldX = 21 * gp.tileSize;
+        gp.npc[0][6].worldY = 18 * gp.tileSize;
 
         //map 2
         gp.npc[1][0] = new Monster_Eye(gp, 1);
@@ -407,36 +431,48 @@ public class AssetSetter {
         gp.npc[1][3].worldY = 2 * gp.tileSize;
 
         gp.npc[1][4] = new Monster_Eye(gp, 1);
-        gp.npc[1][4].worldX =  28 * gp.tileSize;
+        gp.npc[1][4].worldX = 28 * gp.tileSize;
         gp.npc[1][4].worldY = 9 * gp.tileSize;
 
         gp.npc[1][5] = new Monster_Eye(gp, 1);
-        gp.npc[1][5].worldX =  15 * gp.tileSize;
+        gp.npc[1][5].worldX = 15 * gp.tileSize;
         gp.npc[1][5].worldY = 28 * gp.tileSize;
 
         gp.npc[1][6] = new Monster_Spike(gp, 1);
-        gp.npc[1][6].worldX =  22 * gp.tileSize;
+        gp.npc[1][6].worldX = 22 * gp.tileSize;
         gp.npc[1][6].worldY = 15 * gp.tileSize;
 
         gp.npc[1][6] = new Monster_Spike(gp, 1);
-        gp.npc[1][6].worldX =  22 * gp.tileSize;
+        gp.npc[1][6].worldX = 22 * gp.tileSize;
         gp.npc[1][6].worldY = 15 * gp.tileSize;
 
         gp.npc[1][7] = new Monster_Spike(gp, 1);
-        gp.npc[1][7].worldX =  7 * gp.tileSize;
+        gp.npc[1][7].worldX = 7 * gp.tileSize;
         gp.npc[1][7].worldY = 2 * gp.tileSize;
 
         gp.npc[1][8] = new Monster_Spike(gp, 1);
-        gp.npc[1][8].worldX =  25 * gp.tileSize;
+        gp.npc[1][8].worldX = 25 * gp.tileSize;
         gp.npc[1][8].worldY = 2 * gp.tileSize;
 
         gp.npc[1][9] = new Monster_Spike(gp, 1);
-        gp.npc[1][9].worldX =  25 * gp.tileSize;
+        gp.npc[1][9].worldX = 25 * gp.tileSize;
         gp.npc[1][9].worldY = 19 * gp.tileSize;
 
+        gp.npc[1][10] = new Monster_Stalker(gp, 1);
+        gp.npc[1][10].worldX = 22 * gp.tileSize;
+        gp.npc[1][10].worldY = 5 * gp.tileSize;
 
+        gp.npc[1][11] = new NPC_Rat(gp, 1);
+        gp.npc[1][11].worldX = 7 * gp.tileSize;
+        gp.npc[1][11].worldY = 12 * gp.tileSize;
 
+        gp.npc[1][12] = new NPC_Rat(gp, 1);
+        gp.npc[1][12].worldX = 7 * gp.tileSize;
+        gp.npc[1][12].worldY = 17 * gp.tileSize;
 
+        gp.npc[1][13] = new Monster_Stalker(gp, 1);
+        gp.npc[1][13].worldX = 21 * gp.tileSize;
+        gp.npc[1][13].worldY = 25 * gp.tileSize;
 
 
     }

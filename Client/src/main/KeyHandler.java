@@ -184,9 +184,9 @@ public class KeyHandler implements KeyListener {
         } else if (keysPressed[pauseKey]) {
             gp.new_gameState = gp.pauseState;
         } else if (keysPressed[devKey]) {
-            DEV_MODE = !DEV_MODE;
+//            DEV_MODE = !DEV_MODE;
         } else if (keysPressed[lightKey]) {
-            gp.LIGHT = !gp.LIGHT;
+//            gp.LIGHT = !gp.LIGHT;
         } else if (keysPressed[backKey]) {
             gp.new_gameState = gp.optionsState;
             gp.prev_gameState = gp.gameState;
@@ -194,7 +194,7 @@ public class KeyHandler implements KeyListener {
             gp.GOD = !gp.GOD;
             gp.LIGHT = !gp.LIGHT;
         } else if (keysPressed[KeyEvent.VK_E]) {   //TODO: This is temporary, should star with win packet. Remove this line
-            gp.new_gameState = gp.endState;
+//            gp.new_gameState = gp.endState;
         }
     }
 

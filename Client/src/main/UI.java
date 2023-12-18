@@ -76,6 +76,18 @@ public class UI {
             drawPlayerLife(g2d);
             drawInventory(g2d);
             drawInstructions(g2d);
+//            drawWorldCoordinates(g2d);
+
+            if (gp.player.map == 2) {
+                Color c = g2d.getColor();
+                g2d.setColor(Color.gray);
+                g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 35f));
+                String text = "Cross the bridge together to escape the dungeon";
+                int x = getXforCenteredText(text, g2d);
+                int y = gp.screenHeight - (int) g2d.getFont().getLineMetrics(text, g2d.getFontRenderContext()).getHeight();
+                g2d.drawString(text, x, y);
+                g2d.setColor(c);
+            }
 
         }
 
@@ -126,6 +138,14 @@ public class UI {
             }
             drawOptionsScreen(g2d);
         }
+    }
+
+    private void drawWorldCoordinates(Graphics2D g2d) {
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 20f));
+        String text = "X: " + gp.player.worldX / gp.tileSize + " Y: " + gp.player.worldY / gp.tileSize;
+        int x = getXforCenteredText(text, g2d);
+        int y = gp.screenHeight - gp.tileSize * 2;
+        g2d.drawString(text, x, y);
     }
 
     private BufferedImage loadTitleScreen() {

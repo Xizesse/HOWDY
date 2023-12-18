@@ -66,12 +66,12 @@ public class EventHandler {
             }
             //map 2 to 3
             if (hit(1, 30, 15, "right")) {
-                gp.LIGHT = !gp.LIGHT;
+//                gp.LIGHT = !gp.LIGHT;
                 teleport(gp.playState, 2, 1, 15);
             }
             //map 3 to 2
             if (hit(2, 1, 15, "left")) {
-                gp.LIGHT = !gp.LIGHT;
+//                gp.LIGHT = !gp.LIGHT;
                 teleport(gp.playState, 1, 30, 15);
             }
 
