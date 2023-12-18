@@ -5,6 +5,7 @@ import object.SuperObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -328,10 +329,9 @@ public class UI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //background = ut.scaleImage(background,gp.screenWidth2,gp.screenHeight2);
 
         g2d.drawImage(background, 0,0, gp.screenWidth2, gp.screenHeight2, null);
-/*
+
         //TITLE NAME
         g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
         String text = "Heroes Of War:";
@@ -340,12 +340,12 @@ public class UI {
         g2d.setColor(Color.WHITE);
         g2d.drawString(text, x, y);
 
-
+        /*
         //HERO IMAGE
         int scale = 3;
         x = gp.screenWidth / 2 - (gp.tileSize * scale) / 2;
         y += gp.tileSize;
-        g2d.drawImage(gp.player.titleArt, x, y, gp.tileSize * scale, gp.tileSize * scale, null);
+        g2d.drawImage(gp.player.titleArt, x, y, gp.tileSize * scale, gp.tileSize * scale, null);*/
 
         text = "Die Young";
         x = 338;
@@ -386,7 +386,7 @@ public class UI {
         g2d.drawString(text, x, y);
         if (commandNum == 2) {
             g2d.drawString(">", x - gp.tileSize, y);
-        }*/
+        }
 
     }
 
