@@ -226,7 +226,38 @@ public class GameServer extends Thread {
                         System.out.println("[" + address.getHostName() + "] port: " + port + ", entity" + p5.getEntityID() + " health " + p5.getHealth());
                     }
                 }
+            break;
+                case READY:
+                    Packet07Ready p7 = new Packet07Ready(data);
+                    System.out.println("[" + address.getHostName() + "] ready " + p7.getReady());
+                    //i received a ready packet from a player
+                    //check witch player is sending the packet
 
+                    for( NPC_Player player : game.players)
+                    {
+                        if(player != null )
+                        {
+                            if(player.ipAddress.equals(address) && player.port == port) {
+                                //update the ready status for the player
+                                player.ready = p7.getReady();
+                                //player.character = p7.getCharacter();
+                                //player.start = p7.getStart();
+                                //System.out.println("[" + address.getHostName() + " ready " + p7.getReady());
+                                sendDataToAllClientsExceptOne(p7.getData(), address, port);
+                                break;
+                            }
+                        }
+                    }
+                    //if both players are ready
+                    if(game.players.get(0).ready == 1 && game.players.get(1).ready == 1)
+                    {
+                        //send a packet to both players to start the game
+                        Packet07Ready p7_1 = new Packet07Ready(1, 0, 1);
+                        sendDataToAllClients(p7_1.getData());
+                        System.out.println("[" + address.getHostName() + "] port: " + port + ", game started");
+                        game.gameState = game.playState;
+                    }
+                    break;
         }
 
 

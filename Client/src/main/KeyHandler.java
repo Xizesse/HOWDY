@@ -132,6 +132,7 @@ public class KeyHandler implements KeyListener {
 
         if (keysPressed[confirmKey]) {
             gp.playerIsReady = !gp.playerIsReady;
+            gp.Ijustbecameready = true;
         }
     }
 

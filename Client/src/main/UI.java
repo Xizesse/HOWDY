@@ -73,7 +73,6 @@ public class UI {
             drawPlayerLife(g2d);
             drawInventory(g2d);
 
-
         }
 
         //read state

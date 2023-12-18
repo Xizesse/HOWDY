@@ -84,9 +84,31 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
                 System.out.println("Map change packet received");
                 handleMapChange((Packet06MapChange) packet);
                 break;
+            case READY:
+                packet = new Packet07Ready(data);
+                System.out.println("Ready packet received");
+                handleReady((Packet07Ready) packet);
+                break;
+
 
         }
 
+    }
+
+    private void handleReady(Packet07Ready packet) {
+        if (this.game!=null)
+        {
+            if ( packet.getStart() == 1)
+            {
+                game.gameState = game.playState;
+                game.new_gameState = game.playState;
+            }
+            else
+            {
+                game.player2.character = packet.getCharacter();
+                game.player2.ready = packet.getReady();
+            }
+        }
     }
 
     private void handleHealth(Packet05Health packet) {

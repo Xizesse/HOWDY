@@ -16,10 +16,11 @@ public class NPC_Player extends Entity
     //public NPC_Player player;
 
     public ArrayList<SuperObject> inventory = new ArrayList<>(10);
+    public int ready = 0;
     BufferedImage heartFull, heartHalf, heartEmpty;
     public boolean helmetOn = false;
     public int map;
-
+    public int character = 1;
     public int screenX, screenY;
     public int currentHealth, maxHealth;
     public int port;
