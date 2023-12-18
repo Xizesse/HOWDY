@@ -245,52 +245,48 @@ public class GameServer extends Thread {
                 //i received a ready packet from a player
                 //check witch player is sending the packet
 
-                    for( NPC_Player player : game.players)
-                    {
-                        if(player != null )
-                        {
-                            if(player.ipAddress.equals(address) && player.port == port) {
-                                //update the ready status for the player
-                                player.ready = p7.getReady();
-                                //player.character = p7.getCharacter();
-                                //player.start = p7.getStart();
-                                //System.out.println("[" + address.getHostName() + " ready " + p7.getReady());
-                                sendDataToAllClientsExceptOne(p7.getData(), address, port);
-                                break;
-                            }
+                for (NPC_Player player : game.players) {
+                    if (player != null) {
+                        if (player.ipAddress.equals(address) && player.port == port) {
+                            //update the ready status for the player
+                            player.ready = p7.getReady();
+                            //player.character = p7.getCharacter();
+                            //player.start = p7.getStart();
+                            //System.out.println("[" + address.getHostName() + " ready " + p7.getReady());
+                            sendDataToAllClientsExceptOne(p7.getData(), address, port);
+                            break;
                         }
                     }
-                    //if both players are ready
-                    if(game.players.get(0) == null || game.players.get(1) == null)
-                    {
-                        break;
-                    }
-                    if(game.players.get(0).ready == 1 && game.players.get(1).ready == 1)
-                    {
-                        //ready equals 0 again
-                        game.players.get(0).ready = 0;
-                        game.players.get(1).ready = 0;
-                        //send a packet to both players to start the game
-                        Packet07Ready p7_1 = new Packet07Ready(1, 0, 1);
-                        sendDataToAllClients(p7_1.getData());
-                        System.out.println("[" + address.getHostName() + "] port: " + port + ", game started");
-                        game.gameState = game.playState;
-                    }
+                }
+                //if both players are ready
+                if (game.players.get(0) == null || game.players.get(1) == null) {
                     break;
-                case LEAVE:
-                    //broadcast that packet
-                    //Packet10Leave p10 = new Packet10Leave();
-                    //sendDataToAllClients(p10.getData());
-                    //System.out.println("[" + address.getHostName() + "] port: " + port + ", left the game");
-                    //remove both players from the game
-                    //for(int i = 0; i < game.players.size(); i++)
-                    //{
-                    //    if(game.players.get(i) != null && game.players.get(i).ipAddress.equals(address) && game.players.get(i).port == port)
-                    //    {
-                    //        game.players.set(i, null);
-                    //        break;
-                    //    }
-                    //}
+                }
+                if (game.players.get(0).ready == 1 && game.players.get(1).ready == 1) {
+                    //ready equals 0 again
+                    game.players.get(0).ready = 0;
+                    game.players.get(1).ready = 0;
+                    //send a packet to both players to start the game
+                    Packet07Ready p7_1 = new Packet07Ready(1, 0, 1);
+                    sendDataToAllClients(p7_1.getData());
+                    System.out.println("[" + address.getHostName() + "] port: " + port + ", game started");
+                    game.gameState = game.playState;
+                }
+                break;
+//                case LEAVE:
+            //broadcast that packet
+            //Packet10Leave p10 = new Packet10Leave();
+            //sendDataToAllClients(p10.getData());
+            //System.out.println("[" + address.getHostName() + "] port: " + port + ", left the game");
+            //remove both players from the game
+            //for(int i = 0; i < game.players.size(); i++)
+            //{
+            //    if(game.players.get(i) != null && game.players.get(i).ipAddress.equals(address) && game.players.get(i).port == port)
+            //    {
+            //        game.players.set(i, null);
+            //        break;
+            //    }
+            //}
 
 
         }

@@ -59,7 +59,9 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
             case LOGOUT:
                 packet = new Packet01Logout(data);
                 if (((Packet01Logout) packet).getWin() == 1) {
-                    if (game.gameState != game.playState) { break; }
+                    if (game.gameState != game.playState) {
+                        break;
+                    }
                     System.out.println("You won the game!");
                     game.gameState = game.endState;
                     game.new_gameState = game.endState;
@@ -103,10 +105,10 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
                 System.out.println("Ready packet received");
                 handleReady((Packet07Ready) packet);
                 break;
-            case LEAVE:
-                System.out.println("Leave packet received");
-                handleLeave();
-                break;
+//            case LEAVE:
+//                System.out.println("Leave packet received");
+//                handleLeave();
+//                break;
 
         }
 
