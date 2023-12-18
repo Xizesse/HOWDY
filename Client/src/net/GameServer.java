@@ -138,6 +138,9 @@ public class GameServer extends Thread {
                         int map = game.players.get(i).map;
 //                        int damage = game.players.get(i).damage;
                         int damage = 1;
+                        if (game.players.get(i).weapon != null) {
+                            damage += game.players.get(i).weapon.tier;
+                        }
                         for (int j = 0; j < game.npc[map].length; j++) {
                             if (game.npc[map][j] != null) {
                                 //check colision with player
@@ -174,11 +177,11 @@ public class GameServer extends Thread {
                         int map = game.players.get(i).map;
                         if (game.obj[map][p4.getitemIndex()] != null) {
                             //check if the item is already given
-                            //send packet back to the player -> he recieves the item
+                            //send packet back to the player -> he receives the item
                             Packet04Object p4_2 = new Packet04Object(map, p4.getitemIndex(), true);
                             System.out.println("item from map " + map + " index " + p4.getitemIndex() + " given to player " + i);
                             if (game.obj[map][p4.getitemIndex()].equippable) {
-                                game.players.get(i).inventory.add(game.obj[map][p4.getitemIndex()]);
+                                game.players.get(i).giveItem(game.obj[map][p4.getitemIndex()]);
                             }
                             sendData(p4_2.getData(), address, port);
                             //send packet back to the other player -> he does not receive the item

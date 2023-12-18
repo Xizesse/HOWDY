@@ -10,7 +10,7 @@ import java.io.IOException;
 public class OBJ_Shield extends SuperObject {
 
     public OBJ_Shield(GamePanel gp){
-        name = "Stick";
+        name = "Shield";
         type = "shield";
         id = 1;
         tier = 1;

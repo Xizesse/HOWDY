@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NPC_Player extends Entity {
     public InetAddress ipAddress;
@@ -24,6 +25,11 @@ public class NPC_Player extends Entity {
     public int screenX, screenY;
     public int currentHealth, maxHealth;
     public int port;
+    public SuperObject helmet;
+    public SuperObject armour;
+    public SuperObject weapon;
+    public SuperObject shield;
+    public SuperObject boots;
 
     public NPC_Player(InetAddress ipAddress, int port, int x, int y, String direction, GamePanel gp, int map) {
         super(gp, map);
@@ -279,5 +285,24 @@ public class NPC_Player extends Entity {
             x += gp.tileSize / 3; // Move to the next position to draw the next heart
         }
     }
-
+    public void giveItem(SuperObject item) {
+        if (Objects.equals(item.type, "helmet")) {
+            helmet = item;
+            this.maxHealth += 1;
+            this.currentHealth += 1;
+        } else if (Objects.equals(item.type, "armour")) {
+            armour = item;
+            this.maxHealth += 2;
+            this.currentHealth += 2;
+        } else if (Objects.equals(item.type, "weapon")) {
+            weapon = item;
+        } else if (Objects.equals(item.type, "shield")) {
+            shield = item;
+        } else if (Objects.equals(item.type, "boots")) {
+            boots = item;
+            this.speed += 2;
+        } else {
+            inventory.add(item);
+        }
+    }
 }
