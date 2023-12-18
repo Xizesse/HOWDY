@@ -105,6 +105,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int joinState = 5;
     public final int waitingState = 6;
     public final int endState = 7;
+    public final int instructionsState = 8;
+    public final int aboutState = 9;
     public int endGame = 0;
     public int optionsBack = 0;
 
@@ -410,6 +412,10 @@ public class GamePanel extends JPanel implements Runnable {
                 prev_gameState = optionsState;
             }*/
         } else if (gameState == endState) {
+            ui.draw(g2d);
+        } else if(gameState == instructionsState){
+            ui.draw(g2d);
+        } else if(gameState == aboutState){
             ui.draw(g2d);
         }
         // DEBUG

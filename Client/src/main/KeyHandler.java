@@ -41,10 +41,6 @@ public class KeyHandler implements KeyListener {
     }
 
     private void titleKeys() {
-        if (keysPressed[backKey]) {
-            gp.new_gameState = gp.optionsState;
-            gp.prev_gameState = gp.titleState;
-        }
         if (keysPressed[upKey]) {
             gp.ui.commandNum--;
             if (gp.ui.commandNum < 0) gp.ui.commandNum = 4;
@@ -75,12 +71,26 @@ public class KeyHandler implements KeyListener {
                 gp.new_gameState = gp.joinState;
 
             }
+            //instructions
+            else if (gp.ui.commandNum == 2){
+                gp.new_gameState = gp.instructionsState;
+                gp.prev_gameState = gp.titleState;
+                gp.ui.commandNum = 0;
+            }
+            //about
+            else if (gp.ui.commandNum == 3){
+                gp.new_gameState = gp.aboutState;
+                gp.prev_gameState = gp.titleState;
+            }
             //exit
             else if (gp.ui.commandNum == 4) {
                 gp.exitgame = true;
             }
         }
-
+        if (keysPressed[backKey]) {
+            gp.new_gameState = gp.optionsState;
+            gp.prev_gameState = gp.gameState;
+        }
     }
 
     private void joinKeys() {
@@ -215,34 +225,34 @@ public class KeyHandler implements KeyListener {
         int maxcommandNum = 0;
         switch (gp.ui.subState) {
             case 0:
-                maxcommandNum = 5;
+                maxcommandNum = 4;
                 break;
             case 3:
                 maxcommandNum = 1;
                 break;
         }
         if (keysPressed[upKey]) {
-            gp.ui.commandNum--;
+            gp.ui.commandNum1--;
             //gp.playSE(9);
-            if (gp.ui.commandNum < 0) {
-                gp.ui.commandNum = maxcommandNum;
+            if (gp.ui.commandNum1 < 0) {
+                gp.ui.commandNum1 = maxcommandNum;
             }
         }
         if (keysPressed[downKey]) {
-            gp.ui.commandNum++;
+            gp.ui.commandNum1++;
             //gp.playSE(9);
-            if (gp.ui.commandNum > maxcommandNum) {
-                gp.ui.commandNum = 0;
+            if (gp.ui.commandNum1 > maxcommandNum) {
+                gp.ui.commandNum1 = 0;
             }
         }
         if (keysPressed[leftKey]) {
             if (gp.ui.subState == 0) {
-                if (gp.ui.commandNum == 1 && gp.music.volumeScale > 0) {
+                if (gp.ui.commandNum1 == 1 && gp.music.volumeScale > 0) {
                     gp.music.volumeScale--;
                     gp.music.checkVolume();
                     //gp.playSE(9);
                 }
-                    /*if(gp.ui.commandNum == 2 && gp.se.volumeScale > 0){
+                    /*if(gp.ui.commandNum1 == 2 && gp.se.volumeScale > 0){
                         gp.se.volumeScale--;
                         gp.playSE(9);
                     }*/
@@ -250,12 +260,12 @@ public class KeyHandler implements KeyListener {
         }
         if (keysPressed[rightKey]) {
             if (gp.ui.subState == 0) {
-                if (gp.ui.commandNum == 1 && gp.music.volumeScale < 5) {
+                if (gp.ui.commandNum1 == 1 && gp.music.volumeScale < 5) {
                     gp.music.volumeScale++;
                     gp.music.checkVolume();
                     //gp.playSE(9);
                 }
-                    /*if(gp.ui.commandNum == 2 && gp.se.volumeScale < 5){
+                    /*if(gp.ui.commandNum1 == 2 && gp.se.volumeScale < 5){
                         gp.se.volumeScale++;
                         gp.playSE(9);
                     }*/
@@ -266,6 +276,32 @@ public class KeyHandler implements KeyListener {
     private void readKeys() {
         if (keysPressed[confirmKey]) {
             gp.new_gameState = gp.playState;
+        }
+    }
+
+    private void instructionsKeys(){
+        if(keysPressed[rightKey]){
+            gp.ui.commandNum++;
+            if(gp.ui.commandNum > 5){
+                gp.ui.commandNum = 0;
+            }
+        }
+        if(keysPressed[leftKey]){
+            gp.ui.commandNum--;
+            if(gp.ui.commandNum < 0){
+                gp.ui.commandNum = 5;
+            }
+        }
+        if (keysPressed[backKey]) {
+            gp.new_gameState = gp.optionsState;
+            gp.prev_gameState = gp.gameState;
+        }
+    }
+
+    private void aboutKeys(){
+        if (keysPressed[backKey]) {
+            gp.new_gameState = gp.optionsState;
+            gp.prev_gameState = gp.gameState;
         }
     }
 
@@ -298,11 +334,19 @@ public class KeyHandler implements KeyListener {
         //OPTIONS STATE
         else if (gp.gameState == gp.optionsState) {
             optionsKeys();
-        } else if (gp.gameState == gp.endState) {
-
+        }
+        //END STATE
+        else if (gp.gameState == gp.endState) {
             if (keysPressed[confirmKey]) {
                 gp.new_gameState = gp.titleState;
             }
+        }
+        //INSTRUCTIONS STATE
+        else if (gp.gameState == gp.instructionsState){
+            instructionsKeys();
+        }
+        else if (gp.gameState == gp.aboutState){
+            aboutKeys();
         }
         gp.gameState = gp.new_gameState;
     }

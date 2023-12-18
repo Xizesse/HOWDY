@@ -20,11 +20,11 @@ public class UI {
     Font TimesRoman;
     BufferedImage heartFull, heartHalf, heartEmpty;
 
-    public int commandNum = 0;
+    public int commandNum = 0, commandNum1 = 0;
     int subState = 0;
     public String currentText = "";
     int i = 0;
-    private BufferedImage background;
+    private BufferedImage background, instructionimage;
 
     public UI(GamePanel gp, KeyHandler keyH) {
         this.keyH = keyH;
@@ -59,16 +59,19 @@ public class UI {
         //title state
         if (gp.gameState == gp.titleState) {
             drawTitleScreen(g2d);
+            drawInstructions(g2d);
         }
 
         //join state
         if (gp.gameState == gp.joinState) {
             drawJoinScreen(g2d);
+            drawInstructions(g2d);
         }
 
         //waiting state
         if (gp.gameState == gp.waitingState) {
             drawWaitingScreen(g2d);
+            drawInstructions(g2d);
         }
 
         //play state
@@ -135,8 +138,26 @@ public class UI {
                 drawPauseScreen(g2d);
                 drawPlayerLife(g2d);
                 drawInventory(g2d);
+            } else if (gp.prev_gameState == gp.titleState){
+                drawTitleScreen(g2d);
+            } else if (gp.prev_gameState == gp.joinState){
+                drawJoinScreen(g2d);
+            } else if (gp.prev_gameState == gp.waitingState){
+                drawWaitingScreen(g2d);
+            } else if (gp.prev_gameState == gp.instructionsState){
+                drawInstructionsScreen(g2d);
+            } else if (gp.prev_gameState == gp.aboutState){
+                drawAboutScreen(g2d);
             }
             drawOptionsScreen(g2d);
+        }
+        if (gp.gameState == gp.instructionsState){
+            drawInstructions(g2d);
+            drawInstructionsScreen(g2d);
+        }
+        if(gp.gameState == gp.aboutState){
+            drawInstructions(g2d);
+            drawAboutScreen(g2d);
         }
     }
 
@@ -481,7 +502,7 @@ public class UI {
         x = getXforCenteredText(text, g2d);
         y += gp.tileSize - 15;
         g2d.drawString(text, x, y);
-        if (commandNum == 3) {
+        if (commandNum == 3){
             g2d.drawString(">", x - gp.tileSize, y);
         }
 
@@ -498,7 +519,73 @@ public class UI {
             g2d.drawString(">", x - gp.tileSize, y);
         }
         drawInstructions(g2d);
+    }
 
+    private void drawInstructionsScreen(Graphics2D g2d){
+        g2d.setFont(JimNightshade.deriveFont(Font.BOLD, 80f));
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("Instructions", getXforCenteredText("Instructions", g2d), 156);
+        int textX = gp.tileSize * 5, textY = gp.tileSize * 6;
+        g2d.setFont(JimNightshade.deriveFont(Font.BOLD, 200f));
+
+        Color c = new Color(185, 169, 169);
+        g2d.setColor(c);
+        g2d.drawRect(gp.tileSize * 4, 248, gp.tileSize * 16, gp.tileSize * 9);
+        g2d.fillRect(gp.tileSize * 4, 248, gp.tileSize * 16, gp.tileSize * 9);
+
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 30f));
+
+        currentText = "This is a 2 player game. One of the players should choose the option Host,\nand the other one the option Join, entering the Hosts IP address.";
+        for (String line : currentText.split("\n")) {
+            g2d.drawString(line, textX, textY);
+            textY += 40;
+        }
+        textY += 15;
+        currentText = "For movement, use the arrow keys to go up, down, left or right, or a\ncombination of two to go diagonally.";
+        for (String line : currentText.split("\n")) {
+            g2d.drawString(line, textX, textY);
+            textY += 40;
+        }
+        textY += 15;
+        currentText = "Use the space bar to attack and simply walk over the items to pick them up.";
+        for (String line : currentText.split("\n")) {
+            g2d.drawString(line, textX, textY);
+            textY += 40;
+        }
+        textY += 15;
+        currentText = "If you find a pressure plate, your teammate should find an open door\nto go through.";
+        for (String line : currentText.split("\n")) {
+            g2d.drawString(line, textX, textY);
+            textY += 40;
+        }
+        textY += 15;
+        currentText = "At any time, press the ESC key for the options menu.";
+        for (String line : currentText.split("\n")) {
+            g2d.drawString(line, textX, textY);
+            textY += 40;
+        }
+    }
+
+    private void drawAboutScreen(Graphics2D g2d){
+        g2d.setFont(JimNightshade.deriveFont(Font.BOLD, 80f));
+        g2d.setColor(Color.WHITE);
+        g2d.drawString("Instructions", getXforCenteredText("Instructions", g2d), 156);
+        int textX = gp.tileSize * 5, textY = gp.tileSize * 6;
+        g2d.setFont(JimNightshade.deriveFont(Font.BOLD, 200f));
+
+        Color c = new Color(185, 169, 169);
+        g2d.setColor(c);
+        g2d.drawRect(gp.tileSize * 4, 248, gp.tileSize * 16, gp.tileSize * 9);
+        g2d.fillRect(gp.tileSize * 4, 248, gp.tileSize * 16, gp.tileSize * 9);
+
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 30f));
+        currentText = "We are a group of Master's students in Electrical and Computer Engineering\nat the Faculty of Engineering of the University of Porto. We developed this\ngame as a part of our Software Design course. Thanks for playing our game!";
+        for (String line : currentText.split("\n")) {
+            g2d.drawString(line, textX, textY);
+            textY += 40;
+        }
     }
 
     public int getXforCenteredText(String text, Graphics2D g2d) {
@@ -528,9 +615,9 @@ public class UI {
     }
 
     private void drawOptionsScreen(Graphics2D g2d) {
-        int x = gp.tileSize * 4;
+        int x = gp.tileSize * 7;
         int y = gp.tileSize * 2;
-        int width = gp.tileSize * 8;
+        int width = gp.tileSize * 10;
         int height = gp.tileSize * 10;
         Color c = new Color(0, 0, 0, 210);
         g2d.setColor(c);
@@ -564,12 +651,14 @@ public class UI {
         String text = "Options";
         textX = getXforCenteredText(text, g2d);
         textY = frameY + gp.tileSize;
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 35f));
         g2d.drawString(text, textX, textY);
 
         textX = frameX + gp.tileSize;
         textY += gp.tileSize * 2;
         g2d.drawString("Full Screen", textX, textY);
-        if (commandNum == 0) {
+        if (commandNum1 == 0) {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 if (!gp.fullScreenOn) {
@@ -583,49 +672,49 @@ public class UI {
 
         textY += gp.tileSize;
         g2d.drawString("Music", textX, textY);
-        if (commandNum == 1) {
+        if (commandNum1 == 1) {
             g2d.drawString(">", textX - 25, textY);
         }
 
-        textY += gp.tileSize;
+        /*textY += gp.tileSize;
         g2d.drawString("SE", textX, textY);
-        if (commandNum == 2) {
+        if (commandNum1 == 2) {
             g2d.drawString(">", textX - 25, textY);
-        }
+        }*/
 
         textY += gp.tileSize;
         g2d.drawString("Control", textX, textY);
-        if (commandNum == 3) {
+        if (commandNum1 == 2) {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 2;
-                commandNum = 0;
+                commandNum1 = 0;
             }
         }
 
         textY += gp.tileSize;
         g2d.drawString("Exit to main menu", textX, textY);
-        if (commandNum == 4) {
+        if (commandNum1 == 3) {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 3;
-                commandNum = 0;
+                commandNum1 = 0;
             }
         }
 
 
-        textY += gp.tileSize * 2;
+        textY += gp.tileSize * 3;
         g2d.drawString("Back", textX, textY);
-        if (commandNum == 5) {
+        if (commandNum1 == 4) {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 gp.gameState = gp.prev_gameState;
                 gp.new_gameState = gp.prev_gameState;
-                commandNum = 0;
+                commandNum1 = 0;
             }
         }
 
-        textX = frameX + (int) (gp.tileSize * 4.5);
+        textX = frameX + gp.tileSize * 2 + (int) (gp.tileSize * 4.5);
         textY = frameY + gp.tileSize * 2 + 24;
         g2d.setStroke(new BasicStroke(3));
         g2d.drawRect(textX, textY, 24, 24);
@@ -638,20 +727,21 @@ public class UI {
         int volumeWidth = 24 * gp.music.volumeScale;
         g2d.fillRect(textX, textY, volumeWidth, 24);
 
-        textY += gp.tileSize;
+        /*textY += gp.tileSize;
         g2d.drawRect(textX, textY, 120, 24);
         //volumeWidth = 24 * gp.se.volumeScale;
-        g2d.fillRect(textX, textY, volumeWidth, 24);
+        g2d.fillRect(textX, textY, volumeWidth, 24);*/
 
-        gp.config.
-                saveConfig();
+        gp.config.saveConfig();
     }
 
     private void options_fullScreenNotification(int frameX, int frameY, Graphics2D g2d) {
         int textX = frameX + gp.tileSize;
         int textY = frameY + gp.tileSize * 3;
 
-        currentText = "The change will take \neffect after restarting \nthe game.";
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 35f));
+        currentText = "The change will take effect after\nrestarting the game.";
 
         for (String line : currentText.split("\n")) {
             g2d.drawString(line, textX, textY);
@@ -660,7 +750,7 @@ public class UI {
 
         textY = frameY + gp.tileSize * 9;
         g2d.drawString("Back", textX, textY);
-        if (commandNum == 0) {
+        if (commandNum1 == 0) {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
@@ -671,6 +761,9 @@ public class UI {
     private void options_control(int frameX, int frameY, Graphics2D g2d) {
         int textX;
         int textY;
+
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 35f));
 
         String text = "Control";
         textX = getXforCenteredText(text, g2d);
@@ -710,11 +803,11 @@ public class UI {
         textX = frameX + gp.tileSize;
         textY = frameY + gp.tileSize * 9;
         g2d.drawString("Back", textX, textY);
-        if (commandNum == 0) {
+        if (commandNum1 == 0) {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
-                commandNum = 3;
+                commandNum1 = 3;
             }
         }
     }
@@ -722,8 +815,10 @@ public class UI {
     private void options_endGameConfirmation(int x, int y, Graphics2D g2d) {
         int textX = x + gp.tileSize;
         int textY = y + gp.tileSize * 3;
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 35f));
 
-        currentText = "Quit the game and \nreturn to the title screen?";
+        currentText = "Quit the game and return to the\ntitle screen?";
         for (String line : currentText.split("\n")) {
             g2d.drawString(line, textX, textY);
             textY += 40;
@@ -733,7 +828,7 @@ public class UI {
         textX = getXforCenteredText(text, g2d);
         textY += gp.tileSize * 3;
         g2d.drawString(text, textX, textY);
-        if (commandNum == 0) {
+        if (commandNum1 == 0) {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
@@ -752,7 +847,15 @@ public class UI {
                     gp.gameState = gp.titleState;
                     gp.new_gameState = gp.titleState;
 
-                } else {
+                } else if (gp.prev_gameState == gp.instructionsState) {
+                    gp.gameState = gp.titleState;
+                    gp.new_gameState = gp.titleState;
+
+                } else if (gp.prev_gameState == gp.aboutState) {
+                    gp.gameState = gp.titleState;
+                    gp.new_gameState = gp.titleState;
+
+                }else {
                     Packet01Logout logoutPacket = new Packet01Logout(0);
                     logoutPacket.writeData(gp.socketClient);
                     System.out.println("DISCONNECTING");
@@ -766,11 +869,11 @@ public class UI {
         textX = getXforCenteredText(text, g2d);
         textY += gp.tileSize;
         g2d.drawString(text, textX, textY);
-        if (commandNum == 1) {
+        if (commandNum1 == 1) {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
-                commandNum = 4;
+                commandNum1 = 4;
             }
         }
     }
