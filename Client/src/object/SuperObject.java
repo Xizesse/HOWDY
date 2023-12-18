@@ -55,7 +55,6 @@ public class SuperObject {
 
             g2d.drawImage(image, screenX, screenY, null);
         }
-
     }
     public void interact(){
 

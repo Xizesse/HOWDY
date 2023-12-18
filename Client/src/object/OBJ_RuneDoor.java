@@ -16,8 +16,7 @@ public OBJ_RuneDoor(GamePanel gp, char shape) {
         this.shape = shape;
         equippable = false;
         this.gp = gp;
-        this.solidArea = new Rectangle(-1,-1,50,50);
-
+        this.solidArea = new Rectangle(0,0,gp.tileSize+2,gp.tileSize+2);
     }
 
 

@@ -25,7 +25,7 @@ public class UI {
     public int commandNum = 0;
     int subState = 0;
     public String currentText = "";
-    int i = 0
+    int i = 0;
     private BufferedImage background;
 
     public UI(GamePanel gp, KeyHandler keyH) {
@@ -722,6 +722,5 @@ public class UI {
             g2d.drawString(line, x, y - i);
             y += 80;
         }
-        System.out.println(i);
     }
 }
