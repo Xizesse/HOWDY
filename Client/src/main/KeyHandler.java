@@ -38,11 +38,11 @@ public class KeyHandler implements KeyListener {
     private void titleKeys() {
         if (keysPressed[upKey]) {
             gp.ui.commandNum--;
-            if (gp.ui.commandNum < 0) gp.ui.commandNum = 2;
+            if (gp.ui.commandNum < 0) gp.ui.commandNum = 4;
         }
         if (keysPressed[downKey]) {
             gp.ui.commandNum++;
-            if (gp.ui.commandNum > 2) gp.ui.commandNum = 0;
+            if (gp.ui.commandNum > 4) gp.ui.commandNum = 0;
 
         }
         if (keysPressed[confirmKey]) {
@@ -59,7 +59,7 @@ public class KeyHandler implements KeyListener {
 
             }
             //exit
-            else if (gp.ui.commandNum == 2) {
+            else if (gp.ui.commandNum == 4) {
                 System.exit(0);
             }
         }
