@@ -356,8 +356,7 @@ public class UI {
     }
 
     private void drawTitleScreen(Graphics2D g2d) {
-        g2d.drawImage(background, 0,0, gp.screenWidth, gp.screenHeight
-                , null);
+        g2d.drawImage(background, 0,0, gp.screenWidth, gp.screenHeight, null);
         Color c = new Color(0, 0, 0, 0.35f);
         g2d.setColor(c);
         g2d.drawRect(0, 0, gp.screenWidth, gp.screenHeight);
@@ -369,13 +368,6 @@ public class UI {
         int y = 170;
         g2d.setColor(Color.WHITE);
         g2d.drawString(text, x, y);
-
-        /*
-        //HERO IMAGE
-        int scale = 3;
-        x = gp.screenWidth / 2 - (gp.tileSize * scale) / 2;
-        y += gp.tileSize;
-        g2d.drawImage(gp.player.titleArt, x, y, gp.tileSize * scale, gp.tileSize * scale, null);*/
 
         text = "Die Young";
         x = 688;
@@ -391,44 +383,70 @@ public class UI {
         //MENU
         affineTransform.rotate(Math.toRadians(20.31), 0, 0);
         g2d.setFont(IngridDarling.deriveFont(affineTransform));
-        g2d.setColor(Color.WHITE);
         g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 48f));
 
+        y += gp.tileSize;
+        int rectheight = gp.tileSize - 12;
+        c = new Color(0, 0, 0, 0.6f);
+        g2d.setColor(c);
+        g2d.drawRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.fillRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.setColor(Color.WHITE);
         text = "Host Game";
         x = getXforCenteredText(text, g2d);
-        y += gp.tileSize + 30;
+        y += gp.tileSize - 15;
         g2d.drawString(text, x, y);
         if (commandNum == 0) {
             g2d.drawString(">", x - gp.tileSize, y);
         }
 
+        y += 15;
+        g2d.setColor(c);
+        g2d.drawRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.fillRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.setColor(Color.WHITE);
         text = "Join Game";
         x = getXforCenteredText(text, g2d);
-        y += gp.tileSize;
+        y += gp.tileSize - 15;
         g2d.drawString(text, x, y);
         if (commandNum == 1) {
             g2d.drawString(">", x - gp.tileSize, y);
         }
 
+        y += 15;
+        g2d.setColor(c);
+        g2d.drawRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.fillRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.setColor(Color.WHITE);
         text = "Instructions";
         x = getXforCenteredText(text, g2d);
-        y += gp.tileSize;
+        y += gp.tileSize - 15;
         g2d.drawString(text, x, y);
         if (commandNum == 2) {
             g2d.drawString(">", x - gp.tileSize, y);
         }
 
+        y += 15;
+        g2d.setColor(c);
+        g2d.drawRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.fillRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.setColor(Color.WHITE);
         text = "About";
         x = getXforCenteredText(text, g2d);
-        y += gp.tileSize;
+        y += gp.tileSize - 15;
         g2d.drawString(text, x, y);
         if (commandNum == 3) {
             g2d.drawString(">", x - gp.tileSize, y);
         }
 
+        y += 15;
+        g2d.setColor(c);
+        g2d.drawRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.fillRect(gp.tileSize * 9, y, gp.tileSize * 6, rectheight);
+        g2d.setColor(Color.WHITE);
         text = "Quit";
         x = getXforCenteredText(text, g2d);
-        y += gp.tileSize;
+        y += gp.tileSize - 15;
         g2d.drawString(text, x, y);
         if (commandNum == 4) {
             g2d.drawString(">", x - gp.tileSize, y);
