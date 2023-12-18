@@ -296,9 +296,7 @@ public class KeyHandler implements KeyListener {
         } else if (gp.gameState == gp.endState) {
 
             if (keysPressed[confirmKey]) {
-                //envia a packet de close connection
-
-                gp.new_gameState = gp.titleState;   //TODO: title state reset server
+                gp.new_gameState = gp.titleState;
             }
         }
         gp.gameState = gp.new_gameState;

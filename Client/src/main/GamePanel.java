@@ -445,7 +445,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void performClosingActions() {
 
         if (socketClient != null) {
-            Packet01Logout logoutPacket = new Packet01Logout();
+            Packet01Logout logoutPacket = new Packet01Logout(0);
             logoutPacket.writeData(socketClient);
             System.out.println("DISCONNECTING");
             socketClient.close();

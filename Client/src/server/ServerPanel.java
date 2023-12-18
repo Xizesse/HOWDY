@@ -142,7 +142,11 @@ public class ServerPanel extends GamePanel {
                 if (players.get(0).map == 2 && players.get(1).map == 2) {    // win condition
                     System.out.println(players.get(0).worldX / tileSize + " , " + players.get(1).worldX / tileSize);
                     if (players.get(0).worldX / tileSize > 26 && players.get(1).worldX / tileSize > 26) {
-                        System.out.println("ya win"); //TODO: send win packet
+                        System.out.println("ya win");
+                        Packet01Logout p1 = new Packet01Logout(1);
+                        socketServer.sendData(p1.getData(), players.get(0).ipAddress, players.get(0).port);
+                        socketServer.sendData(p1.getData(), players.get(1).ipAddress, players.get(1).port);
+                        //TODO : Kill server
 
                     }
                 }

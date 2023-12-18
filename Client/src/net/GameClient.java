@@ -57,8 +57,20 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
                 game.new_gameState = game.waitingState;
                 break;
             case LOGOUT:
-                game.gameState = game.titleState;
-                game.new_gameState = game.titleState;
+                packet = new Packet01Logout(data);
+                if (((Packet01Logout) packet).getWin() == 1) {
+                    if (game.gameState != game.playState) { break; }
+                    System.out.println("You won the game!");
+                    game.gameState = game.endState;
+                    game.new_gameState = game.endState;
+
+                } else {
+                    System.out.println("You left the game!");
+                    game.gameState = game.titleState;
+                    game.new_gameState = game.titleState;
+                }
+
+
                 break;
 
             case MOVE:

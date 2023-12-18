@@ -715,7 +715,7 @@ public class UI {
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
                 //Send Logout packet
-                Packet01Logout logoutPacket = new Packet01Logout();
+                Packet01Logout logoutPacket = new Packet01Logout(0);
                 logoutPacket.writeData(gp.socketClient);
                 System.out.println("DISCONNECTING");
                 gp.socketClient.close();

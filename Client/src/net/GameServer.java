@@ -114,7 +114,7 @@ public class GameServer extends Thread {
             case LOGOUT:
                 //if a player loged out
                 //broadcast logout packet
-                Packet01Logout p1 = new Packet01Logout();
+                Packet01Logout p1 = new Packet01Logout(0);
                 sendDataToAllClients(p1.getData());
 
                 //remove all players
