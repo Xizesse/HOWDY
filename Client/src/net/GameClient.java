@@ -52,7 +52,7 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
                 break;
             case LOGIN:
                 packet = new Packet00Login();
-                System.out.println("[" + address.getHostAddress() + "][port: " + port + "] has joined the game...");
+                System.out.println("you have joined the game...");
                 game.gameState = game.waitingState;
                 game.new_gameState = game.waitingState;
                 break;
@@ -96,15 +96,11 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
     }
 
     private void handleReady(Packet07Ready packet) {
-        if (this.game!=null)
-        {
-            if ( packet.getStart() == 1)
-            {
+        if (this.game != null) {
+            if (packet.getStart() == 1) {
                 game.gameState = game.playState;
                 game.new_gameState = game.playState;
-            }
-            else
-            {
+            } else {
                 game.player2Skin = packet.getCharacter();
                 game.player2IsReady = packet.getReady() == 1 ? true : false;
             }

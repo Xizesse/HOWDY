@@ -49,8 +49,9 @@ public class KeyHandler implements KeyListener {
             //host
             if (gp.ui.commandNum == 0) {
                 gp.playerIsHoast = true;
-
-                gp.new_gameState = gp.waitingState;
+                gp.ipInserted = true;
+                gp.userInputedServerIP = "localhost";
+                //wait for game panel to update gamestate
             }
             //join
             else if (gp.ui.commandNum == 1) {
@@ -66,6 +67,10 @@ public class KeyHandler implements KeyListener {
     }
 
     private void joinKeys() {
+        if (keysPressed[backKey]) {
+            gp.new_gameState = gp.optionsState;
+            gp.prev_gameState = gp.gameState;
+        }
         for (int i = KeyEvent.VK_A; i <= KeyEvent.VK_Z; i++) {
             if (keysPressed[i]) {
                 gp.userInputedServerIP
@@ -121,7 +126,6 @@ public class KeyHandler implements KeyListener {
 //            gp.new_gameState = gp.waitingState;
         }
     }
-
 
     private void waitingKeys() {
         if (keysPressed[backKey]) {
@@ -242,6 +246,7 @@ public class KeyHandler implements KeyListener {
     }
 
     private void handleKeys() {
+        // TITLE STATE
         if (gp.gameState == gp.titleState) {
             titleKeys();
         }
@@ -249,7 +254,9 @@ public class KeyHandler implements KeyListener {
         else if (gp.gameState == gp.joinState) {
             joinKeys();
 
-        } else if (gp.gameState == gp.waitingState) {
+        }
+        // WAITING STATE
+        else if (gp.gameState == gp.waitingState) {
             waitingKeys();
         }
         //PLAY STATE

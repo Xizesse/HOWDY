@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int originalTileSize = 16; // 16x16 pixels
     public final int scale = 3; // 3x scale
     public final int tileSize = originalTileSize * scale; // 48x48 pixels
-    public final int maxScreenCol = 24; // 24 tiles wide
+    public final int maxScreenCol = 16; // 24 tiles wide
     public final int maxScreenRow = 16; // 16 tiles tall
     public final int screenWidth = tileSize * maxScreenCol; // 768 pixels wide
     public final int screenHeight = tileSize * maxScreenRow; // 768 pixels tal
@@ -176,6 +176,20 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        if (gameState == titleState) {
+            if (playerIsHoast) {
+                if (!(this instanceof ServerPanel)) {
+                    socketClient = new GameClient(this, userInputedServerIP);
+                    socketClient.start();
+                    Packet00Login loginPacket = new Packet00Login();
+                    loginPacket.writeData(socketClient);
+                    System.out.println("Client Socket started");
+                    //socketClient.sendData("ping".getBytes());
+                    ipInserted = false;
+                }
+
+            }
+        }
         if (gameState == joinState) {
             if (ipInserted) {
                 if (!(this instanceof ServerPanel)) {
@@ -189,15 +203,14 @@ public class GamePanel extends JPanel implements Runnable {
                 }
             }
         }
-        if (gameState == waitingState){
-            if (Ijustbecameready){
+        if (gameState == waitingState) {
+            if (Ijustbecameready) {
                 Packet07Ready readyPacket = new Packet07Ready(playerIsReady ? 1 : 0, player1Skin, 0);
                 System.out.println("Sending ready packet " + readyPacket.getReady());
                 readyPacket.writeData(socketClient);
                 Ijustbecameready = false;
             }
         }
-
         if (gameState == playState) {
             player.update();
             //player2.update(); <- This is done by the client thread

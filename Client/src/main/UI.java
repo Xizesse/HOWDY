@@ -330,10 +330,10 @@ public class UI {
             e.printStackTrace();
         }
 
-        g2d.drawImage(background, 0,0, gp.screenWidth2, gp.screenHeight2, null);
+        g2d.drawImage(background, 0, 0, gp.screenWidth2, gp.screenHeight2, null);
 
         //TITLE NAME
-        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
+//        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 60f));
         String text = "Heroes Of War:";
         int x = 56;
         int y = 132;
@@ -352,7 +352,7 @@ public class UI {
         y = 210;
         AffineTransform affineTransform = new AffineTransform();
         affineTransform.rotate(Math.toRadians(-20.31), 0, 0);
-        g2d.setFont(OldEnglish.deriveFont(affineTransform));
+//        g2d.setFont(OldEnglish.deriveFont(affineTransform));
         g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 50f));
         Color c = new Color(214, 61, 61);
         g2d.setColor(c);
@@ -360,7 +360,7 @@ public class UI {
 
         //MENU
         affineTransform.rotate(Math.toRadians(20.31), 0, 0);
-        g2d.setFont(OldEnglish.deriveFont(affineTransform));
+//        g2d.setFont(OldEnglish.deriveFont(affineTransform));
         g2d.setColor(Color.WHITE);
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 48f));
 
