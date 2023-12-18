@@ -399,8 +399,42 @@ public class AssetSetter {
         gp.npc[1][1].worldY = 2 * gp.tileSize;
 
         gp.npc[1][2] = new Monster_Spike(gp, 1);
-        gp.npc[1][2].worldX = 1 * gp.tileSize;
-        gp.npc[1][2].worldY = 3 * gp.tileSize;
+        gp.npc[1][2].worldX = 15 * gp.tileSize;
+        gp.npc[1][2].worldY = 8 * gp.tileSize;
+
+        gp.npc[1][3] = new Monster_Eye(gp, 1);
+        gp.npc[1][3].worldX = 1 * gp.tileSize;
+        gp.npc[1][3].worldY = 2 * gp.tileSize;
+
+        gp.npc[1][4] = new Monster_Eye(gp, 1);
+        gp.npc[1][4].worldX =  28 * gp.tileSize;
+        gp.npc[1][4].worldY = 9 * gp.tileSize;
+
+        gp.npc[1][5] = new Monster_Eye(gp, 1);
+        gp.npc[1][5].worldX =  15 * gp.tileSize;
+        gp.npc[1][5].worldY = 28 * gp.tileSize;
+
+        gp.npc[1][6] = new Monster_Spike(gp, 1);
+        gp.npc[1][6].worldX =  22 * gp.tileSize;
+        gp.npc[1][6].worldY = 15 * gp.tileSize;
+
+        gp.npc[1][6] = new Monster_Spike(gp, 1);
+        gp.npc[1][6].worldX =  22 * gp.tileSize;
+        gp.npc[1][6].worldY = 15 * gp.tileSize;
+
+        gp.npc[1][7] = new Monster_Spike(gp, 1);
+        gp.npc[1][7].worldX =  7 * gp.tileSize;
+        gp.npc[1][7].worldY = 2 * gp.tileSize;
+
+        gp.npc[1][8] = new Monster_Spike(gp, 1);
+        gp.npc[1][8].worldX =  25 * gp.tileSize;
+        gp.npc[1][8].worldY = 2 * gp.tileSize;
+
+        gp.npc[1][9] = new Monster_Spike(gp, 1);
+        gp.npc[1][9].worldX =  25 * gp.tileSize;
+        gp.npc[1][9].worldY = 19 * gp.tileSize;
+
+
 
 
 
