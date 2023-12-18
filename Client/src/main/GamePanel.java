@@ -191,6 +191,7 @@ public class GamePanel extends JPanel implements Runnable {
                     System.out.println("Client Socket started");
                     //socketClient.sendData("ping".getBytes());
                     ipInserted = false;
+                    playerIsHoast = false;
                 }
 
             }

@@ -57,6 +57,8 @@ public class GameClient extends Thread { // extends Thread so we can run it in t
                 game.new_gameState = game.waitingState;
                 break;
             case LOGOUT:
+                game.gameState = game.titleState;
+                game.new_gameState = game.titleState;
                 break;
 
             case MOVE:

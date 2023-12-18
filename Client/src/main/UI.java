@@ -1,5 +1,6 @@
 package main;
 
+import net.Packet01Logout;
 import object.OBJ_Heart;
 import object.SuperObject;
 
@@ -655,8 +656,12 @@ public class UI {
             g2d.drawString(">", textX - 25, textY);
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
-                gp.gameState = gp.titleState;
-                gp.new_gameState = gp.titleState;
+                //Send Logout packet
+                Packet01Logout logoutPacket = new Packet01Logout();
+                logoutPacket.writeData(gp.socketClient);
+                System.out.println("DISCONNECTING");
+                gp.socketClient.close();
+
             }
         }
 

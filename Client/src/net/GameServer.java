@@ -112,15 +112,17 @@ public class GameServer extends Thread {
 
 
             case LOGOUT:
-                //take the player out of the game
-                //System.out.println("["+address.getHostName()+"] port: "+port+", has left the game...");
-                for (int i = 0; i < game.players.size(); i++) {
-                    if (game.players.get(i) != null && game.players.get(i).ipAddress.equals(address) && game.players.get(i).port == port) {
-                        game.players.set(i, null);
-                        System.out.println("[" + address.getHostName() + "] port: " + port + ", has left the game...");
-                        break;
-                    }
-                }
+                //if a player loged out
+                //broadcast logout packet
+                Packet01Logout p1 = new Packet01Logout();
+                sendDataToAllClients(p1.getData());
+
+                //remove all players
+                game.players.set(0, null);
+                game.players.set(1, null);
+
+
+
 
                 break;
 
@@ -267,18 +269,18 @@ public class GameServer extends Thread {
                     break;
                 case LEAVE:
                     //broadcast that packet
-                    Packet10Leave p10 = new Packet10Leave();
-                    sendDataToAllClients(p10.getData());
-                    System.out.println("[" + address.getHostName() + "] port: " + port + ", left the game");
+                    //Packet10Leave p10 = new Packet10Leave();
+                    //sendDataToAllClients(p10.getData());
+                    //System.out.println("[" + address.getHostName() + "] port: " + port + ", left the game");
                     //remove both players from the game
-                    for(int i = 0; i < game.players.size(); i++)
-                    {
-                        if(game.players.get(i) != null && game.players.get(i).ipAddress.equals(address) && game.players.get(i).port == port)
-                        {
-                            game.players.set(i, null);
-                            break;
-                        }
-                    }
+                    //for(int i = 0; i < game.players.size(); i++)
+                    //{
+                    //    if(game.players.get(i) != null && game.players.get(i).ipAddress.equals(address) && game.players.get(i).port == port)
+                    //    {
+                    //        game.players.set(i, null);
+                    //        break;
+                    //    }
+                    //}
 
 
         }

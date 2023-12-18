@@ -228,7 +228,6 @@ public class KeyHandler implements KeyListener {
                     }*/
             }
         }
-
         if (keysPressed[rightKey]) {
             if (gp.ui.subState == 0) {
                 if (gp.ui.commandNum == 1 && gp.music.volumeScale < 5) {
