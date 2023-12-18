@@ -55,7 +55,6 @@ public class UI {
     }
 
     public void draw(Graphics2D g2d) {
-//        g2d.setFont(OldEnglish.deriveFont(Font.BOLD, 20f));
         g2d.setColor(Color.WHITE);
 
         //title state
@@ -275,10 +274,8 @@ public class UI {
     }
 
     private void drawInventory(Graphics2D g2d) {
-
-
-        int x = gp.screenWidth2 - 3 * gp.tileSize - gp.tileSize / 2;
-        int y = gp.screenWidth2 - gp.tileSize * 4 - gp.tileSize;
+        int x = gp.screenWidth - gp.tileSize * 4;
+        int y = gp.screenHeight - gp.tileSize * 7;
 
         //black square with transparency and a white border
         Color b = new Color(0, 0, 0, 100);
@@ -310,8 +307,8 @@ public class UI {
         if (gp.player.weapon != null) g2d.drawImage(gp.player.weapon.image, x, y, null);
 
 
-        x = gp.screenWidth - gp.tileSize - gp.tileSize / 2;
-        y = gp.screenWidth - gp.tileSize - gp.tileSize / 2;
+        x = gp.screenWidth - gp.tileSize * 2;
+        y = gp.screenHeight - gp.tileSize * 3;
 
 
         for (int i = 0; i < gp.player.inventory.size(); i++) {
@@ -358,7 +355,8 @@ public class UI {
     }
 
     private void drawTitleScreen(Graphics2D g2d) {
-        g2d.drawImage(background, 0,0, gp.screenWidth2, gp.screenHeight2, null);
+        g2d.drawImage(background, 0,0, gp.screenWidth, gp.screenHeight
+                , null);
         Color c = new Color(0, 0, 0, 0.35f);
         g2d.setColor(c);
         g2d.drawRect(0, 0, gp.screenWidth, gp.screenHeight);
