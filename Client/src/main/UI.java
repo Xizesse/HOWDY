@@ -177,7 +177,7 @@ public class UI {
 
     private void drawWaitingScreen(Graphics2D g2d) {
         g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 30f));
-        String text = "Select your character bitch Using the fucking arrows you little boomer";
+        String text = "Select your character using the arrow keys";
         int x = getXforCenteredText(text, g2d);
         int y = gp.screenHeight / 9;
         g2d.drawString(text, x, y);
@@ -244,10 +244,10 @@ public class UI {
         //draw player 2 state
         if (gp.player2IsReady) {
             g2d.setColor(Color.green);
-            text = "a putinha esta pronta";
+            text = "Player 2 is ready";
         } else {
             g2d.setColor(Color.red);
-            text = "a putinha nao esta pronta";
+            text = "Player 2 is not ready";
         }
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 30f));
         textWidth = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();

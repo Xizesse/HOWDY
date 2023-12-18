@@ -2,6 +2,7 @@ package main;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -52,6 +53,11 @@ public class KeyHandler implements KeyListener {
         if (keysPressed[confirmKey]) {
             //host
             if (gp.ui.commandNum == 0) {
+                try {
+                    Main.launchServer();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 System.out.println("hosting");
                 gp.playerIsHoast = true;
                 gp.showGameCode = true;
@@ -298,22 +304,18 @@ public class KeyHandler implements KeyListener {
 
     private boolean IPisValid(String ip) {
         if (ip.length() == 7) {
-            System.out.println("IP is 7 + " + ip);
-
             byte[] bytes = new BigInteger(ip, 36).toByteArray();
             int zeroPrefixLength = zeroPrefixLength(bytes);
 
             ip = "";
 
             for (int i = zeroPrefixLength; i < bytes.length; i++) {
-                System.out.println(bytes[i] & 0xFF);
                 ip += bytes[i] & 0xFF;
                 ip += ".";
             }
 
             ip = ip.substring(0, ip.length() - 1); //remove last dot
 
-            System.out.println("IP is now " + ip);
             gp.userInputedServerIP = ip;
             return IPisValid(ip);
         }
@@ -322,7 +324,6 @@ public class KeyHandler implements KeyListener {
             return true;
         }
 
-        System.out.println("IP before regex is " + ip);
         Pattern p = Pattern.compile("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$");
         Matcher m = p.matcher(ip);
         return m.matches();
@@ -363,7 +364,6 @@ public class KeyHandler implements KeyListener {
 //            System.out.println(b & 0xFF);
         }
 
-        System.out.println(new BigInteger(1, bytes).toString(36));
 
         return new BigInteger(1, bytes).toString(36);
     }

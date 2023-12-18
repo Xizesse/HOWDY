@@ -2,6 +2,8 @@ package main;
 
 
 import net.Packet00Login;
+import server.MainServer;
+import server.ServerPanel;
 
 import javax.swing.JFrame;
 import java.awt.event.WindowAdapter;
@@ -9,10 +11,12 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.security.PublicKey;
 
+
 public class Main {
 
     public static boolean DEV_MODE = false;
     public static JFrame window;
+
 
     public static void main(String[] args) throws IOException {
 
@@ -50,4 +54,10 @@ public class Main {
             }
         });
     }
+
+    public static void launchServer() throws IOException {
+        MainServer.main(null);
+    }
+
+
 }
