@@ -201,6 +201,8 @@ public class Entity {
                 case "right":
                     worldX += speed;
                     break;
+                default:
+                    break;
             }
         }
         spriteCounter++;

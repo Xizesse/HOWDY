@@ -495,6 +495,7 @@ public class UI {
             y += gp.tileSize / 1.5;
         }
 
+
     }
 
     private void drawOptionsScreen(Graphics2D g2d) {
@@ -708,10 +709,22 @@ public class UI {
             if (gp.keyH.keysPressed[keyH.confirmKey]) {
                 subState = 0;
                 //Send Logout packet
-                Packet01Logout logoutPacket = new Packet01Logout(0);
-                logoutPacket.writeData(gp.socketClient);
-                System.out.println("DISCONNECTING");
-                gp.socketClient.close();
+                if (gp.prev_gameState == gp.waitingState) {
+                    Packet01Logout logoutPacket = new Packet01Logout(0);
+                    logoutPacket.writeData(gp.socketClient);
+                    System.out.println("DISCONNECTING");
+                    gp.socketClient.close();
+                    return;
+                } else if (gp.prev_gameState == gp.joinState) {
+                    gp.gameState = gp.titleState;
+                    gp.new_gameState = gp.titleState;
+                    return;
+                } else {
+                    Packet01Logout logoutPacket = new Packet01Logout(0);
+                    logoutPacket.writeData(gp.socketClient);
+                    System.out.println("DISCONNECTING");
+                    gp.socketClient.close();
+                }
 
             }
         }
@@ -743,16 +756,16 @@ public class UI {
 
     private void drawEndGameScreen(int i, Graphics2D g2d) {
         String text = "Heroes Of War\n"
-                    + "Die Young\n"
-                    + "\n\n\n\n\n"
-                    + "by: \n"
-                    + " \n"
-                    + "Xizesse\n"
-                    + "Lucca\n"
-                    + "Xanax\n"
-                    + "Érico\n"
-                    + "\n\nThe End\n\n"
-                    + "Press Enter to return\nto the title screen" ;
+                + "Die Young\n"
+                + "\n\n\n\n\n"
+                + "by: \n"
+                + " \n"
+                + "Xizesse\n"
+                + "Lucca\n"
+                + "Xanax\n"
+                + "Érico\n"
+                + "\n\nThe End\n\n"
+                + "Press Enter to return\nto the title screen";
         g2d.setColor(Color.BLACK);
         g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2d.setColor(Color.WHITE);

@@ -32,6 +32,11 @@ public class Monster_Eye extends Entity {
         BodyLeft2 = setup("monster_eye/eye_left2");
         BodyRight1 = setup("monster_eye/eye_right1");
         BodyRight2 = setup("monster_eye/eye_right2");
+
+        attackUp = setup("monster_eye/eye_attack_left");
+        attackDown = setup("monster_eye/eye_attack_right");
+        attackLeft = setup("monster_eye/eye_attack_left");
+        attackRight = setup("monster_eye/eye_attack_right");
     }
 
     @Override
