@@ -2,6 +2,11 @@ package main;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.math.BigInteger;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,7 +52,9 @@ public class KeyHandler implements KeyListener {
         if (keysPressed[confirmKey]) {
             //host
             if (gp.ui.commandNum == 0) {
+                System.out.println("hosting");
                 gp.playerIsHoast = true;
+                gp.showGameCode = true;
                 gp.ipInserted = true;
                 gp.userInputedServerIP = "localhost";
                 //wait for game panel to update gamestate
@@ -138,6 +145,7 @@ public class KeyHandler implements KeyListener {
             }
             if (gp.player1Skin > 1) {
                 gp.player1Skin = 0;
+                gp.waitingRoomUpdate = true;
             }
         }
 
@@ -147,8 +155,9 @@ public class KeyHandler implements KeyListener {
                 gp.waitingRoomUpdate = true;
             }
 
-            if (gp.player1Skin < 1) {
+            if (gp.player1Skin < 0) {
                 gp.player1Skin = 1;
+                gp.waitingRoomUpdate = true;
             }
         }
 
@@ -288,13 +297,75 @@ public class KeyHandler implements KeyListener {
     }
 
     private boolean IPisValid(String ip) {
+        if (ip.length() == 7) {
+            System.out.println("IP is 7 + " + ip);
+
+            byte[] bytes = new BigInteger(ip, 36).toByteArray();
+            int zeroPrefixLength = zeroPrefixLength(bytes);
+
+            ip = "";
+
+            for (int i = zeroPrefixLength; i < bytes.length; i++) {
+                System.out.println(bytes[i] & 0xFF);
+                ip += bytes[i] & 0xFF;
+                ip += ".";
+            }
+
+            ip = ip.substring(0, ip.length() - 1); //remove last dot
+
+            System.out.println("IP is now " + ip);
+            gp.userInputedServerIP = ip;
+            return IPisValid(ip);
+        }
+
         if (Objects.equals(ip, "localhost")) {
             return true;
         }
 
+        System.out.println("IP before regex is " + ip);
         Pattern p = Pattern.compile("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$");
-        Matcher m = p.matcher(gp.userInputedServerIP);
-        return m.find();
+        Matcher m = p.matcher(ip);
+        return m.matches();
+    }
+
+    private int zeroPrefixLength(final byte[] bytes) {
+        for (int i = 0; i < bytes.length; i++) {
+            if (bytes[i] != 0) {
+                return i;
+            }
+        }
+        return bytes.length;
+    }
+
+    public String getIPcode() {
+        String ip = "";
+        try (final DatagramSocket socket = new DatagramSocket()) {
+            try {
+                socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+            } catch (UnknownHostException e) {
+                throw new RuntimeException(e);
+            }
+            ip = socket.getLocalAddress().getHostAddress();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        InetAddress ip2 = null;
+
+        try {
+            ip2 = InetAddress.getByName(ip);
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+
+        byte[] bytes = ip2.getAddress();
+        for (byte b : bytes) {
+//            System.out.println(b & 0xFF);
+        }
+
+        System.out.println(new BigInteger(1, bytes).toString(36));
+
+        return new BigInteger(1, bytes).toString(36);
     }
 
     @Override

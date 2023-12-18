@@ -77,6 +77,8 @@ public class GamePanel extends JPanel implements Runnable {
     public boolean player2IsReady = false;
     public boolean playerIsHoast = false;
 
+    public boolean showGameCode = false;
+
     //FULL SCREEN
     int screenWidth2 = screenWidth;
     int screenHeight2 = screenHeight;

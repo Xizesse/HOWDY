@@ -13,6 +13,10 @@ import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Objects;
 
 public class UI {
@@ -102,13 +106,17 @@ public class UI {
 
             long delta = 0;
             long lastTime = System.currentTimeMillis();
-            while (true){
+            while (true) {
                 delta = System.currentTimeMillis() - lastTime;
                 if (delta >= 10) {
                     if (i < 50) {
                         drawEndGameScreen(0, g2d);
-                    } else { drawEndGameScreen (i-50, g2d);}
-                    if (i<=1150){i++;}
+                    } else {
+                        drawEndGameScreen(i - 50, g2d);
+                    }
+                    if (i <= 1150) {
+                        i++;
+                    }
                     break;
                 }
             }
@@ -127,7 +135,7 @@ public class UI {
         }
     }
 
-    private BufferedImage loadTitleScreen(){
+    private BufferedImage loadTitleScreen() {
         background = new BufferedImage(gp.screenWidth, gp.screenHeight, BufferedImage.TYPE_INT_RGB);
         try {
             background = ImageIO.read(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("title_screen/titleScreen.png")));
@@ -139,13 +147,13 @@ public class UI {
 
     private void drawJoinScreen(Graphics2D g2d) {
         //TITLE NAME
-        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 18f));
-        String text = "Insert server ip address format (xxx.xxx.xxx.xxx) non zero";
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 35f));
+        String text = "Insert Game Code";
         int x = getXforCenteredText(text, g2d);
         int y = gp.screenHeight / 4;
         g2d.drawString(text, x, y);
 
-        text = "IP: " + gp.userInputedServerIP;
+        text = "Code: " + gp.userInputedServerIP.toUpperCase();
         x = getXforCenteredText(text, g2d);
         y += gp.tileSize * 2;
         g2d.drawString(text, x, y);
@@ -156,7 +164,7 @@ public class UI {
         g2d.drawString(text, x, y);
 
         if (keyH.invalidIPinserted) {
-            text = "Pede para a sua mae te ensinar a escrever um IP";
+            text = "Servidor nao encontrado";
             x = getXforCenteredText(text, g2d);
             y = gp.screenHeight - gp.tileSize * 2;
 
@@ -246,6 +254,16 @@ public class UI {
         x = (gp.screenWidth * 4 / 6) + ((gp.tileSize * scale) - textWidth) / 2;
         g2d.drawString(text, x, y);
 
+        if (gp.showGameCode) {
+            String base36 = keyH.getIPcode();
+
+            g2d.setColor(Color.white);
+            text = "Game code: " + base36.toUpperCase();
+            textHeight = (int) g2d.getFont().getLineMetrics(text, g2d.getFontRenderContext()).getHeight();
+            x = getXforCenteredText(text, g2d);
+            y = gp.screenHeight - textHeight / 2;
+            g2d.drawString(text, x, y);
+        }
 
     }
 
@@ -253,9 +271,9 @@ public class UI {
         int x = gp.tileSize / 2;
         int y;
 
-        if(gp.fullScreenOn){
+        if (gp.fullScreenOn) {
             y = gp.screenHeight - gp.tileSize * 2;
-        } else{
+        } else {
             y = gp.screenHeight - gp.tileSize * 3;
         }
         int i = 0;
@@ -280,9 +298,9 @@ public class UI {
     private void drawInventory(Graphics2D g2d) {
         int x = gp.screenWidth - gp.tileSize * 4;
         int y;
-        if(gp.fullScreenOn){
+        if (gp.fullScreenOn) {
             y = gp.screenHeight - gp.tileSize * 6;
-        } else{
+        } else {
             y = gp.screenHeight - gp.tileSize * 7;
         }
 
@@ -317,9 +335,9 @@ public class UI {
 
 
         x = gp.screenWidth - gp.tileSize * 2;
-        if(gp.fullScreenOn){
+        if (gp.fullScreenOn) {
             y = gp.screenHeight - gp.tileSize * 2;
-        } else{
+        } else {
             y = gp.screenHeight - gp.tileSize * 3;
         }
 
@@ -337,14 +355,13 @@ public class UI {
             g2d.drawImage(gp.player.inventory.get(i).image, x, y, null);
             x -= gp.tileSize;
         }
-
     }
 
     private void drawInstructions(Graphics2D g2d) {
 
         g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 35f));
         g2d.setColor(Color.WHITE);
-        g2d.drawString("< ESC", gp.tileSize/2, gp.tileSize);
+        g2d.drawString("< ESC", gp.tileSize / 2, gp.tileSize);
     }
 
     public void drawPauseScreen(Graphics2D g2d) {
@@ -356,7 +373,7 @@ public class UI {
     }
 
     private void drawTitleScreen(Graphics2D g2d) {
-        g2d.drawImage(background, 0,0, gp.screenWidth, gp.screenHeight, null);
+        g2d.drawImage(background, 0, 0, gp.screenWidth, gp.screenHeight, null);
         Color c = new Color(0, 0, 0, 0.35f);
         g2d.setColor(c);
         g2d.drawRect(0, 0, gp.screenWidth, gp.screenHeight);
@@ -368,6 +385,13 @@ public class UI {
         int y = 170;
         g2d.setColor(Color.WHITE);
         g2d.drawString(text, x, y);
+
+        /*
+        //HERO IMAGE
+        int scale = 3;
+        x = gp.screenWidth / 2 - (gp.tileSize * scale) / 2;
+        y += gp.tileSize;
+        g2d.drawImage(gp.player.titleArt, x, y, gp.tileSize * scale, gp.tileSize * scale, null);*/
 
         text = "Die Young";
         x = 688;
@@ -383,6 +407,7 @@ public class UI {
         //MENU
         affineTransform.rotate(Math.toRadians(20.31), 0, 0);
         g2d.setFont(IngridDarling.deriveFont(affineTransform));
+        g2d.setColor(Color.WHITE);
         g2d.setFont(JimNightshade.deriveFont(Font.PLAIN, 48f));
 
         y += gp.tileSize;
@@ -722,21 +747,22 @@ public class UI {
         g2d.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 35, 35);
 
     }
+
     private void drawEndGameScreen(int i, Graphics2D g2d) {
         String text = "Heroes Of War\n"
-                    + "Die Young\n"
-                    + "\n\n\n\n\n"
-                    + "by: Kiko\n"
-                    + "Lucca\n"
-                    + "Pedro\n"
-                    + "Érico\n"
-                    + "\n\nThe End\n\n"
-                    + "Press Enter to return\nto the title screen" ;
+                + "Die Young\n"
+                + "\n\n\n\n\n"
+                + "by: Kiko\n"
+                + "Lucca\n"
+                + "Pedro\n"
+                + "Érico\n"
+                + "\n\nThe End\n\n"
+                + "Press Enter to return\nto the title screen";
         g2d.setColor(Color.BLACK);
-        g2d.fillRect(0,0,gp.screenWidth,gp.screenHeight);
+        g2d.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         g2d.setColor(Color.WHITE);
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 60f));
-        int x ;
+        int x;
         int y = gp.screenHeight / 3;
         for (String line : text.split("\n")) {
             x = getXforCenteredText(line, g2d);
