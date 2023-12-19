@@ -201,8 +201,8 @@ public class KeyHandler implements KeyListener {
             gp.new_gameState = gp.optionsState;
             gp.prev_gameState = gp.gameState;
         } else if (keysPressed[godKey]) {
-            gp.GOD = !gp.GOD;
-            gp.LIGHT = !gp.LIGHT;
+            //gp.GOD = !gp.GOD;
+            //gp.LIGHT = !gp.LIGHT;
         } else if (keysPressed[KeyEvent.VK_E]) {   //TODO: This is temporary, should star with win packet. Remove this line
 //            gp.new_gameState = gp.endState;
         }

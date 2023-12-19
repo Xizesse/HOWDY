@@ -774,14 +774,11 @@ public class UI {
         textY += gp.tileSize;
         g2d.drawString("Move", textX, textY);
         textY += gp.tileSize;
-        g2d.drawString("Confirm/Attack", textX, textY);
+        g2d.drawString("Attack", textX, textY);
         textY += gp.tileSize;
-        g2d.drawString("Shoot/Cast", textX, textY);
+        g2d.drawString("Confirm", textX, textY);
         textY += gp.tileSize;
-        g2d.drawString("Character Screen", textX, textY);
-        textY += gp.tileSize;
-        g2d.drawString("Pause", textX, textY);
-        textY += gp.tileSize;
+
         g2d.drawString("Options", textX, textY);
         textY += gp.tileSize;
 
@@ -791,12 +788,9 @@ public class UI {
         textY += gp.tileSize;
         g2d.drawString("SPACE", textX, textY);
         textY += gp.tileSize;
-        g2d.drawString("F", textX, textY);
+        g2d.drawString("ENTER", textX, textY);
         textY += gp.tileSize;
-        g2d.drawString("C", textX, textY);
-        textY += gp.tileSize;
-        g2d.drawString("P", textX, textY);
-        textY += gp.tileSize;
+
         g2d.drawString("ESC", textX, textY);
         textY += gp.tileSize;
 
