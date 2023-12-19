@@ -35,6 +35,16 @@ class EventHandlerTest {
         eH.dmgPit(gp.playState);
         assertEquals(health-1, gp.player.currentHealth );
     }
+    @Test
+    void deathTest() {
+        this.gp.socketClient = new GameClient(gp, "localhost");
+        gp.player = new Player(gp, new KeyHandler(gp),1, 5, 5 );
+        eH.death(gp.playState, 0, 15, 15);
+        assertEquals(6, gp.player.currentHealth );
+        assertEquals(0, gp.currentMap);
+        assertEquals(15, gp.player.worldX/gp.tileSize);
+        assertEquals(15, gp.player.worldY/gp.tileSize);
+    }
 
     @Test
     void teleportTest() {
