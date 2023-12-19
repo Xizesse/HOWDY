@@ -351,7 +351,7 @@ public class AssetSetter {
                 {15, 21, 10},
                 {16, 21, 5}
         };
-        gp.obj[1][15] = new OBJ_PP(gp, 3, temp, temp2);
+        gp.obj[1][15] = new OBJ_PP(gp, 3, temp, temp);
         gp.obj[1][15].worldX = 14 * gp.tileSize;
         gp.obj[1][15].worldY = 20 * gp.tileSize;
 
