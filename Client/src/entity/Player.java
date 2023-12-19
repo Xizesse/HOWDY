@@ -19,8 +19,6 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    private int attackingX = 0;
-    private int attackingY = 0;
 
 
     //Player images [skin][direction]
@@ -523,23 +521,24 @@ public class Player extends Entity {
     }
 
     public void giveItem(SuperObject item) {
-        if (Objects.equals(item.type, "helmet")) {
-            helmet = item;
-            this.maxHealth += 2 * item.tier;
-            this.currentHealth += 2 * item.tier;
-        } else if (Objects.equals(item.type, "armour")) {
-            armour = item;
-            this.maxHealth += 2 * item.tier;
-            this.currentHealth += 2 * item.tier;
-        } else if (Objects.equals(item.type, "weapon")) {
-            weapon = item;
-        } else if (Objects.equals(item.type, "shield")) {
-            shield = item;
-        } else if (Objects.equals(item.type, "boots")) {
-            boots = item;
-            this.speed += 2;
-        } else {
-            inventory.add(item);
+        switch (item.type) {
+            case "helmet" -> {
+                helmet = item;
+                this.maxHealth += 2 * item.tier;
+                this.currentHealth += 2 * item.tier;
+            }
+            case "armour" -> {
+                armour = item;
+                this.maxHealth += 2 * item.tier;
+                this.currentHealth += 2 * item.tier;
+            }
+            case "weapon" -> weapon = item;
+            case "shield" -> shield = item;
+            case "boots" -> {
+                boots = item;
+                this.speed += 2;
+            }
+            case null, default -> inventory.add(item);
         }
     }
 }
