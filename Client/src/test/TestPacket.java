@@ -17,7 +17,7 @@ class PacketTest {
     @Test
     void testLookupPacketShouldReturnCorrectType() {
         assertEquals(Packet.PacketTypes.LOGIN, Packet.lookupPacket("00"), "Should return LOGIN type for '00'.");
-        assertEquals(Packet.PacketTypes.DISCONNECT, Packet.lookupPacket("01"), "Should return DISCONNECT type for '01'.");
+        assertEquals(Packet.PacketTypes.LOGOUT, Packet.lookupPacket("01"), "Should return DISCONNECT type for '01'.");
         assertEquals(Packet.PacketTypes.MOVE, Packet.lookupPacket("02"), "Should return MOVE type for '02'.");
         assertEquals(Packet.PacketTypes.INVALID, Packet.lookupPacket(-1), "Should return INVALID type for an undefined ID.");
     }

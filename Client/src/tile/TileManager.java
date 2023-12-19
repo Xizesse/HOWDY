@@ -14,16 +14,21 @@ import java.io.InputStreamReader;
 public class TileManager {
     GamePanel gp;
     public Tile[] tile;
-    public int[][] mapTileNum;
+    public int[][][] mapTileNum;
 
     public TileManager(GamePanel gp){
 
         this.gp = gp;
-        tile = new Tile[30];
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
+        tile = new Tile[99];
+        mapTileNum = new int[gp.maxMaps][gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/maps/map01.txt");
+        loadMap("/maps/map01.txt", 0);
+        loadMap("/maps/map02.txt", 1);
+        loadMap("/maps/map3.txt", 2);
+        loadMap("/maps/map4.txt", 3);
+        loadMap("/maps/map5.txt", 4);
+
     }
 
     public void getTileImage(){
@@ -45,6 +50,33 @@ public class TileManager {
         //door
         setup(5, "/tiles/door_clover5", true);
         setup(13, "/tiles/door_clover_openC", false);
+        setup(50, "/tiles/Door_openO", false);
+        setup(51, "/tiles/DoorL", true);
+        setup(53, "/tiles/door_pauseP", true);
+
+        //outside
+        setup(14, "/tiles/grass1", false);
+        setup(15, "/tiles/grass2", false);
+        setup(16, "/tiles/bush", true);
+        setup(17, "/tiles/water", false);
+        setup(18, "/tiles/upplank", true);
+        setup(19, "/tiles/downplank", true);
+        setup(20, "/tiles/planks", false);
+        setup(21, "/tiles/leftsand", true);
+        setup(22, "/tiles/rightsand", true);
+
+        setup(23, "/tiles/rockright", true);
+        setup(24, "/tiles/rockleft", true);
+
+        setup(25, "/tiles/rockupleft", true);
+        setup(26, "/tiles/rockupright", true);
+        setup(27, "/tiles/rockdownleft", true);
+        setup(28, "/tiles/rockdownright", true);
+
+        setup(29, "/tiles/ffdown", true);
+        setup(30, "/tiles/ffup", true);
+        setup(31, "/tiles/ffleft", true);
+        setup(32, "/tiles/ffright", true);
 
 
     }
@@ -64,7 +96,7 @@ public class TileManager {
         }
     }
 
-    public void loadMap(String mapFilePath) {
+    public void loadMap(String mapFilePath, int mapIndex) {
         try {
             InputStream is = getClass().getResourceAsStream(mapFilePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -79,7 +111,7 @@ public class TileManager {
                     char tileChar = line.charAt(col * 2); // Assuming there's a space between each char in the map file
                     int num = charToTileIndex(tileChar); // Convert the character to a tile index
 
-                    mapTileNum[col][row] = num;
+                    mapTileNum[mapIndex][col][row] = num;
                     col++;
                 }
 
@@ -104,29 +136,66 @@ public class TileManager {
             case '2': return 2; // floor_moss2
             case '6': return 6; // floor_vert_magic6
             case '7': return 7; // floor_hor_magic7
-            case '8': return 8; // wall_vert_magic8
-            case '9': return 9; // wall_hor_magic9
+            case 'v': return 8; // wall_vert_magic8
+            case 'h': return 9; // wall_hor_magic9
             //wall
             case '1': return 1; // wall1
             case '3': return 3; // wall_moss3
             case 'H': return 10; // wall_crack_horH
             case 'V': return 11; // wall_crack_vertV
+
+            //force field
+            case 'X': return 10; // force field down
+            case 'Y': return 11; // force field up
+            case 'Z': return 12; // force field left
+
             //pp
             case '4': return 4; // pp_clover4
             case 'A': return 12; // pp_clover4
             //door
             case '5': return 5; // door_clover5
             case 'C': return 13; // door_clover open
+            case 'O': return 50; // RuneDoor open
+            case '!': return 51; // DoorL
+            case '#': return 53; // door_pauseP
 
+
+            //outside
+            case 'g': return 14; // grass1
+            case 'G': return 15; // grass2
+            case 'b': return 16; // bush
+            case 'W' : return 17; // water
+            case 'P':return 18; // plank top
+            case 'p':return 19; // plank bottom
+            case 'B':return 20; // bridge
+
+            case 's': return 21; // sandLeft
+            case 'S': return 22; // sandRight
+
+            case 'r': return 23; // rockright
+            case 'l': return 24; // rockleft
+
+            case 'u': return 25; // rockupleft
+            case 'U': return 26; // rockupright
+            case 'd': return 27; // rockdownleft
+            case 'D': return 28; // rockdownright
+
+            //force field
+            case 'F': return 29; // force field down
+            case 'K': return 30; // force field up
+            case 'I': return 31; // force field left
+            case 'J': return 32; // force field right
 
             // ... Add more cases for additional tiles
-            default: return -1; // Error case, character not recognized
+            default:
+                System.out .println("Unrecognized character: " + tileChar);
+                return -1; // Error case, character not recognized
         }
     }
 
-    public void updateMap(int x, int y, int newTile){
+    public void updateMap(int mapIndex, int x, int y, int newTile){
 
-        mapTileNum[x][y] = newTile;
+        mapTileNum[mapIndex][x][y] = newTile;
     }
 
     public void draw(Graphics2D g2d){
@@ -137,7 +206,7 @@ public class TileManager {
 
         while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow){
 
-            int tileType = mapTileNum[worldCol][worldRow];
+            int tileType = mapTileNum[gp.currentMap][worldCol][worldRow];
 
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;

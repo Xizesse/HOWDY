@@ -8,13 +8,19 @@ import java.awt.image.BufferedImage;
 
 public class SuperObject {
     public BufferedImage image, image2, image3;
+    public BufferedImage up,down,left,right;
+    public boolean equippable = false;
     public String name;
+    public String type;
+    public int tier;
     public byte id;
     public boolean collision = false;
     public int worldX, worldY;
     public Rectangle solidArea = new Rectangle(0,0,48,48);
     public int solidAreaDefaultX = 0;
     public int SolidAreaDefaultY = 0;
+
+    public boolean isItOn = false;
 
     UtilityTool uT = new UtilityTool();
 
@@ -49,9 +55,13 @@ public class SuperObject {
 
             g2d.drawImage(image, screenX, screenY, null);
         }
+    }
+    public void interact(){
 
     }
-
     public void readChapter(GamePanel gp) {
+    }
+
+    public void turnOff() {
     }
 }

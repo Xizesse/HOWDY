@@ -8,12 +8,12 @@ import java.util.Random;
 public class NPC_Rat extends Entity {
 
 
-    public NPC_Rat(GamePanel gp) {
-        super(gp);
-        //System.out.println("npc constructor created");
+    public NPC_Rat(GamePanel gp, int map) {
+        super(gp, map);
+
 
         direction = "down";
-        speed = 1;
+        speed = 4;
         getImage();
 
         solidArea = new Rectangle(0, 4 * 3, 14*3, 7*3);
@@ -31,7 +31,7 @@ public class NPC_Rat extends Entity {
     }
     @Override
     public void setAction() {
-        //System.out.println("npc action");
+
         actionCounter ++;
         if (actionCounter > 40){
             Random random = new Random();
@@ -40,13 +40,15 @@ public class NPC_Rat extends Entity {
                 direction = "left";
             }
             else if (i <= 50) {
-                direction = "left";
+                direction = "right";
             }
             else if (i <= 75) {
-                direction = "right";
+                direction = "down" +
+                        "" +
+                        "";
             }
             else if (i <= 100) {
-                direction = "right";
+                direction = "up";
             }
             actionCounter = 0;
         }

@@ -4,17 +4,18 @@
 
 02 - Move -
 
-03 - Attack - //TODO
-Sends the attacked areas and the damage dealth
+03 - Attack -
+
 
 04 - object -
 
-05 - take damage - //TODO
+05 - health - //TODO
+send a map id health
 
 06 - mapChange -
 when collision to a pressure plate
 when collision to a door and I have the correct key
 -> I ask the server for the changes, and the server broadcasts the changes
 format : level, number of changes, x y newTile
-//TODO : do those changes on the client
+//TODO : do these changes also on the server side
 

@@ -3,31 +3,46 @@ package entity;
 import main.GamePanel;
 import main.KeyHandler;
 import net.*;
+import object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class Player extends Entity {
+
 
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
 
-    public boolean helmetOn = false;
+    private int attackingX = 0;
+    private int attackingY = 0;
 
-    public BufferedImage HelmetUp, HelmetDown, HelmetLeft, HelmetRight;
 
+    //Player images [skin][direction]
+    BufferedImage[][] sprites = new BufferedImage[2][8];
 
-    public Player(GamePanel gp, KeyHandler keyH, int x, int y) {
-        super(gp);
+    //Inventory and slots
+    public SuperObject helmet;
+    public SuperObject armour;
+    public SuperObject weapon;
+    public SuperObject shield;
+    public SuperObject boots;
+    //and then standard inventory
+    public ArrayList<SuperObject> inventory = new ArrayList<>(10);
+
+    public Player(GamePanel gp, KeyHandler keyH, int x, int y, int map) {
+        super(gp, map);
         this.keyH = keyH;
 
         screenX = gp.screenWidth / 2 - gp.tileSize / 2;
         screenY = gp.screenHeight / 2 - gp.tileSize / 2;
 
-        solidArea = new Rectangle(16,16, 16, 24);
+        solidArea = new Rectangle(16, 16, 16, 24);
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
@@ -36,13 +51,13 @@ public class Player extends Entity {
 
         speed = 8;
         direction = "down";
-        this.worldX = gp.tileSize* x;
-        this.worldY = gp.tileSize* y;
+        this.worldX = gp.tileSize * x;
+        this.worldY = gp.tileSize * y;
         getPlayerImage();
         //PLayer stats
         maxHealth = 6;
         currentHealth = maxHealth;
-        //System.out.println("Player created on (" + x + "," + y + ")");
+
     }
 
     public void setDefaultValue() {
@@ -52,25 +67,30 @@ public class Player extends Entity {
         direction = "down";
 
 
-
     }
 
     public void getPlayerImage() {
 
-        bodyUp1 = setup("player1/boy_up_1");
-        bodyUp2 = setup("player1/boy_up_2");
-        bodyDown1 = setup("player1/boy_down_1");
-        bodyDown2 = setup("player1/boy_down_2");
-        BodyLeft1 = setup("player1/boy_left_1");
-        BodyLeft2 = setup("player1/boy_left_2");
-        BodyRight1 = setup("player1/boy_right_1");
-        BodyRight2 = setup("player1/boy_right_2");
+        sprites[0][0] = setup("player1/boy_up_1");
+        sprites[0][1] = setup("player1/boy_up_2");
+        sprites[0][2] = setup("player1/boy_down_1");
+        sprites[0][3] = setup("player1/boy_down_2");
+        sprites[0][4] = setup("player1/boy_left_1");
+        sprites[0][5] = setup("player1/boy_left_2");
+        sprites[0][6] = setup("player1/boy_right_1");
+        sprites[0][7] = setup("player1/boy_right_2");
         titleArt = setup("player1/boy_title_art");
 
-        HelmetUp = setup("player1/ironHelmet_up");
-        HelmetDown = setup("player1/ironHelmet_down");
-        HelmetLeft = setup("player1/ironHelmet_left");
-        HelmetRight = setup("player1/ironHelmet_right");
+        sprites[1][0] = setup("girl/girl_up_1");
+        sprites[1][1] = setup("girl/girl_up_2");
+        sprites[1][2] = setup("girl/girl_down_1");
+        sprites[1][3] = setup("girl/girl_down_2");
+        sprites[1][4] = setup("girl/girl_left_1");
+        sprites[1][5] = setup("girl/girl_left_2");
+        sprites[1][6] = setup("girl/girl_right_1");
+        sprites[1][7] = setup("girl/girl_right_2");
+        titleArt = setup("girl/girl_title_art");
+
 
         attackUp = setup("attack/attack_up");
         attackDown = setup("attack/attack_down");
@@ -81,90 +101,87 @@ public class Player extends Entity {
     }
 
 
-@Override
+    @Override
     public void update() {
-        if (isAttacking){
+        if (gp.GOD) {
+            this.speed = 20;
+        } else {
+            this.speed = 8;
+        }
+        if (isAttacking) {
             attack();
         }
         //MOVEMENT AND COLLISION CHECKING
-        else if (keyH.downPressed|| keyH.upPressed|| keyH.leftPressed|| keyH.rightPressed || keyH.spacePressed) {
-            if (keyH.spacePressed) {
+        else if (keyH.keysPressed[keyH.downKey] || keyH.keysPressed[keyH.upKey] || keyH.keysPressed[keyH.leftKey] || keyH.keysPressed[keyH.rightKey] || keyH.keysPressed[keyH.attackKey]) {
+            if (keyH.keysPressed[keyH.attackKey]) {
                 isAttacking = true;
-                Packet03Attack packet = new Packet03Attack(0, 1);
+                Packet03Attack packet = new Packet03Attack(0, 1, map);
                 packet.writeData(gp.socketClient);
                 attackCounter = 0;
 
             }
-            if (keyH.upPressed) {
+            if (keyH.keysPressed[keyH.upKey]) {
                 collisionOn = false;                                               //reset collision
                 direction = "up";                                                  //set direction
-                gp.cCheck.checkTile(this);                                   //check collision with tile
+                if (!gp.GOD) gp.cCheck.checkTile(this);                                   //check collision with tile
                 int objIndex = gp.cCheck.checkObject(this, true);     //check collision with object
                 pickUpObject(objIndex);                                            //pick up object
-                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);          //check collision with npc
-                interactNPC(npcIndex);                                             //interact with npc
-                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
+                //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);          //check collision with npc
+                //interactNPC(npcIndex);                                             //interact with npc
+
                 if (!collisionOn) {                                                //if no collision
                     worldY -= speed;                                               //move
                 }
             }   //same for all directions
-            if (keyH.downPressed) {
+            if (keyH.keysPressed[keyH.downKey]) {
                 collisionOn = false;
                 direction = "down";
-                gp.cCheck.checkTile(this);
+                if (!gp.GOD) gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
-                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
-                interactNPC(npcIndex);
-                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
+                //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+                //interactNPC(npcIndex);
+
                 if (!collisionOn) {
                     worldY += speed;
                 }
             }
-            if (keyH.leftPressed) {
+            if (keyH.keysPressed[keyH.leftKey]) {
                 collisionOn = false;
                 direction = "left";
-                gp.cCheck.checkTile(this);
+                if (!gp.GOD) gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
-                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
-                interactNPC(npcIndex);
-                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
+                //int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
+                //interactNPC(npcIndex);
+                //int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
                 if (!collisionOn) {
                     worldX -= speed;
                 }
             }
-            if (keyH.rightPressed) {
+            if (keyH.keysPressed[keyH.rightKey]) {
                 collisionOn = false;
                 direction = "right";
-                gp.cCheck.checkTile(this);
+                if (!gp.GOD) gp.cCheck.checkTile(this);
                 int objIndex = gp.cCheck.checkObject(this, true);
                 pickUpObject(objIndex);
-                int npcIndex = gp.cCheck.checkEntity(this, gp.npc);
-                interactNPC(npcIndex);
-                System.out.println(gp.monster[0]);
-                System.out.println(gp.monster[1]);
-                System.out.println(gp.monster[2]);
 
-
-                int monsterIndex = gp.cCheck.checkEntity(this, gp.monster);  //check collision with monster
                 if (!collisionOn) {
                     worldX += speed;
                 }
-
             }
 
             //CHECK EVENT
             gp.eH.checkEvent();
 
             spriteCounter++;
-            //System.out.println("Player position: playerID = 0, " + this.worldX + "," + this.worldY);
-            Packet02Move packet = new Packet02Move( 0, this.worldX, this.worldY, this.direction);
+            //System.out.println("Moving to " + worldX + ", " + worldY + " map: " + gp.currentMap);
+            Packet02Move packet = new Packet02Move(0, gp.currentMap, this.worldX, this.worldY, this.direction);
             packet.writeData(gp.socketClient);
-            //System.out.println("Sending data to server: "+this.worldX+","+this.worldY);
+
 
             if (spriteCounter > 10) {
-                if (spriteNum == 1 &&( keyH.downPressed || keyH.upPressed || keyH.leftPressed || keyH.rightPressed)) {
+                if (spriteNum == 1 && (keyH.keysPressed[keyH.downKey] || keyH.keysPressed[keyH.upKey] || keyH.keysPressed[keyH.leftKey] || keyH.keysPressed[keyH.rightKey])) {
                     spriteNum = 2;
                 } else if (spriteNum == 2) {
                     spriteNum = 1;
@@ -176,104 +193,137 @@ public class Player extends Entity {
 
     private void attack() {
         attackCounter++;
-        if (attackCounter > 5){
+        if (attackCounter > 5) {
             isAttacking = false;
             attackCounter = 0;
         }
 
-        switch(direction){
+        switch (direction) {
             case "up":
-                attackArea.x = worldX + gp.tileSize/2 - attackArea.width/2;
-                attackArea.y = worldY - gp.tileSize/2 - attackArea.height/2 - gp.tileSize*attackCounter/5;
+                attackArea.x = worldX + gp.tileSize / 2 - attackArea.width / 2;
+                attackArea.y = worldY - gp.tileSize / 2 - attackArea.height / 2 - gp.tileSize * attackCounter / 5;
                 break;
         }
     }
 
 
-    public void pickUpObject(int i){
-        if(i!=999){
-            //print all objects and their iD
-            for(int j = 0; j < gp.obj.length; j++){
-                if(gp.obj[j] != null){
-                    //System.out.println("Object index: "+j+" Object ID: "+gp.obj[j].id);
+    public void pickUpObject(int i) {
+        if (i != 999) {
+            if (i < 0) {
+                i = -i;
+                gp.obj[gp.currentMap][i].turnOff();
+            } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "PP")) { //pp
+                gp.obj[gp.currentMap][i].interact();
+                return;
+            } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "RuneDoor")) { //RuneDoor
+                gp.obj[gp.currentMap][i].interact();
+                return;
+            } else {
+                String type = gp.obj[gp.currentMap][i].type;
+                switch (type) {
+                    case "helmet":
+                        if (helmet != null) {
+                            if (helmet.tier >= gp.obj[gp.currentMap][i].tier) {
+                                return;
+                            }
+                        }
+                        Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "armour":
+                        if (armour != null) {
+                            if (armour.tier >= gp.obj[gp.currentMap][i].tier) {
+                                return;
+                            }
+                        }
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "weapon":
+                        if (weapon != null) {
+                            if (weapon.tier >= gp.obj[gp.currentMap][i].tier) {
+                                return;
+                            }
+                        }
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "shield":
+                        if (shield != null) {
+                            if (shield.tier >= gp.obj[gp.currentMap][i].tier) {
+                                return;
+                            }
+                        }
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "boots":
+                        if (boots != null) {
+                            if (boots.tier >= gp.obj[gp.currentMap][i].tier) {
+                                return;
+                            }
+                        }
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+                    case "book":
+                        //giveItem(gp.obj[gp.currentMap][i]);
+                        gp.obj[gp.currentMap][i].readChapter(gp);
+                        gp.gameState = gp.readState;
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
+
+
+                    default:
+                        p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                        p4.writeData(gp.socketClient);
+                        System.out.println("Requesting item: " + p4.getitemIndex());
+                        break;
                 }
             }
-            //System.out.println(i+" is the object index, " + gp.obj[i].id + " is the object id");
-
-              if (gp.obj[i].id == 1) {//helmet
-                Packet04Object p4 = new Packet04Object((char) i, true);
-                p4.writeData(gp.socketClient);
-                //System.out.println("Helmet PickUp with id: 1");
-
-            } else if (gp.obj[i].id == 2) {//axe
-                Packet04Object p4 = new Packet04Object((char) i, true);
-                p4.writeData(gp.socketClient);
-                System.out.println("Requesting item: "+p4.getitemIndex());
-            }else if (gp.obj[i].id == 3) { //book
-                Packet04Object p4 = new Packet04Object((char) i, true);
-                p4.writeData(gp.socketClient);
-                System.out.println("Requesting item: "+p4.getitemIndex()); //Sends item INDEX
-                gp.obj[i].readChapter(gp);
-                gp.gameState = gp.readState;
-            }
-            else if (gp.obj[i].id == 4) { //pp
-                ArrayList<TileChange> changes = new ArrayList<>();
-                //TODO isto está completamente hardcoded
-                TileChange change;
-
-                change = new TileChange(14, 17, 12);
-                changes.add(change);
-                change = new TileChange(14, 16, 8);
-                changes.add(change);
-                change = new TileChange(14, 15, 8);
-                changes.add(change);
-                change = new TileChange(14, 14, 13);
-                changes.add(change);
-
-                Packet06MapChange p6 = new Packet06MapChange(0, changes);
-                System.out.println("Sending map change packet");
-                String[] dataArray = p6.readData(p6.getData()).split(",");
-                p6.writeData(gp.socketClient);
-            }
-              else if (gp.obj[i].id == 5) { //pp
-                  ArrayList<TileChange> changes = new ArrayList<>();
-                  //TODO isto está completamente hardcoded
-                  TileChange change;
-
-                  change = new TileChange(17, 14, 12);
-                  changes.add(change);
-                  change = new TileChange(17, 15, 8);
-                  changes.add(change);
-                  change = new TileChange(17, 16, 8);
-                  changes.add(change);
-                  change = new TileChange(17, 17, 13);
-                  changes.add(change);
-
-                  Packet06MapChange p6 = new Packet06MapChange(0, changes);
-                  System.out.println("Sending map change packet");
-                  String[] dataArray = p6.readData(p6.getData()).split(",");
-                  p6.writeData(gp.socketClient);
-              }
 
 
 
-
-
-
+                /*
+                } else if (gp.obj[gp.currentMap][i].id == 2) {//axe
+                    Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                    p4.writeData(gp.socketClient);
+                    System.out.println("Requesting item: " + p4.getitemIndex());
+                } else if (gp.obj[gp.currentMap][i].id == 3) { //book
+                    Packet04Object p4 = new Packet04Object(gp.currentMap, (char) i, true);
+                    p4.writeData(gp.socketClient);
+                    System.out.println("Requesting item: " + p4.getitemIndex()); //Sends item INDEX
+                    if (gp.obj[gp.currentMap][i] != null) {
+                        gp.obj[gp.currentMap][i].readChapter(gp);
+                        gp.gameState = gp.readState;
+                    }
+                } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "PP")) { //pp
+                    gp.obj[gp.currentMap][i].interact();
+                } else if (Objects.equals(gp.obj[gp.currentMap][i].name, "RuneDoor")) { //rune door
+                    gp.obj[gp.currentMap][i].interact();
+                    gp.obj[gp.currentMap][i] = null;
+                    }*/
         }
     }
+
 
     private void interactNPC(int npcIndex) {
-        if(npcIndex!=999){
+        if (npcIndex != 999) {
             System.out.println("NPC colision");
-
         }
     }
+
     public void draw(Graphics2D g2d) {
 
 
         BufferedImage body = null;
-        BufferedImage helmet = null;
         BufferedImage attack = null;
 
 
@@ -283,46 +333,44 @@ public class Player extends Entity {
                     attack = attackUp;
                 }
                 if (spriteNum == 1) {
-                    body = bodyUp1;
+                    body = sprites[gp.player1Skin][0];
                 } else if (spriteNum == 2) {
-                    body = bodyUp2;
+                    body = sprites[gp.player1Skin][1];
                 }
-                helmet = HelmetUp;
+
                 break;
             case "down":
                 if (isAttacking) {
                     attack = attackDown;
                 }
                 if (spriteNum == 1) {
-                    body = bodyDown1;
+                    body = sprites[gp.player1Skin][2];
                 } else if (spriteNum == 2) {
-                    body = bodyDown2;
+                    body = sprites[gp.player1Skin][3];
                 }
-                helmet = HelmetDown;
+
                 break;
             case "left":
                 if (isAttacking) {
                     attack = attackLeft;
                 }
                 if (spriteNum == 1) {
-                    body = BodyLeft1;
+                    body = sprites[gp.player1Skin][4];
                 } else if (spriteNum == 2) {
-                    body = BodyLeft2;
+                    body = sprites[gp.player1Skin][5];
                 }
-                helmet = HelmetLeft;
+
                 break;
             case "right":
                 if (isAttacking) {
                     attack = attackRight;
                 }
                 if (spriteNum == 1) {
-                    body = BodyRight1;
+                    body = sprites[gp.player1Skin][6];
                 } else if (spriteNum == 2)
-                    body = BodyRight2;
-                helmet = HelmetRight;
+                    body = sprites[gp.player1Skin][7];
                 break;
         }
-
 
 
         int x = screenX;
@@ -330,41 +378,168 @@ public class Player extends Entity {
 
         //Stop camera movement at the edge of the map
         //left
-        if(screenX > worldX){
+        if (screenX > worldX) {
             x = worldX;
         }
         //top
-        if(screenY > worldY){
+        if (screenY > worldY) {
             y = worldY;
         }
         //right
-        if(screenX < worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth){
+        if (screenX < worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth) {
             x = worldX - gp.maxWorldCol * gp.tileSize + gp.screenWidth;
         }
         //bottom
-        if(screenY < worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight){
+        if (screenY < worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight) {
             y = worldY - gp.maxWorldRow * gp.tileSize + gp.screenHeight;
         }
 
-        g2d.drawImage(body, x, y, null);
-        if (helmetOn) {g2d.drawImage(helmet, x, y, null);}
-        if (isAttacking)
-        {
+        //g2d.drawImage(body, x, y, null);
+
+        //draw armour, then helmet, then boots, then weapon, then shield
+        drawitems(g2d, x, y, body);
+
+        //if (helmetOn) {g2d.drawImage(helmet, x, y, null);}
+        if (isAttacking) {
             switch (direction) {
                 case "up":
-                    g2d.drawImage(attack, x, y - gp.tileSize/2 - gp.tileSize*attackCounter/5, null);
+                    g2d.drawImage(attack, x, y - gp.tileSize / 2 - gp.tileSize * attackCounter / 5, null);
                     break;
                 case "down":
-                    g2d.drawImage(attack, x, y + gp.tileSize/2 + gp.tileSize*attackCounter/5, null);
+                    g2d.drawImage(attack, x, y + gp.tileSize / 2 + gp.tileSize * attackCounter / 5, null);
                     break;
                 case "left":
-                    g2d.drawImage(attack, x - gp.tileSize/2 - gp.tileSize*attackCounter/5 , y, null);
+                    g2d.drawImage(attack, x - gp.tileSize / 2 - gp.tileSize * attackCounter / 5, y, null);
                     break;
                 case "right":
-                    g2d.drawImage(attack, x + + gp.tileSize/2 + gp.tileSize*attackCounter/5, y, null);
+                    g2d.drawImage(attack, x + +gp.tileSize / 2 + gp.tileSize * attackCounter / 5, y, null);
                     break;
             }
         }
+    }
 
+    private void drawitems(Graphics2D g2d, int x, int y, BufferedImage body) {
+        //this now considers the order of the drawing of the items
+        switch (direction) {
+            case "down":
+                g2d.drawImage(body, x, y, null);
+                if (boots != null) {
+                    g2d.drawImage(boots.down, x, y, null);
+                }
+                if (armour != null) {
+                    g2d.drawImage(armour.down, x, y, null);
+                }
+                if (helmet != null) {
+                    g2d.drawImage(helmet.down, x, y, null);
+                }
+                if (weapon != null) {
+                    g2d.drawImage(weapon.down, x, y, null);
+                }
+                if (shield != null) {
+                    g2d.drawImage(shield.down, x, y, null);
+                }
+                break;
+            case "up":
+                if (shield != null) {
+                    g2d.drawImage(shield.up, x, y, null);
+                }
+                g2d.drawImage(body, x, y, null);
+                if (weapon != null) {
+                    g2d.drawImage(weapon.up, x, y, null);
+                }
+                if (boots != null) {
+                    g2d.drawImage(boots.up, x, y, null);
+                }
+                if (armour != null) {
+                    g2d.drawImage(armour.up, x, y, null);
+                }
+                if (helmet != null) {
+                    g2d.drawImage(helmet.up, x, y, null);
+                }
+                break;
+            case "left":
+                g2d.drawImage(body, x, y, null);
+                if (helmet != null) {
+                    g2d.drawImage(helmet.left, x, y, null);
+                }
+                if (boots != null) {
+                    g2d.drawImage(boots.left, x, y, null);
+                }
+                if (armour != null) {
+                    g2d.drawImage(armour.left, x, y, null);
+                }
+                if (weapon != null) {
+                    g2d.drawImage(weapon.left, x, y, null);
+                }
+                if (shield != null) {
+                    g2d.drawImage(shield.left, x, y, null);
+                }
+                break;
+            case "right":
+                g2d.drawImage(body, x, y, null);
+                if (helmet != null) {
+                    g2d.drawImage(helmet.right, x, y, null);
+                }
+                if (boots != null) {
+                    g2d.drawImage(boots.right, x, y, null);
+                }
+                if (armour != null) {
+                    g2d.drawImage(armour.right, x, y, null);
+                }
+                if (weapon != null) {
+                    g2d.drawImage(weapon.right, x, y, null);
+                }
+                if (shield != null) {
+                    g2d.drawImage(shield.right, x, y, null);
+                }
+                break;
+
+
+        }
+
+
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).equippable) {
+                if (inventory.get(i).name == "firefly") {
+                    g2d.drawImage(inventory.get(i).image, x, y - gp.tileSize, null);
+                } else {
+                    switch (direction) {
+                        case "up":
+                            g2d.drawImage(inventory.get(i).up, x, y, null);
+                            break;
+                        case "down":
+                            g2d.drawImage(inventory.get(i).down, x, y, null);
+                            break;
+                        case "left":
+                            g2d.drawImage(inventory.get(i).left, x, y, null);
+                            break;
+                        case "right":
+                            g2d.drawImage(inventory.get(i).right, x, y, null);
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void giveItem(SuperObject item) {
+        if (Objects.equals(item.type, "helmet")) {
+            helmet = item;
+            this.maxHealth += 2 * item.tier;
+            this.currentHealth += 2 * item.tier;
+        } else if (Objects.equals(item.type, "armour")) {
+            armour = item;
+            this.maxHealth += 2 * item.tier;
+            this.currentHealth += 2 * item.tier;
+        } else if (Objects.equals(item.type, "weapon")) {
+            weapon = item;
+        } else if (Objects.equals(item.type, "shield")) {
+            shield = item;
+        } else if (Objects.equals(item.type, "boots")) {
+            boots = item;
+            this.speed += 2;
+        } else {
+            inventory.add(item);
+        }
     }
 }

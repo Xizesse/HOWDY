@@ -23,7 +23,7 @@ class CollisionCheckerTest {
 
     @Test
     void checkTileCollisionOff() {
-        Player player = new Player(gp, new KeyHandler(gp), 10, 10 );
+        Player player = new Player(gp, new KeyHandler(gp), 10, 10, 0);
         player.direction = "up";
         colCheck.checkTile(player);
         assertFalse(player.collisionOn);
@@ -40,7 +40,7 @@ class CollisionCheckerTest {
 
     @Test
     void checkTileCollisionOn() {
-        Player player = new Player(gp, new KeyHandler(gp), 0, 0 );
+        Player player = new Player(gp, new KeyHandler(gp), 0, 0, 0 );
         player.direction = "up";
         colCheck.checkTile(player);
         assertTrue(player.collisionOn);
