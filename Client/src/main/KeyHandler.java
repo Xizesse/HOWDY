@@ -293,14 +293,14 @@ public class KeyHandler implements KeyListener {
             }
         }
         if (keysPressed[backKey]) {
-            gp.new_gameState = gp.optionsState;
+            gp.new_gameState = gp.titleState;
             gp.prev_gameState = gp.gameState;
         }
     }
 
     private void aboutKeys(){
         if (keysPressed[backKey]) {
-            gp.new_gameState = gp.optionsState;
+            gp.new_gameState = gp.titleState;
             gp.prev_gameState = gp.gameState;
         }
     }
@@ -338,6 +338,10 @@ public class KeyHandler implements KeyListener {
         //END STATE
         else if (gp.gameState == gp.endState) {
             if (keysPressed[confirmKey]) {
+                gp.performClosingActions();
+                //System.out.println("Closing window...");
+                // Dispose the window and exit the application
+                System.exit(0);
                 gp.new_gameState = gp.titleState;
             }
         }
