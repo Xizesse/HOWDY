@@ -19,6 +19,12 @@ class PacketTest {
         assertEquals(Packet.PacketTypes.LOGIN, Packet.lookupPacket("00"), "Should return LOGIN type for '00'.");
         assertEquals(Packet.PacketTypes.LOGOUT, Packet.lookupPacket("01"), "Should return DISCONNECT type for '01'.");
         assertEquals(Packet.PacketTypes.MOVE, Packet.lookupPacket("02"), "Should return MOVE type for '02'.");
+        assertEquals(Packet.PacketTypes.ATTACK, Packet.lookupPacket("03"), "Should return ATTACK type for '03'.");
+        assertEquals(Packet.PacketTypes.OBJECT, Packet.lookupPacket("04"), "Should return OBJECT type for '04'.");
+        assertEquals(Packet.PacketTypes.HEALTH, Packet.lookupPacket("05"), "Should return HEALTH type for '05'.");
+        assertEquals(Packet.PacketTypes.MAPCHANGE, Packet.lookupPacket("06"), "Should return MAPCHANGE type for '06'.");
+        assertEquals(Packet.PacketTypes.READY, Packet.lookupPacket("07"), "Should return READY type for '07'.");
+
         assertEquals(Packet.PacketTypes.INVALID, Packet.lookupPacket(-1), "Should return INVALID type for an undefined ID.");
     }
 
