@@ -19,8 +19,6 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    private int attackingX = 0;
-    private int attackingY = 0;
 
 
     //Player images [skin][direction]
