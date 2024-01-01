@@ -15,6 +15,11 @@ https://www.oracle.com/java/technologies/downloads/#jdk21-windows
 
 Download the Java Develoment Kit. Be sure to download the JDK 21 for the correct operating system. 
 
+**Download the game
+
+On the master branch on Gitlab, you should be able to see the HOWDY.jar file. Download it. 
+You can also download it from here
+
 **Run the Game**:
 
 - Navigate to the folder where you downloaded **`HOWDY.jar`**.
