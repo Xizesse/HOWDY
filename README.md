@@ -18,7 +18,8 @@ Download the Java Develoment Kit. Be sure to download the JDK 21 for the correct
 **Download the game
 
 On the master branch on Gitlab, you should be able to see the HOWDY.jar file. Download it. 
-You can also download it from here
+You can also download it from here https://drive.google.com/drive/folders/14PoFcpFRM6Kzeh7Z5BqNXgxrxl6YQBdF?usp=sharing
+
 
 **Run the Game**:
 
