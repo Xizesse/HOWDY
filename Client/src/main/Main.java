@@ -1,6 +1,7 @@
 package main;
 
 
+
 import net.Packet00Login;
 import server.MainServer;
 import server.ServerPanel;
@@ -24,6 +25,7 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("HOWDY");
+        new Main().setIcon();
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
@@ -58,6 +60,10 @@ public class Main {
     public static void launchServer() throws IOException {
         MainServer.main(null);
     }
+    public void setIcon() {
+        javax.swing.ImageIcon img = new javax.swing.ImageIcon("res/monster_eye/eye_left1.png");
+        window.setIconImage(img.getImage());
 
+    }
 
 }
