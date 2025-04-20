@@ -1,6 +1,4 @@
 # HOWDY
-![howdy](https://github.com/user-attachments/assets/dcee2582-93cd-47de-bb24-64994452ee97)
-![howdy2](https://github.com/user-attachments/assets/3ce0af66-4b31-4259-8c67-de32bf58f27f)
 
 
 ### **HOWDY: Heroes of War, Die Young - Installation Instructions**
@@ -33,6 +31,7 @@ You can also download it from here https://drive.google.com/drive/folders/14PoFc
     - Run the command: **`java -jar HOWDY.jar`**.
     
 
+![howdy](https://github.com/user-attachments/assets/dcee2582-93cd-47de-bb24-64994452ee97)
 ## User Manual
 
 HOWDY : Heroes of War Die young is a 2 player where you and your friend are stuck in a dungeon and must work together to escape, solving puzzles and killing monsters !
@@ -58,3 +57,5 @@ HOWDY : Heroes of War Die young is a 2 player where you and your friend are stuc
 - Confirm Actions: Press Enter to confirm actions.
 - Go Back/Cancel: Press Esc to go back or cancel an action.
 - Objective: Solve puzzles and defeat monsters to escape the dungeon. Cooperation with your teammate is crucial.
+
+![howdy2](https://github.com/user-attachments/assets/3ce0af66-4b31-4259-8c67-de32bf58f27f)
